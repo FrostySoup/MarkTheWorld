@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Data;
 using Data.DataHelpers;
+using Repository.Index;
 
 namespace Repository.DotRepository
 {
@@ -23,6 +24,7 @@ namespace Repository.DotRepository
                     if (user.Id == null)
                         return reg;
                     Dot dotCopy = new Dot();
+                    
                     dotCopy.date = dot.date;
                     dotCopy.message = dot.message;
                     dotCopy.lat = dot.lat;
