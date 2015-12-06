@@ -1,0 +1,81 @@
+/*Removes button focus*/
+button.md-default-theme:not([disabled]).md-focused {
+    background-color: transparent !important;
+}
+/*Removes button focus*/
+.md-icon-button.md-button.md-ink-ripple.md-focused {
+    background-color: transparent !important;
+}
+
+md-fab.md-fab-bottom-right.md-button.md-ink-ripple.md-focused {
+    background-color: transparent !important;
+}
+
+.material-icons.md-36 {
+    font-size: 36px;
+}
+
+.s48 {
+    width: 48px;
+    height: 48px;
+}
+
+.s24 {
+    width: 24px;
+    height: 24px;
+}
+
+.s32 {
+    width: 32px;
+    height: 32px;
+}
+
+form {
+    margin-bottom: 0;
+}
+
+.button-login {
+    min-width: 100%;
+    margin: 0;
+    height: 42px
+}
+
+md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
+    background-color: rgb(98, 98, 98);
+}
+
+/*a.md-button.md-default-theme.md-primary.md-raised {*/
+    /*background-color: rgb(58, 58, 58);*/
+/*}*/
+
+md-fab-speed-dial {
+    position: absolute;
+    right: 20px;
+    bottom: 30px;
+}
+
+.no-account {
+    display: block;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.no-account a {
+    cursor: pointer;
+}
+
+.no-account a:hover {
+    color: #3F51B5;
+}
+
+.md-dialog-full-page {
+    min-height: 100%;
+    min-width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+.md-dialog-full-page .md-dialog-content {
+    padding-top: 0;
+}
