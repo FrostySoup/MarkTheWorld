@@ -24,7 +24,7 @@ namespace MarkTheWorld.Controllers.Api
         [HttpPost]
         public IHttpActionResult PostDot(DotFromViewModel dot)
         {
-            Dot dotCopy = new Dot();
+            UserRegistrationModel dotCopy = new UserRegistrationModel();
             try
             {
                 dotCopy = dotService.storeDot(dot);

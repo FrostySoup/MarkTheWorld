@@ -24,9 +24,33 @@ namespace BusinessLayer.DotService
             return repositoryDot.GetAll(corners);
         }
 
-        public Dot storeDot(DotFromViewModel dot)
+        public UserRegistrationModel storeDot(DotFromViewModel dot)
         {
             return repositoryDot.AddOne(dot);
+        }
+
+        public CornersCorrds coordsToSquare(double lat, double lng)
+        {
+            CornersCorrds corners = new CornersCorrds();
+            double late = ((int)(lat*100))/100;
+            double longt = ((int)(lng * 100)) / 100;
+            corners.swX = longt + 0.01;
+            corners.neX = longt;
+            corners.neY = late + 0.01;
+            corners.swY = late;
+            if (corners.neX < corners.swX)
+            {
+                double laikinas = corners.neX;
+                corners.neX = corners.swX;
+                corners.swX = laikinas;
+            }
+            if (corners.neY < corners.swY)
+            {
+                double laikinas = corners.neY;
+                corners.neY = corners.swY;
+                corners.swY = laikinas;
+            }
+            return corners;
         }
 
         public List<CornersCorrds> getAllSquares(List<Dot> dots)
