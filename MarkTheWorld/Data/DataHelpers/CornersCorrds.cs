@@ -8,9 +8,9 @@ namespace Data.DataHelpers
 {
     public class CornersCorrds
     {
-        public double nwX { get; set; }
-        public double nwY { get; set; }
-        public double seX { get; set; }
-        public double seY { get; set; }
+        public double neX { get; set; }
+        public double neY { get; set; }
+        public double swX { get; set; }
+        public double swY { get; set; }
     }
 }

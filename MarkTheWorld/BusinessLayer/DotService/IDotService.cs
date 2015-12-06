@@ -10,7 +10,7 @@ namespace BusinessLayer.DotService
 {
     public interface IDotService
     {
-        Dot storeDot(DotFromViewModel dot);
+        UserRegistrationModel storeDot(DotFromViewModel dot);
         List<Dot> getAllDots(CornersCorrds corners);
         Dot deleteDot(string dotId);
         List<CornersCorrds> getAllSquares(List<Dot> dots);

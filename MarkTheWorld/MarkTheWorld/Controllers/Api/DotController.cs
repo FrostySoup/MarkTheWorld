@@ -24,7 +24,7 @@ namespace MarkTheWorld.Controllers.Api
         [HttpPost]
         public IHttpActionResult PostDot(DotFromViewModel dot)
         {
-            Dot dotCopy = new Dot();
+            UserRegistrationModel dotCopy = new UserRegistrationModel();
             try
             {
                 dotCopy = dotService.storeDot(dot);
@@ -39,6 +39,24 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(dotCopy);
         }
 
+
+        [Route("squaresInArea")]
+        [HttpPost]
+        public IHttpActionResult GetSquares(CornersCorrds corners)
+        {
+            List<Dot> gameDots = new List<Dot>();
+            try
+            {
+                gameDots = dotService.getAllDots(corners);
+
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(gameDots);
+        }
 
         [Route("dotsInArea")]
         [HttpPost]

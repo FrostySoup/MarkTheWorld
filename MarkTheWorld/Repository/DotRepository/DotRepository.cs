@@ -10,15 +10,18 @@ namespace Repository.DotRepository
 {
     public class DotRepository : GenericRepository.GenericRepository, IDotRepository
     {
-        public Dot AddOne(DotFromViewModel dot)
+        public UserRegistrationModel AddOne(DotFromViewModel dot)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
+                UserRegistrationModel reg = new UserRegistrationModel();
+                reg.success = false;
+                reg.message = "You already marked this dot";
                 try
-                {
+                {                 
                     User user = session.Query<User>().First(x => x.Token.Equals(dot.username));
                     if (user.Id == null)
-                        return new Dot();
+                        return reg;
                     Dot dotCopy = new Dot();
                     dotCopy.date = dot.date;
                     dotCopy.message = dot.message;
@@ -30,11 +33,12 @@ namespace Repository.DotRepository
                     user.dotsId.Add(dotCopy.Id);
                     session.Store(user);
                     session.SaveChanges();
-                    return dotCopy;
+                    reg.success = true;
+                    return reg;
                 }
                 catch
                 {
-                    return new Dot();
+                    return reg;
                 }
             }
         }
@@ -49,8 +53,8 @@ namespace Repository.DotRepository
                 List<Dot> dotsToSend = new List<Dot>();
                for (int i = 0; i < dots.Length; i++)
                {
-                    if (corners.nwX > dots[i].lon && corners.nwY > dots[i].lat &&
-                        corners.seX < dots[i].lon && corners.seY < dots[i].lat)
+                    if (corners.neX < dots[i].lon && corners.neY > dots[i].lat &&
+                        corners.swX > dots[i].lon && corners.swY < dots[i].lat)
                         dotsToSend.Add(dots[i]);
                }
                return dotsToSend;

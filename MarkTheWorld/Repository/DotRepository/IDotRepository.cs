@@ -10,7 +10,7 @@ namespace Repository.DotRepository
 {
     public interface IDotRepository
     {
-        Dot AddOne(DotFromViewModel dot);
+        UserRegistrationModel AddOne(DotFromViewModel dot);
         List<Dot> GetAll(CornersCorrds corners);
     }
 }
