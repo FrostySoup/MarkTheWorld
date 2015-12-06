@@ -3,7 +3,7 @@
 
     app.controller('AppCtrl', AppCtrl);
 
-    function AppCtrl ($scope, $log, $mdDialog, $mdSidenav, $state, $http, MarkMapFactory) {
+    function AppCtrl($scope, $log, $mdDialog, $mdSidenav, $state, $http, MarkMapFactory, SimpleModalFactory, $timeout) {
 
 
 
@@ -58,6 +58,22 @@
             $state.transitionTo(state, { param1 : 'something' }, { reload: true });
             sideBar();
         };
+
+        $scope.isLogged = function() {
+            return localStorage.getItem('token') !== null;
+        }
+
+        $scope.getLoggedUser = function() {
+            return localStorage.getItem('user');
+        }
+
+        $scope.logout = function () {
+            SimpleModalFactory.showModal('Info', 'Logged out successfully');
+            $timeout(function () {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+            }, 300);
+        }
 
         $scope.openMenu = function($mdOpenMenu, ev) {
             $mdOpenMenu(ev);

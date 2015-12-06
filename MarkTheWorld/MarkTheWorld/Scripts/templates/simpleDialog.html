@@ -1,0 +1,18 @@
+﻿<md-dialog ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>{{title}}</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-svg-src="~/../Content/img/icons/ic_clear_white_48px.svg" class="s48" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <p>
+                {{content}}
+            </p>
+        </div>
+    </md-dialog-content>
+</md-dialog>
