@@ -8,7 +8,8 @@ namespace Data
 {
     public class UserRegistrationModel
     {
-        public string success { get; set; }
+        public Boolean success { get; set; }
+        public string message { get; set; }
         public Guid Token { get; set; }
     }
 }

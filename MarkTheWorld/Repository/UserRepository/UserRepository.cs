@@ -16,7 +16,8 @@ namespace Repository.UserRepository
                 try
                 {
                     UserRegistrationModel check = new UserRegistrationModel();
-                    check.success = "Unknown error";
+                    check.success = false;
+                    check.message = "Unknown error";
                     check.Token = System.Guid.NewGuid();
                     User oneObject = session.Query<User>().First(x => x.UserName.Equals(user.UserName));
                     if (oneObject == null)
@@ -24,21 +25,23 @@ namespace Repository.UserRepository
                         user.Token = check.Token;
                         session.Store(user);
                         session.SaveChanges();
-                        check.success = "User added";
+                        check.success = true;
+                        check.message = "User added";
                         return check;
                     }
-                    check.success = "Username already taken";
+                    check.success = false;
+                    check.message = "Username already taken";
                     return check;
                 }
                 catch
                 {
                     UserRegistrationModel check = new UserRegistrationModel();
-                    check.success = "Unknown error";
+                    check.success = true;
                     check.Token = System.Guid.NewGuid();
                     user.Token = check.Token;
                     session.Store(user);
                     session.SaveChanges();
-                    check.success = "User added";
+                    check.message = "User added";
                     return check;
                 }
             }
@@ -51,23 +54,26 @@ namespace Repository.UserRepository
                 try
                 {
                     UserRegistrationModel check = new UserRegistrationModel();
-                    check.success = "Unknown error";
+                    check.success = false;
                     User oneObject = session.Query<User>().First(x => x.UserName.Equals(user.UserName));
                     if (oneObject == null)
                     {
-                        check.success = "Wrong username";
+                        check.success = false;
+                        check.message = "Wrong username";
                         return check;
                     }
 
                     if (!oneObject.PasswordHash.Equals(user.PasswordHash))
                     {
-                        check.success = "Wrong password";
+                        check.success = false;
+                        check.message = "Wrong password";
                         return check;
                     }
 
                     if (oneObject != null)
                     {
-                        check.success = "User found";
+                        check.success = true;
+                        check.message = "User found";
                         check.Token = oneObject.Token;
                         return check;
                     }
@@ -76,7 +82,8 @@ namespace Repository.UserRepository
                 catch
                 {
                     UserRegistrationModel check = new UserRegistrationModel();
-                    check.success = "Wrong username";
+                    check.success = false;
+                    check.message = "Wrong username";
                     return check;
                 }
             }
