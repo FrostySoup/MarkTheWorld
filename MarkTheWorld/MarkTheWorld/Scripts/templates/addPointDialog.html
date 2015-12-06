@@ -10,7 +10,7 @@
         </md-toolbar>
         <md-dialog-content>
             <div class="md-dialog-content">
-                <h2>You are about to mark a square!</h2>
+                <h2>You are about to mark a spot!</h2>
                 <p>
                     Please leave the message for the current square.
                 </p>
@@ -20,7 +20,7 @@
                         <input type="text" id="message" ng-model="message" md-autofocus="">
                     </md-input-container>
                 </form>
-                <md-button ng-click="confirm()" class="button-login md-raised md-primary">Mark!</md-button>
+                <md-button ng-click="confirm(message)" class="button-login md-raised md-primary">Mark!</md-button>
             </div>
         </md-dialog-content>
 </md-dialog>

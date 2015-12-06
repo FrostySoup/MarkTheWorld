@@ -85,6 +85,8 @@
                 templateUrl: 'scripts/templates/addPointDialog.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
+                locals: { "lat": window.lat, "lng": window.lng },
+                bindToController: true,
                 clickOutsideToClose: true
             });
         };
@@ -115,5 +117,27 @@
         }
 
         var sideBar = buildToggler('right');
+
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function () {
+                var context = this, args = arguments;
+                var later = function () {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        };
+
+        var centerChangedHandler = debounce(function () {
+            MarkMapFactory.clearMap();
+            MarkMapFactory.markAllPoint();
+        }, 250);
+
+        google.maps.event.addListener(map.map, 'center_changed', centerChangedHandler);
     }
 })();

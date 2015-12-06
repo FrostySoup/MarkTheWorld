@@ -51,6 +51,32 @@
                 });
 
                 return deferredObject.promise;
+            },
+
+            addPoint: function (message, lat, lng) {
+                var deferredObject = $q.defer();
+
+                $http.post(
+                    '/api/User', {
+                        "username": localStorage.getItem('token'),
+                        "lat": lat,
+                        "lng": lng,
+                        "message": message
+                    }
+                ).
+                success(function (data) {
+                    if (data) {
+                        console.log(data);
+                        deferredObject.resolve(data);
+                    } else {
+                        deferredObject.resolve(false);
+                    }
+                }).
+                error(function () {
+                    deferredObject.resolve(false);
+                });
+
+                return deferredObject.promise;
             }
         };
     }
