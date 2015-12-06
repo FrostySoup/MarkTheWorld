@@ -32,9 +32,7 @@ namespace BusinessLayer.DotService
         public List<CornersCorrds> getAllSquares(List<Dot> dots)
         {
             List<CornersCorrds> squares = new List<CornersCorrds>();
-            foreach(Dot dot from dots){
-                 
-            }
+           
             return squares;
         }
 

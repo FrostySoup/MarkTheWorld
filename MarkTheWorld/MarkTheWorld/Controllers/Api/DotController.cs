@@ -40,6 +40,24 @@ namespace MarkTheWorld.Controllers.Api
         }
 
 
+        [Route("squaresInArea")]
+        [HttpPost]
+        public IHttpActionResult GetSquares(CornersCorrds corners)
+        {
+            List<Dot> gameDots = new List<Dot>();
+            try
+            {
+                gameDots = dotService.getAllDots(corners);
+
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(gameDots);
+        }
+
         [Route("dotsInArea")]
         [HttpPost]
         public IHttpActionResult GetDots(CornersCorrds corners)
