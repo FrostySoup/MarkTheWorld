@@ -5,6 +5,17 @@
 
     function MarkMapFactory(SquareInfoFactory, $http, $q) {
         var markersArray = [];
+        function addPoint(lat, lng, title) {
+            return map.addMarker({
+                title: title,
+                lat: lat,
+                lng: lng,
+                infoWindow: {
+                    content: title
+                }
+            });
+        };
+
         return {
             drawRectangles : function(recs) {
                 angular.forEach(recs, function(rec, key) {
@@ -18,33 +29,27 @@
                 });
             },
             markAllPoint: function () {
-                var deferredObject = $q.defer();
-
                 $http.post(
-                    '/api/dotsInArea', {
-                        "nwX": map.getBounds().getNorthEast().lat(),
-                        "nwY": map.getBounds().getNorthEast().lng(),
-                        "seX": map.getBounds().getSouthWest().lat(),
-                        "seY": map.getBounds().getSouthWest().lng()
-                    }
-                ).
-                success(function (data) {
-                    if (data) {
+                        '/api/dotsInArea', {
+                            "neX": map.getBounds().getNorthEast().lng(),
+                            "neY": map.getBounds().getNorthEast().lat(),
+                            "swX": map.getBounds().getSouthWest().lng(),
+                            "swY": map.getBounds().getSouthWest().lat()
+                        }
+                    ).
+                    success(function (data) {
                         console.log(data);
-                        deferredObject.resolve(data);
-                    } else {
-                        deferredObject.resolve(false);
-                    }
-                }).
-                error(function () {
-                    deferredObject.resolve(false);
-                });
+                        if (data) {
+                            angular.forEach(data, function (value, key) {
+                                markersArray.push(addPoint(value.lat, value.lon, value.message));
+                            });
+                        }
+                    });
 
-                return deferredObject.promise;
             },
             clearMap: function() {
-                for (var i = 0; i < markersArray.length; i++ ) {
-                    markersArray[i].setMap(null);
+                for (var i = 0; i < markersArray.length; i++) {
+                    map.removeMarker(markersArray[i]);
                 }
                 markersArray.length = 0;
             }

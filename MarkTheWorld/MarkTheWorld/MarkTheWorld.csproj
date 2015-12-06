@@ -231,17 +231,21 @@
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\controllers\addPointCtrl.js" />
     <Content Include="Scripts\controllers\appCtrl.js" />
+    <Content Include="Scripts\controllers\simpleModalController.js" />
     <Content Include="Scripts\controllers\pointInfoController.js" />
     <Content Include="Scripts\controllers\sideBarCtrl.js" />
     <Content Include="Scripts\libs\gmaps.js" />
     <Content Include="Scripts\libs\markerclusterer.js" />
+    <Content Include="Scripts\services\accountFactory.js" />
     <Content Include="Scripts\services\markMapFactory.js" />
+    <Content Include="Scripts\services\simpleModalFactory.js" />
     <Content Include="Scripts\services\squareInfoFactory.js" />
     <Content Include="Scripts\templates\addPointDialog.html" />
     <Content Include="Scripts\templates\login.html" />
     <Content Include="Scripts\templates\pointAddedDialog.html" />
     <Content Include="Scripts\templates\pointMarkersDialog.html" />
     <Content Include="Scripts\templates\register.html" />
+    <Content Include="Scripts\templates\simpleDialog.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
