@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Data;
 using Data.DataHelpers;
+using Raven.Client;
 using Repository.Index;
 
 namespace Repository.DotRepository
@@ -24,7 +25,12 @@ namespace Repository.DotRepository
                     if (user.Id == null)
                         return reg;
                     Dot dotCopy = new Dot();
-                    
+                    var dots = session
+                        .Query<UserDotsIndex.Result, UserDotsIndex>()
+                        .Where(x => x.UserId.Equals(user.Id))
+                        .Where(x => x.coordX != -300)
+                        .As<Dot>()
+                        .ToList();
                     dotCopy.date = dot.date;
                     dotCopy.message = dot.message;
                     dotCopy.lat = dot.lat;
@@ -55,8 +61,8 @@ namespace Repository.DotRepository
                 List<Dot> dotsToSend = new List<Dot>();
                for (int i = 0; i < dots.Length; i++)
                {
-                    if (corners.neX < dots[i].lon && corners.neY > dots[i].lat &&
-                        corners.swX > dots[i].lon && corners.swY < dots[i].lat)
+                    if (corners.neX > dots[i].lon && corners.neY > dots[i].lat &&
+                        corners.swX < dots[i].lon && corners.swY < dots[i].lat)
                         dotsToSend.Add(dots[i]);
                }
                return dotsToSend;
