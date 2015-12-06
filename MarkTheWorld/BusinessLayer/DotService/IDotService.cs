@@ -13,5 +13,6 @@ namespace BusinessLayer.DotService
         Dot storeDot(DotFromViewModel dot);
         List<Dot> getAllDots(CornersCorrds corners);
         Dot deleteDot(string dotId);
+        List<CornersCorrds> getAllSquares(List<Dot> dots);
     }
 }
