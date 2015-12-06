@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataForIndex\DotForIndex.cs" />
     <Compile Include="DocumentStoreHolder.cs" />
     <Compile Include="DotRepository\DotRepository.cs" />
     <Compile Include="DotRepository\IDotRepository.cs" />

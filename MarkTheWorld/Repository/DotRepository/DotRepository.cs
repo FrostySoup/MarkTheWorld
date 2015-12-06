@@ -7,6 +7,7 @@ using Data;
 using Data.DataHelpers;
 using Raven.Client;
 using Repository.Index;
+using Repository.DataForIndex;
 
 namespace Repository.DotRepository
 {
@@ -18,19 +19,34 @@ namespace Repository.DotRepository
             {
                 UserRegistrationModel reg = new UserRegistrationModel();
                 reg.success = false;
-                reg.message = "You already marked this dot";
+                reg.message = "Unknown error";
                 try
                 {                 
                     User user = session.Query<User>().First(x => x.Token.Equals(dot.username));
                     if (user.Id == null)
                         return reg;
                     Dot dotCopy = new Dot();
-                    var dots = session
+                    DotForIndex[] dots = session
                         .Query<UserDotsIndex.Result, UserDotsIndex>()
                         .Where(x => x.UserId.Equals(user.Id))
-                        .Where(x => x.coordX != -300)
-                        .As<Dot>()
-                        .ToList();
+                        //.Where(x => x.lat != -300)
+                        .As<DotForIndex>()
+                        .ToArray();
+                    for (int i = 0; i < dots.Length; i++)
+                    {
+                        int lng = (int)(dots[i].lon * 100);
+                        int lng2 = (int)(dot.lng * 100);
+                        if (lng == lng2)
+                        {
+                            int lat = (int)(dots[i].lat * 100);
+                            int lat2 = (int)(dot.lat * 100);
+                            if (lat == lat2)
+                            {
+                                reg.message = "You already marked this dot";
+                                return reg;
+                            }
+                        }
+                    }
                     dotCopy.date = dot.date;
                     dotCopy.message = dot.message;
                     dotCopy.lat = dot.lat;
@@ -42,6 +58,7 @@ namespace Repository.DotRepository
                     session.Store(user);
                     session.SaveChanges();
                     reg.success = true;
+                    reg.message = "Success";
                     return reg;
                 }
                 catch
