@@ -2,16 +2,17 @@
     <h1 class="md-toolbar-tools">Login</h1>
 </md-toolbar>
 <md-content layout-padding="">
-<form>
-    <md-input-container>
-        <label for="username">Username</label>
-        <input type="text" id="username" ng-model="username" md-autofocus="">
-    </md-input-container>
-    <md-input-container>
-        <label for="password">Password</label>
-        <input type="password" id="password" ng-model="password">
-    </md-input-container>
-</form>
-<md-button class="button-login md-raised md-primary">Login</md-button>
-<p class="no-account"><a ng-click="go('register')">Don't have account? Register here.</a></p>
+    <form>
+        <md-input-container>
+            <label for="username">Username</label>
+            <input type="text" id="username" ng-model="login_username" ng-required="true" md-autofocus="">
+        </md-input-container>
+        <md-input-container>
+            <label for="password">Password</label>
+            <input type="password" id="password" ng-required="true" ng-model="login_password">
+        </md-input-container>
+    </form>
+    <md-button ng-click="login(login_username, login_password)" class="button-login md-raised md-primary">Login</md-button>
+    <p class="no-account"><a ng-click="go('register')">Don't have account? Register here.</a>
+    </p>
 </md-content>

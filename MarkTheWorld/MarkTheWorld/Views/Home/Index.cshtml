@@ -23,17 +23,28 @@
                         <md-icon md-svg-src="~/Content/img/icons/ic_account_box_white_48px.svg" class="s48" aria-label="Account"></md-icon>
                     </md-button>
                     <md-menu-content width="4">
-                        <md-menu-item>
+                        
+                        <md-menu-item ng-show="!isLogged()">
                             <md-button ng-click="toggleRight('login')">
-                                <!--<md-icon md-svg-src="img/icons/ic_face_black_24px.svg" class="s24" md-menu-align-target></md-icon>-->
                                 Login
                             </md-button>
                         </md-menu-item>
-                        <md-menu-item>
+                        <md-menu-item ng-show="!isLogged()">
                             <md-button ng-click="toggleRight('register')">
                                 Register
                             </md-button>
                         </md-menu-item>
+
+                        <md-menu-item ng-show="isLogged()">
+                            <p>Logged as {{getLoggedUser()}}</p>
+                        </md-menu-item>
+                        <md-menu-divider ng-show="isLogged()"></md-menu-divider>
+                        <md-menu-item ng-show="isLogged()">
+                            <md-button ng-click="logout()">
+                                Logout
+                            </md-button>
+                        </md-menu-item>
+
                     </md-menu-content>
                 </md-menu>
 
