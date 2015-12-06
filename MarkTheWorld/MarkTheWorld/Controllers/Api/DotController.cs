@@ -44,10 +44,15 @@ namespace MarkTheWorld.Controllers.Api
         [HttpPost]
         public IHttpActionResult GetSquares(CornersCorrds corners)
         {
-            List<Dot> gameDots = new List<Dot>();
+            List<Dot> dots = new List<Dot>();
+            List<CornersCorrds> corner = new List<CornersCorrds>();
             try
             {
-                gameDots = dotService.getAllDots(corners);
+                dots = dotService.getAllDots(corners);
+                foreach (Dot dot in dots)
+                {
+                    corner.Add(dotService.coordsToSquare(dot.lat, dot.lon));
+                }
 
             }
             catch (Exception)
@@ -55,7 +60,7 @@ namespace MarkTheWorld.Controllers.Api
                 return InternalServerError();
             }
 
-            return Ok(gameDots);
+            return Ok(corner);
         }
 
         [Route("dotsInArea")]

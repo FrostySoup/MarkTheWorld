@@ -32,8 +32,8 @@ namespace BusinessLayer.DotService
         public CornersCorrds coordsToSquare(double lat, double lng)
         {
             CornersCorrds corners = new CornersCorrds();
-            double late = ((int)(lat*100))/100;
-            double longt = ((int)(lng * 100)) / 100;
+            double late = (double)((int)(lat*100))/100;
+            double longt = (double)((int)(lng * 100)) / 100;
             corners.swX = longt + 0.01;
             corners.neX = longt;
             corners.neY = late + 0.01;

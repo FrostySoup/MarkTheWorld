@@ -14,8 +14,9 @@ namespace Repository.Index
         public class Result
         {
             public string Id { get; set; }
-            public double coordX { get; set; }
-            public double coordY { get; set; }
+            public double? lat { get; set; }
+            public double? lon { get; set; }        
+            public string message { get; set; }
             public string UserId { get; set; }
         }
 
@@ -26,8 +27,9 @@ namespace Repository.Index
                                   select new
                                   {
                                       Id = dotId,
-                                      coordX = -100,
-                                      coordY = -100,
+                                      lat = (double?)null,
+                                      lon = (double?)null,                                    
+                                      message = (string)null,
                                       UserId = user.Id
                                   });
 
@@ -35,8 +37,9 @@ namespace Repository.Index
                                   select new
                                   {
                                       Id = dot.Id,
-                                      coordX = dot.lon,
-                                      coordY = dot.lat,
+                                      lat = dot.lat,
+                                      lon = dot.lon,                                      
+                                      message = dot.message,
                                       UserId = (string)null
                                   });
 
@@ -46,8 +49,9 @@ namespace Repository.Index
                                     select new
                                     {
                                         Id = g.Key,
-                                        coordX = g.Select(x => x.coordX).Where(x => x != -100).First(),
-                                        coordY = g.Select(x => x.coordY).Where(x => x != -100).First(),
+                                        lat = g.Select(x => x.lat).Where(x => x != null).First(),
+                                        lon = g.Select(x => x.lon).Where(x => x != null).First(),                                        
+                                        message = g.Select(x => x.message).Where(x => x != null).First(),
                                         UserId = g.Select(x => x.UserId).Where(x => x != null).First()
                                     };
         }
