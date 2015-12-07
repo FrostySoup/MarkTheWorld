@@ -79,6 +79,16 @@
             $mdOpenMenu(ev);
         };
 
+        $scope.showMapSettingsDialog = function (ev) {
+            console.log(ev);
+            $mdDialog.show({
+                controller: 'MapSettingsCtrl',
+                templateUrl: 'scripts/templates/mapSettingsDialog.html',
+                parent: angular.element(document.body),
+                clickOutsideToClose: true
+            });
+        }
+
         $scope.showDialog = function(ev) {
             $mdDialog.show({
                 controller: 'AddPointCtrl',
@@ -135,7 +145,9 @@
 
         var centerChangedHandler = debounce(function () {
             MarkMapFactory.clearMap();
-            MarkMapFactory.markAllPoint();
+            //MarkMapFactory.markAllPoint();
+
+            MarkMapFactory.markRectangles();
         }, 250);
 
         google.maps.event.addListener(map.map, 'center_changed', centerChangedHandler);
