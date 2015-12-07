@@ -63,6 +63,45 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(corner);
         }
 
+        [Route("getUserSquares/{token}")]
+        [HttpPost]
+        public IHttpActionResult GetUserSqyares(CornersCorrds corners, Guid token)
+        {
+            List<Dot> gameDots = new List<Dot>();
+            List<CornersCorrds> corner = new List<CornersCorrds>();
+            try
+            {
+                gameDots = dotService.getUserDots(corners, token);
+                foreach (Dot dot in gameDots)
+                {
+                    corner.Add(dotService.coordsToSquare(dot.lat, dot.lon));
+                }
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(corner);
+        }
+
+        [Route("getUserDots/{token}")]
+        [HttpPost]
+        public IHttpActionResult GetUserDots(CornersCorrds corners, Guid token)
+        {
+            List<Dot> gameDots = new List<Dot>();
+            try
+            {
+                gameDots = dotService.getUserDots(corners, token);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(gameDots);
+        }
+
         [Route("dotsInArea")]
         [HttpPost]
         public IHttpActionResult GetDots(CornersCorrds corners)
