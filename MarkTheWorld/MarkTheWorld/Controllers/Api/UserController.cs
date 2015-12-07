@@ -55,5 +55,22 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(userCopy);
         }
 
+        [Route("topList")]
+        [HttpGet]
+        public IHttpActionResult GetTopUsers()
+        {
+            List<TopUser> users = new List<TopUser>();
+            try
+            {
+                users = userService.getTopUsers();
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(users);
+        }
+
     }
 }

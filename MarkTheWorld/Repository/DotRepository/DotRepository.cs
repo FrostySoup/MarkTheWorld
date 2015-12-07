@@ -29,7 +29,6 @@ namespace Repository.DotRepository
                     DotForIndex[] dots = session
                         .Query<UserDotsIndex.Result, UserDotsIndex>()
                         .Where(x => x.UserId.Equals(user.Id))
-                        //.Where(x => x.lat != -300)
                         .As<DotForIndex>()
                         .ToArray();
                     for (int i = 0; i < dots.Length; i++)
@@ -47,7 +46,7 @@ namespace Repository.DotRepository
                             }
                         }
                     }
-                    dotCopy.date = dot.date;
+                    dotCopy.date = DateTime.Today;
                     dotCopy.message = dot.message;
                     dotCopy.lat = dot.lat;
                     dotCopy.lon = dot.lng;
@@ -75,7 +74,7 @@ namespace Repository.DotRepository
                Dot[] dots = session
                         .Query<Dot>()
                         .ToArray();
-                List<Dot> dotsToSend = new List<Dot>();
+               List<Dot> dotsToSend = new List<Dot>();
                for (int i = 0; i < dots.Length; i++)
                {
                     if (corners.neX > dots[i].lon && corners.neY > dots[i].lat &&
@@ -83,6 +82,43 @@ namespace Repository.DotRepository
                         dotsToSend.Add(dots[i]);
                }
                return dotsToSend;
+            }
+        }
+
+        public List<Dot> GetAllUser(CornersCorrds corners, Guid token)
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                List<Dot> reg = new List<Dot>();
+                try
+                {
+                    User user = session.Query<User>().First(x => x.Token.Equals(token));
+                    if (user.Id == null)
+                        return reg;                   
+                    DotForIndex[] dots = session
+                        .Query<UserDotsIndex.Result, UserDotsIndex>()
+                        .Where(x => x.UserId.Equals(user.Id))
+                        .As<DotForIndex>()
+                        .ToArray();
+                    for (int i = 0; i < dots.Length; i++)
+                    {
+                        if (corners.neX > dots[i].lon && corners.neY > dots[i].lat &&
+                        corners.swX < dots[i].lon && corners.swY < dots[i].lat)
+                        {
+                            Dot dotCopy = new Dot();
+                            dotCopy.Id = dots[i].Id;
+                            dotCopy.lat = (double)dots[i].lat;
+                            dotCopy.lon = (double)dots[i].lon;
+                            dotCopy.message = dots[i].message;
+                            reg.Add(dotCopy);
+                        }
+                    }
+                    return reg;
+                }
+                catch
+                {
+                    return reg;
+                }
             }
         }
     }

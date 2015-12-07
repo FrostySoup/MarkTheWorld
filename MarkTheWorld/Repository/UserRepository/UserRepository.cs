@@ -1,4 +1,6 @@
 ﻿using Data;
+using Raven.Client;
+using Repository.Index;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +46,38 @@ namespace Repository.UserRepository
                     check.message = "User added";
                     return check;
                 }
+            }
+        }
+
+        public List<TopUser> GetTopUsers()
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                List<TopUser> users = new List<TopUser>();
+                try
+                {
+                    User[] oneObject = session
+                         .Query<UsersByMostDots.Result, UsersByMostDots>()
+                         .OrderByDescending(x => x.numberOfDots)
+                         .Take(10)
+                         .As<User>()
+                         .ToArray();
+                    for (int i = 0; i < oneObject.Length; i++)
+                    {
+                        TopUser user = new TopUser();
+                        user.name = oneObject[i].UserName;
+                        if (oneObject[i].dotsId == null)
+                            user.numberOfMarks = 0;
+                        else
+                            user.numberOfMarks = oneObject[i].dotsId.Count;
+                        users.Add(user);
+                    }
+                }
+                catch
+                {
+                    return users;
+                }
+                return users;
             }
         }
 

@@ -12,5 +12,6 @@ namespace Repository.DotRepository
     {
         UserRegistrationModel AddOne(DotFromViewModel dot);
         List<Dot> GetAll(CornersCorrds corners);
+        List<Dot> GetAllUser(CornersCorrds corners, Guid token);
     }
 }

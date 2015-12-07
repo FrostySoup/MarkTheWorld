@@ -14,5 +14,6 @@ namespace Repository.UserRepository
         UserRegistrationModel AddUser(User user);
         Guid GetTokenByName(string name);
         UserRegistrationModel GetOneUser(User user);
+        List<TopUser> GetTopUsers();
     }
 }

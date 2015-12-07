@@ -60,5 +60,9 @@ namespace BusinessLayer.DotService
             return squares;
         }
 
+        public List<Dot> getUserDots(CornersCorrds corners, Guid token)
+        {
+            return repositoryDot.GetAllUser(corners, token);
+        }
     }
 }

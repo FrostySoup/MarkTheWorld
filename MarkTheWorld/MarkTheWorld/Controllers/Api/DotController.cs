@@ -45,13 +45,13 @@ namespace MarkTheWorld.Controllers.Api
         public IHttpActionResult GetSquares(CornersCorrds corners)
         {
             List<Dot> dots = new List<Dot>();
-            List<CornersCorrds> corner = new List<CornersCorrds>();
+            List<Square> squares = new List<Square>();
             try
             {
                 dots = dotService.getAllDots(corners);
                 foreach (Dot dot in dots)
                 {
-                    corner.Add(dotService.coordsToSquare(dot.lat, dot.lon));
+                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon)));
                 }
 
             }
@@ -60,7 +60,46 @@ namespace MarkTheWorld.Controllers.Api
                 return InternalServerError();
             }
 
-            return Ok(corner);
+            return Ok(squares);
+        }
+
+        [Route("getUserSquares/{token}")]
+        [HttpPost]
+        public IHttpActionResult GetUserSqyares(CornersCorrds corners, Guid token)
+        {
+            List<Dot> gameDots = new List<Dot>();
+            List<Square> squares = new List<Square>();
+            try
+            {
+                gameDots = dotService.getUserDots(corners, token);
+                foreach (Dot dot in gameDots)
+                {
+                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon)));
+                }
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(squares);
+        }
+
+        [Route("getUserDots/{token}")]
+        [HttpPost]
+        public IHttpActionResult GetUserDots(CornersCorrds corners, Guid token)
+        {
+            List<Dot> gameDots = new List<Dot>();
+            try
+            {
+                gameDots = dotService.getUserDots(corners, token);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(gameDots);
         }
 
         [Route("dotsInArea")]
