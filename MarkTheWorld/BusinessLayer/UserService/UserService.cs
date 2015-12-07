@@ -47,5 +47,9 @@ namespace BusinessLayer.UserService
             return repository.GetOneByToken(token);
         }
 
+        public List<TopUser> getTopUsers()
+        {
+            return repository.GetTopUsers();
+        }
     }
 }

@@ -15,5 +15,6 @@ namespace BusinessLayer.UserService
         User deleteOne(string id);   //delete one
         User editApplicationUser(User ApplicationUser);
         User getOneByToken(Guid token);
+        List<TopUser> getTopUsers();
     }
 }
