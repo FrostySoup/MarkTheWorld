@@ -79,3 +79,12 @@ md-fab-speed-dial {
 .md-dialog-full-page .md-dialog-content {
     padding-top: 0;
 }
+
+md-icon svg {
+  fill: inherit;
+}
+
+md-switch {
+    margin-top: 0;
+    width: 265px;
+}
