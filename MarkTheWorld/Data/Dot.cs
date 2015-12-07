@@ -13,5 +13,6 @@ namespace Data
         public double lon { get; set; }
         public string message { get; set; }
         public DateTime date { get; set; }
+        public string username { get; set; }
     }
 }

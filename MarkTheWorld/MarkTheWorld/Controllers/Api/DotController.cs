@@ -46,13 +46,15 @@ namespace MarkTheWorld.Controllers.Api
         {
             List<Dot> dots = new List<Dot>();
             List<Square> squares = new List<Square>();
+            List<SquaresWithInfo> squaresSend = new List<SquaresWithInfo>();
             try
             {
                 dots = dotService.getAllDots(corners);
                 foreach (Dot dot in dots)
                 {
-                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon)));
+                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon), dot.username));                    
                 }
+                squaresSend = dotService.groupSquares(squares);
 
             }
             catch (Exception)
@@ -60,12 +62,12 @@ namespace MarkTheWorld.Controllers.Api
                 return InternalServerError();
             }
 
-            return Ok(squares);
+            return Ok(squaresSend);
         }
 
         [Route("getUserSquares/{token}")]
         [HttpPost]
-        public IHttpActionResult GetUserSqyares(CornersCorrds corners, Guid token)
+        public IHttpActionResult GetUserSquares(CornersCorrds corners, Guid token)
         {
             List<Dot> gameDots = new List<Dot>();
             List<Square> squares = new List<Square>();
@@ -74,7 +76,7 @@ namespace MarkTheWorld.Controllers.Api
                 gameDots = dotService.getUserDots(corners, token);
                 foreach (Dot dot in gameDots)
                 {
-                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon)));
+                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon), dot.username));
                 }
             }
             catch (Exception)
