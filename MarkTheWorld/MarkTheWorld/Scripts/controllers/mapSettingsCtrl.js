@@ -6,22 +6,23 @@
     function MapSettingsCtrl($scope, $mdDialog, AccountFactory, SimpleModalFactory, MarkMapFactory) {
 
         if (localStorage.getItem('onlyMyOwnMarks') === 'true') {
-            $scope.switch = true;
+            $scope.selection = 'my';
         } else {
-            $scope.switch = false;
+            $scope.selection = 'all';
         }
         
-
-        $scope.getSwitchState = function() {
-            return $scope.switch ? 'on' : 'off';
-        }
 
         $scope.cancel = function () {
             $mdDialog.hide();
         };
 
         $scope.confirm = function () {
-            localStorage.setItem('onlyMyOwnMarks', $scope.switch);
+            if ($scope.selection === 'my') {
+                localStorage.setItem('onlyMyOwnMarks', true);
+            } else if ($scope.selection === 'all') {
+                localStorage.setItem('onlyMyOwnMarks', false);
+            }
+
             MarkMapFactory.clearMap();
             if (map.getZoom() < 12) {
                 MarkMapFactory.markAllPoint();

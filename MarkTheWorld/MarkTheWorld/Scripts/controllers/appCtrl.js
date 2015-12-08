@@ -40,11 +40,12 @@
             });
         }
 
-        $scope.showMapSettingsDialog = function () {
+        $scope.showMapSettingsDialog = function (ev) {
             $mdDialog.show({
                 controller: 'MapSettingsCtrl',
                 templateUrl: 'scripts/templates/mapSettingsDialog.html',
                 parent: angular.element(document.body),
+                targetEvent: ev,
                 clickOutsideToClose: true
             });
         }

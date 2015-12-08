@@ -53,12 +53,6 @@
                         <md-icon md-svg-src="~/Content/img/icons/ic_more_vert_white_48px.svg" class="s48" aria-label="Account"></md-icon>
                     </md-button>
                     <md-menu-content width="4">
-                        <md-menu-item ng-show="isLogged()">
-                            <md-button ng-click="showMapSettingsDialog()">
-                                <md-icon md-svg-src="~/Content/img/icons/ic_settings_black_48px.svg" class="s24" md-menu-align-target></md-icon>
-                                Map Settings
-                            </md-button>
-                        </md-menu-item>
                         <md-menu-item>
                             <md-button ng-click="showTopMarkersDialog()">
                                 <md-icon md-svg-src="~/Content/img/icons/ic_people_black_48px.svg" class="s24" md-menu-align-target></md-icon>
@@ -72,7 +66,9 @@
         <section layout-fill layout="row" layout-padding style="min-height: calc(100% - 80px);">
             <div id="map"></div>
         </section>
-
+        <md-button ng-show="isLogged()" class="settings-fab md-fab md-fab-bottom-right" aria-label="Add" ng-click="showMapSettingsDialog($event)">
+            <md-icon md-svg-src="~/Content/img/icons/ic_settings_black_48px.svg" class="s32" aria-label="Map settings" style="color:white;"></md-icon>
+        </md-button>
         <md-button ng-show="isLogged()" class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showDialog($event)">
             <md-icon md-svg-src="~/Content/img/icons/ic_add_location_black_48px.svg" class="s32" aria-label="Add point" style="color:white;"></md-icon>
         </md-button>

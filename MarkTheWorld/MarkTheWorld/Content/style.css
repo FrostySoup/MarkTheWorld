@@ -114,3 +114,24 @@ md-subhead {
     letter-spacing: .01em;
     line-height: 24px;
 }
+
+.settings-fab.md-button.md-fab.md-fab-bottom-right {
+    right: 110px;
+    background-color: #757575;
+}
+
+.radio-box-first { 
+    margin-top: 0;
+}
+
+.radio-box-last-bigger-bottom {
+    margin-bottom: 23px;
+}
+
+.radio-box-last-no-bottom {
+    margin-bottom: 0;
+}
+
+.no-top-margin {
+    margin-top: 0;
+}
