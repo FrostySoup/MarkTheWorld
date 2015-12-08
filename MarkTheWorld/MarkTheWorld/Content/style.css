@@ -102,3 +102,15 @@ md-card-title .md-headline {
     margin-bottom: 16px;
     padding: 0 10px;
 }
+
+md-subhead {
+    display: block;
+}
+
+.md-date-subhead {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: .01em;
+    line-height: 24px;
+}

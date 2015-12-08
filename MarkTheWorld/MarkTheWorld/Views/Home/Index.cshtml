@@ -53,7 +53,7 @@
                         <md-icon md-svg-src="~/Content/img/icons/ic_more_vert_white_48px.svg" class="s48" aria-label="Account"></md-icon>
                     </md-button>
                     <md-menu-content width="4">
-                        <md-menu-item>
+                        <md-menu-item ng-show="isLogged()">
                             <md-button ng-click="showMapSettingsDialog()">
                                 <md-icon md-svg-src="~/Content/img/icons/ic_settings_black_48px.svg" class="s24" md-menu-align-target></md-icon>
                                 Map Settings

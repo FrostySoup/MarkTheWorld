@@ -21,7 +21,8 @@
         return {
             markAllPoint: function () {
                 var url = '/api/dotsInArea';
-                if (localStorage.getItem('onlyMyOwnMarks')) {
+                if (localStorage.getItem('onlyMyOwnMarks') === 'true') {
+                    console.log('paisom tik userio');
                     url = '/api/getUserDots/' + localStorage.getItem('token');
                 }
                 $http.post(
@@ -44,7 +45,8 @@
             },
             markRectangles: function () {
                 var url = '/api/squaresInArea';
-                if (localStorage.getItem('onlyMyOwnMarks')) {
+                if (localStorage.getItem('onlyMyOwnMarks') === 'true') {
+                    console.log('paisom tik userio');
                     url = '/api/getUserSquares/' + localStorage.getItem('token');
                 }
                 $http.post(
@@ -65,7 +67,12 @@
                                         strokeColor: 'rgb(255,64,129)',
                                         fillColor: 'rgb(255,64,129)',
                                         strokeOpacity: 1,
-                                        strokeWeight: 1
+                                        strokeWeight: 1,
+                                        click: function (event) {
+                                            if (localStorage.getItem('onlyMyOwnMarks') !== 'true') {
+                                                SquareInfoFactory.showDialog(value.markers);
+                                            }
+                                        }
                                     })
                                 );
                             });

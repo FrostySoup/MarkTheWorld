@@ -10,39 +10,17 @@
         </md-toolbar>
         <md-dialog-content>
             <md-content class="md-padding" layout="column">
-                    <md-card>
-                        <md-card-title>
-                            <md-card-title-text>
-                                <span class="md-headline">#1 Andrius</span>
-                                <span class="md-subhead">Total 24 marked spots</span>
-                            </md-card-title-text>
-                        </md-card-title>
-                        <md-card-actions layout="row" layout-align="end center">
-                            <md-button ng-click="confirm(message)" class="button-user-map md-raised md-primary">User's map</md-button>
-                        </md-card-actions>
-                    </md-card>
-                    <md-card>
-                        <md-card-title>
-                            <md-card-title-text>
-                                <span class="md-headline">#2 Andrius</span>
-                                <span class="md-subhead">Total 24 marked spots</span>
-                            </md-card-title-text>
-                        </md-card-title>
-                        <md-card-actions layout="row" layout-align="end center">
-                            <md-button ng-click="confirm(message)" class="button-user-map md-raised md-primary">User's map</md-button>
-                        </md-card-actions>
-                    </md-card>
-                    <md-card>
-                        <md-card-title>
-                            <md-card-title-text>
-                                <span class="md-headline">#3 Andrius</span>
-                                <span class="md-subhead">Total 24 marked spots</span>
-                            </md-card-title-text>
-                        </md-card-title>
-                        <md-card-actions layout="row" layout-align="end center">
-                            <md-button ng-click="confirm(message)" class="button-user-map md-raised md-primary">User's map</md-button>
-                        </md-card-actions>
-                    </md-card>
+                <md-card ng-repeat="marker in toplist">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">#{{($index + 1)}} {{ marker.name }}</span>
+                            <span class="md-subhead">Total {{ marker.numberOfMarks }} marked spots</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button ng-click="confirm(message)" class="button-user-map md-raised md-primary">User's map</md-button>
+                    </md-card-actions>
+                </md-card>
             </md-content>
         </md-dialog-content>
 </md-dialog>

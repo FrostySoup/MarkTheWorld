@@ -9,17 +9,19 @@
         </div>
     </md-toolbar>
     <md-dialog-content>
-        <div class="md-dialog-content">
-            <div ng-repeat="marker in markers">
-                <h2>{{ marker.username }}</h2>
-                <p>
-                    {{ marker.date }}
-                </p>
-                <p>
-                    {{ marker.message }}
-                </p>
-                <md-divider></md-divider>
-            </div>
-        </div>
-    </md-dialog-content>
+        <md-content class="md-padding" layout="column">
+            <md-card ng-repeat="marker in markers">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">#{{($index + 1)}} {{ marker.username }}</span>
+                        <span class="md-date-subhead">{{ marker.date }}</span>
+                        <span class="md-subhead">{{ marker.message }}</span>
+                </md-card-title-text>
+                </md-card-title>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button ng-click="confirm(message)" class="button-user-map md-raised md-primary">User's map</md-button>
+                </md-card-actions>
+            </md-card>
+        </md-content>
+</md-dialog-content>
 </md-dialog>
