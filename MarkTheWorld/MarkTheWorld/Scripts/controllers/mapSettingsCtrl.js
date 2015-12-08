@@ -12,13 +12,11 @@
         }
 
         $scope.cancel = function () {
-            console.log('cancel');
             $mdDialog.hide();
         };
 
         $scope.confirm = function () {
-            console.log('confirm');
-            SimpleModalFactory.showModal('Congrats!', 'You marked a spot!');
+            localStorage.setItem('onlyMyOwnMarks', $scope.switch);
             $mdDialog.cancel();
         };
     }

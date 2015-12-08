@@ -229,6 +229,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\controllers\topMarkersCtrl.js" />
     <Content Include="Scripts\controllers\mapSettingsCtrl.js" />
     <Content Include="Scripts\controllers\addPointCtrl.js" />
     <Content Include="Scripts\controllers\appCtrl.js" />
@@ -241,6 +242,7 @@
     <Content Include="Scripts\services\markMapFactory.js" />
     <Content Include="Scripts\services\simpleModalFactory.js" />
     <Content Include="Scripts\services\squareInfoFactory.js" />
+    <Content Include="Scripts\templates\topMarkersDialog.html" />
     <Content Include="Scripts\templates\mapSettingsDialog.html" />
     <Content Include="Scripts\templates\addPointDialog.html" />
     <Content Include="Scripts\templates\login.html" />

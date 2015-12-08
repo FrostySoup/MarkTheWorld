@@ -72,6 +72,7 @@
             $timeout(function () {
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
+                localStorage.removeItem('onlyMyOwnMarks');
             }, 300);
         }
 
@@ -79,8 +80,16 @@
             $mdOpenMenu(ev);
         };
 
-        $scope.showMapSettingsDialog = function (ev) {
-            console.log(ev);
+        $scope.showTopMarkersDialog = function () {
+            $mdDialog.show({
+                controller: 'TopMarkersCtrl',
+                templateUrl: 'scripts/templates/topMarkersDialog.html',
+                parent: angular.element(document.body),
+                clickOutsideToClose: true
+            });
+        }
+
+        $scope.showMapSettingsDialog = function () {
             $mdDialog.show({
                 controller: 'MapSettingsCtrl',
                 templateUrl: 'scripts/templates/mapSettingsDialog.html',

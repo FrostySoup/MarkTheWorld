@@ -88,3 +88,17 @@ md-switch {
     margin-top: 0;
     width: 265px;
 }
+
+md-card-title {
+    margin: 16px;
+}
+
+md-card-title .md-headline {
+    display: block;
+}
+
+.button-user-map {
+    margin-right: 16px;
+    margin-bottom: 16px;
+    padding: 0 10px;
+}

@@ -19,20 +19,13 @@
         };
 
         return {
-            drawRectangles : function(recs) {
-                angular.forEach(recs, function(rec, key) {
-                    map.drawRectangle({
-                        bounds: [[rec.nw.lat, rec.nw.lng], [rec.se.lat, rec.se.lng]],
-                        strokeColor: '#131540',
-                        strokeOpacity: 1,
-                        strokeWeight: 1,
-                        click: function() { SquareInfoFactory.showDialog(rec.markers); }
-                    });
-                });
-            },
             markAllPoint: function () {
+                var url = '/api/dotsInArea';
+                if (localStorage.getItem('onlyMyOwnMarks')) {
+                    url = '/api/getUserDots/' + localStorage.getItem('token');
+                }
                 $http.post(
-                        '/api/dotsInArea', {
+                        url, {
                             "neX": map.getBounds().getNorthEast().lng(),
                             "neY": map.getBounds().getNorthEast().lat(),
                             "swX": map.getBounds().getSouthWest().lng(),
@@ -49,9 +42,13 @@
                     });
 
             },
-            markRectangles: function() {
+            markRectangles: function () {
+                var url = '/api/squaresInArea';
+                if (localStorage.getItem('onlyMyOwnMarks')) {
+                    url = '/api/getUserSquares/' + localStorage.getItem('token');
+                }
                 $http.post(
-                        '/api/squaresInArea', {
+                        url, {
                             "neX": map.getBounds().getNorthEast().lng(),
                             "neY": map.getBounds().getNorthEast().lat(),
                             "swX": map.getBounds().getSouthWest().lng(),
@@ -62,7 +59,6 @@
                         console.log(data);
                         if (data) {
                             angular.forEach(data, function (value, key) {
-                                console.log('viduj', value.neX, value.neY, value.swX, value.swY);
                                 rectanglesArray.push(
                                     map.drawRectangle({
                                         bounds: [[value.swY, value.swX], [value.neY, value.neX]],
