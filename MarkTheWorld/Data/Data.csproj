@@ -59,6 +59,9 @@
   <ItemGroup>
     <Compile Include="AppUser.cs" />
     <Compile Include="DataHelpers\CornersCorrds.cs" />
+    <Compile Include="DataHelpers\GroupedSquares.cs" />
+    <Compile Include="DataHelpers\Markers.cs" />
+    <Compile Include="DataHelpers\SquaresWithInfo.cs" />
     <Compile Include="DotFromViewModel.cs" />
     <Compile Include="Dot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

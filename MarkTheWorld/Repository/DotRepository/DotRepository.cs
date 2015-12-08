@@ -50,6 +50,7 @@ namespace Repository.DotRepository
                     dotCopy.message = dot.message;
                     dotCopy.lat = dot.lat;
                     dotCopy.lon = dot.lng;
+                    dotCopy.username = user.UserName;
                     session.Store(dotCopy);
                     if (user.dotsId == null)
                         user.dotsId = new List<string>();
@@ -79,7 +80,11 @@ namespace Repository.DotRepository
                {
                     if (corners.neX > dots[i].lon && corners.neY > dots[i].lat &&
                         corners.swX < dots[i].lon && corners.swY < dots[i].lat)
+                    {
+                        if (dots[i].username == null)
+                            dots[i].username = "Unknown user";
                         dotsToSend.Add(dots[i]);
+                    }
                }
                return dotsToSend;
             }
