@@ -30,6 +30,7 @@ namespace Repository.DotRepository
                         .Query<UserDotsIndex.Result, UserDotsIndex>()
                         .Where(x => x.UserId.Equals(user.Id))
                         .As<DotForIndex>()
+                        .Take(100000)
                         .ToArray();
                     for (int i = 0; i < dots.Length; i++)
                     {
@@ -74,6 +75,7 @@ namespace Repository.DotRepository
             {
                Dot[] dots = session
                         .Query<Dot>()
+                        .Take(100000)
                         .ToArray();
                List<Dot> dotsToSend = new List<Dot>();
                for (int i = 0; i < dots.Length; i++)
@@ -104,6 +106,7 @@ namespace Repository.DotRepository
                         .Query<UserDotsIndex.Result, UserDotsIndex>()
                         .Where(x => x.UserId.Equals(user.Id))
                         .As<DotForIndex>()
+                        .Take(100000)
                         .ToArray();
                     for (int i = 0; i < dots.Length; i++)
                     {

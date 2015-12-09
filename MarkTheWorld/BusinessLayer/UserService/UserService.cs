@@ -26,7 +26,6 @@ namespace BusinessLayer.UserService
             return repository.AddUser(user);
         }
 
-
         public UserRegistrationModel getOne(User user)
         {
             return repository.GetOneUser(user);

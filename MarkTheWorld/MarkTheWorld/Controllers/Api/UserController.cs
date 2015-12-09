@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.DotService;
+using BusinessLayer.TestGenerator;
 using BusinessLayer.UserService;
 using Data;
 using MarkTheWorld.Models;
@@ -36,6 +37,24 @@ namespace MarkTheWorld.Controllers.Api
             }
 
             return Ok(userCopy);
+        }
+
+        [Route("generate")]
+        [HttpGet]
+        public IHttpActionResult GenerateUsers()
+        {
+            
+            try
+            {
+                GenerateObjects generate = new GenerateObjects();
+                generate.GenerateXUsersWithYDots(10, 10000);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(true);
         }
 
         [Route("getUser")]
