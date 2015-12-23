@@ -25,6 +25,8 @@ namespace MarkTheWorld.Controllers.Api
         public IHttpActionResult PostDot(DotFromViewModel dot)
         {
             UserRegistrationModel dotCopy = new UserRegistrationModel();
+            if (dot.lat < -300 || dot.lng < -300 || dot.username == null)
+                return Ok(dotCopy);
             try
             {
                 dotCopy = dotService.storeDot(dot);
@@ -109,16 +111,18 @@ namespace MarkTheWorld.Controllers.Api
         public IHttpActionResult GetDots(CornersCorrds corners)
         {
             List<Dot> gameDots = new List<Dot>();
+            List<GroupedDotsForApi> groupedDots = new List<GroupedDotsForApi>();
             try
             {
                 gameDots = dotService.getAllDots(corners);
+                groupedDots = dotService.groupDots(gameDots, corners);
             }
             catch (Exception)
             {
                 return InternalServerError();
             }
 
-            return Ok(gameDots);
+            return Ok(groupedDots);
         }
 
     }

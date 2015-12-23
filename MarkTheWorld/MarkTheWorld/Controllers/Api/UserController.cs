@@ -26,7 +26,8 @@ namespace MarkTheWorld.Controllers.Api
         public IHttpActionResult PostUser(User User)
         {
             UserRegistrationModel userCopy = new UserRegistrationModel();
-
+            if (User.UserName == null || User.PasswordHash == null)
+                return Ok(userCopy);
             try
             {
                 userCopy = userService.addUser(User);
@@ -47,7 +48,7 @@ namespace MarkTheWorld.Controllers.Api
             try
             {
                 GenerateObjects generate = new GenerateObjects();
-                generate.GenerateXUsersWithYDots(10, 10000);
+                generate.GenerateXUsersWithYDots(5, 100);
             }
             catch (Exception)
             {

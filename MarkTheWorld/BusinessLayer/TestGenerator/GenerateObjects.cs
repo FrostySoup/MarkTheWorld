@@ -33,7 +33,7 @@ namespace BusinessLayer.TestGenerator
         {
             DotFromViewModel dot = new DotFromViewModel();
             Random rnd = new Random();
-            dot.lat = rnd.NextDouble() * 180;
+            dot.lat = rnd.NextDouble() * 90;
             dot.lng = rnd.NextDouble() * (180 - 0) + 0;
             dot.message = "Same message";
             dot.username = token;

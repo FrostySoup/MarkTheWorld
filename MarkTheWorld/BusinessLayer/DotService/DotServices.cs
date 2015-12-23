@@ -89,6 +89,54 @@ namespace BusinessLayer.DotService
             return grSquares;
         }
 
+        public List<GroupedDotsForApi> groupDots(List<Dot> dots, CornersCorrds corners)
+        {
+            GroupedDots[] groupedDots = new GroupedDots[12];
+            double squareX = (corners.neX - corners.swX)/ (groupedDots.Length/2);
+            double squareY = (corners.neY - corners.swY) / 2;
+            List<GroupedDotsForApi> groupedDotsApi = new List<GroupedDotsForApi>();
+            for (int i = 0; i < groupedDots.Length/2; i++)
+            {
+                groupedDots[i] = new GroupedDots();
+                groupedDots[i].neX = corners.neX-squareX*i;
+                groupedDots[i].neY = corners.neY;
+                groupedDots[i].swX = corners.neX - squareX * (i+1);
+                groupedDots[i].swY = corners.neY - squareY;
+            }
 
+            for (int i = 0; i < groupedDots.Length / 2; i++)
+            {
+                int size = groupedDots.Length / 2;
+                groupedDots[i + size] = new GroupedDots();
+                groupedDots[i + size].neX = corners.neX - squareX * i;
+                groupedDots[i + size].neY = corners.neY - squareY;
+                groupedDots[i + size].swX = corners.neX - squareX * (i + 1);
+                groupedDots[i + size].swY = corners.neY - (squareY*2);
+            }
+
+            for (int i = 0; i < dots.Count; i++)
+            {
+                bool found = false;
+                int j = 0;
+                while(!found && j < groupedDots.Length)
+                {
+                    if (dots[i].lon >= groupedDots[j].swX && dots[i].lon <= groupedDots[j].neX
+                        && dots[i].lat >= groupedDots[j].swY && dots[i].lat <= groupedDots[j].neY)
+                    {
+                        found = true;
+                        groupedDots[j].dots.Add(dots[i]);
+                    }
+                    j++;
+                }
+            }
+
+            foreach(GroupedDots group in groupedDots)
+            {
+                if (group.dots.Count > 0)
+                    groupedDotsApi.Add(new GroupedDotsForApi(group.dots));
+            }
+
+            return groupedDotsApi;
+        }
     }
 }

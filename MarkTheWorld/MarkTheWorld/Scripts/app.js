@@ -27,9 +27,9 @@ map = new GMaps({
     streetViewControl: false,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     styles: myStyles2,
-    markerClusterer: function(map) {
-        return new MarkerClusterer(map);
-    },
+    //markerClusterer: function(map) {
+    //    return new MarkerClusterer(map);
+    //},
     click: function(e) {
         //var bounds = getSquareCoordinates(e.latLng.lat(), e.latLng.lng(), 300);
         if (marker) {
