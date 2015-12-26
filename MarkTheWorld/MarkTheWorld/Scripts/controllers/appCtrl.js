@@ -106,7 +106,7 @@
         };
 
         var centerChangedHandler = debounce(function () {
-            MarkMapFactory.clearMap();
+            //MarkMapFactory.clearMap();
             if (map.getZoom() < 12) {
                 MarkMapFactory.markAllPoint();
             }
