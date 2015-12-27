@@ -65,6 +65,11 @@ namespace BusinessLayer.DotService
             return repositoryDot.GetAllUser(corners, token);
         }
 
+        public List<Dot> getUserDotsName(CornersCorrds corners, string name)
+        {
+            return repositoryDot.GetAllUserByName(corners, name);
+        }
+
         public List<SquaresWithInfo> groupSquares(List<Square> squares)
         {
             List<SquaresWithInfo> grSquares = new List<SquaresWithInfo>();

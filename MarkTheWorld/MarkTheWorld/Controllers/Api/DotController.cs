@@ -89,6 +89,28 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(squares);
         }
 
+        [Route("getUserSquaresByName/{name}")]
+        [HttpPost]
+        public IHttpActionResult GetUserSquaresByName(CornersCorrds corners, string name)
+        {
+            List<Dot> gameDots = new List<Dot>();
+            List<Square> squares = new List<Square>();
+            try
+            {
+                gameDots = dotService.getUserDotsName(corners, name);
+                foreach (Dot dot in gameDots)
+                {
+                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon), dot.username));
+                }
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(squares);
+        }
+
         [Route("getUserDots/{token}")]
         [HttpPost]
         public IHttpActionResult GetUserDots(CornersCorrds corners, Guid token)
@@ -97,6 +119,23 @@ namespace MarkTheWorld.Controllers.Api
             try
             {
                 gameDots = dotService.getUserDots(corners, token);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(gameDots);
+        }
+
+        [Route("getUserByNameDots/{name}")]
+        [HttpPost]
+        public IHttpActionResult GetUserDotsByName(CornersCorrds corners, string name)
+        {
+            List<Dot> gameDots = new List<Dot>();
+            try
+            {
+                gameDots = dotService.getUserDotsName(corners, name);
             }
             catch (Exception)
             {

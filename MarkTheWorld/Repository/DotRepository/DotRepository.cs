@@ -129,5 +129,44 @@ namespace Repository.DotRepository
                 }
             }
         }
+
+        public List<Dot> GetAllUserByName(CornersCorrds corners, string name)
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                List<Dot> reg = new List<Dot>();
+                try
+                {
+                    User user = session.Query<User>().First(x => x.UserName.Equals(name));
+                    if (user.Id == null)
+                        return reg;
+                    DotForIndex[] dots = session
+                        .Query<UserDotsIndex.Result, UserDotsIndex>()
+                        .Where(x => x.UserId.Equals(user.Id))
+                        .As<DotForIndex>()
+                        .Take(100000)
+                        .ToArray();
+                    for (int i = 0; i < dots.Length; i++)
+                    {
+                        if (corners.neX > dots[i].lon && corners.neY > dots[i].lat &&
+                        corners.swX < dots[i].lon && corners.swY < dots[i].lat)
+                        {
+                            Dot dotCopy = new Dot();
+                            dotCopy.Id = dots[i].Id;
+                            dotCopy.lat = (double)dots[i].lat;
+                            dotCopy.lon = (double)dots[i].lon;
+                            dotCopy.message = dots[i].message;
+                            reg.Add(dotCopy);
+                        }
+                    }
+                    return reg;
+                }
+                catch
+                {
+                    return reg;
+                }
+            }
+        }
+
     }
 }

@@ -15,6 +15,7 @@ namespace BusinessLayer.DotService
         Dot deleteDot(string dotId);
         List<CornersCorrds> getAllSquares(List<Dot> dots);
         List<Dot> getUserDots(CornersCorrds corners, Guid token);
+        List<Dot> getUserDotsName(CornersCorrds corners, string name);
         List<SquaresWithInfo> groupSquares(List<Square> squares);
         List<GroupedDotsForApi> groupDots(List<Dot> dots, CornersCorrds corners);
     }
