@@ -3,7 +3,7 @@
 
     app.controller('AppCtrl', AppCtrl);
 
-    function AppCtrl($scope, $log, $mdDialog, $mdSidenav, $state, $http, MarkMapFactory, SimpleModalFactory, $timeout) {
+    function AppCtrl($scope, $log, $mdDialog, $mdSidenav, $state, $http, SimpleModalFactory, $timeout, mapService) {
 
         $scope.toggleRight = function(state) {
             $state.transitionTo(state, { param1 : 'something' }, { reload: true });
@@ -108,10 +108,10 @@
         var centerChangedHandler = debounce(function () {
             //MarkMapFactory.clearMap();
             if (map.getZoom() < 12) {
-                MarkMapFactory.markAllPoint();
+                mapService.markAllPoint();
             }
             else {
-                MarkMapFactory.markRectangles();
+                mapService.markRectangles();
             }
         }, 250);
 

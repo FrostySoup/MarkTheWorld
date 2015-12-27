@@ -1,9 +1,9 @@
 /**
  * Created by Andy on 2015.10.25.
  */
-var app = angular.module('MarkApp', ['ngMaterial', 'ui.router']);
+var app = angular.module('markTheWorld', ['ngMaterial', 'ui.router', 'map']);
 
-app.config(['$stateProvider', function($stateProvider) {
+app.config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('login', {
                 name: 'login',
