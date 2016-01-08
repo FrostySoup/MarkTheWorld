@@ -77,7 +77,7 @@ namespace Repository.DotRepository
                         .Query<Dot>()
                         .Take(5000)
                         .ToArray();
-               List<Dot> dotsToSend = new List<Dot>();
+                List<Dot> dotsToSend = new List<Dot>();
                for (int i = 0; i < dots.Length; i++)
                {
                     if (corners.neX > dots[i].lon && corners.neY > dots[i].lat &&
@@ -88,7 +88,7 @@ namespace Repository.DotRepository
                         dotsToSend.Add(dots[i]);
                     }
                }
-               return dotsToSend;
+               return dots.ToList();
             }
         }
 

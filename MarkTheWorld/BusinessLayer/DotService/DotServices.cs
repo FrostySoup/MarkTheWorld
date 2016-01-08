@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Data;
 using Data.DataHelpers;
+using CSharpQuadTree;
 
 namespace BusinessLayer.DotService
 {
@@ -96,27 +97,33 @@ namespace BusinessLayer.DotService
 
         public List<GroupedDotsForApi> groupDots(List<Dot> dots, CornersCorrds corners)
         {
-            GroupedDots[] groupedDots = new GroupedDots[12];
-            double squareX = (corners.neX - corners.swX)/ (groupedDots.Length/2);
-            double squareY = (corners.neY - corners.swY) / 2;
-            List<GroupedDotsForApi> groupedDotsApi = new List<GroupedDotsForApi>();
-            for (int i = 0; i < groupedDots.Length/2; i++)
+            TBQuadTreeNodeData node;
+            quadTreeNode quadTree = new quadTreeNode(new TBBoundingBox(corners.swX, corners.swY, corners.neX, corners.neY), 1);
+            foreach (Dot dot in dots)
             {
-                groupedDots[i] = new GroupedDots();
-                groupedDots[i].neX = corners.neX-squareX*i;
-                groupedDots[i].neY = corners.neY;
-                groupedDots[i].swX = corners.neX - squareX * (i+1);
-                groupedDots[i].swY = corners.neY - squareY;
+                node = new TBQuadTreeNodeData(dot.lat, dot.lon, dot);
+                quadTree.addPoint(node);
             }
 
-            for (int i = 0; i < groupedDots.Length / 2; i++)
+            int sqNum = 6;
+            GroupedDots[] groupedDots = new GroupedDots[sqNum* sqNum];
+            double squareX = (corners.neX - corners.swX)/ sqNum;
+            double squareY = (corners.neY - corners.swY) / sqNum;
+            /*corners.neX = Math.Ceiling(corners.neX/ squareX)* squareX;
+            corners.swX = Math.Floor(corners.swX/ squareX) * squareX;
+            corners.neY = Math.Ceiling(corners.neY / squareY) * squareY;
+            corners.swY = Math.Floor(corners.swY / squareY) * squareY;*/
+            List<GroupedDotsForApi> groupedDotsApi = new List<GroupedDotsForApi>();
+            for (int j = 0; j < sqNum; j++)
             {
-                int size = groupedDots.Length / 2;
-                groupedDots[i + size] = new GroupedDots();
-                groupedDots[i + size].neX = corners.neX - squareX * i;
-                groupedDots[i + size].neY = corners.neY - squareY;
-                groupedDots[i + size].swX = corners.neX - squareX * (i + 1);
-                groupedDots[i + size].swY = corners.neY - (squareY*2);
+                for (int i = 0; i < sqNum; i++)
+                {
+                    groupedDots[i + sqNum * j] = new GroupedDots();
+                    groupedDots[i + sqNum * j].neX = corners.neX - squareX * i;
+                    groupedDots[i + sqNum * j].neY = corners.neY - squareY * j;
+                    groupedDots[i + sqNum * j].swX = corners.neX - squareX * (i + 1);
+                    groupedDots[i + sqNum * j].swY = corners.neY - squareY * (j + 1);
+                }
             }
 
             for (int i = 0; i < dots.Count; i++)
