@@ -10,7 +10,9 @@ namespace MarkTheWorld
         {
             bundles.Add(new ScriptBundle("~/bundles/app")
                 .IncludeDirectory("~/Scripts/libs", "*.js")
+                .IncludeDirectory("~/Scripts/squareDetails", "*.js")
                 .IncludeDirectory("~/Scripts/map", "*.js")
+                .IncludeDirectory("~/Scripts/map/services", "*.js")
                 .Include("~/Scripts/app.js")
                 .IncludeDirectory("~/Scripts/controllers", "*.js")
                 .IncludeDirectory("~/Scripts/services", "*.js"));

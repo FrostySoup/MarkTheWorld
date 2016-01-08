@@ -12,11 +12,11 @@
 
         $scope.isLogged = function() {
             return localStorage.getItem('token') !== null;
-        }
+        };
 
         $scope.getLoggedUser = function() {
             return localStorage.getItem('user');
-        }
+        };
 
         $scope.logout = function () {
             SimpleModalFactory.showModal('Info', 'Logged out successfully');
@@ -25,7 +25,7 @@
                 localStorage.removeItem('user');
                 localStorage.removeItem('onlyMyOwnMarks');
             }, 300);
-        }
+        };
 
         $scope.openMenu = function($mdOpenMenu, ev) {
             $mdOpenMenu(ev);
@@ -38,7 +38,7 @@
                 parent: angular.element(document.body),
                 clickOutsideToClose: true
             });
-        }
+        };
 
         $scope.showMapSettingsDialog = function (ev) {
             $mdDialog.show({
@@ -48,7 +48,7 @@
                 targetEvent: ev,
                 clickOutsideToClose: true
             });
-        }
+        };
 
         $scope.showDialog = function(ev) {
             $mdDialog.show({
@@ -71,7 +71,7 @@
 
         $http(req).then(function(data){
             window.currLocation = data.data.location;
-            map.setCenter({lat: data.data.location.lat, lng: data.data.location.lng});
+            mapService.map.setCenter({lat: data.data.location.lat, lng: data.data.location.lng});
             //map.addMarker({
             //    lat: data.data.location.lat,
             //    lng: data.data.location.lng
@@ -79,14 +79,14 @@
         });
 
         function buildToggler(navID) {
-            return function() {
+            return function () {
                 $mdSidenav(navID)
                     .toggle()
                     .then(function () {
                         $log.debug("toggle " + navID + " is done");
                     });
-            }
-        }
+            };
+        };
 
         var sideBar = buildToggler('right');
 
@@ -107,7 +107,7 @@
 
         var centerChangedHandler = debounce(function () {
             //MarkMapFactory.clearMap();
-            if (map.getZoom() < 12) {
+            if (mapService.map.getZoom() < 12) {
                 mapService.markAllPoint();
             }
             else {
@@ -115,6 +115,6 @@
             }
         }, 250);
 
-        google.maps.event.addListener(map.map, 'center_changed', centerChangedHandler);
+        google.maps.event.addListener(mapService.map.map, 'center_changed', centerChangedHandler);
     }
 })();
