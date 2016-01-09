@@ -63,17 +63,17 @@
                         "message": message
                     }
                 ).
-                success(function (data) {
-                    if (data) {
-                        console.log(data);
-                        deferredObject.resolve(data);
-                    } else {
+                    success(function (data) {
+                        if (data) {
+                            console.log('addPoint success', data);
+                            deferredObject.resolve(data);
+                        } else {
+                            deferredObject.resolve(false);
+                        }
+                    }).
+                    error(function () {
                         deferredObject.resolve(false);
-                    }
-                }).
-                error(function () {
-                    deferredObject.resolve(false);
-                });
+                    });
 
                 return deferredObject.promise;
             }

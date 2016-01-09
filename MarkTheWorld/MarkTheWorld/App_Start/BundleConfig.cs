@@ -13,6 +13,7 @@ namespace MarkTheWorld
                 .IncludeDirectory("~/Scripts/squareDetails", "*.js")
                 .IncludeDirectory("~/Scripts/map", "*.js")
                 .IncludeDirectory("~/Scripts/map/services", "*.js")
+                .IncludeDirectory("~/Scripts/newSquare", "*.js")
                 .Include("~/Scripts/app.js")
                 .IncludeDirectory("~/Scripts/controllers", "*.js")
                 .IncludeDirectory("~/Scripts/services", "*.js"));

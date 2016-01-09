@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    function AppCtrl($scope, $log, $mdDialog, $mdSidenav, $state, $http, SimpleModalFactory, $timeout, mapService) {
+    function AppCtrl($scope, $log, $mdDialog, $mdSidenav, $state, $http, SimpleModalFactory, $timeout, mapService, newSquareService) {
 
         $scope.toggleRight = function(state) {
             $state.transitionTo(state, { param1 : 'something' }, { reload: true });
@@ -49,16 +49,8 @@
             });
         };
 
-        $scope.showDialog = function(ev) {
-            $mdDialog.show({
-                controller: 'AddPointCtrl',
-                templateUrl: 'scripts/templates/addPointDialog.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                locals: { "lat": window.lat, "lng": window.lng },
-                bindToController: true,
-                clickOutsideToClose: true
-            });
+        $scope.addNewSquare = function(ev) {
+            newSquareService.showDialog(ev);
         };
 
         // cia yra current pos nustatymas

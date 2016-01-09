@@ -241,6 +241,10 @@
     <Content Include="Scripts\map\map.js" />
     <Content Include="Scripts\map\services\mapService.js" />
     <Content Include="Scripts\map\services\rectanglesService.js" />
+    <Content Include="Scripts\newSquare\newSquare.html" />
+    <Content Include="Scripts\newSquare\newSquare.js" />
+    <Content Include="Scripts\newSquare\newSquareController.js" />
+    <Content Include="Scripts\newSquare\newSquareService.js" />
     <Content Include="Scripts\services\accountFactory.js" />
     <Content Include="Scripts\services\simpleModalFactory.js" />
     <Content Include="Scripts\services\squareInfoFactory.js" />
@@ -250,10 +254,8 @@
     <Content Include="Scripts\squareDetails\squareDetailsService.js" />
     <Content Include="Scripts\templates\topMarkersDialog.html" />
     <Content Include="Scripts\templates\mapSettingsDialog.html" />
-    <Content Include="Scripts\templates\addPointDialog.html" />
     <Content Include="Scripts\templates\login.html" />
     <Content Include="Scripts\templates\pointAddedDialog.html" />
-    <Content Include="Scripts\templates\pointMarkersDialog.html" />
     <Content Include="Scripts\templates\register.html" />
     <Content Include="Scripts\templates\simpleDialog.html" />
     <Content Include="Web.config">

@@ -32,7 +32,7 @@
         $scope.register = function (username, password) {
             if (!username || !password) {
                 return;
-            };
+            }
 
             AccountFactory.register(
                 {

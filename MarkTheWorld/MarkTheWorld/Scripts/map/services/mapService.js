@@ -7,6 +7,7 @@
         var markersArray = [];
         var mapStyle = [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}];
         var marker;
+        var clickedPosition = {};
 
         var map = new GMaps({
             div: '#map',
@@ -27,9 +28,9 @@
                     animation: google.maps.Animation.DROP,
                     position: { lat: e.latLng.lat(), lng: e.latLng.lng() }
                 });
-                window.lat = e.latLng.lat();
-                window.lng = e.latLng.lng();
-                console.log(JSON.stringify(e.latLng), 'zoom:', map.getZoom());
+                clickedPosition.lat = e.latLng.lat();
+                clickedPosition.lng = e.latLng.lng();
+                console.log(JSON.stringify(clickedPosition), 'zoom:', map.getZoom());
             }
         });
 
@@ -84,7 +85,7 @@
             centerZoomChangedHandler : debounce((function () {
                 if (map.getZoom() < 11) {
                     rectanglesService.removeAllRecs();
-                    returnObject.markAllPoint();
+                    returnObject.markClusters();
                 }
                 else {
                     removePointsFromMap(markersArray);
@@ -92,7 +93,11 @@
                 }
             }), 250),
 
-            markAllPoint: function () {
+            getClickedPosition: function() {
+              return clickedPosition;
+            },
+
+            markClusters: function () {
                 var url = '/api/dotsInArea/' + map.getZoom();
                 if (localStorage.getItem('onlyMyOwnMarks') === 'true') {
                     url = '/api/getUserDots/' + localStorage.getItem('token');
@@ -108,8 +113,8 @@
                 then(function(data) {
                     removePointsFromMap(markersArray);
                     if (data) {
-                        angular.forEach(data.data, function (value, key) {
-                            markersArray.push(addPoint(value.sTemp, value.nTemp, value.count));
+                        angular.forEach(data.data, function (value) {
+                            markersArray.push(addPoint(value.nTemp, value.sTemp, value.count));
                         });
                     }
                 });
