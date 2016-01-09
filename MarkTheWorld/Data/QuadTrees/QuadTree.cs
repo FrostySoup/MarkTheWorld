@@ -11,7 +11,7 @@ namespace CSharpQuadTree
         public double x;
         public double y;
         public Dot data;
-        public TBQuadTreeNodeData(double x, double y, Dot dat)
+        public TBQuadTreeNodeData(double y, double x, Dot dat)
         {
             this.x = x;
             this.y = y;

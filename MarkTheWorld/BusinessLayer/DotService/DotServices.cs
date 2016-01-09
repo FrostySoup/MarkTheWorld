@@ -97,14 +97,15 @@ namespace BusinessLayer.DotService
 
         public List<GroupedDotsForApi> groupDots(List<Dot> dots, CornersCorrds corners, double zoomLevel)
         {
-            double lenghtPerSquare = 16;
+            double lenghtPerSquare = 32;
             if (zoomLevel > 2)
                 lenghtPerSquare /= Math.Pow(2, (zoomLevel - 3));
-
+            if (corners.neX < corners.swX)
+                corners.neX = 179;
             corners.neX = lenghtPerSquare*((int)(corners.neX / lenghtPerSquare)+1);
             corners.neY = lenghtPerSquare * ((int)(corners.neY / lenghtPerSquare) + 1);
-            corners.swX = lenghtPerSquare * (int)(corners.swX / lenghtPerSquare);
-            corners.swY = lenghtPerSquare * (int)(corners.swY / lenghtPerSquare);
+            corners.swX = lenghtPerSquare * (int)((corners.swX / lenghtPerSquare)-1);
+            corners.swY = lenghtPerSquare * (int)((corners.swY / lenghtPerSquare)-1);
 
             double squarex = corners.neX - corners.swX;
             double squarey = corners.neY - corners.swY;
@@ -112,6 +113,18 @@ namespace BusinessLayer.DotService
             double neY = corners.neY + squarey / 3;
             double swX = corners.swX - squarex / 3;
             double swY = corners.swY - squarey / 3;
+            if (neX < swX)
+                neX = 179;
+            if (squarex < 0)
+                squarex = 179 - corners.swX;
+            if (neX > 180 || neX < -180)
+                neX = 179;
+            if (swX > 180 || swX < -180)
+                swX = -179;
+            if (neY > 90 || neY < -90)
+                neY = 89;
+            if (swY > 90 || swY < -90)
+                swY = -89;
             TBQuadTreeNodeData node;
             quadTreeNode quadTree = new quadTreeNode(new TBBoundingBox(swX, swY, neX, neY), 1);
             foreach (Dot dot in dots)
