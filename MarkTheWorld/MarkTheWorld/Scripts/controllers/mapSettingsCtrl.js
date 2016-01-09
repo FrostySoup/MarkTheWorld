@@ -1,16 +1,14 @@
+/*global angular */
 (function () {
     'use strict';
 
-    app.controller('MapSettingsCtrl', MapSettingsCtrl);
-
-    function MapSettingsCtrl($scope, $mdDialog, AccountFactory, SimpleModalFactory, MarkMapFactory) {
+    function MapSettingsCtrl($scope, $mdDialog, MarkMapFactory) {
 
         if (localStorage.getItem('onlyMyOwnMarks') === 'true') {
             $scope.selection = 'my';
         } else {
             $scope.selection = 'all';
         }
-        
 
         $scope.cancel = function () {
             $mdDialog.hide();
@@ -33,4 +31,5 @@
             $mdDialog.cancel();
         };
     }
-})();
+    angular.module('markTheWorld').controller('MapSettingsCtrl', MapSettingsCtrl);
+}());

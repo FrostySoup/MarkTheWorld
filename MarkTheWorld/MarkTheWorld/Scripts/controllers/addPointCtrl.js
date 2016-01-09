@@ -1,7 +1,6 @@
+/*global angular */
 (function () {
     'use strict';
-
-    app.controller('AddPointCtrl', AddPointCtrl);
 
     function AddPointCtrl($scope, $mdDialog, AccountFactory, SimpleModalFactory, MarkMapFactory, lat, lng) {
         $scope.cancel = function() {
@@ -27,4 +26,5 @@
             });
         };
     }
-})();
+    angular.module('markTheWorld').controller('AddPointCtrl', AddPointCtrl);
+}());

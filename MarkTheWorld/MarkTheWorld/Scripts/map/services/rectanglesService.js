@@ -84,6 +84,10 @@
                 removeUnneededRecsFromMap(recsToBeRemoved);
                 var recsToBeAdded = addNewRecs(data);
                 addNewRecsToMap(recsToBeAdded, map);
+            },
+            removeAllRecs : function() {
+                removeUnneededRecsFromMap(rectanglesArray);
+                rectanglesArray.length = 0;
             }
         };
     }

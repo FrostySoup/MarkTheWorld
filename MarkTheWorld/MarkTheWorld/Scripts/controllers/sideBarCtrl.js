@@ -1,7 +1,6 @@
+/*global angular */
 (function () {
     'use strict';
-
-    app.controller('SidebarCtrl', SidebarCtrl);
 
     function SidebarCtrl($scope, $mdSidenav, $log, $state, AccountFactory, SimpleModalFactory) {
         $scope.go = function (route) {
@@ -59,4 +58,5 @@
                 });
         };
     }
-})();
+    angular.module('markTheWorld').controller('SidebarCtrl', SidebarCtrl);
+}());

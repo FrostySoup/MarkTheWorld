@@ -1,7 +1,6 @@
+/*global angular */
 (function () {
     'use strict';
-
-    app.controller('AppCtrl', AppCtrl);
 
     function AppCtrl($scope, $log, $mdDialog, $mdSidenav, $state, $http, SimpleModalFactory, $timeout, mapService) {
 
@@ -89,32 +88,7 @@
         };
 
         var sideBar = buildToggler('right');
-
-        function debounce(func, wait, immediate) {
-            var timeout;
-            return function () {
-                var context = this, args = arguments;
-                var later = function () {
-                    timeout = null;
-                    if (!immediate) func.apply(context, args);
-                };
-                var callNow = immediate && !timeout;
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-                if (callNow) func.apply(context, args);
-            };
-        };
-
-        var centerChangedHandler = debounce(function () {
-            //MarkMapFactory.clearMap();
-            if (mapService.map.getZoom() < 12) {
-                mapService.markAllPoint();
-            }
-            else {
-                mapService.markRectangles();
-            }
-        }, 250);
-
-        google.maps.event.addListener(mapService.map.map, 'center_changed', centerChangedHandler);
     }
-})();
+
+    angular.module('markTheWorld').controller('AppCtrl', AppCtrl);
+}());

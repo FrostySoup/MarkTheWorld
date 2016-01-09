@@ -1,7 +1,6 @@
-﻿(function () {
+﻿/*global angular */
+(function () {
     'use strict';
-
-    app.factory('SimpleModalFactory', SimpleModalFactory);
 
     function SimpleModalFactory($mdDialog) {
         return {
@@ -17,4 +16,5 @@
             }
         };
     }
-})();
+    angular.module('markTheWorld').factory('SimpleModalFactory', SimpleModalFactory);
+}());

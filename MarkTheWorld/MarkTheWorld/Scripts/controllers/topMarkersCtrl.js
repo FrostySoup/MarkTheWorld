@@ -1,7 +1,6 @@
+/*global angular */
 (function () {
     'use strict';
-
-    app.controller('TopMarkersCtrl', TopMarkersCtrl);
 
     function TopMarkersCtrl($scope, $mdDialog, $http) {
 
@@ -19,4 +18,5 @@
             $mdDialog.hide();
         };
     }
-})();
+    angular.module('markTheWorld').controller('TopMarkersCtrl', TopMarkersCtrl);
+}());

@@ -1,13 +1,18 @@
-var app = angular.module('markTheWorld', ['ngMaterial', 'ui.router', 'map', 'squareDetails']);
+/*global angular */
+(function () {
+    'use strict';
 
-app.config(['$stateProvider', function ($stateProvider) {
-    $stateProvider
-        .state('login', {
-            name: 'login',
-            templateUrl: 'scripts/templates/login.html'
-        })
-        .state('register', {
-            name: 'register',
-            templateUrl: 'scripts/templates/register.html'
-        });
-}]);
+    angular.module('markTheWorld', ['ngMaterial', 'ui.router', 'map', 'squareDetails'])
+        .config(['$stateProvider', function ($stateProvider) {
+            $stateProvider
+                .state('login', {
+                    name: 'login',
+                    templateUrl: 'scripts/templates/login.html'
+                })
+                .state('register', {
+                    name: 'register',
+                    templateUrl: 'scripts/templates/register.html'
+                });
+        }]);
+
+}());

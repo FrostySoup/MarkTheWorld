@@ -1,7 +1,6 @@
+/*global angular */
 (function () {
     'use strict';
-
-    app.factory('AccountFactory', AccountFactory);
 
     function AccountFactory($http, $q) {
         return {
@@ -80,4 +79,5 @@
             }
         };
     }
-})();
+    angular.module('markTheWorld').factory('AccountFactory', AccountFactory);
+}());

@@ -1,7 +1,6 @@
+/*global angular */
 (function () {
     'use strict';
-
-    app.controller('SimpleModalController', SimpleModalController);
 
     function SimpleModalController($scope, $mdDialog, title, content) {
         $scope.title = title;
@@ -10,4 +9,5 @@
             $mdDialog.cancel();
         };
     }
-})();
+    angular.module('markTheWorld').controller('SimpleModalController', SimpleModalController);
+}());
