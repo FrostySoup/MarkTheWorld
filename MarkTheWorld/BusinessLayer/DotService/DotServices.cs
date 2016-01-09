@@ -97,6 +97,15 @@ namespace BusinessLayer.DotService
 
         public List<GroupedDotsForApi> groupDots(List<Dot> dots, CornersCorrds corners, double zoomLevel)
         {
+            double lenghtPerSquare = 16;
+            if (zoomLevel > 2)
+                lenghtPerSquare /= Math.Pow(2, (zoomLevel - 3));
+
+            corners.neX = lenghtPerSquare*((int)(corners.neX / lenghtPerSquare)+1);
+            corners.neY = lenghtPerSquare * ((int)(corners.neY / lenghtPerSquare) + 1);
+            corners.swX = lenghtPerSquare * (int)(corners.swX / lenghtPerSquare);
+            corners.swY = lenghtPerSquare * (int)(corners.swY / lenghtPerSquare);
+
             double squarex = corners.neX - corners.swX;
             double squarey = corners.neY - corners.swY;
             double neX = corners.neX + squarex / 3;
@@ -110,9 +119,7 @@ namespace BusinessLayer.DotService
                 node = new TBQuadTreeNodeData(dot.lat, dot.lon, dot);
                 quadTree.addPoint(node);
             }
-            double lenghtPerSquare = 16;
-            if (zoomLevel > 2)
-                lenghtPerSquare /= (zoomLevel - 2);
+            
             int howManySquaresX = (int)Math.Ceiling(squarex / lenghtPerSquare);
             int howManySquaresY = (int)Math.Ceiling(squarey / lenghtPerSquare);
 
