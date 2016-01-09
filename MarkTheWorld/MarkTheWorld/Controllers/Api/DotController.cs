@@ -145,16 +145,16 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(gameDots);
         }
 
-        [Route("dotsInArea")]
+        [Route("dotsInArea/{zoomLevel}")]
         [HttpPost]
-        public IHttpActionResult GetDots(CornersCorrds corners)
+        public IHttpActionResult GetDots(CornersCorrds corners, double zoomLevel)
         {
             List<Dot> gameDots = new List<Dot>();
             List<GroupedDotsForApi> groupedDots = new List<GroupedDotsForApi>();
             try
             {
                 gameDots = dotService.getAllDots(corners);
-                groupedDots = dotService.groupDots(gameDots, corners);
+                groupedDots = dotService.groupDots(gameDots, corners, zoomLevel);
             }
             catch (Exception)
             {

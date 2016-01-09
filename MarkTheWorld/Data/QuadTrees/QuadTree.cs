@@ -136,7 +136,13 @@ namespace CSharpQuadTree
 
         private bool TBBoundingBoxIntersectsBoundingBox(TBBoundingBox boundingBox, TBBoundingBox range)
         {
-            if (boundingBox.x0 <= range.x0 && boundingBox.xf >= range.xf && boundingBox.y0 <= range.y0 && boundingBox.yf >= range.yf)
+            if (boundingBox.xf > range.x0 && boundingBox.yf > range.y0)
+                return true;
+            if (boundingBox.x0 < range.xf && boundingBox.yf > range.y0)
+                return true;
+            if (boundingBox.xf > range.x0 && boundingBox.y0 < range.yf)
+                return true;
+            if (boundingBox.x0 < range.xf && boundingBox.y0 < range.yf)
                 return true;
             else return false;
         }

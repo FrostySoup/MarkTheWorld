@@ -95,57 +95,48 @@ namespace BusinessLayer.DotService
             return grSquares;
         }
 
-        public List<GroupedDotsForApi> groupDots(List<Dot> dots, CornersCorrds corners)
+        public List<GroupedDotsForApi> groupDots(List<Dot> dots, CornersCorrds corners, double zoomLevel)
         {
+            double squarex = corners.neX - corners.swX;
+            double squarey = corners.neY - corners.swY;
+            double neX = corners.neX + squarex / 3;
+            double neY = corners.neY + squarey / 3;
+            double swX = corners.swX - squarex / 3;
+            double swY = corners.swY - squarey / 3;
             TBQuadTreeNodeData node;
-            quadTreeNode quadTree = new quadTreeNode(new TBBoundingBox(corners.swX, corners.swY, corners.neX, corners.neY), 1);
+            quadTreeNode quadTree = new quadTreeNode(new TBBoundingBox(swX, swY, neX, neY), 1);
             foreach (Dot dot in dots)
             {
                 node = new TBQuadTreeNodeData(dot.lat, dot.lon, dot);
                 quadTree.addPoint(node);
             }
+            double lenghtPerSquare = 16;
+            if (zoomLevel > 2)
+                lenghtPerSquare /= (zoomLevel - 2);
+            int howManySquaresX = (int)Math.Ceiling(squarex / lenghtPerSquare);
+            int howManySquaresY = (int)Math.Ceiling(squarey / lenghtPerSquare);
 
-            int sqNum = 6;
-            GroupedDots[] groupedDots = new GroupedDots[sqNum* sqNum];
-            double squareX = (corners.neX - corners.swX)/ sqNum;
-            double squareY = (corners.neY - corners.swY) / sqNum;
-            /*corners.neX = Math.Ceiling(corners.neX/ squareX)* squareX;
-            corners.swX = Math.Floor(corners.swX/ squareX) * squareX;
-            corners.neY = Math.Ceiling(corners.neY / squareY) * squareY;
-            corners.swY = Math.Floor(corners.swY / squareY) * squareY;*/
+            List<TBQuadTreeNodeData>[] block = new List<TBQuadTreeNodeData>[howManySquaresX * howManySquaresY];
+
+            
+            for (int j = 0; j < howManySquaresY; j++)
+                {
+                for (int i = 0; i < howManySquaresX; i++)
+                {
+                    neX = corners.neX - lenghtPerSquare * (howManySquaresX - i - 1);
+                    neY = corners.neY - lenghtPerSquare*j;
+                    swX = corners.neX - lenghtPerSquare * (howManySquaresX - i);
+                    swY = corners.neY - lenghtPerSquare * (j+1);
+                    block[i + j * howManySquaresX] = new List<TBQuadTreeNodeData>();
+                    quadTree.TBQuadTreeGatherDataInRange(quadTree, new TBBoundingBox(swX, swY, neX, neY), block[i+j*howManySquaresX]);
+                }
+            }
+
             List<GroupedDotsForApi> groupedDotsApi = new List<GroupedDotsForApi>();
-            for (int j = 0; j < sqNum; j++)
+            for (int i = 0; i < howManySquaresX * howManySquaresY; i++)
             {
-                for (int i = 0; i < sqNum; i++)
-                {
-                    groupedDots[i + sqNum * j] = new GroupedDots();
-                    groupedDots[i + sqNum * j].neX = corners.neX - squareX * i;
-                    groupedDots[i + sqNum * j].neY = corners.neY - squareY * j;
-                    groupedDots[i + sqNum * j].swX = corners.neX - squareX * (i + 1);
-                    groupedDots[i + sqNum * j].swY = corners.neY - squareY * (j + 1);
-                }
-            }
-
-            for (int i = 0; i < dots.Count; i++)
-            {
-                bool found = false;
-                int j = 0;
-                while(!found && j < groupedDots.Length)
-                {
-                    if (dots[i].lon >= groupedDots[j].swX && dots[i].lon <= groupedDots[j].neX
-                        && dots[i].lat >= groupedDots[j].swY && dots[i].lat <= groupedDots[j].neY)
-                    {
-                        found = true;
-                        groupedDots[j].dots.Add(dots[i]);
-                    }
-                    j++;
-                }
-            }
-
-            foreach(GroupedDots group in groupedDots)
-            {
-                if (group.dots.Count > 0)
-                    groupedDotsApi.Add(new GroupedDotsForApi(group.dots));
+                if (block[i].Count > 0)
+                     groupedDotsApi.Add(new GroupedDotsForApi(block[i]));
             }
 
             return groupedDotsApi;

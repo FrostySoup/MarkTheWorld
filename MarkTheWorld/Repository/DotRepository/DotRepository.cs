@@ -71,6 +71,12 @@ namespace Repository.DotRepository
 
         public List<Dot> GetAll(CornersCorrds corners)
         {
+            double squareX = corners.neX - corners.swX;
+            double squareY = corners.neY - corners.swY;
+            double neX = corners.neX + squareX / 3;
+            double neY = corners.neY + squareY / 3;
+            double swX = corners.swX - squareX / 3;
+            double swY = corners.swY - squareY / 3;
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
                Dot[] dots = session
@@ -80,8 +86,8 @@ namespace Repository.DotRepository
                 List<Dot> dotsToSend = new List<Dot>();
                for (int i = 0; i < dots.Length; i++)
                {
-                    if (corners.neX > dots[i].lon && corners.neY > dots[i].lat &&
-                        corners.swX < dots[i].lon && corners.swY < dots[i].lat)
+                    if (neX > dots[i].lon && neY > dots[i].lat &&
+                        swX < dots[i].lon && swY < dots[i].lat)
                     {
                         if (dots[i].username == null)
                             dots[i].username = "Unknown user";

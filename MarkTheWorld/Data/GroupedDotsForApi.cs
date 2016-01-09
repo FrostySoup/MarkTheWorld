@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSharpQuadTree;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,15 +13,15 @@ namespace Data
         public double nTemp { get; set; }
         public double sTemp { get; set; }
 
-        public GroupedDotsForApi(List<Dot> dots)
+        public GroupedDotsForApi(List<TBQuadTreeNodeData> dots)
         {
             count = dots.Count;
             nTemp = 0;
             sTemp = 0;
             for (int i = 0; i < dots.Count; i++)
             {
-                nTemp += dots[i].lon;
-                sTemp += dots[i].lat;
+                nTemp += dots[i].x;
+                sTemp += dots[i].y;
             }
             nTemp /= dots.Count;
             sTemp /= dots.Count;
