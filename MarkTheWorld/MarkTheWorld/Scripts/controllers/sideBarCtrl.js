@@ -2,17 +2,17 @@
 (function () {
     'use strict';
 
-    function SidebarCtrl($scope, $mdSidenav, $log, $state, AccountFactory, SimpleModalFactory) {
+    function SidebarCtrl($scope, $mdSidenav, $log, $state, accountService, simpleModalService) {
         $scope.go = function (route) {
-            $state.transitionTo(route, { param1: 'something' }, { reload: true });
+            $state.transitionTo(route);
         };
 
         $scope.login = function (username, password) {
             if (!username || !password) {
                 return;
-            };
+            }
 
-            AccountFactory.login(
+            accountService.login(
                 {
                     "UserName": username,
                     "PasswordHash": password
@@ -20,7 +20,7 @@
             ).then(function (data) {
                 if (data.success === true) {
                     $scope.close();
-                    SimpleModalFactory.showModal('Success!', 'Welcome back ' + username + '!');
+                    simpleModalService.showModal('Success!', 'Welcome back ' + username + '!');
                     localStorage.setItem('token', data.Token);
                     localStorage.setItem('user', username);
                 } else {
@@ -34,7 +34,7 @@
                 return;
             }
 
-            AccountFactory.register(
+            accountService.register(
                 {
                     "UserName": username,
                     "PasswordHash": password
@@ -42,11 +42,11 @@
             ).then(function (data) {
                 if (data.success === true) {
                     $scope.close();
-                    SimpleModalFactory.showModal('Success!', 'Welcome ' + username + '!');
+                    simpleModalService.showModal('Success!', 'Welcome ' + username + '!');
                     localStorage.setItem('token', data.Token);
                     localStorage.setItem('user', username);
                 } else {
-                    SimpleModalFactory.showModal('Error!', data.message);
+                    simpleModalService.showModal('Error!', data.message);
                 }
             });
         };

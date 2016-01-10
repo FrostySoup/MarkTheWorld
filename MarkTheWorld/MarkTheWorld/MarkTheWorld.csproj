@@ -218,9 +218,13 @@
     <Content Include="Content\img\icons\ic_account_circle_white_36px.svg" />
     <Content Include="Content\img\icons\ic_account_circle_white_48px.svg" />
     <Content Include="Content\img\icons\ic_add_location_black_48px.svg" />
+    <Content Include="Content\img\icons\ic_clear_white_36px.svg" />
     <Content Include="Content\img\icons\ic_clear_white_48px.svg" />
     <Content Include="Content\img\icons\ic_face_black_24px.svg" />
     <Content Include="Content\img\icons\ic_more_vert_white_48px.svg" />
+    <Content Include="Content\img\icons\ic_people_black_48px.svg" />
+    <Content Include="Content\img\icons\ic_settings_black_48px.svg" />
+    <Content Include="Content\img\icons\settings.png" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -238,6 +242,10 @@
     <Content Include="Scripts\controllers\sideBarCtrl.js" />
     <Content Include="Scripts\libs\gmaps.js" />
     <Content Include="Scripts\libs\markerclusterer.js" />
+    <Content Include="Scripts\mapSettings\mapSettings.html" />
+    <Content Include="Scripts\mapSettings\mapSettings.js" />
+    <Content Include="Scripts\mapSettings\mapSettingsController.js" />
+    <Content Include="Scripts\mapSettings\mapSettingsService.js" />
     <Content Include="Scripts\map\map.js" />
     <Content Include="Scripts\map\services\mapService.js" />
     <Content Include="Scripts\map\services\rectanglesService.js" />
@@ -245,19 +253,23 @@
     <Content Include="Scripts\newSquare\newSquare.js" />
     <Content Include="Scripts\newSquare\newSquareController.js" />
     <Content Include="Scripts\newSquare\newSquareService.js" />
-    <Content Include="Scripts\services\accountFactory.js" />
-    <Content Include="Scripts\services\simpleModalFactory.js" />
-    <Content Include="Scripts\services\squareInfoFactory.js" />
+    <Content Include="Scripts\services\accountService.js" />
+    <Content Include="Scripts\shared\shared.js" />
+    <Content Include="Scripts\shared\simpleModal\simpleModal.js" />
+    <Content Include="Scripts\shared\simpleModal\simpleModalController.js" />
+    <Content Include="Scripts\shared\simpleModal\simpleModalService.js" />
+    <Content Include="Scripts\shared\toast\toast.html" />
+    <Content Include="Scripts\shared\toast\toast.js" />
+    <Content Include="Scripts\shared\toast\toastController.js" />
+    <Content Include="Scripts\shared\toast\toastService.js" />
     <Content Include="Scripts\squareDetails\squareDetails.html" />
     <Content Include="Scripts\squareDetails\squareDetails.js" />
     <Content Include="Scripts\squareDetails\squareDetailsController.js" />
     <Content Include="Scripts\squareDetails\squareDetailsService.js" />
     <Content Include="Scripts\templates\topMarkersDialog.html" />
-    <Content Include="Scripts\templates\mapSettingsDialog.html" />
     <Content Include="Scripts\templates\login.html" />
     <Content Include="Scripts\templates\pointAddedDialog.html" />
     <Content Include="Scripts\templates\register.html" />
-    <Content Include="Scripts\templates\simpleDialog.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -322,7 +334,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59287</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:59287/</IISUrl>
+          <IISUrl>http://localhost:80/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

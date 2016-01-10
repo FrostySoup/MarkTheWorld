@@ -12,17 +12,15 @@
             <div class="md-dialog-content">
                 <md-radio-group ng-model="selection">
                     <md-radio-button class="radio-box-first" value="all">All marked spots</md-radio-button>
-                    <md-radio-button value="my">Only my marked spots</md-radio-button>
+                    <md-radio-button value="own">Only my marked spots</md-radio-button>
                     <md-radio-button class="radio-box-last" value="user">Only user spots</md-radio-button>
-
                 </md-radio-group>
+
                 <md-input-container>
                     <label>Enter username</label>
                     <input ng-model="username">
                 </md-input-container>
-                <!--<md-switch ng-model="switch" aria-label="Switch 1">
-                    Only show my own marks ({{ getSwitchState() }})
-                </md-switch>-->
+
                 <md-button ng-click="confirm()" class="button-login md-raised md-primary">Save</md-button>
             </div>
         </md-dialog-content>
