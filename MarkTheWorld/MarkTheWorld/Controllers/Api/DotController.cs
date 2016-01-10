@@ -100,7 +100,7 @@ namespace MarkTheWorld.Controllers.Api
                 gameDots = dotService.getUserDotsName(corners, name);
                 foreach (Dot dot in gameDots)
                 {
-                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon), dot.username));
+                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon), name));
                 }
             }
             catch (Exception)

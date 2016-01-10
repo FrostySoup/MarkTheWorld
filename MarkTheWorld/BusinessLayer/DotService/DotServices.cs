@@ -97,7 +97,7 @@ namespace BusinessLayer.DotService
 
         public List<GroupedDotsForApi> groupDots(List<Dot> dots, CornersCorrds corners, double zoomLevel)
         {
-            double lenghtPerSquare = 32;
+            double lenghtPerSquare = 16;
             if (zoomLevel > 2)
                 lenghtPerSquare /= Math.Pow(2, (zoomLevel - 3));
             if (corners.neX < corners.swX)
