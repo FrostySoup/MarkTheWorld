@@ -102,6 +102,10 @@
               return clickedPosition;
             },
 
+            setClickedPosition: function(clickedP) {
+                clickedPosition = clickedP;
+            },
+
             markClusters: function () {
                 var url = '/api/dotsInArea/' + map.getZoom();
                 if (localStorage.getItem('onlyMyOwnMarks') === 'true') {

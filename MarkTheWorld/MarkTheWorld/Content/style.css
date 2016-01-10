@@ -34,6 +34,18 @@ md-toast md-icon {
     }
 }
 
+/*Make dialogs responsive*/
+md-dialog.responsive {
+    min-width: 40%;
+}
+
+@media only screen and (max-width: 600px) and (min-width: 0) {
+    md-dialog.responsive {
+        min-width: 100%;
+        min-height: 100%;
+    }
+}
+
 md-fab.md-fab-bottom-right.md-button.md-ink-ripple.md-focused {
     background-color: transparent !important;
 }

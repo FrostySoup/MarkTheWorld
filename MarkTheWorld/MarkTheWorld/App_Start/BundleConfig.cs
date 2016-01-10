@@ -14,6 +14,7 @@ namespace MarkTheWorld
                 .IncludeDirectory("~/Scripts/shared", "*.js")
                 .IncludeDirectory("~/Scripts/shared/simpleModal", "*.js")
                 .IncludeDirectory("~/Scripts/shared/toast", "*.js")
+                .IncludeDirectory("~/Scripts/topMarkers", "*.js")
                 .IncludeDirectory("~/Scripts/mapSettings", "*.js")
                 .IncludeDirectory("~/Scripts/map", "*.js")
                 .IncludeDirectory("~/Scripts/map/services", "*.js")

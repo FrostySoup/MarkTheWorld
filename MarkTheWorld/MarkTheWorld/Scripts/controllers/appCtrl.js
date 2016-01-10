@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    function AppCtrl($scope, $log, $mdDialog, $mdToast, $mdSidenav, $state, $http, mapService, newSquareService, mapSettingsService, accountService, toastService) {
+    function AppCtrl($scope, $log, $mdSidenav, $state, $http, mapService, newSquareService, mapSettingsService, accountService, topMarkersService, simpleModalService) {
 
         $scope.toggleRight = function (state) {
             $state.transitionTo(state, { param1 : 'something' }, { reload: true });
@@ -25,13 +25,8 @@
             $mdOpenMenu(ev);
         };
 
-        $scope.showTopMarkersDialog = function () {
-            $mdDialog.show({
-                controller: 'TopMarkersCtrl',
-                templateUrl: 'scripts/templates/topMarkersDialog.html',
-                parent: angular.element(document.body),
-                clickOutsideToClose: true
-            });
+        $scope.topMarkers = function () {
+            topMarkersService.showDialog();
         };
 
         $scope.mapSettings = function (ev) {
@@ -42,20 +37,23 @@
             newSquareService.showDialog(ev);
         };
 
+        if (!accountService.isLogged()) {
+            simpleModalService.showModal('Welcome!', 'Join MarkTheWorld and leave your first mark!');
+        }
+
         // cia yra current pos nustatymas
         var req = {
             method: 'POST',
-            url: 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBBmLH1JbsTdr8CeJYP8icbQqcymux3ffA'
-            //data: { test: 'test' }
+            url: 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBBmLH1JbsTdr8CeJYP8icbQqcymux3ffA',
         };
 
-        $http(req).then(function(data){
-            window.currLocation = data.data.location;
+        $http(req).then(function(data) {
             mapService.map.setCenter({lat: data.data.location.lat, lng: data.data.location.lng});
-            //map.addMarker({
-            //    lat: data.data.location.lat,
-            //    lng: data.data.location.lng
-            //});
+            mapService.setClickedPosition({ lat: data.data.location.lat, lng: data.data.location.lng });
+            mapService.map.addMarker({
+                lat: data.data.location.lat,
+                lng: data.data.location.lng
+            });
         });
 
         function buildToggler(navID) {

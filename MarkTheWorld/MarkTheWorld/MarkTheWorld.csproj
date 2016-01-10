@@ -270,6 +270,10 @@
     <Content Include="Scripts\templates\login.html" />
     <Content Include="Scripts\templates\pointAddedDialog.html" />
     <Content Include="Scripts\templates\register.html" />
+    <Content Include="Scripts\topMarkers\topMarkers.html" />
+    <Content Include="Scripts\topMarkers\topMarkers.js" />
+    <Content Include="Scripts\topMarkers\topMarkersController.js" />
+    <Content Include="Scripts\topMarkers\topMarkersService.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

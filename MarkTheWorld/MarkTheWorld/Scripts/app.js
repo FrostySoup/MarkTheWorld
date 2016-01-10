@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    angular.module('markTheWorld', ['ngMaterial', 'ui.router', 'map', 'squareDetails', 'newSquare', 'mapSettings', 'shared'])
+    angular.module('markTheWorld', ['ngMaterial', 'ui.router', 'map', 'squareDetails', 'newSquare', 'mapSettings', 'topMarkers', 'shared'])
         .config(['$stateProvider', function ($stateProvider) {
             $stateProvider
                 .state('login', {
