@@ -119,7 +119,7 @@
                     removePointsFromMap(markersArray);
                     if (data) {
                         angular.forEach(data.data, function (value) {
-                            markersArray.push(addPoint(value.nTemp, value.sTemp, value.count));
+                            markersArray.push(addPoint(value.sTemp, value.nTemp, value.count));
                         });
                     }
                 });

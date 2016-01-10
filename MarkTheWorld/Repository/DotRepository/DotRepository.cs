@@ -77,6 +77,16 @@ namespace Repository.DotRepository
             double neY = corners.neY + squareY / 3;
             double swX = corners.swX - squareX / 3;
             double swY = corners.swY - squareY / 3;
+            if (neX < swX)
+                neX = 179;
+            if (neX > 180 || neX < -180)
+                neX = 179;
+            if (swX > 180 || swX < -180)
+                swX = -179;
+            if (neY > 90 || neY < -90)
+                neY = 89;
+            if (swY > 90 || swY < -90)
+                swY = -89;
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
                Dot[] dots = session
@@ -94,7 +104,7 @@ namespace Repository.DotRepository
                         dotsToSend.Add(dots[i]);
                     }
                }
-               return dots.ToList();
+               return dotsToSend;
             }
         }
 

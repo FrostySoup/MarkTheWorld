@@ -48,7 +48,7 @@ namespace MarkTheWorld.Controllers.Api
             try
             {
                 GenerateObjects generate = new GenerateObjects();
-                generate.GenerateXUsersWithYDots(1, 1000);
+                generate.GenerateXUsersWithYDots(1, 5);
             }
             catch (Exception)
             {
