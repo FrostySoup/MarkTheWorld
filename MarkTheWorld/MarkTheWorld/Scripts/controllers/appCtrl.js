@@ -2,28 +2,23 @@
 (function () {
     'use strict';
 
-    function AppCtrl($scope, $log, $mdDialog, $mdSidenav, $state, $http, SimpleModalFactory, $timeout, mapService, newSquareService) {
+    function AppCtrl($scope, $log, $mdDialog, $mdToast, $mdSidenav, $state, $http, mapService, newSquareService, mapSettingsService, accountService, toastService) {
 
-        $scope.toggleRight = function(state) {
+        $scope.toggleRight = function (state) {
             $state.transitionTo(state, { param1 : 'something' }, { reload: true });
             sideBar();
         };
 
-        $scope.isLogged = function() {
-            return localStorage.getItem('token') !== null;
+        $scope.isLogged = function () {
+            return accountService.isLogged();
         };
 
-        $scope.getLoggedUser = function() {
-            return localStorage.getItem('user');
+        $scope.getLoggedUser = function () {
+            return accountService.getLoggedUser();
         };
 
         $scope.logout = function () {
-            SimpleModalFactory.showModal('Info', 'Logged out successfully');
-            $timeout(function () {
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
-                localStorage.removeItem('onlyMyOwnMarks');
-            }, 300);
+            accountService.logout();
         };
 
         $scope.openMenu = function($mdOpenMenu, ev) {
@@ -39,17 +34,11 @@
             });
         };
 
-        $scope.showMapSettingsDialog = function (ev) {
-            $mdDialog.show({
-                controller: 'MapSettingsCtrl',
-                templateUrl: 'scripts/templates/mapSettingsDialog.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true
-            });
+        $scope.mapSettings = function (ev) {
+            mapSettingsService.showDialog(ev);
         };
 
-        $scope.addNewSquare = function(ev) {
+        $scope.addNewSquare = function (ev) {
             newSquareService.showDialog(ev);
         };
 

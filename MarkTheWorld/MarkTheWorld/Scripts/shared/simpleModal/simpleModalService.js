@@ -2,12 +2,12 @@
 (function () {
     'use strict';
 
-    function SimpleModalFactory($mdDialog) {
+    function simpleModalService($mdDialog) {
         return {
             showModal: function (title, content) {
                 $mdDialog.show({
-                    controller: 'SimpleModalController',
-                    templateUrl: 'scripts/templates/simpleDialog.html',
+                    controller: 'simpleModalController',
+                    templateUrl: 'scripts/shared/simpleModal/simpleModal.html',
                     parent: angular.element(document.body),
                     locals: { "title": title, "content" : content },
                     bindToController: true,
@@ -16,5 +16,5 @@
             }
         };
     }
-    angular.module('markTheWorld').factory('SimpleModalFactory', SimpleModalFactory);
+    angular.module('simpleModal').factory('simpleModalService', simpleModalService);
 }());

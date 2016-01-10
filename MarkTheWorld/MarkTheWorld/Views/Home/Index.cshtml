@@ -14,7 +14,7 @@
 <body layout="column" ng-controller="AppCtrl" ng-cloak>
 
     <md-content style="overflow: hidden">
-        <md-toolbar class="md-primary" ng-click="showSimpleToast('labas')">
+        <md-toolbar class="md-primary">
             <div class="md-toolbar-tools">
                 <h3 class="ng-binding">Mark The Planet</h3>
                 <span flex=""></span>
@@ -63,14 +63,14 @@
                 </md-menu>
             </div>
         </md-toolbar>
-        <section layout-fill layout="row" layout-padding style="min-height: calc(100% - 80px);">
+        <div id="toastBounds" layout-fill layout="row" layout-padding style="min-height: calc(100% - 80px);">
             <div id="map"></div>
-        </section>
-        <md-button ng-show="isLogged()" class="settings-fab md-fab md-fab-bottom-right" aria-label="Add" ng-click="showMapSettingsDialog($event)">
+        </div>
+        <md-button ng-show="isLogged()" class="settings-fab md-fab md-fab-bottom-right" aria-label="Map settings" ng-click="mapSettings($event)">
             <md-icon md-svg-src="~/Content/img/icons/ic_settings_black_48px.svg" class="s32" aria-label="Map settings" style="color:white;"></md-icon>
         </md-button>
-        <md-button ng-show="isLogged()" class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="addNewSquare($event)">
-            <md-icon md-svg-src="~/Content/img/icons/ic_add_location_black_48px.svg" class="s32" aria-label="Add point" style="color:white;"></md-icon>
+        <md-button ng-show="isLogged()" class="md-fab md-fab-bottom-right" aria-label="Mark your spot" ng-click="addNewSquare($event)">
+            <md-icon md-svg-src="~/Content/img/icons/ic_add_location_black_48px.svg" class="s32" aria-label="Mark your spot" style="color:white;"></md-icon>
         </md-button>
 
         <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">

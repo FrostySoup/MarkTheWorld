@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    angular.module('markTheWorld', ['ngMaterial', 'ui.router', 'map', 'squareDetails', 'newSquare'])
+    angular.module('markTheWorld', ['ngMaterial', 'ui.router', 'map', 'squareDetails', 'newSquare', 'mapSettings', 'shared'])
         .config(['$stateProvider', function ($stateProvider) {
             $stateProvider
                 .state('login', {
@@ -14,5 +14,4 @@
                     templateUrl: 'scripts/templates/register.html'
                 });
         }]);
-
 }());

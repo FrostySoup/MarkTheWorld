@@ -1,9 +1,10 @@
 /*global angular */
 /*global GMaps */
+/*global google */
 (function () {
     'use strict';
 
-    function mapService($http, rectanglesService) {
+    function mapService($http, rectanglesService, accountService) {
         var markersArray = [];
         var mapStyle = [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}];
         var marker;
@@ -47,7 +48,7 @@
                 timeout = setTimeout(later, wait);
                 if (callNow) func.apply(context, args);
             };
-        };
+        }
 
         function addPoint(lat, lng, count) {
             var size = 32 + count;
@@ -71,6 +72,17 @@
             });
         }
 
+        function updateMap() {
+            if (map.getZoom() < 11) {
+                rectanglesService.removeAllRecs();
+                returnObject.markClusters();
+            }
+            else {
+                removePointsFromMap(markersArray);
+                returnObject.markRectangles();
+            }
+        }
+
         function removePointsFromMap(markersArray) {
             for (var i = 0; i < markersArray.length; i++) {
                 map.removeMarker(markersArray[i]);
@@ -82,16 +94,9 @@
         var returnObject = {
             map: map,
 
-            centerZoomChangedHandler : debounce((function () {
-                if (map.getZoom() < 11) {
-                    rectanglesService.removeAllRecs();
-                    returnObject.markClusters();
-                }
-                else {
-                    removePointsFromMap(markersArray);
-                    returnObject.markRectangles();
-                }
-            }), 250),
+            centerZoomChangedHandler : debounce(updateMap, 250),
+
+            updateMap : updateMap,
 
             getClickedPosition: function() {
               return clickedPosition;
@@ -122,10 +127,12 @@
             },
 
             markRectangles: function () {
+
                 var url = '/api/squaresInArea';
-                if (localStorage.getItem('onlyMyOwnMarks') === 'true') {
-                    url = '/api/getUserSquares/' + localStorage.getItem('token');
+                if (typeof accountService.getMapUser() !== 'undefined' && accountService.getMapUser() !== 'all') {
+                    url = '/api/getUserSquaresByName/' + accountService.getMapUser();
                 }
+
                 $http.post(
                     url, {
                         "neX": map.getBounds().getNorthEast().lng(),
