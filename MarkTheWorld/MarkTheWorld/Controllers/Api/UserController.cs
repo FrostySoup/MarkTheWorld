@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace MarkTheWorld.Controllers.Api
 {
@@ -21,6 +22,10 @@ namespace MarkTheWorld.Controllers.Api
             userService = new UserService();
         }
 
+        /// <summary>
+        /// Registracija, prideda naują vartotoją į duomenų bazę
+        /// </summary>
+        [ResponseType(typeof(UserRegistrationModel))]
         [Route("addUser")]
         [HttpPost]
         public IHttpActionResult PostUser(User User)
@@ -40,15 +45,19 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(userCopy);
         }
 
-        [Route("generate")]
+        /// <summary>
+        /// Generuoja nustatytą kiekį duomenų
+        /// </summary>
+        [ResponseType(typeof(bool))]
+        [Route("generate/{user}/{dots}")]
         [HttpGet]
-        public IHttpActionResult GenerateUsers()
+        public IHttpActionResult GenerateUsers(int user, int dots)
         {
             
             try
             {
                 GenerateObjects generate = new GenerateObjects();
-                generate.GenerateXUsersWithYDots(1, 1000);
+                generate.GenerateXUsersWithYDots(user, dots);
             }
             catch (Exception)
             {
@@ -58,6 +67,10 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(true);
         }
 
+        /// <summary>
+        /// Login, gražina vartotojo token
+        /// </summary>
+        [ResponseType(typeof(UserRegistrationModel))]
         [Route("getUser")]
         [HttpPost]
         public IHttpActionResult GetUsers(User user)
@@ -75,6 +88,10 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(userCopy);
         }
 
+        /// <summary>
+        /// Gražina iki 10 vartotojų turinčių daugiausia pažymėtų taškų
+        /// </summary>
+        [ResponseType(typeof(List<TopUser>))]
         [Route("topList")]
         [HttpGet]
         public IHttpActionResult GetTopUsers()

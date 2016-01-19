@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace MarkTheWorld.Controllers.Api
 {
@@ -19,11 +20,14 @@ namespace MarkTheWorld.Controllers.Api
         {
             dotService = new DotServices();
         }
-
+        /// <summary>
+        /// Leidžia patalpinti tašką duomenų bazėje
+        /// </summary>
+        [ResponseType(typeof(UserRegistrationModel))]
         [Route("User")]
         [HttpPost]
         public IHttpActionResult PostDot(DotFromViewModel dot)
-        {
+        {          
             UserRegistrationModel dotCopy = new UserRegistrationModel();
             if (dot.lat < -300 || dot.lng < -300 || dot.username == null)
                 return Ok(dotCopy);
@@ -41,7 +45,10 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(dotCopy);
         }
 
-
+        /// <summary>
+        /// Gražina visus kvadratėlius tam tikroje teritorijoje
+        /// </summary>
+        [ResponseType(typeof(SquaresWithInfo))]
         [Route("squaresInArea")]
         [HttpPost]
         public IHttpActionResult GetSquares(CornersCorrds corners)
@@ -67,6 +74,10 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(squaresSend);
         }
 
+        /// <summary>
+        /// (bus pašalintas API, NENAUDOTI)
+        /// </summary>
+        [ResponseType(typeof(List<Square>))]
         [Route("getUserSquares/{token}")]
         [HttpPost]
         public IHttpActionResult GetUserSquares(CornersCorrds corners, Guid token)
@@ -89,6 +100,10 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(squares);
         }
 
+        /// <summary>
+        /// Gražina tik tam tikro žaidėjo kvadratėlius, pagal prisijungimo vardą
+        /// </summary>
+        [ResponseType(typeof(List<Square>))]
         [Route("getUserSquaresByName/{name}")]
         [HttpPost]
         public IHttpActionResult GetUserSquaresByName(CornersCorrds corners, string name)
@@ -111,6 +126,9 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(squares);
         }
 
+        /// <summary>
+        /// (bus pašalintas API, NENAUDOTI)
+        /// </summary>
         [Route("getUserDots/{token}")]
         [HttpPost]
         public IHttpActionResult GetUserDots(CornersCorrds corners, Guid token)
@@ -128,6 +146,10 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(gameDots);
         }
 
+        /// <summary>
+        /// Gražina tik tam tikro žaidėjo taškus, pagal prisijungimo vardą
+        /// </summary>
+        [ResponseType(typeof(List<Dot>))]
         [Route("getUserByNameDots/{name}")]
         [HttpPost]
         public IHttpActionResult GetUserDotsByName(CornersCorrds corners, string name)
@@ -145,6 +167,10 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(gameDots);
         }
 
+        /// <summary>
+        /// Gražina visus apjungtus taškus tam tikroje teritorijoje
+        /// </summary>
+        [ResponseType(typeof(GroupedDotsForApi))]
         [Route("dotsInArea/{zoomLevel}")]
         [HttpPost]
         public IHttpActionResult GetDots(CornersCorrds corners, double zoomLevel)
