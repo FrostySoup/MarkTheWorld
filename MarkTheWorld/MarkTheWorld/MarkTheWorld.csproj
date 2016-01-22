@@ -240,8 +240,6 @@
     <Content Include="Scripts\controllers\simpleModalController.js" />
     <Content Include="Scripts\controllers\pointInfoController.js" />
     <Content Include="Scripts\controllers\sideBarCtrl.js" />
-    <Content Include="Scripts\libs\gmaps.js" />
-    <Content Include="Scripts\libs\markerclusterer.js" />
     <Content Include="Scripts\mapSettings\mapSettings.html" />
     <Content Include="Scripts\mapSettings\mapSettings.js" />
     <Content Include="Scripts\mapSettings\mapSettingsController.js" />
@@ -301,6 +299,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\libs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

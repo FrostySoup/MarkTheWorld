@@ -42,19 +42,19 @@
         }
 
         // cia yra current pos nustatymas
-        var req = {
-            method: 'POST',
-            url: 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBBmLH1JbsTdr8CeJYP8icbQqcymux3ffA',
-        };
-
-        $http(req).then(function(data) {
-            mapService.map.setCenter({lat: data.data.location.lat, lng: data.data.location.lng});
-            mapService.setClickedPosition({ lat: data.data.location.lat, lng: data.data.location.lng });
-            mapService.map.addMarker({
-                lat: data.data.location.lat,
-                lng: data.data.location.lng
-            });
-        });
+        //var req = {
+        //    method: 'POST',
+        //    url: 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBBmLH1JbsTdr8CeJYP8icbQqcymux3ffA',
+        //};
+        //
+        //$http(req).then(function(data) {
+        //    mapService.map.setCenter({lat: data.data.location.lat, lng: data.data.location.lng});
+        //    mapService.setClickedPosition({ lat: data.data.location.lat, lng: data.data.location.lng });
+        //    mapService.map.addMarker({
+        //        lat: data.data.location.lat,
+        //        lng: data.data.location.lng
+        //    });
+        //});
 
         function buildToggler(navID) {
             return function () {

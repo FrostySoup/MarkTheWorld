@@ -13,20 +13,23 @@
 
         function addNewRecsToMap(recsToBeAdded, map) {
             angular.forEach(recsToBeAdded, function (value) {
-                rectanglesArray.push(
-                    map.drawRectangle({
-                        bounds: [[value.swY, value.swX], [value.neY, value.neX]],
-                        strokeColor: 'rgb(255,64,129)',
-                        fillColor: 'rgb(255,64,129)',
-                        strokeOpacity: 1,
-                        strokeWeight: 1,
-                        click: function () {
-                            if (localStorage.getItem('onlyMyOwnMarks') !== 'true') {
-                                squareDetailsService.showDialog(value.markers);
-                            }
-                        }
-                    })
-                );
+                var rec = new google.maps.Rectangle({
+                    strokeColor: 'rgb(255,64,129)',
+                    strokeOpacity: 1,
+                    strokeWeight: 1,
+                    fillColor: 'rgb(255,64,129)',
+                    map: map,
+                    bounds: new google.maps.LatLngBounds(
+                        new google.maps.LatLng(value.swY, value.swX),
+                        new google.maps.LatLng(value.neY, value.neX)
+                    )
+                });
+                rec.addListener('click', function() {
+                    if (localStorage.getItem('onlyMyOwnMarks') !== 'true') {
+                        squareDetailsService.showDialog(value.markers);
+                    }
+                });
+                rectanglesArray.push(rec);
             });
         }
 
@@ -37,8 +40,8 @@
                 var arrayLength = rectanglesArray.length;
 
                 for (var i = 0; i < arrayLength; i++) {
-                    if (Math.round(rectanglesArray[i].bounds.N.j * 1000) / 1000 === Math.round(element.neY * 1000) / 1000 &&
-                        Math.round(rectanglesArray[i].bounds.j.j * 1000) / 1000 === Math.round(element.swX * 1000) / 1000) {
+                    if (Math.round(rectanglesArray[i].getBounds().R.j * 1000) / 1000 === Math.round(element.neY * 1000) / 1000 &&
+                        Math.round(rectanglesArray[i].getBounds().j.j * 1000) / 1000 === Math.round(element.swX * 1000) / 1000) {
                         return true;
                     }
                 }
@@ -61,8 +64,8 @@
             function newRecsContains(element) {
                 var arrayLength = newRecs.length;
                 for (var i = 0; i < arrayLength; i++) {
-                    if (Math.round(element.bounds.N.j * 1000) / 1000 === Math.round(newRecs[i].neY * 1000) / 1000 &&
-                        Math.round(element.bounds.j.j * 1000) / 1000 === Math.round(newRecs[i].swX * 1000) / 1000) {
+                    if (Math.round(element.getBounds().R.j * 1000) / 1000 === Math.round(newRecs[i].neY * 1000) / 1000 &&
+                        Math.round(element.getBounds().j.j * 1000) / 1000 === Math.round(newRecs[i].swX * 1000) / 1000) {
                         return true;
                     }
                 }
@@ -93,4 +96,4 @@
     }
 
     angular.module('map').factory('rectanglesService', rectanglesService);
-})();
+}());

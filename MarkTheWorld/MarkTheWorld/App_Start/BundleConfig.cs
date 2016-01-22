@@ -5,16 +5,15 @@ namespace MarkTheWorld
 {
     public class BundleConfig
     {
-        // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/app")
-                .IncludeDirectory("~/Scripts/libs", "*.js")
                 .IncludeDirectory("~/Scripts/squareDetails", "*.js")
                 .IncludeDirectory("~/Scripts/shared", "*.js")
                 .IncludeDirectory("~/Scripts/shared/simpleModal", "*.js")
                 .IncludeDirectory("~/Scripts/shared/toast", "*.js")
                 .IncludeDirectory("~/Scripts/topMarkers", "*.js")
+                .IncludeDirectory("~/Scripts/googleMapsInitializer", "*.js")
                 .IncludeDirectory("~/Scripts/mapSettings", "*.js")
                 .IncludeDirectory("~/Scripts/map", "*.js")
                 .IncludeDirectory("~/Scripts/map/services", "*.js")

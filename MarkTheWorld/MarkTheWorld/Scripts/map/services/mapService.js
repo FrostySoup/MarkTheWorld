@@ -1,39 +1,106 @@
 /*global angular */
-/*global GMaps */
 /*global google */
 (function () {
     'use strict';
 
-    function mapService($http, rectanglesService, accountService) {
+    function mapService($http, rectanglesService, accountService, GoogleMapsInitializerService) {
         var markersArray = [];
         var mapStyle = [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}];
         var marker;
         var clickedPosition = {};
+        var map;
 
-        var map = new GMaps({
-            div: '#map',
-            lat: -12.043333,
-            lng: -77.028333,
-            width: '100%',
-            height: 'calc(100% - 64px)',
-            streetViewControl: false,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            styles: mapStyle,
-            click: function(e) {
-                if (marker) {
-                    marker.setMap(null);
+        GoogleMapsInitializerService.mapsInitialized.then(function() {
+            var mapOptions = {
+                lat: -12.043333,
+                lng: -77.028333,
+                width: '100%',
+                height: 'calc(100% - 64px)',
+                streetViewControl: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                styles: mapStyle,
+                click: function(e) {
+                    if (marker) {
+                        marker.setMap(null);
+                    }
+                    marker = new google.maps.Marker({
+                        map: map.map,
+                        draggable: true,
+                        animation: google.maps.Animation.DROP,
+                        position: { lat: e.latLng.lat(), lng: e.latLng.lng() }
+                    });
+                    clickedPosition.lat = e.latLng.lat();
+                    clickedPosition.lng = e.latLng.lng();
+                    console.log(JSON.stringify(clickedPosition), 'zoom:', map.getZoom());
                 }
+            };
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: -34.397, lng: 150.644 },
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                styles: mapStyle,
+                zoom: 12,
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.LEFT_TOP
+                },
+                streetViewControl: false
+            });
+
+            map.addListener('click', function(e) {
                 marker = new google.maps.Marker({
-                    map: map.map,
-                    draggable: true,
+                    map: map,
                     animation: google.maps.Animation.DROP,
                     position: { lat: e.latLng.lat(), lng: e.latLng.lng() }
                 });
-                clickedPosition.lat = e.latLng.lat();
-                clickedPosition.lng = e.latLng.lng();
-                console.log(JSON.stringify(clickedPosition), 'zoom:', map.getZoom());
-            }
+            });
+
+            var req = {
+                method: 'POST',
+                url: 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBBmLH1JbsTdr8CeJYP8icbQqcymux3ffA',
+            };
+
+            $http(req).then(function(data) {
+                map.setCenter({lat: data.data.location.lat, lng: data.data.location.lng});
+            });
+
+            //TODO taip reik daryt
+            //map.addListener('center_changed', function() {
+            //    // 3 seconds after the center of the map has changed, pan back to the
+            //    // marker.
+            //    window.setTimeout(function() {
+            //        map.panTo(marker.getPosition());
+            //    }, 3000);
+            //});
+
+            google.maps.event.addListener(map, 'center_changed', debounce(updateMap, 500));
+            //google.maps.event.addListener(map, 'zoom_changed', mapService.centerZoomChangedHandler);
         });
+
+        //
+        //    new GMaps({
+        //    div: '#map',
+        //    lat: -12.043333,
+        //    lng: -77.028333,
+        //    width: '100%',
+        //    height: 'calc(100% - 64px)',
+        //    streetViewControl: false,
+        //    mapTypeId: google.maps.MapTypeId.ROADMAP,
+        //    styles: mapStyle,
+        //    click: function(e) {
+        //        if (marker) {
+        //            marker.setMap(null);
+        //        }
+        //        marker = new google.maps.Marker({
+        //            map: map.map,
+        //            draggable: true,
+        //            animation: google.maps.Animation.DROP,
+        //            position: { lat: e.latLng.lat(), lng: e.latLng.lng() }
+        //        });
+        //        clickedPosition.lat = e.latLng.lat();
+        //        clickedPosition.lng = e.latLng.lng();
+        //        console.log(JSON.stringify(clickedPosition), 'zoom:', map.getZoom());
+        //    }
+        //});
 
         function debounce(func, wait, immediate) {
             var timeout;
@@ -61,15 +128,13 @@
 
             var image = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="' + size + '" height="' + size + '" viewBox="0 0 38 38"><path fill="rgb(197,17,98)" d="M34.305 16.234c0 8.83-15.148 19.158-15.148 19.158S3.507 25.065 3.507 16.1c0-8.505 6.894-14.304 15.4-14.304 8.504 0 15.398 5.933 15.398 14.438z"/><text transform="translate(19 18.5)" fill="#fff" style="font-family: Roboto, \'Helvetica Neue\', sans-serif;font-weight:bold;text-align:center;" font-size="12" text-anchor="middle">' + count + '</text></svg>';
 
-            return map.addMarker({
-                //title: title,
-                lat: lat,
+            var marker = new google.maps.Marker({
+                position: {'lat' : lat, 'lng' : lng},
                 icon: image,
-                lng: lng
-                //infoWindow: {
-                //    content: title
-                //}
+                map: map
             });
+
+            return marker;
         }
 
         function updateMap() {
@@ -85,7 +150,8 @@
 
         function removePointsFromMap(markersArray) {
             for (var i = 0; i < markersArray.length; i++) {
-                map.removeMarker(markersArray[i]);
+                markersArray[i].setMap(null);
+                //map.removeMarker(markersArray[i]);
             }
 
             markersArray.length = 0;
@@ -133,7 +199,7 @@
             markRectangles: function () {
 
                 var url = '/api/squaresInArea';
-                if (typeof accountService.getMapUser() !== 'undefined' && accountService.getMapUser() !== 'all') {
+                if (accountService.getMapUser() !== null && accountService.getMapUser() !== 'all') {
                     url = '/api/getUserSquaresByName/' + accountService.getMapUser();
                 }
 
@@ -156,4 +222,4 @@
     }
 
     angular.module('map').factory('mapService', mapService);
-})();
+}());
