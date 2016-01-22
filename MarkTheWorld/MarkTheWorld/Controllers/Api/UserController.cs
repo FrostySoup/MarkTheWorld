@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace MarkTheWorld.Controllers.Api
 {
@@ -21,6 +22,10 @@ namespace MarkTheWorld.Controllers.Api
             userService = new UserService();
         }
 
+        /// <summary>
+        /// Registracija, prideda naują vartotoją į duomenų bazę
+        /// </summary>
+        [ResponseType(typeof(UserRegistrationModel))]
         [Route("addUser")]
         [HttpPost]
         public IHttpActionResult PostUser(User User)
@@ -40,15 +45,23 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(userCopy);
         }
 
-        [Route("generate")]
+        /// <summary>
+        /// Generuoja nustatytą kiekį duomenų
+        /// </summary>
+        [ResponseType(typeof(bool))]
+        [Route("generate/{user}/{dots}")]
         [HttpGet]
-        public IHttpActionResult GenerateUsers()
+        public IHttpActionResult GenerateUsers(int user, int dots)
         {
             
             try
             {
                 GenerateObjects generate = new GenerateObjects();
+<<<<<<< HEAD
                 generate.GenerateXUsersWithYDots(5, 100);
+=======
+                generate.GenerateXUsersWithYDots(user, dots);
+>>>>>>> b478da8119c850b18b74dd5dc455d9a8c0bc1e2f
             }
             catch (Exception)
             {
@@ -58,6 +71,10 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(true);
         }
 
+        /// <summary>
+        /// Login, gražina vartotojo token
+        /// </summary>
+        [ResponseType(typeof(UserRegistrationModel))]
         [Route("getUser")]
         [HttpPost]
         public IHttpActionResult GetUsers(User user)
@@ -75,6 +92,73 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(userCopy);
         }
 
+        /// <summary>
+        /// Prideda taškų į vartotojo sąskaitą (NEBAIGTA)
+        /// </summary>
+        [ResponseType(typeof(UserRegistrationModel))]
+        [Route("points/{userName}")]
+        [HttpPost]
+        public IHttpActionResult GetPoints(string userName)
+        {
+            UserRegistrationModel userCopy = new UserRegistrationModel();
+            try
+            {
+               // userCopy = userService.getOne(user);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(userCopy);
+        }
+
+        /// <summary>
+        /// Patikrina ar vartotojas gali pasiimti taškų
+        /// </summary>
+        [ResponseType(typeof(bool))]
+        [Route("checkDaily/{userName}")]
+        [HttpGet]
+        public IHttpActionResult CheckPoints(string userName)
+        {
+            bool canTake = false;
+            try
+            {
+                 canTake = userService.checkUserDaily(userName);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(canTake);
+        }
+
+        /// <summary>
+        /// Paima paskutinius 10 vartotojo įvykių
+        /// </summary>
+        [ResponseType(typeof(List<UserEvent>))]
+        [Route("getEvents/{userName}")]
+        [HttpGet]
+        public IHttpActionResult GetUerEvents(string userName)
+        {
+            List<UserEvent> events = new List<UserEvent>();
+            try
+            {
+                events = userService.getUserEvents(userName);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(events);
+        }
+
+        /// <summary>
+        /// Gražina iki 10 vartotojų turinčių daugiausia pažymėtų taškų
+        /// </summary>
+        [ResponseType(typeof(List<TopUser>))]
         [Route("topList")]
         [HttpGet]
         public IHttpActionResult GetTopUsers()

@@ -72,11 +72,14 @@
     <Compile Include="Square.cs" />
     <Compile Include="TopUser.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserEvent.cs" />
     <Compile Include="UserRegistrationModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -15,5 +15,8 @@ namespace Repository.UserRepository
         Guid GetTokenByName(string name);
         UserRegistrationModel GetOneUser(User user);
         List<TopUser> GetTopUsers();
+        bool GetUserDaily(string userName);
+        List<UserEvent> GetUserEvents(string userName);
+        bool SetDailies();
     }
 }

@@ -49,6 +49,69 @@ namespace Repository.UserRepository
             }
         }
 
+        public bool SetDailies()
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                try
+                {
+                    List<User> users = session.Query<User>()
+                        .Take(5000)
+                        .ToList();
+                    foreach(User user in users)
+                    {
+                        user.pointsAvailable = true;
+                        session.Store(user);
+                    }
+                    session.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public List<UserEvent> GetUserEvents(string userName)
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                try
+                {
+                    User user = session.Query<User>().First(x => x.UserName.Equals(userName));
+                    return user.eventsHistory;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
+        public bool GetUserDaily(string userName)
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                try
+                {
+                    User user = session.Query<User>().First(x => x.UserName.Equals(userName));
+                    if (user.pointsAvailable != false)
+                    {
+                        user.pointsAvailable = false;
+                        session.Store(user);
+                        session.SaveChanges();
+                        return true;
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+                return false;
+            }
+        }
+
         public List<TopUser> GetTopUsers()
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
