@@ -57,11 +57,7 @@ namespace MarkTheWorld.Controllers.Api
             try
             {
                 GenerateObjects generate = new GenerateObjects();
-<<<<<<< HEAD
-                generate.GenerateXUsersWithYDots(5, 100);
-=======
                 generate.GenerateXUsersWithYDots(user, dots);
->>>>>>> b478da8119c850b18b74dd5dc455d9a8c0bc1e2f
             }
             catch (Exception)
             {
