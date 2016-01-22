@@ -26,10 +26,8 @@ namespace Repository.DotRepository
                     if (user.Id == null)
                         return reg;
                     Dot dotCopy = new Dot();
-                    DotForIndex[] dots = session
-                        .Query<UserDotsIndex.Result, UserDotsIndex>()
-                        .Where(x => x.UserId.Equals(user.Id))
-                        .As<DotForIndex>()
+                    Dot[] dots = session
+                        .Query<Dot>()
                         .Take(5000)
                         .ToArray();
                     for (int i = 0; i < dots.Length; i++)
@@ -42,11 +40,54 @@ namespace Repository.DotRepository
                             int lat2 = (int)(dot.lat * 100);
                             if (lat == lat2)
                             {
-                                reg.message = "You already marked this dot";
-                                return reg;
+                                if (dot.username.Equals(dots[i].username))
+                                {
+                                    reg.message = "You already marked this dot";
+                                    return reg;
+                                }
+                                else
+                                {
+                                    string name = dots[i].username;
+                                    User userChanged = session.Query<User>().First(x => x.UserName.Equals(name));
+                                    userChanged.dotsId.Remove(dots[i].Id);
+
+                                    //add event here
+                                    if (userChanged.eventsHistory == null)
+                                        userChanged.eventsHistory = new List<UserEvent>();
+                                    userChanged.eventsHistory.Add(new UserEvent("Player captured your point", dots[i].lon, dots[i].lat, user.UserName));
+                                    if (userChanged.eventsHistory.Count > 10)
+                                        userChanged.eventsHistory.RemoveRange(10, 1);
+
+                                    if (user.eventsHistory == null)
+                                        user.eventsHistory = new List<UserEvent>();
+                                    user.eventsHistory.Add(new UserEvent("You captured point", dots[i].lon, dots[i].lat, userChanged.UserName));
+                                    if (user.eventsHistory.Count > 10)
+                                        user.eventsHistory.RemoveRange(10, 1);
+
+                                    dots[i].date = DateTime.Today;
+                                    dots[i].message = dot.message;
+                                    dots[i].lat = dot.lat;
+                                    dots[i].lon = dot.lng;
+                                    dots[i].username = user.UserName;
+                                    user.dotsId.Add(dots[i].Id);
+                                    session.Store(dots[i]);
+                                    session.Store(userChanged);
+                                    session.Store(user);
+                                    session.SaveChanges();
+                                    reg.success = true;
+                                    reg.message = "Success";
+                                    return reg;
+                                }
                             }
                         }
                     }
+
+                    if (user.eventsHistory == null)
+                        user.eventsHistory = new List<UserEvent>();
+                    user.eventsHistory.Add(new UserEvent("You captured new point", dot.lng, dot.lat, null));
+                    if (user.eventsHistory.Count > 10)
+                        user.eventsHistory.RemoveRange(10, 1);
+
                     dotCopy.date = DateTime.Today;
                     dotCopy.message = dot.message;
                     dotCopy.lat = dot.lat;

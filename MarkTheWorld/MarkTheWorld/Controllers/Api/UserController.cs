@@ -89,6 +89,69 @@ namespace MarkTheWorld.Controllers.Api
         }
 
         /// <summary>
+        /// Prideda taškų į vartotojo sąskaitą (NEBAIGTA)
+        /// </summary>
+        [ResponseType(typeof(UserRegistrationModel))]
+        [Route("points/{userName}")]
+        [HttpPost]
+        public IHttpActionResult GetPoints(string userName)
+        {
+            UserRegistrationModel userCopy = new UserRegistrationModel();
+            try
+            {
+               // userCopy = userService.getOne(user);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(userCopy);
+        }
+
+        /// <summary>
+        /// Patikrina ar vartotojas gali pasiimti taškų
+        /// </summary>
+        [ResponseType(typeof(bool))]
+        [Route("checkDaily/{userName}")]
+        [HttpGet]
+        public IHttpActionResult CheckPoints(string userName)
+        {
+            bool canTake = false;
+            try
+            {
+                 canTake = userService.checkUserDaily(userName);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(canTake);
+        }
+
+        /// <summary>
+        /// Paima paskutinius 10 vartotojo įvykių
+        /// </summary>
+        [ResponseType(typeof(List<UserEvent>))]
+        [Route("getEvents/{userName}")]
+        [HttpGet]
+        public IHttpActionResult GetUerEvents(string userName)
+        {
+            List<UserEvent> events = new List<UserEvent>();
+            try
+            {
+                events = userService.getUserEvents(userName);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(events);
+        }
+
+        /// <summary>
         /// Gražina iki 10 vartotojų turinčių daugiausia pažymėtų taškų
         /// </summary>
         [ResponseType(typeof(List<TopUser>))]

@@ -72,6 +72,7 @@
     <Compile Include="Square.cs" />
     <Compile Include="TopUser.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserEvent.cs" />
     <Compile Include="UserRegistrationModel.cs" />
   </ItemGroup>
   <ItemGroup>

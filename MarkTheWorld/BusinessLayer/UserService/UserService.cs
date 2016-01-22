@@ -55,5 +55,21 @@ namespace BusinessLayer.UserService
         {
             return repository.GetTopUsers();
         }
+
+        public bool checkUserDaily(string userName)
+        {
+            return repository.GetUserDaily(userName);
+        }
+
+        public List<UserEvent> getUserEvents(string userName)
+        {
+            return repository.GetUserEvents(userName);
+        }
+
+        public bool renewDailies()
+        {
+            return repository.SetDailies();
+        }
+
     }
 }

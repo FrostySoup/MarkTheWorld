@@ -16,7 +16,12 @@ namespace Data
 
         public string PasswordHash { get; set; }
 
-        public List<string> dotsId { get; set; } 
+        public List<string> dotsId { get; set; }
 
+        public int points { get; set; }
+
+        public List<UserEvent> eventsHistory { get; set; }
+
+        public bool pointsAvailable { get; set; }
     }
 }

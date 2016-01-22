@@ -531,6 +531,21 @@
             Login, gražina vartotojo token
             </summary>
         </member>
+        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetPoints(System.String)">
+            <summary>
+            Prideda taškų į vartotojo sąskaitą (NEBAIGTA)
+            </summary>
+        </member>
+        <member name="M:MarkTheWorld.Controllers.Api.UserController.CheckPoints(System.String)">
+            <summary>
+            Patikrina ar vartotojas gali pasiimti taškų
+            </summary>
+        </member>
+        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetUerEvents(System.String)">
+            <summary>
+            Paima paskutinius 10 vartotojo įvykių
+            </summary>
+        </member>
         <member name="M:MarkTheWorld.Controllers.Api.UserController.GetTopUsers">
             <summary>
             Gražina iki 10 vartotojų turinčių daugiausia pažymėtų taškų
