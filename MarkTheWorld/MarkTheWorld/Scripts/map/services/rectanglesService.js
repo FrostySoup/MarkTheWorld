@@ -4,6 +4,7 @@
     var rectanglesArray = [];
 
     function rectanglesService(squareDetailsService) {
+
         function removeUnneededRecsFromMap(unneededRecs) {
             var arrayLength = unneededRecs.length;
             for (var i = 0; i < arrayLength; i++) {
@@ -33,7 +34,7 @@
             });
         }
 
-        function addNewRecs(newRecs) {
+        function findNewRecs(newRecs) {
             var recsToBeAdded = [];
 
             function rectanglesArrayContains(element) {
@@ -58,7 +59,7 @@
             return recsToBeAdded;
         }
 
-        function removeUnneededRecs(newRecs) {
+        function findUnneededRecs(newRecs) {
             var recsToBeRemoved = [];
 
             function newRecsContains(element) {
@@ -72,6 +73,7 @@
                 return false;
             }
 
+            //updating main rectangles container
             for (var i = 0; i < rectanglesArray.length; i++) {
                 if (!newRecsContains(rectanglesArray[i])) {
                     recsToBeRemoved.push.apply(recsToBeRemoved, rectanglesArray.splice(i, 1));
@@ -83,9 +85,9 @@
 
         return {
             handleRecs : function(data, map) {
-                var recsToBeRemoved = removeUnneededRecs(data);
+                var recsToBeRemoved = findUnneededRecs(data);
                 removeUnneededRecsFromMap(recsToBeRemoved);
-                var recsToBeAdded = addNewRecs(data);
+                var recsToBeAdded = findNewRecs(data);
                 addNewRecsToMap(recsToBeAdded, map);
             },
             removeAllRecs : function() {
