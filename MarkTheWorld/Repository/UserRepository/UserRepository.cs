@@ -23,7 +23,7 @@ namespace Repository.UserRepository
                 {                    
                     UserRegistrationModel check = new UserRegistrationModel();
                     check.success = false;
-                    check.message = "Unknown error";
+                    check.message = message2.Unknown;
                     check.Token = System.Guid.NewGuid();
                     User oneObject = session.Query<User>().First(x => x.UserName.Equals(newUser.UserName));
                     if (oneObject == null)
@@ -32,11 +32,11 @@ namespace Repository.UserRepository
                         session.Store(newUser);
                         session.SaveChanges();
                         check.success = true;
-                        check.message = "User added";
+                        check.message = message2.Success;
                         return check;
                     }
                     check.success = false;
-                    check.message = "Username already taken";
+                    check.message = message2.Fail;
                     return check;
                 }
                 catch
@@ -47,7 +47,7 @@ namespace Repository.UserRepository
                     newUser.Token = check.Token;
                     session.Store(newUser);
                     session.SaveChanges();
-                    check.message = "User added";
+                    check.message = message2.Success;
                     return check;
                 }
             }
@@ -160,21 +160,21 @@ namespace Repository.UserRepository
                     if (oneObject == null)
                     {
                         check.success = false;
-                        check.message = "Wrong username";
+                        check.message = message2.MissMatch;
                         return check;
                     }
 
                     if (!oneObject.PasswordHash.Equals(user.PasswordHash))
                     {
                         check.success = false;
-                        check.message = "Wrong password";
+                        check.message = message2.MissMatch;
                         return check;
                     }
 
                     if (oneObject != null)
                     {
                         check.success = true;
-                        check.message = "User found";
+                        check.message = message2.Success;
                         check.Token = oneObject.Token;
                         return check;
                     }
@@ -184,7 +184,7 @@ namespace Repository.UserRepository
                 {
                     UserRegistrationModel check = new UserRegistrationModel();
                     check.success = false;
-                    check.message = "Wrong username";
+                    check.message = message2.MissMatch;
                     return check;
                 }
             }

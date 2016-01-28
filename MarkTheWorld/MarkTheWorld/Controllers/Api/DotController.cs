@@ -75,32 +75,6 @@ namespace MarkTheWorld.Controllers.Api
         }
 
         /// <summary>
-        /// (bus pašalintas API, NENAUDOTI)
-        /// </summary>
-        [ResponseType(typeof(List<Square>))]
-        [Route("getUserSquares/{token}")]
-        [HttpPost]
-        public IHttpActionResult GetUserSquares(CornersCorrds corners, Guid token)
-        {
-            List<Dot> gameDots = new List<Dot>();
-            List<Square> squares = new List<Square>();
-            try
-            {
-                gameDots = dotService.getUserDots(corners, token);
-                foreach (Dot dot in gameDots)
-                {
-                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon), dot.username));
-                }
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
-
-            return Ok(squares);
-        }
-
-        /// <summary>
         /// Gražina tik tam tikro žaidėjo kvadratėlius, pagal prisijungimo vardą
         /// </summary>
         [ResponseType(typeof(List<Square>))]
@@ -124,26 +98,6 @@ namespace MarkTheWorld.Controllers.Api
             }
 
             return Ok(squares);
-        }
-
-        /// <summary>
-        /// (bus pašalintas API, NENAUDOTI)
-        /// </summary>
-        [Route("getUserDots/{token}")]
-        [HttpPost]
-        public IHttpActionResult GetUserDots(CornersCorrds corners, Guid token)
-        {
-            List<Dot> gameDots = new List<Dot>();
-            try
-            {
-                gameDots = dotService.getUserDots(corners, token);
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
-
-            return Ok(gameDots);
         }
 
         /// <summary>
