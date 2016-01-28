@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.ReceivePostData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace BusinessLayer.TestGenerator
 
         public UserRegistrationModel generateUser()
         {
-            User user = new User();
+            UserRegistrationPost user = new UserRegistrationPost();
             string[] pavardės = { "varšys", "driugys", "banilskis", "bobtuskis", "lakonavičius", "berdonskis", "pralešavičius", "vinciškis", "druiginksis", "lepavičius", "skis", "bakskys" };
             Random rnd = new Random();
             char[] chars = "ABCDEFGHIJKLMNOPRSTUVYZ".ToCharArray();

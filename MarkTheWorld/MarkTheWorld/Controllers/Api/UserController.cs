@@ -2,10 +2,13 @@
 using BusinessLayer.TestGenerator;
 using BusinessLayer.UserService;
 using Data;
+using Data.ReceivePostData;
 using MarkTheWorld.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -26,9 +29,9 @@ namespace MarkTheWorld.Controllers.Api
         /// Registracija, prideda naują vartotoją į duomenų bazę
         /// </summary>
         [ResponseType(typeof(UserRegistrationModel))]
-        [Route("addUser")]
+        [Route("User")]
         [HttpPost]
-        public IHttpActionResult PostUser(User User)
+        public IHttpActionResult PostUser(UserRegistrationPost User)
         {
             UserRegistrationModel userCopy = new UserRegistrationModel();
             if (User.UserName == null || User.PasswordHash == null)
@@ -37,9 +40,12 @@ namespace MarkTheWorld.Controllers.Api
             {
                 userCopy = userService.addUser(User);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return InternalServerError();
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError){
+                    Content = new StringContent("An error occured, please try again or contact the administrator"),
+                    ReasonPhrase = "Critical Exception"
+                });
             }
 
             return Ok(userCopy);
@@ -71,9 +77,9 @@ namespace MarkTheWorld.Controllers.Api
         /// Login, gražina vartotojo token
         /// </summary>
         [ResponseType(typeof(UserRegistrationModel))]
-        [Route("getUser")]
-        [HttpPost]
-        public IHttpActionResult GetUsers(User user)
+        [Route("User")]
+        [HttpGet]
+        public IHttpActionResult GetUsers(UserRegistrationPost user)
         {
             UserRegistrationModel userCopy = new UserRegistrationModel();
             try
@@ -113,7 +119,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Patikrina ar vartotojas gali pasiimti taškų
         /// </summary>
         [ResponseType(typeof(bool))]
-        [Route("checkDaily/{userName}")]
+        [Route("Daily/{userName}")]
         [HttpGet]
         public IHttpActionResult CheckPoints(string userName)
         {
@@ -134,7 +140,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Paima paskutinius 10 vartotojo įvykių
         /// </summary>
         [ResponseType(typeof(List<UserEvent>))]
-        [Route("getEvents/{userName}")]
+        [Route("Events/{userName}")]
         [HttpGet]
         public IHttpActionResult GetUerEvents(string userName)
         {

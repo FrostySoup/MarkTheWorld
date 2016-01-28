@@ -233,6 +233,10 @@
     <Compile Include="Controllers\DummyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="ExceptionsHandling\BrowserJsonFormatter.cs" />
+    <Compile Include="ExceptionsHandling\ExceptionHandlingWithCustomPages.cs" />
+    <Compile Include="ExceptionsHandling\FileExceptionLogger.cs" />
+    <Compile Include="ExceptionsHandling\GenericExceptionHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -243,7 +247,15 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.html" />
+    <Content Include="500.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\images\bg1.png" />
+    <Content Include="Content\images\error-img.png" />
+    <Content Include="Content\img\ErrorPageIcons\MarkThePlanetLogoText.png" />
+    <Content Include="Content\img\ErrorPageIcons\MarkTheWorldLogo.png" />
+    <Content Include="Content\img\ErrorPageIcons\signal.png" />
     <Content Include="Content\img\icons\ic_account_box_black_36px.svg" />
     <Content Include="Content\img\icons\ic_account_box_white_36px.svg" />
     <Content Include="Content\img\icons\ic_account_box_white_48px.svg" />
@@ -258,6 +270,7 @@
     <Content Include="Content\img\icons\ic_settings_black_48px.svg" />
     <Content Include="Content\img\icons\settings.png" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\styles\css\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -360,6 +373,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Content\images\Thumbs.db" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Dummy\Index.cshtml" />

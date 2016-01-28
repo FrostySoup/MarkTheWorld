@@ -506,7 +506,7 @@
             (bus pašalintas API, NENAUDOTI)
             </summary>
         </member>
-        <member name="M:MarkTheWorld.Controllers.Api.DotController.GetUserDotsByName(Data.DataHelpers.CornersCorrds,System.String)">
+        <member name="M:MarkTheWorld.Controllers.Api.DotController.GetUserDotsByName(Data.DataHelpers.CornersCorrds,System.String,System.Double)">
             <summary>
             Gražina tik tam tikro žaidėjo taškus, pagal prisijungimo vardą
             </summary>
@@ -516,7 +516,7 @@
             Gražina visus apjungtus taškus tam tikroje teritorijoje
             </summary>
         </member>
-        <member name="M:MarkTheWorld.Controllers.Api.UserController.PostUser(Data.User)">
+        <member name="M:MarkTheWorld.Controllers.Api.UserController.PostUser(Data.ReceivePostData.UserRegistrationPost)">
             <summary>
             Registracija, prideda naują vartotoją į duomenų bazę
             </summary>
@@ -526,7 +526,7 @@
             Generuoja nustatytą kiekį duomenų
             </summary>
         </member>
-        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetUsers(Data.User)">
+        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetUsers(Data.ReceivePostData.UserRegistrationPost)">
             <summary>
             Login, gražina vartotojo token
             </summary>

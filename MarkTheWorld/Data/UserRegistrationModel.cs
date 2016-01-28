@@ -10,6 +10,12 @@ namespace Data
     {
         public Boolean success { get; set; }
         public string message { get; set; }
+        public enum message2 : int
+        {
+            Unknown,
+            Fail,
+            Success
+        }; 
         public Guid Token { get; set; }
     }
 }

@@ -67,9 +67,6 @@ namespace MarkTheWorld
 
         protected void Application_BeginRequest(Object sender, EventArgs e)
         {
-            // If the dummy page is hit, then it means we want to add another item
-
-            // in cache
 
             if (HttpContext.Current.Request.Url.ToString() == DummyPageUrl)
             {

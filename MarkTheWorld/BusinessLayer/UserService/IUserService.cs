@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.ReceivePostData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace BusinessLayer.UserService
     public interface IUserService
     {
         List<User> getApplicationUserApplicationUsers(string ApplicationUserID);
-        UserRegistrationModel addUser(User ApplicationUser);
-        UserRegistrationModel getOne(User user);
+        UserRegistrationModel addUser(UserRegistrationPost ApplicationUser);
+        UserRegistrationModel getOne(UserRegistrationPost user);
         User deleteOne(string id);   //delete one
         User editApplicationUser(User ApplicationUser);
         User getOneByToken(Guid token);
