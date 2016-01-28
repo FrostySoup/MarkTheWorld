@@ -4,7 +4,7 @@
 
     function mapSettingsController($scope, $mdDialog, mapService, accountService, toastService) {
 
-        if (typeof accountService.getMapUser() === 'undefined' || accountService.getMapUser() === 'all') {
+        if (accountService.getMapUser() === null || accountService.getMapUser() === 'all') {
             $scope.selection = 'all';
         } else if (accountService.getMapUser() === accountService.getLoggedUser()) {
             $scope.selection = 'own';

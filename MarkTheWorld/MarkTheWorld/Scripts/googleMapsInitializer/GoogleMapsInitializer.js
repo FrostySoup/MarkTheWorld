@@ -2,5 +2,5 @@
 (function () {
     'use strict';
 
-    angular.module('map', ['GoogleMapsInitializer']);
+    angular.module('GoogleMapsInitializer', []);
 }());

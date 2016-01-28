@@ -1,3 +1,10 @@
+html, body { height: 100%; margin: 0; padding: 0; }
+
+#map {
+    width: 100%;
+    height: calc(100% - 64px);
+}
+
 /*Removes button focus*/
 button.md-default-theme:not([disabled]).md-focused {
     background-color: transparent !important;
