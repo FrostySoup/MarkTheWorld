@@ -10,21 +10,21 @@ namespace Data
     public class GroupedDotsForApi
     {
         public int count { get; set; }
-        public double nTemp { get; set; }
-        public double sTemp { get; set; }
+        public double lon { get; set; }
+        public double lat { get; set; }
 
         public GroupedDotsForApi(List<TBQuadTreeNodeData> dots)
         {
             count = dots.Count;
-            nTemp = 0;
-            sTemp = 0;
+            lon = 0;
+            lat = 0;
             for (int i = 0; i < dots.Count; i++)
             {
-                nTemp += dots[i].x;
-                sTemp += dots[i].y;
+                lon += dots[i].x;
+                lat += dots[i].y;
             }
-            nTemp /= dots.Count;
-            sTemp /= dots.Count;
+            lon /= dots.Count;
+            lat /= dots.Count;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.ReceivePostData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,9 @@ namespace Repository.UserRepository
     {
         User GetOneByName(string name);
         User GetOneByToken(Guid token);
-        UserRegistrationModel AddUser(User user);
+        UserRegistrationModel AddUser(UserRegistrationPost user);
         Guid GetTokenByName(string name);
-        UserRegistrationModel GetOneUser(User user);
+        UserRegistrationModel GetOneUser(UserRegistrationPost user);
         List<TopUser> GetTopUsers();
         bool GetUserDaily(string userName);
         List<UserEvent> GetUserEvents(string userName);

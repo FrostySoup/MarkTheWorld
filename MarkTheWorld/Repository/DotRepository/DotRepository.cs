@@ -19,7 +19,7 @@ namespace Repository.DotRepository
             {
                 UserRegistrationModel reg = new UserRegistrationModel();
                 reg.success = false;
-                reg.message = "Unknown error";
+                reg.message = 0;
                 try
                 {                 
                     User user = session.Query<User>().First(x => x.Token.Equals(dot.username));
@@ -42,7 +42,7 @@ namespace Repository.DotRepository
                             {
                                 if (dot.username.Equals(dots[i].username))
                                 {
-                                    reg.message = "You already marked this dot";
+                                    reg.message = message2.Fail;
                                     return reg;
                                 }
                                 else
@@ -75,7 +75,7 @@ namespace Repository.DotRepository
                                     session.Store(user);
                                     session.SaveChanges();
                                     reg.success = true;
-                                    reg.message = "Success";
+                                    reg.message = message2.Success;
                                     return reg;
                                 }
                             }
@@ -100,7 +100,7 @@ namespace Repository.DotRepository
                     session.Store(user);
                     session.SaveChanges();
                     reg.success = true;
-                    reg.message = "Success";
+                    reg.message = message2.Success;
                     return reg;
                 }
                 catch

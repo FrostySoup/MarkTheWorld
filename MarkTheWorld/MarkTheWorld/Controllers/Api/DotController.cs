@@ -24,7 +24,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Leidžia patalpinti tašką duomenų bazėje
         /// </summary>
         [ResponseType(typeof(UserRegistrationModel))]
-        [Route("User")]
+        [Route("Dot")]
         [HttpPost]
         public IHttpActionResult PostDot(DotFromViewModel dot)
         {          
@@ -49,8 +49,8 @@ namespace MarkTheWorld.Controllers.Api
         /// Gražina visus kvadratėlius tam tikroje teritorijoje
         /// </summary>
         [ResponseType(typeof(SquaresWithInfo))]
-        [Route("squaresInArea")]
-        [HttpPost]
+        [Route("Squares")]
+        [HttpGet]
         public IHttpActionResult GetSquares(CornersCorrds corners)
         {
             List<Dot> dots = new List<Dot>();
@@ -75,36 +75,10 @@ namespace MarkTheWorld.Controllers.Api
         }
 
         /// <summary>
-        /// (bus pašalintas API, NENAUDOTI)
-        /// </summary>
-        [ResponseType(typeof(List<Square>))]
-        [Route("getUserSquares/{token}")]
-        [HttpPost]
-        public IHttpActionResult GetUserSquares(CornersCorrds corners, Guid token)
-        {
-            List<Dot> gameDots = new List<Dot>();
-            List<Square> squares = new List<Square>();
-            try
-            {
-                gameDots = dotService.getUserDots(corners, token);
-                foreach (Dot dot in gameDots)
-                {
-                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon), dot.username));
-                }
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
-
-            return Ok(squares);
-        }
-
-        /// <summary>
         /// Gražina tik tam tikro žaidėjo kvadratėlius, pagal prisijungimo vardą
         /// </summary>
         [ResponseType(typeof(List<Square>))]
-        [Route("getUserSquaresByName/{name}")]
+        [Route("Squares/{name}")]
         [HttpPost]
         public IHttpActionResult GetUserSquaresByName(CornersCorrds corners, string name)
         {
@@ -127,51 +101,33 @@ namespace MarkTheWorld.Controllers.Api
         }
 
         /// <summary>
-        /// (bus pašalintas API, NENAUDOTI)
-        /// </summary>
-        [Route("getUserDots/{token}")]
-        [HttpPost]
-        public IHttpActionResult GetUserDots(CornersCorrds corners, Guid token)
-        {
-            List<Dot> gameDots = new List<Dot>();
-            try
-            {
-                gameDots = dotService.getUserDots(corners, token);
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
-
-            return Ok(gameDots);
-        }
-
-        /// <summary>
         /// Gražina tik tam tikro žaidėjo taškus, pagal prisijungimo vardą
         /// </summary>
-        [ResponseType(typeof(List<Dot>))]
-        [Route("getUserByNameDots/{name}")]
+        [ResponseType(typeof(List<GroupedDotsForApi>))]
+        [Route("Dots/{name}/{zoomLevel}")]
         [HttpPost]
-        public IHttpActionResult GetUserDotsByName(CornersCorrds corners, string name)
+        public IHttpActionResult GetUserDotsByName(CornersCorrds corners, string name, double zoomLevel)
         {
             List<Dot> gameDots = new List<Dot>();
+            List<GroupedDotsForApi> groupedDots = new List<GroupedDotsForApi>();
             try
             {
                 gameDots = dotService.getUserDotsName(corners, name);
+                groupedDots = dotService.groupDots(gameDots, corners, zoomLevel);
             }
             catch (Exception)
             {
                 return InternalServerError();
             }
 
-            return Ok(gameDots);
+            return Ok(groupedDots);
         }
 
         /// <summary>
         /// Gražina visus apjungtus taškus tam tikroje teritorijoje
         /// </summary>
-        [ResponseType(typeof(GroupedDotsForApi))]
-        [Route("dotsInArea/{zoomLevel}")]
+        [ResponseType(typeof(List<GroupedDotsForApi>))]
+        [Route("Dots/{zoomLevel}")]
         [HttpPost]
         public IHttpActionResult GetDots(CornersCorrds corners, double zoomLevel)
         {

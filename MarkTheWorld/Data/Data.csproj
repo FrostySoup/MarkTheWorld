@@ -69,6 +69,7 @@
     <Compile Include="GroupedDotsForApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuadTrees\QuadTree.cs" />
+    <Compile Include="ReceivePostData\UserRegistrationPost.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="TopUser.cs" />
     <Compile Include="User.cs" />

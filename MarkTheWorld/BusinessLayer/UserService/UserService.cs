@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.ReceivePostData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,12 @@ namespace BusinessLayer.UserService
             return repository.GetAll<User>();
         }
 
-        public UserRegistrationModel addUser(User user)
+        public UserRegistrationModel addUser(UserRegistrationPost user)
         {
             return repository.AddUser(user);
         }
 
-        public UserRegistrationModel getOne(User user)
+        public UserRegistrationModel getOne(UserRegistrationPost user)
         {
             return repository.GetOneUser(user);
         }
