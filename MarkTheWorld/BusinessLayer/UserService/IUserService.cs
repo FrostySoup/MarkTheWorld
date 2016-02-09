@@ -19,6 +19,6 @@ namespace BusinessLayer.UserService
         List<TopUser> getTopUsers();
         bool checkUserDaily(string userName);
         List<UserEvent> getUserEvents(string userName);
-        bool renewDailies();
+        bool renewDailies();        
     }
 }

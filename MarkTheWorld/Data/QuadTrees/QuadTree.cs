@@ -11,13 +11,21 @@ namespace CSharpQuadTree
         public double x;
         public double y;
         public Dot data;
+        public int number;
         public TBQuadTreeNodeData(double y, double x, Dot dat)
         {
             this.x = x;
             this.y = y;
             data = dat;
         }
-        
+        public TBQuadTreeNodeData(double y, double x, Dot dat, int num)
+        {
+            this.x = x;
+            this.y = y;
+            data = dat;
+            number = num;
+        }
+
     }
 
     public class TBBoundingBox

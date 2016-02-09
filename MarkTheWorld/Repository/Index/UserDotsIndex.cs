@@ -54,6 +54,7 @@ namespace Repository.Index
                                         message = g.Select(x => x.message).Where(x => x != null).First(),
                                         UserId = g.Select(x => x.UserId).Where(x => x != null).First()
                                     };
-        }
+        }     
+
     }
 }

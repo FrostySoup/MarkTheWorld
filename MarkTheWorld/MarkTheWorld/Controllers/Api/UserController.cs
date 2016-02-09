@@ -77,8 +77,8 @@ namespace MarkTheWorld.Controllers.Api
         /// Login, gražina vartotojo token
         /// </summary>
         [ResponseType(typeof(UserRegistrationModel))]
-        [Route("User")]
-        [HttpGet]
+        [Route("User/Login")]
+        [HttpPost]
         public IHttpActionResult GetUsers(UserRegistrationPost user)
         {
             UserRegistrationModel userCopy = new UserRegistrationModel();

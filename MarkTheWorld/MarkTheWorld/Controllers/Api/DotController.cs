@@ -50,7 +50,7 @@ namespace MarkTheWorld.Controllers.Api
         /// </summary>
         [ResponseType(typeof(SquaresWithInfo))]
         [Route("Squares")]
-        [HttpGet]
+        [HttpPost]
         public IHttpActionResult GetSquares(CornersCorrds corners)
         {
             List<Dot> dots = new List<Dot>();
