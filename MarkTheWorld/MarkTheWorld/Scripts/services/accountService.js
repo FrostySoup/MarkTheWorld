@@ -8,7 +8,7 @@
             login: function (user) {
                 var deferredObject = $q.defer();
 
-                $http.post('/api/getUser',
+                $http.post('/api/User/Login',
                     {
                         "UserName": user.UserName,
                         "PasswordHash": user.PasswordHash
@@ -31,7 +31,7 @@
             register: function (user) {
                 var deferredObject = $q.defer();
 
-                $http.post('/api/addUser',
+                $http.post('/api/User',
                     {
                         "UserName": user.UserName,
                         "PasswordHash": user.PasswordHash
@@ -54,7 +54,7 @@
             addPoint: function (message, lat, lng) {
                 var deferredObject = $q.defer();
 
-                $http.post('/api/User',
+                $http.post('/api/Dot',
                     {
                         "username": localStorage.getItem('token'),
                         "lat": lat,

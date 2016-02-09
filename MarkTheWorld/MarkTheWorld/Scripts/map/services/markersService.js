@@ -12,8 +12,8 @@
                 var arrayLength = newMarkers.length;
                 for (var i = 0; i < arrayLength; i++) {
 
-                    if (Math.round(element.getPosition().lat() * 1000) / 1000 === Math.round(newMarkers[i].sTemp * 1000) / 1000 &&
-                        Math.round(element.getPosition().lng() * 1000) / 1000 === Math.round(newMarkers[i].nTemp * 1000) / 1000 &&
+                    if (Math.round(element.getPosition().lat() * 1000) / 1000 === Math.round(newMarkers[i].lat * 1000) / 1000 &&
+                        Math.round(element.getPosition().lng() * 1000) / 1000 === Math.round(newMarkers[i].lon * 1000) / 1000 &&
                         newMarkers[i].count === element.count) {
                         return true;
                     }
@@ -39,8 +39,8 @@
                 var arrayLength = markersArray.length;
 
                 for (var i = 0; i < arrayLength; i++) {
-                    if (Math.round(markersArray[i].getPosition().lat() * 1000) / 1000 === Math.round(element.sTemp * 1000) / 1000 &&
-                        Math.round(markersArray[i].getPosition().lng() * 1000) / 1000 === Math.round(element.nTemp * 1000) / 1000 &&
+                    if (Math.round(markersArray[i].getPosition().lat() * 1000) / 1000 === Math.round(element.lat * 1000) / 1000 &&
+                        Math.round(markersArray[i].getPosition().lng() * 1000) / 1000 === Math.round(element.lon * 1000) / 1000 &&
                         markersArray[i].count === element.count) {
                         return true;
                     }
@@ -79,7 +79,7 @@
 
                 var marker = new google.maps.Marker({
                     count: value.count,
-                    position: {'lat': value.sTemp, 'lng': value.nTemp},
+                    position: {'lat': value.lat, 'lng': value.lon},
                     icon: image,
                     map: map
                 });

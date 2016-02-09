@@ -25,16 +25,16 @@
         function updateMap() {
             if (map.getZoom() < 11) {
                 rectanglesService.removeAllRecs();
-                markClusters();
+                drawMarkers();
             }
             else {
                 markersService.removeAllMarkers();
-                markRectangles();
+                drawRectangles();
             }
         }
 
-        function markClusters() {
-            var url = '/api/dotsInArea/' + map.getZoom();
+        function drawMarkers() {
+            var url = '/api/Dots/' + map.getZoom();
 
             $http.post(
                 url, {
@@ -44,16 +44,17 @@
                     "swY": map.getBounds().getSouthWest().lat()
                 }
             ).then(function (response) {
+                    console.log(response, 'response');
                     markersService.handleMarkers(response.data, map);
                 }, function (response) {
-                    console.log('Error: ', JSON.stringify(response));
+                    console.log('Error: ', response.statusText);
                 });
         }
 
-        function markRectangles() {
-            var url = '/api/squaresInArea';
+        function drawRectangles() {
+            var url = '/api/Squares';
             if (accountService.getMapUser() !== null && accountService.getMapUser() !== 'all') {
-                url = '/api/getUserSquaresByName/' + accountService.getMapUser();
+                url = '/api/Squares/' + accountService.getMapUser();
             }
 
             $http.post(
@@ -66,7 +67,7 @@
             ).then(function (response) {
                     rectanglesService.handleRecs(response.data, map);
                 }, function (response) {
-                    console.log('Error: ', JSON.stringify(response));
+                    console.log('Error: ', response.statusText);
                 });
         }
 
@@ -78,9 +79,11 @@
             getClickedPosition: function() {
               return clickedPosition;
             },
+
             setClickedPosition: function(clickedP) {
                 clickedPosition = clickedP;
             },
+
             setMap: function(m) {
                 map = m;
             }
