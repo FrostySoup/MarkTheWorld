@@ -1,74 +1,12 @@
-html, body { height: 100%; margin: 0; padding: 0; }
-
-#map {
-    width: 100%;
-    height: calc(100% - 64px);
+body {
+    overflow: hidden;
 }
 
-/*Removes button focus*/
-button.md-default-theme:not([disabled]).md-focused {
-    background-color: transparent !important;
-}
-/*Removes button focus*/
-.md-icon-button.md-button.md-ink-ripple.md-focused {
-    background-color: transparent !important;
-}
-
-/*FireFox fix*/
-@-moz-document url-prefix() {
-    md-content {
-        width: 100%;
-        height: 100%;
-    }
-}
-
-#toastBounds {
-    position: relative;    
-}
-
-md-toast {
-    padding-right: 0;
-}
-
-md-toast md-icon {
-    color: rgb(250,250,250);
-}
-
-/*On narrow screen wider bottom border appears*/
-@media only screen and (max-width: 600px) and (min-width: 0) and (orientation: portrait) {
-    md-toolbar {
-        min-height: 64px;
-    }
-}
-
-/*Make dialogs responsive*/
-md-dialog.responsive {
-    min-width: 40%;
-}
-
-@media only screen and (max-width: 600px) and (min-width: 0) {
-    md-dialog.responsive {
-        min-width: 100%;
-        min-height: 100%;
-    }
-}
-
-md-fab.md-fab-bottom-right.md-button.md-ink-ripple.md-focused {
-    background-color: transparent !important;
-}
-
-.material-icons.md-36 {
-    font-size: 36px;
-}
+/* icon sizes */
 
 .s48 {
     width: 48px;
     height: 48px;
-}
-
-.s24 {
-    width: 24px;
-    height: 24px;
 }
 
 .s32 {
@@ -76,108 +14,73 @@ md-fab.md-fab-bottom-right.md-button.md-ink-ripple.md-focused {
     height: 32px;
 }
 
-form {
-    margin-bottom: 0;
+.s36 {
+    width: 36px;
+    height: 36px;
 }
 
-.button-login {
-    min-width: 100%;
-    margin: 0;
-    height: 42px
+/* icon buttons */
+
+.md-button.md-icon-button {
+    width: auto;
+    height: auto;
 }
 
-md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
-    background-color: rgb(98, 98, 98);
+md-dialog .md-button.md-icon-button {
+    padding: 0;
 }
 
-/*a.md-button.md-default-theme.md-primary.md-raised {*/
-    /*background-color: rgb(58, 58, 58);*/
-/*}*/
-
-md-fab-speed-dial {
-    position: absolute;
-    right: 20px;
-    bottom: 30px;
+.md-toolbar-tools .md-button.md-icon-button {
+    padding: 0;
+    margin: 0 4px;
 }
 
-.no-account {
-    display: block;
-    text-align: center;
-    padding-top: 10px;
-}
+/* fab buttons */
 
-.no-account a {
-    cursor: pointer;
-}
-
-.no-account a:hover {
-    color: #3F51B5;
-}
-
-.md-dialog-full-page {
-    min-height: 100%;
-    min-width: 100%;
-    top: 0;
-    left: 0;
-    position: absolute;
-}
-
-.md-dialog-full-page .md-dialog-content {
-    padding-top: 0;
-}
-
-md-icon svg {
-  fill: inherit;
-}
-
-md-switch {
-    margin-top: 0;
-    width: 265px;
-}
-
-md-card-title {
-    margin: 16px;
-}
-
-md-card-title .md-headline {
-    display: block;
-}
-
-.button-user-map {
-    margin-right: 16px;
-    margin-bottom: 16px;
-    padding: 0 10px;
-}
-
-md-subhead {
-    display: block;
-}
-
-.md-date-subhead {
-    display: block;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: .01em;
-    line-height: 24px;
-}
-
-.settings-fab.md-button.md-fab.md-fab-bottom-right {
-    right: 110px;
+.md-button.md-fab {
     background-color: #757575;
 }
 
-.radio-box-first { 
-    margin-top: 0;
+.md-button.md-fab.md-fab-settings {
+    right: 110px;
 }
 
-.radio-box-last-bigger-bottom {
-    margin-bottom: 23px;
+/* login form */
+
+.login-form form {
+    padding: 0;
 }
 
-.radio-box-last-no-bottom {
+.login-form md-input-container label:not(.md-no-float):not(.md-container-ignore) {
+    -webkit-transform: translate3d(0,32px,0) scale(1);
+    transform: translate3d(0,32px,0) scale(1);
+}
+
+.login-form md-input-container.md-input-has-value label:not(.md-no-float) {
+    -webkit-transform: translate3d(0,6px,0) scale(.75);
+    transform: translate3d(0,6px,0) scale(.75);
+}
+
+.login-form md-input-container.md-input-focused label:not(.md-no-float) {
+    -webkit-transform: translate3d(0,6px,0) scale(.75);
+    transform: translate3d(0,6px,0) scale(.75);
+}
+
+.login-form a {
+    cursor: pointer;
+}
+
+.login-form input {
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+}
+
+.login-form md-input-container {
     margin-bottom: 0;
 }
 
-.no-top-margin {
-    margin-top: 0;
+.login-form button {
+    height: 42px;
+    margin: 8px 0 0;
 }

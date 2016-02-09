@@ -1,18 +1,25 @@
-<md-toolbar ng-click="close()" class="md-theme-light">
+<md-toolbar ng-click="close()" class="md-primary">
     <h1 class="md-toolbar-tools">Login</h1>
 </md-toolbar>
-<md-content layout-padding="">
-    <form>
-        <md-input-container>
+<md-content class="login-form" layout-padding layout="column">
+    <form name="loginForm">
+        <md-input-container class="md-block">
             <label for="username">Username</label>
-            <input type="text" id="username" ng-model="login_username" ng-required="true" md-autofocus="">
+            <input required type="text" id="username" name="username" ng-model="loginData.username" md-autofocus>
+            <div ng-messages="loginForm.username.$error">
+                <div ng-message="required">This field is required</div>
+            </div>
         </md-input-container>
-        <md-input-container>
+        <md-input-container class="md-block">
             <label for="password">Password</label>
-            <input type="password" id="password" ng-required="true" ng-model="login_password">
+            <input required type="password" name="password" id="password" ng-model="loginData.password">
+            <div ng-messages="loginForm.password.$error">
+                <div ng-message="required">This field is required</div>
+            </div>
         </md-input-container>
+        <md-button layout-fill ng-click="login(loginData)" class="md-raised md-primary">Login</md-button>
     </form>
-    <md-button ng-click="login(login_username, login_password)" class="button-login md-raised md-primary">Login</md-button>
-    <p class="no-account"><a ng-click="go('register')">Don't have account? Register here.</a>
+    <p>
+        <a ng-click="go('register')">Don't have an account? Register here.</a>
     </p>
 </md-content>

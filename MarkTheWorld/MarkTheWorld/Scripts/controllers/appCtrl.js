@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    function AppCtrl($scope, $log, $mdSidenav, $state, $http, mapService, newSquareService, mapSettingsService, accountService, topMarkersService, simpleModalService) {
+    function AppCtrl($scope, $log, $mdSidenav, $state, newSquareService, mapSettingsService, accountService, topMarkersService, simpleModalService, $mdDialog) {
 
         $scope.toggleRight = function (state) {
             $state.transitionTo(state, { param1 : 'something' }, { reload: true });
@@ -21,7 +21,7 @@
             accountService.logout();
         };
 
-        $scope.openMenu = function($mdOpenMenu, ev) {
+        $scope.openMenu = function ($mdOpenMenu, ev) {
             $mdOpenMenu(ev);
         };
 
@@ -41,21 +41,6 @@
             simpleModalService.showModal('Welcome!', 'Join MarkTheWorld and leave your first mark!');
         }
 
-        // cia yra current pos nustatymas
-        //var req = {
-        //    method: 'POST',
-        //    url: 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBBmLH1JbsTdr8CeJYP8icbQqcymux3ffA',
-        //};
-        //
-        //$http(req).then(function(data) {
-        //    mapService.map.setCenter({lat: data.data.location.lat, lng: data.data.location.lng});
-        //    mapService.setClickedPosition({ lat: data.data.location.lat, lng: data.data.location.lng });
-        //    mapService.map.addMarker({
-        //        lat: data.data.location.lat,
-        //        lng: data.data.location.lng
-        //    });
-        //});
-
         function buildToggler(navID) {
             return function () {
                 $mdSidenav(navID)
@@ -64,7 +49,7 @@
                         $log.debug("toggle " + navID + " is done");
                     });
             };
-        };
+        }
 
         var sideBar = buildToggler('right');
     }

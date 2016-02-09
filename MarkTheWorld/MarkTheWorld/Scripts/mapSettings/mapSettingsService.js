@@ -1,4 +1,5 @@
 /*global angular */
+/*global document */
 (function () {
     'use strict';
 
@@ -10,6 +11,7 @@
                     templateUrl: 'scripts/mapSettings/mapSettings.html',
                     parent: angular.element(document.body),
                     targetEvent: ev,
+                    fullscreen: true,
                     clickOutsideToClose: true
                 });
             }

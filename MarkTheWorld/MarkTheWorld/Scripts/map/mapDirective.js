@@ -32,14 +32,22 @@
                         marker = new google.maps.Marker({
                             map: map,
                             animation: google.maps.Animation.DROP,
+                            draggable: true,
                             position: { lat: e.latLng.lat(), lng: e.latLng.lng() }
                         });
+
+                        marker.addListener('dragend',function(e) {
+                            mapService.setClickedPosition({ 'lat' : e.latLng.lat(), 'lng' : e.latLng.lng() });
+                            console.log('position:', 'lat:' + marker.position.lat(), 'lng:' + marker.position.lng(), 'zoom:', map.getZoom());
+                        });
+
                         mapService.setClickedPosition({ 'lat' : e.latLng.lat(), 'lng' : e.latLng.lng() });
                         console.log('position:', 'lat:' + marker.position.lat(), 'lng:' + marker.position.lng(), 'zoom:', map.getZoom());
                     });
 
                     mapService.setMap(map);
 
+                    //set map to current position
                     var req = {
                         method: 'POST',
                         url: 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBBmLH1JbsTdr8CeJYP8icbQqcymux3ffA'

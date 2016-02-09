@@ -25,7 +25,8 @@
                         new google.maps.LatLng(value.neY, value.neX)
                     )
                 });
-                rec.addListener('click', function() {
+                //TODO: should use accountService
+                rec.addListener('click', function(e) {
                     if (localStorage.getItem('onlyMyOwnMarks') !== 'true') {
                         squareDetailsService.showDialog(value.markers);
                     }
