@@ -496,6 +496,11 @@
             Gražina tik tam tikro žaidėjo kvadratėlius, pagal prisijungimo vardą
             </summary>
         </member>
+        <member name="M:MarkTheWorld.Controllers.Api.DotController.GetPointsByName(System.String)">
+            <summary>
+            Gražina tam tikro žaidėjo taškų skaičių, kurį jis gali gauti kartą per parą
+            </summary>
+        </member>
         <member name="M:MarkTheWorld.Controllers.Api.DotController.GetUserDotsByName(Data.DataHelpers.CornersCorrds,System.String,System.Double)">
             <summary>
             Gražina tik tam tikro žaidėjo taškus, pagal prisijungimo vardą
@@ -519,11 +524,6 @@
         <member name="M:MarkTheWorld.Controllers.Api.UserController.GetUsers(Data.ReceivePostData.UserRegistrationPost)">
             <summary>
             Login, gražina vartotojo token
-            </summary>
-        </member>
-        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetPoints(System.String)">
-            <summary>
-            Prideda taškų į vartotojo sąskaitą (NEBAIGTA)
             </summary>
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.UserController.CheckPoints(System.String)">

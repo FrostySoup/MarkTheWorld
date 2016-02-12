@@ -17,11 +17,11 @@ namespace BusinessLayer.DotService
         Dot deleteDot(string dotId);
         List<CornersCorrds> getAllSquares(List<Dot> dots);
         List<Dot> getUserDotsName(CornersCorrds corners, string name);
-
+        int getUserPointsName(Dot[] squares);
 
         //functions
         List<SquaresWithInfo> groupSquares(List<Square> squares);
         List<GroupedDotsForApi> groupDots(List<Dot> dots, CornersCorrds corners, double zoomLevel);
-        int maxConnection(string name, Dot[] squares);
+        int maxConnection(Dot[] squares);
     }
 }

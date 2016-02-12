@@ -95,27 +95,6 @@ namespace MarkTheWorld.Controllers.Api
         }
 
         /// <summary>
-        /// Prideda taškų į vartotojo sąskaitą (NEBAIGTA)
-        /// </summary>
-        [ResponseType(typeof(UserRegistrationModel))]
-        [Route("points/{userName}")]
-        [HttpPost]
-        public IHttpActionResult GetPoints(string userName)
-        {
-            UserRegistrationModel userCopy = new UserRegistrationModel();
-            try
-            {
-               // userCopy = userService.getOne(user);
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
-
-            return Ok(userCopy);
-        }
-
-        /// <summary>
         /// Patikrina ar vartotojas gali pasiimti taškų
         /// </summary>
         [ResponseType(typeof(bool))]

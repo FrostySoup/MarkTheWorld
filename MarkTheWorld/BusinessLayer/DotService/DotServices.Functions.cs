@@ -37,6 +37,8 @@ namespace BusinessLayer.DotService
             CornersCorrds corners = new CornersCorrds();
             double late = (double)((int)(lat * 100)) / 100;
             double longt = (double)((int)(lng * 100)) / 100;
+            late = System.Math.Round(late, 2);
+            longt = System.Math.Round(longt, 2);
             corners.swX = longt + 0.01;
             corners.neX = longt;
             corners.neY = late + 0.01;
@@ -123,13 +125,13 @@ namespace BusinessLayer.DotService
             return groupedDotsApi;
         }
 
-        public int maxConnection(string name, Dot[] squares)
+
+        public int maxConnection(Dot[] squares)
         {
             int maxCon = 0;
             List<DotSearch> dotsToSearch = new List<DotSearch>();
 
             int[] checkedDots = new int[squares.Length];
-            checkedDots.SetValue(0, 0, squares.Length);
 
             int nr = 0;
             foreach (Dot dot in squares)
@@ -152,16 +154,16 @@ namespace BusinessLayer.DotService
                     List<Dot> conectedSquares = new List<Dot>();
                     conectedSquares.Add(squares[i]);
                     int connected = 1;
-                    findConnections(connected, quadTree, squares[i], conectedSquares, checkedDots);
+                    checkedDots[i] = 1;
+                    findConnections(connected, quadTree, squares[i], conectedSquares, checkedDots, ref maxCon);
                 }
             }
             return maxCon;
         }
 
-        private void findConnections(int connected, quadTreeNode quadTree, Dot dot, List<Dot> conectedSquares, int[] checkedDots)
+        private void findConnections(int connected, quadTreeNode quadTree, Dot dot, List<Dot> conectedSquares, int[] checkedDots, ref int max)
         {
             CornersCorrds square = coordsToSquare(dot.lat, dot.lon);
-
             double neX = square.neX + 0.01;
             double neY = square.neY + 0.01;
             double swX = square.swX - 0.01;
@@ -170,13 +172,16 @@ namespace BusinessLayer.DotService
             quadTree.TBQuadTreeGatherDataInRange(quadTree, new TBBoundingBox(swX, swY, neX, neY), block);
             foreach(TBQuadTreeNodeData node in block)
             {
-                if (checkConnections(node, conectedSquares))
-                {
-                    conectedSquares.Add(new Dot(node.x, node.y));
-                    connected++;
-                    checkedDots[node.number] = 1;
-                    findConnections(connected, quadTree, new Dot(node.x, node.y), conectedSquares, checkedDots);
-                }
+                if (checkedDots[node.number] == 0)
+                    if (checkConnections(node, conectedSquares))
+                    {
+                        conectedSquares.Add(new Dot(node.x, node.y));
+                        connected++;
+                        checkedDots[node.number] = 1;
+                        if (max < connected)
+                            max = connected;
+                        findConnections(connected, quadTree, new Dot(node.x, node.y), conectedSquares, checkedDots, ref max);                     
+                    }
             }
         }
 
@@ -189,12 +194,12 @@ namespace BusinessLayer.DotService
                 double constant = 0.01;
                 if (squareOne.neX == squareTwo.neX)
                 {
-                    if (squareOne.neY + constant == squareTwo.neY || squareOne.neY - constant == squareTwo.neY)
+                    if (System.Math.Round(squareOne.neY + constant, 2) == System.Math.Round(squareTwo.neY, 2) || System.Math.Round(squareOne.neY - constant, 2) == System.Math.Round(squareTwo.neY, 2))
                         return true;
                 }
                 else if (squareOne.neY == squareTwo.neY)
                 {
-                    if (squareOne.neX + constant == squareTwo.neX || squareOne.neX - constant == squareTwo.neX)
+                    if (System.Math.Round(squareOne.neX + constant, 2) == System.Math.Round(squareTwo.neX, 2) || System.Math.Round(squareOne.neX - constant, 2) == System.Math.Round(squareTwo.neX, 2))
                         return true;
                 }
             }

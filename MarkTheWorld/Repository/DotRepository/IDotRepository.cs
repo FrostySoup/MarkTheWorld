@@ -14,5 +14,6 @@ namespace Repository.DotRepository
         List<Dot> GetAll(CornersCorrds corners);
         List<Dot> GetAllUserByName(CornersCorrds corners, string name);
         UserRegistrationModel AddGroup(List<DotFromViewModel> dot);
+        Dot[] GetAllDotsByName(string name);
     }
 }

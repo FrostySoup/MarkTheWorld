@@ -101,6 +101,27 @@ namespace MarkTheWorld.Controllers.Api
         }
 
         /// <summary>
+        /// Gražina tam tikro žaidėjo taškų skaičių, kurį jis gali gauti kartą per parą
+        /// </summary>
+        [Route("Points/{name}")]
+        [HttpGet]
+        public IHttpActionResult GetPointsByName(string name)
+        {
+            int points = 0;
+            try
+            {
+                Dot[] dots = dotService.getAlluserDots(name);
+                points = dotService.getUserPointsName(dots);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(points);
+        }
+
+        /// <summary>
         /// Gražina tik tam tikro žaidėjo taškus, pagal prisijungimo vardą
         /// </summary>
         [ResponseType(typeof(List<GroupedDotsForApi>))]

@@ -219,5 +219,17 @@ namespace Repository.DotRepository
             }
         }
 
+        public Dot[] GetAllDotsByName(string name)
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                Dot[] dots = session.Query<Dot>()
+                    .Where(x => x.username.Equals(name))
+                    .Take(2000)
+                    .ToArray();
+                return dots;
+            }
+        }
+
     }
 }

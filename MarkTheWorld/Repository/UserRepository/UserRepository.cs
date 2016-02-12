@@ -18,7 +18,7 @@ namespace Repository.UserRepository
             {
                 User newUser = new User();
                 newUser.PasswordHash = userPost.PasswordHash;
-                newUser.UserName = userPost.PasswordHash;
+                newUser.UserName = userPost.UserName;
                 try
                 {                    
                     UserRegistrationModel check = new UserRegistrationModel();

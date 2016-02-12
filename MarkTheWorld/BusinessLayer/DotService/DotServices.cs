@@ -46,6 +46,16 @@ namespace BusinessLayer.DotService
         {
             return repositoryDot.GetAllUserByName(corners, name);
         }
-       
+
+        public int getUserPointsName(Dot[] squares)
+        {
+            return maxConnection(squares);
+        }
+
+        public Dot[] getAlluserDots(string name)
+        {
+            return repositoryDot.GetAllDotsByName(name);
+        }
+
     }
 }
