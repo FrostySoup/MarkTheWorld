@@ -5,13 +5,15 @@
 
     function accountService($http, $q, $timeout, simpleModalService) {
         return {
-            login: function (user) {
+            login: function (loginData) {
+                console.log('tyring to login');
+
                 var deferredObject = $q.defer();
 
                 $http.post('/api/User/Login',
                     {
-                        "UserName": user.UserName,
-                        "PasswordHash": user.PasswordHash
+                        "UserName": loginData.UserName,
+                        "PasswordHash": loginData.PasswordHash
                     }).
                     success(function (data) {
                         if (data) {

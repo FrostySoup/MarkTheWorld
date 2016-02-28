@@ -1,16 +1,23 @@
 <md-toolbar ng-click="close()" class="md-theme-light">
     <h1 class="md-toolbar-tools">Register</h1>
 </md-toolbar>
-<md-content layout-padding="">
-<form>
-    <md-input-container>
-        <label for="username">Username</label>
-        <input type="text" id="username" ng-required="true" ng-model="register_username" md-autofocus="">
-    </md-input-container>
-    <md-input-container>
-        <label for="password">Password</label>
-        <input type="password" id="password" ng-required="true" ng-model="register_password">
-    </md-input-container>
-</form>
-    <md-button ng-click="register(register_username, register_password)" class="button-login md-raised md-primary">Register</md-button>
+<md-content class="login-form" layout-padding layout="column">
+    <form ng-submit="register(registerForm, registerData)" name="registerForm" novalidate>
+        <md-input-container class="md-block">
+            <label for="username">Username</label>
+            <input required maxlength="16" type="text" id="username" name="username" ng-model="registerData.username" md-autofocus>
+            <div ng-messages="registerForm.username.$error">
+                <div ng-message="required">You should enter username</div>
+                <div ng-message="maxlength">The username should be shorter</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label for="password">Password</label>
+            <input required type="password" name="password" id="password" ng-model="registerData.password">
+            <div ng-messages="registerForm.password.$error">
+                <div ng-message="required">You should enter password</div>
+            </div>
+        </md-input-container>
+        <md-button type="submit" layout-fill class="md-raised md-primary">Register</md-button>
+    </form>
 </md-content>

@@ -2,22 +2,23 @@
     <h1 class="md-toolbar-tools">Login</h1>
 </md-toolbar>
 <md-content class="login-form" layout-padding layout="column">
-    <form name="loginForm">
+    <form ng-submit="login(loginForm, loginData)" name="loginForm" novalidate>
         <md-input-container class="md-block">
             <label for="username">Username</label>
-            <input required type="text" id="username" name="username" ng-model="loginData.username" md-autofocus>
+            <input required maxlength="16" type="text" id="username" name="username" ng-model="loginData.username" md-autofocus>
             <div ng-messages="loginForm.username.$error">
-                <div ng-message="required">This field is required</div>
+                <div ng-message="required">You should enter username</div>
+                <div ng-message="maxlength">The username should be shorter</div>
             </div>
         </md-input-container>
         <md-input-container class="md-block">
             <label for="password">Password</label>
             <input required type="password" name="password" id="password" ng-model="loginData.password">
             <div ng-messages="loginForm.password.$error">
-                <div ng-message="required">This field is required</div>
+                <div ng-message="required">You should enter password</div>
             </div>
         </md-input-container>
-        <md-button layout-fill ng-click="login(loginData)" class="md-raised md-primary">Login</md-button>
+        <md-button type="submit" layout-fill class="md-raised md-primary">Login</md-button>
     </form>
     <p>
         <a ng-click="go('register')">Don't have an account? Register here.</a>

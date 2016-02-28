@@ -10,8 +10,8 @@
             $state.transitionTo(route);
         };
 
-        $scope.login = function (loginData) {
-            if (!loginData.username || !loginData.password) {
+        $scope.login = function (loginForm, loginData) {
+            if (!loginForm.$valid) {
                 return;
             }
 
@@ -32,22 +32,22 @@
             });
         };
 
-        $scope.register = function (username, password) {
-            if (!username || !password) {
+        $scope.register = function (registerForm, registerData) {
+            if (!registerForm.$valid) {
                 return;
             }
 
             accountService.register(
                 {
-                    "UserName": username,
-                    "PasswordHash": password
+                    "UserName": registerData.username,
+                    "PasswordHash": registerData.password
                 }
             ).then(function (data) {
                 if (data.success === true) {
                     $scope.close();
-                    simpleModalService.showModal('Success!', 'Welcome ' + username + '!');
+                    simpleModalService.showModal('Success!', 'Welcome ' + registerData.username + '!');
                     localStorage.setItem('token', data.Token);
-                    localStorage.setItem('user', username);
+                    localStorage.setItem('user', registerData.username);
                 } else {
                     simpleModalService.showModal('Error!', data.message);
                 }
