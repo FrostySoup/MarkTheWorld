@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.DataHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,5 +24,7 @@ namespace Data
         public List<UserEvent> eventsHistory { get; set; }
 
         public bool pointsAvailable { get; set; }
+
+        public Colors colors { get; set; }
     }
 }

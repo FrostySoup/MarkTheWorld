@@ -60,7 +60,7 @@ namespace Repository.DotRepository
                             {
                                 if (dot.username.Equals(dots[i].username))
                                 {
-                                    reg.message = message2.Fail;
+                                    reg.message = message2.AlreadyMarked;
                                     return reg;
                                 }
                                 else

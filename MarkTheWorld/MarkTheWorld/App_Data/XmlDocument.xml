@@ -536,6 +536,21 @@
             Paima paskutinius 10 vartotojo įvykių
             </summary>
         </member>
+        <member name="M:MarkTheWorld.Controllers.Api.UserController.PostUserColor(System.String,Data.DataHelpers.Colors)">
+            <summary>
+            Patalpina vartotojo spalvą
+            </summary>
+        </member>
+        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetUsername(System.String)">
+            <summary>
+            Nurodo ar duotas username yra jau užimtas/ true-neužimtas, false-užimtas
+            </summary>
+        </member>
+        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetUserColor(System.String)">
+            <summary>
+            Gražina vartotojo spalvą
+            </summary>
+        </member>
         <member name="M:MarkTheWorld.Controllers.Api.UserController.GetTopUsers">
             <summary>
             Gražina iki 10 vartotojų turinčių daugiausia pažymėtų taškų

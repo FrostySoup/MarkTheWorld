@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.DataHelpers;
 using Data.ReceivePostData;
 using System;
 using System.Collections.Generic;
@@ -72,5 +73,19 @@ namespace BusinessLayer.UserService
             return repository.SetDailies();
         }
 
+        public bool postUserColors(string userName, Colors colors)
+        {
+            return repository.SetColors(userName, colors);
+        }
+
+        public Colors getUserColors(string userName)
+        {
+            return repository.GetColors(userName);
+        }
+
+        public bool checkUsername(string userName)
+        {
+            return repository.GetUsername(userName);
+        }
     }
 }

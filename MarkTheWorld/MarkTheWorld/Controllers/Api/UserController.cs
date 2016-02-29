@@ -2,6 +2,7 @@
 using BusinessLayer.TestGenerator;
 using BusinessLayer.UserService;
 using Data;
+using Data.DataHelpers;
 using Data.ReceivePostData;
 using MarkTheWorld.Models;
 using System;
@@ -134,6 +135,60 @@ namespace MarkTheWorld.Controllers.Api
             }
 
             return Ok(events);
+        }
+
+        /// <summary>
+        /// Patalpina vartotojo spalvą
+        /// </summary>
+        [ResponseType(typeof(bool))]
+        [Route("Color/{userName}")]
+        [HttpPost]
+        public IHttpActionResult PostUserColor(string userName, Colors colors)
+        {
+            try
+            {
+                return Ok(userService.postUserColors(userName, colors));
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+
+        /// <summary>
+        /// Nurodo ar duotas username yra jau užimtas/ true-neužimtas, false-užimtas
+        /// </summary>
+        [ResponseType(typeof(bool))]
+        [Route("username/{userName}")]
+        [HttpGet]
+        public IHttpActionResult GetUsername(string userName)
+        {
+            try
+            {
+                return Ok(userService.checkUsername(userName));
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+
+        /// <summary>
+        /// Gražina vartotojo spalvą
+        /// </summary>
+        [ResponseType(typeof(bool))]
+        [Route("Color/{userName}")]
+        [HttpGet]
+        public IHttpActionResult GetUserColor(string userName)
+        {
+            try
+            {
+                return Ok(userService.getUserColors(userName));
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
         }
 
         /// <summary>

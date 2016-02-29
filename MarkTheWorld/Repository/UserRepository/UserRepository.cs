@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.DataHelpers;
 
 namespace Repository.UserRepository
 {
@@ -23,7 +24,7 @@ namespace Repository.UserRepository
                 {                    
                     UserRegistrationModel check = new UserRegistrationModel();
                     check.success = false;
-                    check.message = message2.Unknown;
+                    check.message = message2.UserNameTaken;
                     check.Token = System.Guid.NewGuid();
                     User oneObject = session.Query<User>().First(x => x.UserName.Equals(newUser.UserName));
                     if (oneObject == null)
@@ -36,7 +37,7 @@ namespace Repository.UserRepository
                         return check;
                     }
                     check.success = false;
-                    check.message = message2.Fail;
+                    check.message = message2.UserNameTaken;
                     return check;
                 }
                 catch
@@ -49,6 +50,66 @@ namespace Repository.UserRepository
                     session.SaveChanges();
                     check.message = message2.Success;
                     return check;
+                }
+            }
+        }
+
+        public bool SetColors(string userName, Colors colors)
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                try
+                {
+                    User user = session.Query<User>()
+                        .First(x => x.UserName.Equals(userName));
+
+                    user.colors = colors;
+                    session.Store(user);
+                    
+                    session.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool GetUsername(string userName)
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                try
+                {
+                    User user = session.Query<User>()
+                        .First(x => x.UserName.Equals(userName));
+                    if (user != null)
+                        return false;
+                    else return true;
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+        }
+
+        public Colors GetColors(string userName)
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                try
+                {
+                    User user = session.Query<User>()
+                        .First(x => x.UserName.Equals(userName));
+                    if (user != null)
+                        return user.colors;
+                    else return null;
+                }
+                catch
+                {
+                    return null;
                 }
             }
         }
@@ -160,14 +221,14 @@ namespace Repository.UserRepository
                     if (oneObject == null)
                     {
                         check.success = false;
-                        check.message = message2.MissMatch;
+                        check.message = message2.NoUserName;
                         return check;
                     }
 
                     if (!oneObject.PasswordHash.Equals(user.PasswordHash))
                     {
                         check.success = false;
-                        check.message = message2.MissMatch;
+                        check.message = message2.PassMissmatch;
                         return check;
                     }
 
@@ -184,7 +245,7 @@ namespace Repository.UserRepository
                 {
                     UserRegistrationModel check = new UserRegistrationModel();
                     check.success = false;
-                    check.message = message2.MissMatch;
+                    check.message = message2.NoUserName;
                     return check;
                 }
             }

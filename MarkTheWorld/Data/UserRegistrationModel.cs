@@ -17,27 +17,27 @@ namespace Data
         public Guid Token { get; set; }
     }
 
-    public enum message2 : int
+    public enum message2
     {
-        /// <summary>
-        /// Unknown error
-        /// </summary>
-        [Display(Name = "Unknown")]
-        Unknown,
-        /// <summary>
-        /// This person already marked this spot
-        /// </summary>
-        [Display(Name = "Already marked")]
-        Fail,
-        /// <summary>
-        /// Succesfully made an action
-        /// </summary>
+
+        [Display(Name = "No account found with that username")]
+        [StringValue("No account found with that username")]
+        NoUserName = 0,
+
+        [Display(Name = "The password you entered is incorrect")]
+        [StringValue("The password you entered is incorrect")]
+        PassMissmatch = 1,
+
+        [Display(Name = "This username is already taken")]
+        [StringValue("This username is already taken")]
+        UserNameTaken = 2,
+
         [Display(Name = "Success")]
-        Success,
-        /// <summary>
-        /// Username or password didnt match
-        /// </summary>
-        [Display(Name = "MissMatch")]
-        MissMatch
+        [StringValue("Success")]
+        Success = 3,
+
+        [Display(Name = "You have already marked this spot")]
+        [StringValue("You have already marked this spot")]
+        AlreadyMarked = 4
     }
 }

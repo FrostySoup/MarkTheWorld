@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.DataHelpers;
 using Data.ReceivePostData;
 using System;
 using System.Collections.Generic;
@@ -19,5 +20,8 @@ namespace Repository.UserRepository
         bool GetUserDaily(string userName);
         List<UserEvent> GetUserEvents(string userName);
         bool SetDailies();
+        bool SetColors(string userName, Colors colors);
+        Colors GetColors(string userName);
+        bool GetUsername(string userName);
     }
 }

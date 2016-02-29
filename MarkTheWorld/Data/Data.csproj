@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppUser.cs" />
+    <Compile Include="DataHelpers\Colors.cs" />
     <Compile Include="DataHelpers\CornersCorrds.cs" />
     <Compile Include="DataHelpers\DotSearch.cs" />
     <Compile Include="DataHelpers\GroupedDots.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="QuadTrees\QuadTree.cs" />
     <Compile Include="ReceivePostData\UserRegistrationPost.cs" />
     <Compile Include="Square.cs" />
+    <Compile Include="StringValueAttribute.cs" />
     <Compile Include="TopUser.cs" />
     <Compile Include="Database\User.cs" />
     <Compile Include="UserEvent.cs" />
