@@ -1,21 +1,24 @@
 <md-toolbar ng-click="close()" class="md-theme-light">
     <h1 class="md-toolbar-tools">Register</h1>
+    <md-progress-linear class="register-form-loader md-warn" ng-show="registerForm.$pending.unique" md-mode="indeterminate"></md-progress-linear>
 </md-toolbar>
 <md-content class="login-form" layout-padding layout="column">
     <form ng-submit="register(registerForm, registerData)" name="registerForm" novalidate>
         <md-input-container class="md-block">
             <label for="username">Username</label>
-            <input required maxlength="16" type="text" id="username" name="username" ng-model="registerData.username" md-autofocus>
+            <input required maxlength="26" type="text" id="username" name="username" unique-username ng-model="registerData.username" md-autofocus>
             <div ng-messages="registerForm.username.$error">
                 <div ng-message="required">You should enter username</div>
                 <div ng-message="maxlength">The username should be shorter</div>
+                <div ng-message="unique">This username is already taken</div>
             </div>
         </md-input-container>
         <md-input-container class="md-block">
             <label for="password">Password</label>
-            <input required type="password" name="password" id="password" ng-model="registerData.password">
+            <input required maxlength="100" type="password" name="password" id="password" ng-model="registerData.password">
             <div ng-messages="registerForm.password.$error">
                 <div ng-message="required">You should enter password</div>
+                <div ng-message="maxlength">The password should be shorter</div>
             </div>
         </md-input-container>
         <md-button type="submit" layout-fill class="md-raised md-primary">Register</md-button>

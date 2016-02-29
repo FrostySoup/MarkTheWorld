@@ -18,9 +18,9 @@ namespace MarkTheWorld
                 .IncludeDirectory("~/Scripts/map", "*.js")
                 .IncludeDirectory("~/Scripts/map/services", "*.js")
                 .IncludeDirectory("~/Scripts/newSquare", "*.js")
+                .IncludeDirectory("~/Scripts/account", "*.js")
                 .Include("~/Scripts/app.js")
-                .IncludeDirectory("~/Scripts/controllers", "*.js")
-                .IncludeDirectory("~/Scripts/services", "*.js"));
+                .IncludeDirectory("~/Scripts/controllers", "*.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/style.css"));

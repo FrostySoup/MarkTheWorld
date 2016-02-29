@@ -104,5 +104,5 @@
             }
         };
     }
-    angular.module('markTheWorld').factory('accountService', accountService);
+    angular.module('account').factory('accountService', accountService);
 }());

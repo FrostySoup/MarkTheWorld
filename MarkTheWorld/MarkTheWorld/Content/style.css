@@ -84,3 +84,7 @@ md-dialog .md-button.md-icon-button {
     height: 42px;
     margin: 8px 0 0;
 }
+
+.register-form-loader {
+    position: absolute;
+}
