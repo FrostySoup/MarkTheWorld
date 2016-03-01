@@ -7,7 +7,10 @@
             require: 'ngModel',
             template: "<div></div>",
             link: function (scope, el, attr, ctrl) {
-                ctrl.$asyncValidators.unique = function (modelValue, viewValue) {
+                var config = scope.$eval(attr.uniqueUsername);
+                var delay = config.delay;
+
+                function doAsyncValidation(modelValue) {
                     var deferredObject = $q.defer();
 
                     $http.get('api/username/' + modelValue)
@@ -20,11 +23,26 @@
                             }
                         },
                         function (error) {
-                            console.log("Error checking unique username", error);
+                            console.log('Unique username check error: ', error);
                             deferredObject.reject();
                         });
 
                     return deferredObject.promise;
+                }
+
+                var pendingValidation;
+
+                ctrl.$asyncValidators.unique = function (modelValue, viewValue) {
+                    if (pendingValidation) {
+                        $timeout.cancel(pendingValidation);
+                    }
+
+                    pendingValidation = $timeout(function () {
+                        pendingValidation = null;
+                        return doAsyncValidation(modelValue);
+                    }, delay);
+
+                    return pendingValidation;
                 };
 
             }

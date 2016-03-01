@@ -6,7 +6,7 @@
     <form ng-submit="register(registerForm, registerData)" name="registerForm" novalidate>
         <md-input-container class="md-block">
             <label for="username">Username</label>
-            <input required maxlength="26" type="text" id="username" name="username" unique-username ng-model="registerData.username" md-autofocus>
+            <input required maxlength="26" type="text" id="username" name="username" unique-username="{delay: 300}" ng-model="registerData.username" md-autofocus>
             <div ng-messages="registerForm.username.$error">
                 <div ng-message="required">You should enter username</div>
                 <div ng-message="maxlength">The username should be shorter</div>
