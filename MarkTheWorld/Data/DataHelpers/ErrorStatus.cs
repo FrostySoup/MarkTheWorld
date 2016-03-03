@@ -10,21 +10,21 @@ namespace Data.DataHelpers
         {
             if (userMiniModel.message == message2.NoUserName)
             {
-                status = HttpStatusCode.NotFound;
+                status = HttpStatusCode.BadRequest;
                 message = "Couldn't find user with such login";
             }else if (userMiniModel.message == message2.PassMissmatch)
             {
-                status = HttpStatusCode.NotFound;
+                status = HttpStatusCode.BadRequest;
                 message = "Password didn't match";
             }
             else if (userMiniModel.message == message2.AlreadyMarked)
             {
-                status = HttpStatusCode.Found;
+                status = HttpStatusCode.BadRequest;
                 message = "You already marked this spot";
             }
             else if (userMiniModel.message == message2.UserNameTaken)
             {
-                status = HttpStatusCode.Found;
+                status = HttpStatusCode.BadRequest;
                 message = "Username already taken";
             }
             else
