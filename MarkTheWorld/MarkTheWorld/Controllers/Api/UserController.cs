@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -19,7 +21,7 @@ namespace MarkTheWorld.Controllers.Api
     [RoutePrefix("api")]
     public class UserController : ApiController
     {
-        private readonly UserService userService;
+        private readonly UserService userService;        
 
         public UserController()
         {
@@ -40,6 +42,11 @@ namespace MarkTheWorld.Controllers.Api
             try
             {
                 userCopy = userService.addUser(User);
+                if (userCopy.message != message2.Success)
+                {
+                    ErrorStatus errorCheck = new ErrorStatus(userCopy);
+                    return Content(errorCheck.status, errorCheck.message);
+                }
             }
             catch (Exception e)
             {
@@ -86,6 +93,11 @@ namespace MarkTheWorld.Controllers.Api
             try
             {
                 userCopy = userService.getOne(user);
+                if (userCopy.message != message2.Success)
+                {
+                    ErrorStatus errorCheck = new ErrorStatus(userCopy);
+                    return Content(errorCheck.status, errorCheck.message);
+                }
             }
             catch (Exception)
             {
@@ -174,7 +186,7 @@ namespace MarkTheWorld.Controllers.Api
         }
 
         /// <summary>
-        /// Gražina vartotojo spalvą
+        /// Gražina vartotojo spalvas
         /// </summary>
         [ResponseType(typeof(bool))]
         [Route("Color/{userName}")]

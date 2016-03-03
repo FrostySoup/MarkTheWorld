@@ -62,6 +62,7 @@
     <Compile Include="DataHelpers\Colors.cs" />
     <Compile Include="DataHelpers\CornersCorrds.cs" />
     <Compile Include="DataHelpers\DotSearch.cs" />
+    <Compile Include="DataHelpers\ErrorStatus.cs" />
     <Compile Include="DataHelpers\GroupedDots.cs" />
     <Compile Include="DataHelpers\GroupedSquares.cs" />
     <Compile Include="DataHelpers\Markers.cs" />
