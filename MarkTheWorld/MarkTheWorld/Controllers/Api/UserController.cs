@@ -37,8 +37,8 @@ namespace MarkTheWorld.Controllers.Api
         public IHttpActionResult PostUser(UserRegistrationPost User)
         {
             UserRegistrationModel userCopy = new UserRegistrationModel();
-            if (User.UserName == null || User.PasswordHash == null)
-                return Ok(userCopy);
+            if (!User.checkIfValiable())
+                return Content(HttpStatusCode.BadRequest, "Wrong length of username or password");
             try
             {
                 userCopy = userService.addUser(User);
@@ -66,8 +66,7 @@ namespace MarkTheWorld.Controllers.Api
         [Route("generate/{user}/{dots}")]
         [HttpGet]
         public IHttpActionResult GenerateUsers(int user, int dots)
-        {
-            
+        {    
             try
             {
                 GenerateObjects generate = new GenerateObjects();
@@ -90,6 +89,8 @@ namespace MarkTheWorld.Controllers.Api
         public IHttpActionResult GetUsers(UserRegistrationPost user)
         {
             UserRegistrationModel userCopy = new UserRegistrationModel();
+            if (!user.checkIfValiable())
+                return Content(HttpStatusCode.BadRequest, "Wrong length of username or password");
             try
             {
                 userCopy = userService.getOne(user);
@@ -115,6 +116,8 @@ namespace MarkTheWorld.Controllers.Api
         [HttpGet]
         public IHttpActionResult CheckPoints(string userName)
         {
+            if (userName.Length < 3 || userName.Length > 25)
+                return Content(HttpStatusCode.BadRequest, "Wrong username length");
             bool canTake = false;
             try
             {
@@ -136,6 +139,9 @@ namespace MarkTheWorld.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetUerEvents(string userName)
         {
+            if (userName.Length < 3 || userName.Length > 25)
+                return Content(HttpStatusCode.BadRequest, "Wrong username length");
+
             List<UserEvent> events = new List<UserEvent>();
             try
             {
@@ -157,6 +163,10 @@ namespace MarkTheWorld.Controllers.Api
         [HttpPost]
         public IHttpActionResult PostUserColor(string userName, Colors colors)
         {
+            if (userName.Length < 3 || userName.Length > 25)
+                return Content(HttpStatusCode.BadRequest, "Wrong username length");
+            if (colors == null)
+                return Content(HttpStatusCode.BadRequest, "Object missing");
             try
             {
                 return Ok(userService.postUserColors(userName, colors));
@@ -193,6 +203,8 @@ namespace MarkTheWorld.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetUserColor(string userName)
         {
+            if (userName.Length < 3 || userName.Length > 25)
+                return Content(HttpStatusCode.BadRequest, "Wrong username length");
             try
             {
                 return Ok(userService.getUserColors(userName));

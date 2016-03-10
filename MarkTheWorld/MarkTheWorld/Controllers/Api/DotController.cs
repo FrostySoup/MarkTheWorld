@@ -5,6 +5,7 @@ using MarkTheWorld.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -30,7 +31,7 @@ namespace MarkTheWorld.Controllers.Api
         {          
             UserRegistrationModel dotCopy = new UserRegistrationModel();
             if (dot.lat < -300 || dot.lng < -300 || dot.username == null)
-                return Ok(dotCopy);
+                return Content(HttpStatusCode.BadRequest, "Wrong object sent");
             try
             {
                 dotCopy = dotService.storeDot(dot);
@@ -53,6 +54,8 @@ namespace MarkTheWorld.Controllers.Api
         [HttpPost]
         public IHttpActionResult GetSquares(CornersCorrds corners)
         {
+            if (corners == null)
+                return Content(HttpStatusCode.BadRequest, "Wrong object");
             List<Dot> dots = new List<Dot>();
             List<Square> squares = new List<Square>();
             List<SquaresWithInfo> squaresSend = new List<SquaresWithInfo>();
@@ -82,6 +85,10 @@ namespace MarkTheWorld.Controllers.Api
         [HttpPost]
         public IHttpActionResult GetUserSquaresByName(CornersCorrds corners, string name)
         {
+            if (corners == null || corners.checkCorners())
+                return Content(HttpStatusCode.BadRequest, "Wrong object");
+            if (name.Length < 3 || name.Length > 25)
+                return Content(HttpStatusCode.BadRequest, "Wrong username length");
             List<Dot> gameDots = new List<Dot>();
             List<Square> squares = new List<Square>();
             try
@@ -107,6 +114,8 @@ namespace MarkTheWorld.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetPointsByName(string name)
         {
+            if (name.Length < 3 || name.Length > 25)
+                return Content(HttpStatusCode.BadRequest, "Wrong username length");
             int points = 0;
             try
             {
@@ -129,6 +138,12 @@ namespace MarkTheWorld.Controllers.Api
         [HttpPost]
         public IHttpActionResult GetUserDotsByName(CornersCorrds corners, string name, double zoomLevel)
         {
+            if (name.Length < 3 || name.Length > 25)
+                return Content(HttpStatusCode.BadRequest, "Wrong username length");
+            if (zoomLevel > 15 && zoomLevel < 0)
+                return Content(HttpStatusCode.BadRequest, "Wrong zoom level");
+            if (corners == null || corners.checkCorners())
+                return Content(HttpStatusCode.BadRequest, "Insuficient information about specific object");
             List<Dot> gameDots = new List<Dot>();
             List<GroupedDotsForApi> groupedDots = new List<GroupedDotsForApi>();
             try
@@ -152,6 +167,10 @@ namespace MarkTheWorld.Controllers.Api
         [HttpPost]
         public IHttpActionResult GetDots(CornersCorrds corners, double zoomLevel)
         {
+            if (corners == null || corners.checkCorners())
+                return Content(HttpStatusCode.BadRequest, "Insuficient information about specific object");
+            if (zoomLevel > 15 && zoomLevel < 0)
+                return Content(HttpStatusCode.BadRequest, "Wrong zoom level");
             List<Dot> gameDots = new List<Dot>();
             List<GroupedDotsForApi> groupedDots = new List<GroupedDotsForApi>();
             try
