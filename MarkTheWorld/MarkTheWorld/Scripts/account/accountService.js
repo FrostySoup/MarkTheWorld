@@ -23,7 +23,8 @@
                             deferredObject.resolve(false);
                         }
                     }).
-                    error(function () {
+                    error(function (error) {
+                        console.log('Login error: ' + error);
                         deferredObject.resolve(false);
                     });
 
@@ -38,15 +39,15 @@
                         "UserName": user.UserName,
                         "PasswordHash": user.PasswordHash
                     }).
-                    success(function (data) {
+                    then(function (data) {
+                        console.log(JSON.stringify(data));
                         if (data) {
-                            console.log(data);
                             deferredObject.resolve(data);
                         } else {
                             deferredObject.resolve(false);
                         }
-                    }).
-                    error(function () {
+                    }, function (error) {
+                        console.log('Register error: ' + JSON.stringify(error));
                         deferredObject.resolve(false);
                     });
 

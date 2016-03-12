@@ -5,7 +5,6 @@
     function uniqueUsernameDirective($q, $timeout, $http) {
         return {
             require: 'ngModel',
-            template: "<div></div>",
             link: function (scope, el, attr, ctrl) {
                 var config = scope.$eval(attr.uniqueUsername);
                 var delay = config.delay;
@@ -15,6 +14,7 @@
 
                     $http.get('api/username/' + modelValue)
                         .then(function (response) {
+                            console.log(response);
                             if (response.data === true) {
                                 deferredObject.resolve();
                             }

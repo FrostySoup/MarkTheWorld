@@ -5,7 +5,7 @@
     <form ng-submit="login(loginForm, loginData)" name="loginForm" novalidate>
         <md-input-container class="md-block">
             <label for="username">Username</label>
-            <input required maxlength="26" type="text" id="username" name="username" ng-model="loginData.username" md-autofocus>
+            <input required maxlength="26" type="text" id="username" name="username" ng-model="loginData.username" md-autofocus class="ng-touched">
             <div ng-messages="loginForm.username.$error">
                 <div ng-message="required">You should enter username</div>
                 <div ng-message="maxlength">The username should be shorter</div>
@@ -24,4 +24,3 @@
     <p>
         <a ng-click="go('register')">Don't have an account? Register here.</a>
     </p>
-</md-content>
