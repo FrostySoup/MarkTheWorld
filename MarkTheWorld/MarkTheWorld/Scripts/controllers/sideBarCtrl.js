@@ -1004,12 +1004,7 @@
             $scope.requestError.login = undefined;
 
             $timeout(function () {
-                accountService.login(
-                    {
-                        "UserName": loginData.username,
-                        "PasswordHash": loginData.password
-                    }
-                ).then(
+                accountService.login(loginData).then(
                     function (success) {
                         console.log('login success: ', success);
                         localStorage.setItem('token', success.data.Token);
@@ -1034,32 +1029,24 @@
             $scope.requesting.register = true;
             $scope.requestError.register = undefined;
 
-            console.log('registerData', registerData);
-
             $timeout(function () {
-                $scope.requesting.register = false;
-                $scope.requestError.register = "Username should be longer";
+                accountService.register(registerData).then(
+                    function (success) {
+                        console.log('register success: ', success);
+                        simpleModalService.showModal('Success!', 'Welcome ' + registerData.username + '!');
+                        localStorage.setItem('token', success.data.Token);
+                        localStorage.setItem('user', registerData.username);
+                        $scope.close();
+                    },
+                    function (error) {
+                        console.log('register error: ', error);
+                        $scope.requestError.register = error.data;
+                    }
+                ).finally(function () {
+                        $scope.requesting.register = false;
+                    });
             }, 2000);
 
-            //accountService.register(
-            //    {
-            //        "UserName": registerData.username,
-            //        "PasswordHash": registerData.password
-            //    }
-            //).then(
-            //    function (success) {
-            //        console.log('register success: ', success);
-            //        //$scope.close();
-            //        //simpleModalService.showModal('Success!', 'Welcome ' + registerData.username + '!');
-            //        //localStorage.setItem('token', data.Token);
-            //        //localStorage.setItem('user', registerData.username);
-            //    },
-            //    function (error) {
-            //        console.log('register error: ', error);
-            //    }
-            //).finally(function () {
-            //        $scope.requesting.register = false;
-            //});
         };
 
         $scope.close = function () {

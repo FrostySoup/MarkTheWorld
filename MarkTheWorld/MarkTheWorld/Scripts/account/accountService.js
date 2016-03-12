@@ -12,37 +12,36 @@
 
                 $http.post('/api/User/Login',
                     {
-                        "UserName": loginData.UserName,
-                        "PasswordHash": loginData.PasswordHash
-                    }).
-                    then(
-                        function (success) {
-                            deferredObject.resolve(success);
-                        },
-                        function (error) {
-                            deferredObject.reject(error);
-                        }
-                    );
+                        "UserName": loginData.username,
+                        "PasswordHash": loginData.password
+                    }).then(
+                    function (success) {
+                        deferredObject.resolve(success);
+                    },
+                    function (error) {
+                        deferredObject.reject(error);
+                    }
+                );
 
                 return deferredObject.promise;
             },
 
-            register: function (user) {
+            register: function (registerData) {
                 var deferredObject = $q.defer();
 
                 $http.post('/api/User',
                     {
-                        "UserName": user.UserName,
-                        "PasswordHash": user.PasswordHash
-                    }).
-                    then(
-                        function (success) {
-                            deferredObject.resolve(success);
-                        },
-                        function (error) {
-                            deferredObject.reject(error);
-                        }
-                    );
+                        "UserName": registerData.username,
+                        "PasswordHash": registerData.password,
+                        "CountryCode": registerData.countryCode
+                    }).then(
+                    function (success) {
+                        deferredObject.resolve(success);
+                    },
+                    function (error) {
+                        deferredObject.reject(error);
+                    }
+                );
 
                 return deferredObject.promise;
             },

@@ -28,7 +28,7 @@
         </md-input-container>
         <md-input-container class="md-block" md-is-error="registerForm.register_country.$invalid && (registerForm.$submitted || registerForm.register_country.$dirty)">
             <label>Country</label>
-            <md-select name="register_country" id="register_country" ng-model="registerData.country" ng-required="true">
+            <md-select name="register_country" id="register_country" ng-model="registerData.countryCode" ng-required="true">
                 <md-option ng-repeat="country in countries" ng-value="country.code">{{ country.name }}</md-option>
             </md-select>
             <div class="md-errors-spacer"></div>
