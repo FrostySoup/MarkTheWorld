@@ -15,18 +15,14 @@
                         "UserName": loginData.UserName,
                         "PasswordHash": loginData.PasswordHash
                     }).
-                    success(function (data) {
-                        if (data) {
-                            console.log(data);
-                            deferredObject.resolve(data);
-                        } else {
-                            deferredObject.resolve(false);
+                    then(
+                        function (success) {
+                            deferredObject.resolve(success);
+                        },
+                        function (error) {
+                            deferredObject.reject(error);
                         }
-                    }).
-                    error(function (error) {
-                        console.log('Login error: ' + error);
-                        deferredObject.resolve(false);
-                    });
+                    );
 
                 return deferredObject.promise;
             },
@@ -39,17 +35,14 @@
                         "UserName": user.UserName,
                         "PasswordHash": user.PasswordHash
                     }).
-                    then(function (data) {
-                        console.log(JSON.stringify(data));
-                        if (data) {
-                            deferredObject.resolve(data);
-                        } else {
-                            deferredObject.resolve(false);
+                    then(
+                        function (success) {
+                            deferredObject.resolve(success);
+                        },
+                        function (error) {
+                            deferredObject.reject(error);
                         }
-                    }, function (error) {
-                        console.log('Register error: ' + JSON.stringify(error));
-                        deferredObject.resolve(false);
-                    });
+                    );
 
                 return deferredObject.promise;
             },

@@ -135,12 +135,11 @@ md-input-container.md-input-invalid md-select .md-select-value {
     width: 100%;
     background: rgb(255,204,188);
     color: #3E2723;
-    margin: 0;
+    margin-top: 8px;
     height: 42px;
     line-height: 42px;
     border-radius: 3px;
-    font-weight: 500;
-    font-size: 14px;
+    font-size: 15px;
     opacity: 1;
     white-space: nowrap;
 }
@@ -152,7 +151,7 @@ md-input-container.md-input-invalid md-select .md-select-value {
     transform: translateY(-50%);
     left: 6px;
     width: 32px;
-    color: rgb(255,87,34);
+    color: #FF5722;
 }
 
 .login-form .panel-error .panel-error-text {
@@ -162,7 +161,7 @@ md-input-container.md-input-invalid md-select .md-select-value {
 }
 
 .login-form .panel-error.ng-hide-add, .login-form .panel-error.ng-hide-remove {
-  transition: opacity linear 0.5s;
+  transition: opacity linear 0.3s;
 }
 
 .login-form .panel-error.ng-hide {

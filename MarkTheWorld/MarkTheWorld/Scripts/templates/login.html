@@ -5,22 +5,31 @@
     <form ng-submit="login(loginForm, loginData)" name="loginForm" novalidate>
         <md-input-container class="md-block">
             <label for="username">Username</label>
-            <input required maxlength="26" type="text" id="username" name="username" ng-model="loginData.username" md-autofocus class="ng-touched">
+            <input required minlength="3" maxlength="25" type="text" id="username" name="username" ng-model="loginData.username" md-autofocus>
             <div ng-messages="loginForm.username.$error">
-                <div ng-message="required">You should enter username</div>
+                <div ng-message-exp="['required', 'minlength']">The username should be at least 3 characters long</div>
                 <div ng-message="maxlength">The username should be shorter</div>
             </div>
         </md-input-container>
         <md-input-container class="md-block">
             <label for="password">Password</label>
-            <input required maxlength="100" type="password" name="password" id="password" ng-model="loginData.password">
+            <input required minlength="6" maxlength="30" type="password" name="password" id="password" ng-model="loginData.password">
             <div ng-messages="loginForm.password.$error">
-                <div ng-message="required">You should enter password</div>
+                <div ng-message-exp="['required', 'minlength']">The password should be at least 6 characters long</div>
                 <div ng-message="maxlength">The password should be shorter</div>
             </div>
         </md-input-container>
-        <md-button type="submit" layout-fill class="md-raised md-primary">Login</md-button>
+        <md-button ng-disabled="requesting.login" type="submit" layout-fill class="md-raised md-primary">
+            Login
+            <md-progress-circular ng-show="requesting.login" md-mode="indeterminate" class="md-hue-2" md-diameter="42px"></md-progress-circular>
+        </md-button>
+        <div ng-show="requestError.login" class="panel-error">
+            <md-icon md-svg-src="~/../Content/img/icons/ic_announcement.svg" class="s32" aria-label="Error"></md-icon>
+            <div class="panel-error-text">{{ requestError.login }}</div>
+        </div>
     </form>
     <p>
         <a ng-click="go('register')">Don't have an account? Register here.</a>
     </p>
+    </form>
+</md-content>

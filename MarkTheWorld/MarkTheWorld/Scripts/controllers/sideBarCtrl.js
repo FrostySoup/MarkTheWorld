@@ -1000,21 +1000,30 @@
                 return;
             }
 
-            accountService.login(
-                {
-                    "UserName": loginData.username,
-                    "PasswordHash": loginData.password
-                }
-            ).then(function (data) {
-                if (data.success === true) {
-                    $scope.close();
-                    simpleModalService.showModal('Success!', 'Welcome back ' + loginData.username + '!');
-                    localStorage.setItem('token', data.Token);
-                    localStorage.setItem('user', loginData.username);
-                } else {
-                    simpleModalService.showModal('Error!', data.message);
-                }
-            });
+            $scope.requesting.login = true;
+            $scope.requestError.login = undefined;
+
+            $timeout(function () {
+                accountService.login(
+                    {
+                        "UserName": loginData.username,
+                        "PasswordHash": loginData.password
+                    }
+                ).then(
+                    function (success) {
+                        console.log('login success: ', success);
+                        localStorage.setItem('token', success.data.Token);
+                        localStorage.setItem('user', loginData.username);
+                        $scope.close();
+                    },
+                    function (error) {
+                        console.log('login error: ', error);
+                        $scope.requestError.login = error.data;
+                    }
+                ).finally(function () {
+                        $scope.requesting.login = false;
+                });
+            }, 2000);
         };
 
         $scope.register = function (registerForm, registerData) {
@@ -1023,7 +1032,9 @@
             }
 
             $scope.requesting.register = true;
+            $scope.requestError.register = undefined;
 
+            console.log('registerData', registerData);
 
             $timeout(function () {
                 $scope.requesting.register = false;
@@ -1035,15 +1046,19 @@
             //        "UserName": registerData.username,
             //        "PasswordHash": registerData.password
             //    }
-            //).then(function (data) {
-            //    if (data.success === true) {
-            //        $scope.close();
-            //        simpleModalService.showModal('Success!', 'Welcome ' + registerData.username + '!');
-            //        localStorage.setItem('token', data.Token);
-            //        localStorage.setItem('user', registerData.username);
-            //    } else {
-            //        simpleModalService.showModal('Error!', data.message);
+            //).then(
+            //    function (success) {
+            //        console.log('register success: ', success);
+            //        //$scope.close();
+            //        //simpleModalService.showModal('Success!', 'Welcome ' + registerData.username + '!');
+            //        //localStorage.setItem('token', data.Token);
+            //        //localStorage.setItem('user', registerData.username);
+            //    },
+            //    function (error) {
+            //        console.log('register error: ', error);
             //    }
+            //).finally(function () {
+            //        $scope.requesting.register = false;
             //});
         };
 
@@ -1054,5 +1069,6 @@
                 });
         };
     }
+
     angular.module('markTheWorld').controller('SidebarCtrl', SidebarCtrl);
 }());

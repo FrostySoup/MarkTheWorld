@@ -7,7 +7,8 @@
     <form ng-submit="register(registerForm, registerData)" name="registerForm" novalidate>
         <md-input-container md-is-error="( registerForm.register_username.$invalid && ( registerForm.register_username.$touched || registerForm.$submitted )) || registerForm.register_username.$error.unique" class="md-block">
             <label for="register_username">Username</label>
-            <input minlength="3" required maxlength="26" type="text" id="register_username" name="register_username" unique-username="{delay: 500}" ng-model="registerData.username">
+            <!--todo: [polishing] md-autofocus neveikia-->
+            <input minlength="3" required maxlength="25" type="text" id="register_username" name="register_username" unique-username="{delay: 500}" ng-model="registerData.username" md-autofocus>
             <div ng-messages class="errors">
                 <div ng-if="(registerForm.register_username.$touched || registerForm.$submitted) && (registerForm.register_username.$error.required || registerForm.register_username.$error.minlength)" class="error md-input-messages-animation">
                     The username should be at least 3 characters long
@@ -19,7 +20,7 @@
         </md-input-container>
         <md-input-container class="md-block">
             <label for="register_password">Password</label>
-            <input required minlength="6" maxlength="100" type="password" name="register_password" id="register_password" ng-model="registerData.password">
+            <input required minlength="6" maxlength="30" type="password" name="register_password" id="register_password" ng-model="registerData.password">
             <div ng-messages="registerForm.register_password.$error">
                 <div ng-message-exp="['required', 'minlength']">The password should be at least 6 characters long</div>
                 <div ng-message="maxlength">The password should be shorter</div>
@@ -35,11 +36,13 @@
                 <div ng-message="required">You should select the country</div>
             </div>
         </md-input-container>
+        <md-button ng-disabled="requesting.register" type="submit" layout-fill class="md-raised md-primary">
+            Register
+            <md-progress-circular ng-show="requesting.register" md-mode="indeterminate" class="md-hue-2" md-diameter="42px"></md-progress-circular>
+        </md-button>
         <div ng-show="requestError.register" class="panel-error">
             <md-icon md-svg-src="~/../Content/img/icons/ic_announcement.svg" class="s32" aria-label="Error"></md-icon>
             <div class="panel-error-text">{{ requestError.register }}</div>
         </div>
-        <md-button ng-disabled="requesting.register" type="submit" layout-fill class="md-raised md-primary">Register<md-progress-circular ng-show="requesting.register" md-mode='indeterminate' class="md-hue-2" md-diameter="42px"></md-progress-circular>
-        </md-button>
     </form>
 </md-content>
