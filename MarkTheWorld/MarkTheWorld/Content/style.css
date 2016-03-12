@@ -47,6 +47,10 @@ md-dialog .md-button.md-icon-button {
 
 /* login form */
 
+md-progress-linear.register-form-loader {
+    position: absolute;
+}
+
 .login-form form {
     padding: 0;
 }
@@ -76,8 +80,25 @@ md-dialog .md-button.md-icon-button {
     font-size: 20px;
 }
 
+.login-form md-select {
+    height: 40px;
+}
+
+.login-form md-select md-select-value span:first-child {
+    font-size: 16.5px;
+}
+
+.login-form md-select md-select-value span:first-child div {
+    font-size: 20px;
+    line-height: 40px;
+}
+
 .login-form md-input-container {
     margin-bottom: 0;
+}
+
+.login-form md-input-container:last-of-type {
+    margin-bottom: 16px;
 }
 
 .login-form button {
@@ -85,6 +106,65 @@ md-dialog .md-button.md-icon-button {
     margin: 8px 0 0;
 }
 
-.register-form-loader {
+md-input-container.md-input-invalid md-select .md-select-value {
+    border-bottom-color: rgb(221,44,0);
+}
+
+.login-form md-progress-circular {
     position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.login-form .errors {
+    position: relative;
+    clear: left;
+}
+
+.login-form .errors .error {
+    color: rgb(221,44,0);
+    font-size: 12px;
+    line-height: 14px;
+    overflow: hidden;
+    transition: all .3s cubic-bezier(.55,0,.55,.2);
+    padding-top: 5px;
+}
+
+.login-form .panel-error {
+    position: relative;
+    width: 100%;
+    background: rgb(255,204,188);
+    color: #3E2723;
+    margin: 0;
+    height: 42px;
+    line-height: 42px;
+    border-radius: 3px;
+    font-weight: 500;
+    font-size: 14px;
+    opacity: 1;
+    white-space: nowrap;
+}
+
+.login-form .panel-error md-icon {
+    position: absolute;
+    height: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 6px;
+    width: 32px;
+    color: rgb(255,87,34);
+}
+
+.login-form .panel-error .panel-error-text {
+    padding-left: 44px;
+    text-align: left;
+    overflow: hidden;
+}
+
+.login-form .panel-error.ng-hide-add, .login-form .panel-error.ng-hide-remove {
+  transition: opacity linear 0.5s;
+}
+
+.login-form .panel-error.ng-hide {
+  opacity: 0;
 }

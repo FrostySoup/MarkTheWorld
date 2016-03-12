@@ -8,11 +8,13 @@
             $stateProvider
                 .state('login', {
                     name: 'login',
-                    templateUrl: 'scripts/templates/login.html'
+                    templateUrl: 'scripts/templates/login.html',
+                    controller: 'SidebarCtrl'
                 })
                 .state('register', {
                     name: 'register',
-                    templateUrl: 'scripts/templates/register.html'
+                    templateUrl: 'scripts/templates/register.html',
+                    controller: 'SidebarCtrl'
                 });
         }]);
 }());
