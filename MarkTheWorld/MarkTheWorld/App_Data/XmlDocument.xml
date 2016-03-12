@@ -548,7 +548,7 @@
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.UserController.GetUserColor(System.String)">
             <summary>
-            Gražina vartotojo spalvą
+            Gražina vartotojo spalvas
             </summary>
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.UserController.GetTopUsers">
