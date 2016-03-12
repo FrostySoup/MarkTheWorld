@@ -12,6 +12,8 @@ namespace Data.ReceivePostData
 
         public string PasswordHash { get; set; }
 
+        public string CountryCode { get; set; }
+
         public bool checkIfValiable()
         {
             if (UserName.Length > 25 || UserName.Length < 3)

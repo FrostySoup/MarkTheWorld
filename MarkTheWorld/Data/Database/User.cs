@@ -26,5 +26,7 @@ namespace Data
         public bool pointsAvailable { get; set; }
 
         public Colors colors { get; set; }
+
+        public string countryCode { get; set; }
     }
 }
