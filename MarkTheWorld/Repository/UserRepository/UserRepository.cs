@@ -20,6 +20,7 @@ namespace Repository.UserRepository
                 User newUser = new User();
                 newUser.PasswordHash = userPost.PasswordHash;
                 newUser.UserName = userPost.UserName;
+                newUser.countryCode = userPost.CountryCode;
                 try
                 {                    
                     UserRegistrationModel check = new UserRegistrationModel();

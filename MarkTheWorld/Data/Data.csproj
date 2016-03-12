@@ -59,8 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppUser.cs" />
+    <Compile Include="DataHelpers\Country.cs" />
     <Compile Include="DataHelpers\Colors.cs" />
     <Compile Include="DataHelpers\CornersCorrds.cs" />
+    <Compile Include="DataHelpers\CountriesList.cs" />
     <Compile Include="DataHelpers\DotSearch.cs" />
     <Compile Include="DataHelpers\ErrorStatus.cs" />
     <Compile Include="DataHelpers\GroupedDots.cs" />

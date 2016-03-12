@@ -37,8 +37,12 @@ namespace MarkTheWorld.Controllers.Api
         public IHttpActionResult PostUser(UserRegistrationPost User)
         {
             UserRegistrationModel userCopy = new UserRegistrationModel();
+            if (User == null)
+                return Content(HttpStatusCode.BadRequest, "Invalid object");
             if (!User.checkIfValiable())
                 return Content(HttpStatusCode.BadRequest, "Wrong length of username or password");
+            if (!CountriesList.checkCode(User.CountryCode))
+                return Content(HttpStatusCode.BadRequest, "Invalid country code");
             try
             {
                 userCopy = userService.addUser(User);
@@ -88,6 +92,8 @@ namespace MarkTheWorld.Controllers.Api
         [HttpPost]
         public IHttpActionResult GetUsers(UserRegistrationPost user)
         {
+            if (User == null)
+                return Content(HttpStatusCode.BadRequest, "Invalid object");
             UserRegistrationModel userCopy = new UserRegistrationModel();
             if (!user.checkIfValiable())
                 return Content(HttpStatusCode.BadRequest, "Wrong length of username or password");
