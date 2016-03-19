@@ -23,5 +23,6 @@ namespace Repository.UserRepository
         bool SetColors(string userName, Colors colors);
         Colors GetColors(string userName);
         bool GetUsername(string userName);
+        int GetTotalPoints(string userName);
     }
 }

@@ -343,7 +343,8 @@
     <Content Include="Views\Account\VerifyCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Flags\" />
+    <Folder Include="App_Data\ProfilePictures\" />
     <Folder Include="Scripts\libs\" />
   </ItemGroup>
   <ItemGroup>

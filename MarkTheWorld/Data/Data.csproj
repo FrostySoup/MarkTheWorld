@@ -63,12 +63,14 @@
     <Compile Include="DataHelpers\Colors.cs" />
     <Compile Include="DataHelpers\CornersCorrds.cs" />
     <Compile Include="DataHelpers\CountriesList.cs" />
+    <Compile Include="DataHelpers\DailyReward.cs" />
     <Compile Include="DataHelpers\DotSearch.cs" />
     <Compile Include="DataHelpers\ErrorStatus.cs" />
     <Compile Include="DataHelpers\GroupedDots.cs" />
     <Compile Include="DataHelpers\GroupedSquares.cs" />
     <Compile Include="DataHelpers\Markers.cs" />
     <Compile Include="DataHelpers\SquaresWithInfo.cs" />
+    <Compile Include="DataHelpers\UserProfile.cs" />
     <Compile Include="DotFromViewModel.cs" />
     <Compile Include="Database\Dot.cs" />
     <Compile Include="GroupedDotsForApi.cs" />

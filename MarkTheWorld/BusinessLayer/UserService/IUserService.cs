@@ -24,5 +24,6 @@ namespace BusinessLayer.UserService
         bool postUserColors(string userName, Colors colors);
         Colors getUserColors(string userName);
         bool checkUsername(string userName);
+        UserProfile GetProfile(string userName);
     }
 }

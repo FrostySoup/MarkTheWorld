@@ -21,6 +21,10 @@ namespace Repository.UserRepository
                 newUser.PasswordHash = userPost.PasswordHash;
                 newUser.UserName = userPost.UserName;
                 newUser.countryCode = userPost.CountryCode;
+                Random rnd = new Random();
+                newUser.colors.Blue = rnd.Next(1, 255);
+                newUser.colors.Red = rnd.Next(1, 255);
+                newUser.colors.Green = rnd.Next(1, 255);
                 try
                 {                    
                     UserRegistrationModel check = new UserRegistrationModel();
@@ -73,6 +77,25 @@ namespace Repository.UserRepository
                 catch
                 {
                     return false;
+                }
+            }
+        }
+
+        public int GetTotalPoints(string userName)
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                try
+                {
+                    User user = session.Query<User>()
+                        .First(x => x.UserName.Equals(userName));
+                    if (user != null)
+                        return -1;
+                    else return user.points;
+                }
+                catch
+                {
+                    return -1;
                 }
             }
         }

@@ -85,6 +85,27 @@ namespace MarkTheWorld.Controllers.Api
         }
 
         /// <summary>
+        /// Paima duomenis reikalingus profilio langui
+        /// </summary>
+        [ResponseType(typeof(UserProfile))]
+        [Route("profile/{user}")]
+        [HttpGet]
+        public IHttpActionResult GetProfile(string userName)
+        {
+            UserProfile user = new UserProfile();
+            try
+            {
+                user = userService.GetProfile(userName);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(user);
+        }
+
+        /// <summary>
         /// Login, gražina vartotojo token
         /// </summary>
         [ResponseType(typeof(UserRegistrationModel))]
