@@ -88,7 +88,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Paima duomenis reikalingus profilio langui
         /// </summary>
         [ResponseType(typeof(UserProfile))]
-        [Route("profile/{user}")]
+        [Route("profile/{userName}")]
         [HttpGet]
         public IHttpActionResult GetProfile(string userName)
         {

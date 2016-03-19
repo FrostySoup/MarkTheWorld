@@ -97,18 +97,21 @@ namespace BusinessLayer.UserService
             user.name = userName;
             user.points = repository.GetTotalPoints(userName);
             //Not implemented
-            user.flagAdress = HttpContext.Current.Server.MapPath("~/App_Data/Flags/lt.png");
+            user.flagAdress = "lt.png";
+            //user.flagAdress = HttpContext.Current.Server.MapPath("~/App_Data/Flags/lt.png");
             //Not implemented
-            user.pictureAdress = HttpContext.Current.Server.MapPath("~/App_Data/ProfilePictures/profpicTest.png");
+            user.pictureAdress = "profpicTest.png";
+            //user.pictureAdress = HttpContext.Current.Server.MapPath("~/App_Data/ProfilePictures/profpicTest.png");
 
             DotServices dotService = new DotServices();
+            user.dailies = new DailyReward();
             int points = 0;
             Dot[] dots = dotService.getAlluserDots(userName);
             points = dotService.getUserPointsName(dots);
             user.dailies.points = points;
 
             //Not implemented
-            user.dailies.timeLeft = new DateTime(0, 0, 0, 0, 5, 0);
+            user.dailies.timeLeft = new DateTime();
 
             return user;
         }
