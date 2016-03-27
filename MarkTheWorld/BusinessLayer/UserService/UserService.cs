@@ -2,10 +2,12 @@
 using Data.DataHelpers;
 using Data.ReceivePostData;
 using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLayer.DotService;
 
 namespace BusinessLayer.UserService
 {
@@ -86,6 +88,32 @@ namespace BusinessLayer.UserService
         public bool checkUsername(string userName)
         {
             return repository.GetUsername(userName);
+        }
+
+        public UserProfile GetProfile(string userName)
+        {
+            UserProfile user = new UserProfile();
+            user.colors = repository.GetColors(userName);
+            user.name = userName;
+            user.points = repository.GetTotalPoints(userName);
+            //Not implemented
+            user.flagAdress = "lt.png";
+            //user.flagAdress = HttpContext.Current.Server.MapPath("~/App_Data/Flags/lt.png");
+            //Not implemented
+            user.pictureAdress = "profpicTest.png";
+            //user.pictureAdress = HttpContext.Current.Server.MapPath("~/App_Data/ProfilePictures/profpicTest.png");
+
+            DotServices dotService = new DotServices();
+            user.dailies = new DailyReward();
+            int points = 0;
+            Dot[] dots = dotService.getAlluserDots(userName);
+            points = dotService.getUserPointsName(dots);
+            user.dailies.points = points;
+
+            //Not implemented
+            user.dailies.timeLeft = new DateTime();
+
+            return user;
         }
     }
 }

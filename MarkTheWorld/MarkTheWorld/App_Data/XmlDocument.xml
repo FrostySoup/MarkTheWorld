@@ -521,6 +521,11 @@
             Generuoja nustatytą kiekį duomenų
             </summary>
         </member>
+        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetProfile(System.String)">
+            <summary>
+            Paima duomenis reikalingus profilio langui
+            </summary>
+        </member>
         <member name="M:MarkTheWorld.Controllers.Api.UserController.GetUsers(Data.ReceivePostData.UserRegistrationPost)">
             <summary>
             Login, gražina vartotojo token
