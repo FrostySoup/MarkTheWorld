@@ -2,10 +2,10 @@
 (function () {
     'use strict';
 
-    function AppCtrl($scope, $log, $mdSidenav, $state, newSquareService, mapSettingsService, accountService, topMarkersService, simpleModalService, $mdDialog) {
+    function AppCtrl($scope, $log, $mdSidenav, $state, newSquareService, mapSettingsService, myProfileService, accountService, topMarkersService, simpleModalService) {
 
         $scope.toggleRight = function (state) {
-            $state.transitionTo(state, { param1 : 'something' }, { reload: true });
+            $state.transitionTo(state);
             sideBar();
         };
 
@@ -17,8 +17,8 @@
             return accountService.getLoggedUser();
         };
 
-        $scope.logout = function () {
-            accountService.logout();
+        $scope.logout = function (ev) {
+            accountService.logout(ev);
         };
 
         $scope.openMenu = function ($mdOpenMenu, ev) {
@@ -31,6 +31,10 @@
 
         $scope.mapSettings = function (ev) {
             mapSettingsService.showDialog(ev);
+        };
+
+        $scope.myProfile = function (ev) {
+            myProfileService.showDialog(ev);
         };
 
         $scope.addNewSquare = function (ev) {

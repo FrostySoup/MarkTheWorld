@@ -35,7 +35,7 @@ md-dialog .md-button.md-icon-button {
     margin: 0 4px;
 }
 
-/* fab buttons */
+/* buttons */
 
 .md-button.md-fab {
     background-color: #757575;
@@ -45,7 +45,58 @@ md-dialog .md-button.md-icon-button {
     right: 110px;
 }
 
-/* login form */
+.md-button.md-secondary {
+    background: whitesmoke;
+}
+
+/* dialogs */
+
+md-dialog .md-toolbar-tools {
+    padding-right: 8px;
+}
+
+md-dialog .md-subheader {
+    padding: 0;
+    background-color: rgb(245,245,245);
+}
+
+/* my profile dialog */
+@media (min-width: 960px) {
+    md-dialog.dialog-my-profile {
+        min-width: 450px;
+    }
+}
+
+md-dialog.dialog-my-profile img {
+    border-radius: 50%;
+    margin: 16px !important;
+}
+
+md-dialog.dialog-my-profile .user-color {
+    background: #E242ED;
+    border-radius: 3px;
+    width: 28px;
+    height: 28px;
+    margin-left: 2px;
+    margin-right: 10px;
+}
+
+md-dialog.dialog-my-profile .md-list-item-user-password md-icon, md-dialog.dialog-my-profile .md-list-item-reward md-icon {
+    margin: 0 8px 0 0;
+    color: #757575;
+    width: 32px;
+}
+
+md-dialog.dialog-my-profile .profile-main-info h3 {
+    margin: 0;
+}
+
+md-dialog.dialog-my-profile .row-title {
+    text-align: right;
+    padding-right: 8px;
+}
+
+/* login/register dialog */
 
 md-progress-linear.register-form-loader {
     position: absolute;

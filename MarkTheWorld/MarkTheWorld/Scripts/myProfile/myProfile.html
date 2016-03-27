@@ -1,0 +1,55 @@
+<md-dialog class="dialog-my-profile">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>My Profile</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()" aria-label="Close dialog" title="Close dialog">
+                <md-icon md-svg-src="~/../Content/img/icons/ic_clear_white_48px.svg" class="s32"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div layout layout-align="start center">
+            <img src="http://lorempixel.com/100/100/people/" class="user-avatar" />
+            <div class="profile-main-info" layout="column">
+                <table>
+                    <tr>
+                        <td class="row-title"><h3>Frisson</h3></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="row-title">Country:</td>
+                        <td>Lithuania</td>
+                    </tr>
+                    <tr>
+                        <td class="row-title">Points:</td>
+                        <td>565</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <md-subheader>Daily reward</md-subheader>
+        <md-divider ></md-divider>
+        <md-list>
+            <md-list-item class="md-list-item-reward">
+                <md-icon md-svg-src="~/../Content/img/icons/ic_monetization_on.svg" class="s32"></md-icon>
+                <p>24 points in 2h 31m 23s</p>
+                <md-button class="md-secondary" ng-click="doSecondaryAction($event)">Explain</md-button>
+            </md-list-item>
+        </md-list>
+        <md-subheader>Account settings</md-subheader>
+        <md-divider ></md-divider>
+        <md-list>
+            <md-list-item>
+                <div class="user-color"></div>
+                <p>Color</p>
+                <md-button class="md-secondary" ng-click="doSecondaryAction($event)">Edit</md-button>
+            </md-list-item>
+            <md-list-item class="md-list-item-user-password">
+                <md-icon md-svg-src="~/../Content/img/icons/ic_lock_open.svg" class="s32"></md-icon>
+                <p>Password</p>
+                <md-button class="md-secondary" ng-click="doSecondaryAction($event)">Edit</md-button>
+            </md-list-item>
+        </md-list>
+    </md-dialog-content>
+</md-dialog>
