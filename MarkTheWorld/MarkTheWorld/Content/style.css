@@ -46,7 +46,11 @@ md-dialog .md-button.md-icon-button {
 }
 
 .md-button.md-secondary {
-    background: whitesmoke;
+    border: 1px solid rgba(158,158,158,0.2);
+}
+
+.md-button.md-secondary:hover {
+    border: 1px solid initial;
 }
 
 /* dialogs */
@@ -67,9 +71,19 @@ md-dialog .md-subheader {
     }
 }
 
-md-dialog.dialog-my-profile img {
+md-dialog.dialog-my-profile .user-avatar {
+    padding: 8px 0 8px;
+}
+
+md-dialog.dialog-my-profile .user-avatar img {
     border-radius: 50%;
-    margin: 16px !important;
+    margin: 0 16px 0;
+}
+
+md-dialog.dialog-my-profile .user-avatar p {
+    font-size: 12px;
+    text-align: center;
+    margin: 3px 0 0 0;
 }
 
 md-dialog.dialog-my-profile .user-color {
@@ -93,7 +107,11 @@ md-dialog.dialog-my-profile .profile-main-info h3 {
 
 md-dialog.dialog-my-profile .row-title {
     text-align: right;
-    padding-right: 8px;
+    padding: 0 8px 0 0;
+}
+
+md-dialog.dialog-my-profile table {
+    border-spacing: 0 2px;
 }
 
 /* login/register dialog */

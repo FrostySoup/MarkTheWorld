@@ -17,6 +17,7 @@ namespace MarkTheWorld
                 .IncludeDirectory("~/Scripts/googleMapsInitializer", "*.js")
                 .IncludeDirectory("~/Scripts/mapSettings", "*.js")
                 .IncludeDirectory("~/Scripts/myProfile", "*.js")
+                .IncludeDirectory("~/Scripts/myProfile/directives", "*.js")
                 .IncludeDirectory("~/Scripts/map", "*.js")
                 .IncludeDirectory("~/Scripts/map/services", "*.js")
                 .IncludeDirectory("~/Scripts/newSquare", "*.js")

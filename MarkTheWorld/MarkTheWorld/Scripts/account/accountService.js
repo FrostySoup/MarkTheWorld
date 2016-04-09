@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    function accountService($http, $q, $timeout, confirmDialogService) {
+    function accountService($http, $q, confirmDialogService) {
         return {
             login: function (loginData) {
                 console.log('tyring to login');
@@ -84,7 +84,7 @@
             },
 
             getLoggedUser: function () {
-                return localStorage.getItem('user');
+                return localStorage.getItem('username');
             },
 
             logout: function (ev) {

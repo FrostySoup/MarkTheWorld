@@ -33,8 +33,8 @@
             accountService.login(loginData).then(
                 function (success) {
                     console.log('login success: ', success);
+                    localStorage.setItem('username', loginData.username);
                     localStorage.setItem('token', success.data.Token);
-                    localStorage.setItem('user', loginData.username);
                     $scope.close();
                 },
                 function (error) {
