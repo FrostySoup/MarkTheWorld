@@ -167,7 +167,7 @@ namespace MarkTheWorld.Controllers.Api
         [HttpPost]
         public IHttpActionResult GetDots(CornersCorrds corners, double zoomLevel)
         {
-            if (corners == null || corners.checkCorners())
+            if (corners == null || !corners.checkCorners())
                 return Content(HttpStatusCode.BadRequest, "Insuficient information about specific object");
             if (zoomLevel > 15 && zoomLevel < 0)
                 return Content(HttpStatusCode.BadRequest, "Wrong zoom level");

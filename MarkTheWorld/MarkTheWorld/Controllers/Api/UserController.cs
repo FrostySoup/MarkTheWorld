@@ -95,9 +95,9 @@ namespace MarkTheWorld.Controllers.Api
             UserProfile user = new UserProfile();
             try
             {
-                user = userService.GetProfile(userName);
-                if (user.colors == null)
+                if (userService.checkUsername(userName))
                     return Content(HttpStatusCode.BadRequest, "User doesn't exist");
+                user = userService.GetProfile(userName);                
             }
             catch (Exception)
             {
