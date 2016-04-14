@@ -8,7 +8,7 @@ namespace Data.DataHelpers
 {
     public class DailyReward
     {
-        public TimeSpan timeLeft { get; set; }
+        public int timeLeft { get; set; }
         public int points { get; set; }
     }
 }

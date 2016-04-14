@@ -92,7 +92,7 @@ namespace BusinessLayer.UserService
             user.name = userName;
             user.points = repository.GetTotalPoints(userName);
             //Not implemented
-            user.pictureAdress = "profpicTest.png";
+            user.pictureAddress = "profpicTest.png";
             //user.pictureAdress = HttpContext.Current.Server.MapPath("~/App_Data/ProfilePictures/profpicTest.png");
 
             DotServices dotService = new DotServices();
@@ -103,14 +103,15 @@ namespace BusinessLayer.UserService
             user.dailies.points = points;
             Country country = repository.GetCountry(userName);
             user.countryName = country.name;
-            user.flagAdress = country.code + ".png";
+            user.flagAddress = country.code.ToLower() + ".png";
 
             TimeSpan time = repository.GetUserDaily(userName);
+            TimeSpan saveTime = new TimeSpan(0, 0, 0);
             if (time.TotalDays >= 1)
-                user.dailies.timeLeft = new TimeSpan(0, 0, 0);
+                user.dailies.timeLeft = 0;
             else {
                 TimeSpan newSpan = new TimeSpan(24, 0, 0);
-                user.dailies.timeLeft = newSpan - time;
+                user.dailies.timeLeft = (int)(newSpan - time).TotalSeconds + 1;
             }
 
             return user;
