@@ -4,17 +4,17 @@
 <md-content class="login-form" layout-padding layout="column">
     <form ng-submit="login(loginForm, loginData)" name="loginForm" novalidate>
         <md-input-container class="md-block">
-            <label for="username">Username</label>
-            <input required minlength="3" maxlength="25" type="text" id="username" name="username" ng-model="loginData.username" md-autofocus>
-            <div ng-messages="loginForm.username.$error">
+            <label for="login_username">Username</label>
+            <input required minlength="3" maxlength="25" type="text" id="login_username" name="login_username" ng-model="loginData.username" md-autofocus>
+            <div ng-messages="loginForm.login_username.$error">
                 <div ng-message-exp="['required', 'minlength']">The username should be at least 3 characters long</div>
                 <div ng-message="maxlength">The username should be shorter</div>
             </div>
         </md-input-container>
         <md-input-container class="md-block">
-            <label for="password">Password</label>
-            <input required minlength="6" maxlength="30" type="password" name="password" id="password" ng-model="loginData.password">
-            <div ng-messages="loginForm.password.$error">
+            <label for="login_password">Password</label>
+            <input required minlength="6" maxlength="30" type="password" name="login_password" id="login_password" ng-model="loginData.password">
+            <div ng-messages="loginForm.login_password.$error">
                 <div ng-message-exp="['required', 'minlength']">The password should be at least 6 characters long</div>
                 <div ng-message="maxlength">The password should be shorter</div>
             </div>

@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    function accountService($http, $q, $timeout, simpleModalService) {
+    function accountService($http, $q, confirmDialogService) {
         return {
             login: function (loginData) {
                 console.log('tyring to login');
@@ -84,16 +84,22 @@
             },
 
             getLoggedUser: function () {
-                return localStorage.getItem('user');
+                return localStorage.getItem('username');
             },
 
-            logout: function () {
-                simpleModalService.showModal('Info', 'Logged out successfully');
-                $timeout(function () {
+            logout: function (ev) {
+                confirmDialogService.showConfirmDialog({
+                    title: 'Logging out',
+                    message: 'Are you sure you want to log out?',
+                    ariaLabel: 'Logging out',
+                    ev: ev,
+                    okText: 'Yes',
+                    cancelText: 'No'
+                }).then(function () {
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
                     localStorage.removeItem('onlyMyOwnMarks');
-                }, 300);
+                });
             }
         };
     }

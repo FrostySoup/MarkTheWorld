@@ -19,7 +19,6 @@
                 <md-icon md-svg-icon="~/Content/img/icons/ic_account_box_white_48px.svg" class="s48" aria-label="Account"></md-icon>
             </md-button>
             <md-menu-content width="4">
-
                 <md-menu-item ng-show="!isLogged()">
                     <md-button ng-click="toggleRight('login')">
                         Login
@@ -30,16 +29,22 @@
                         Register
                     </md-button>
                 </md-menu-item>
-
-                <md-menu-item ng-show="isLogged()">
-                    <p>Logged as: {{getLoggedUser()}}</p>
-                </md-menu-item>
-                <md-menu-divider ng-show="isLogged()"></md-menu-divider>
-                <md-menu-item ng-show="isLogged()">
-                    <md-button ng-click="logout()">
-                        Logout
-                    </md-button>
-                </md-menu-item>
+                <div ng-show="isLogged()">
+                    <md-menu-item>
+                        <p>Logged as: {{getLoggedUser()}}</p>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-button ng-click="myProfile($event)">
+                            My profile
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="logout($event)">
+                            Logout
+                        </md-button>
+                    </md-menu-item>
+                </div>
 
             </md-menu-content>
         </md-menu>

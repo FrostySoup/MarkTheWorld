@@ -2,5 +2,5 @@
 (function () {
     'use strict';
 
-    angular.module('shared', ['simpleModal', 'toast']);
+    angular.module('shared', ['simpleModal', 'toast', 'confirmDialog']);
 }());
