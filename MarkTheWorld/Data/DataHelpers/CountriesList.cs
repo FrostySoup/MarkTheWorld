@@ -995,6 +995,16 @@ namespace Data.DataHelpers
             }
             return false;
         }
+        static public Country getCountry(string code)
+        {
+            Country[] codes = getCodes();
+            for (int i = 0; i < codes.Length; i++)
+            {
+                if (code.Equals(codes[i].code))
+                    return codes[i];
+            }
+            return null;
+        }
     }
 }             
      

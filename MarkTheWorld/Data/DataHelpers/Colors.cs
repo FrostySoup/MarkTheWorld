@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Data.DataHelpers
 {
-    public class Colors
+    public class Color
     {
-        public int Red { get; set; }
-        public int Green { get; set; }
-        public int Blue { get; set; }
+        public int red { get; set; }
+        public int green { get; set; }
+        public int blue { get; set; }
     }
 }

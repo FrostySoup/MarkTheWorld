@@ -21,11 +21,12 @@ namespace Repository.UserRepository
                 newUser.PasswordHash = userPost.PasswordHash;
                 newUser.UserName = userPost.UserName;
                 newUser.countryCode = userPost.CountryCode;
+                newUser.lastDailyTime = DateTime.Now;
                 Random rnd = new Random();
-                newUser.colors = new Colors();
-                newUser.colors.Blue = rnd.Next(1, 255);
-                newUser.colors.Red = rnd.Next(1, 255);
-                newUser.colors.Green = rnd.Next(1, 255);
+                newUser.colors = new Color();
+                newUser.colors.blue = rnd.Next(1, 255);
+                newUser.colors.red = rnd.Next(1, 255);
+                newUser.colors.green = rnd.Next(1, 255);
                 try
                 {                    
                     UserRegistrationModel check = new UserRegistrationModel();
@@ -60,7 +61,7 @@ namespace Repository.UserRepository
             }
         }
 
-        public bool SetColors(string userName, Colors colors)
+        public bool SetColors(string userName, Color colors)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
@@ -103,6 +104,25 @@ namespace Repository.UserRepository
             }
         }
 
+        public Country GetCountry(string userName)
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                try
+                {
+                    User user = session.Query<User>()
+                        .First(x => x.UserName.Equals(userName));
+                    if (user != null)
+                        return CountriesList.getCountry(user.countryCode);
+                    else return null;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         public bool GetUsername(string userName)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
@@ -122,7 +142,7 @@ namespace Repository.UserRepository
             }
         }
 
-        public Colors GetColors(string userName)
+        public Color GetColors(string userName)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
@@ -137,30 +157,6 @@ namespace Repository.UserRepository
                 catch
                 {
                     return null;
-                }
-            }
-        }
-
-        public bool SetDailies()
-        {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
-            {
-                try
-                {
-                    List<User> users = session.Query<User>()
-                        .Take(5000)
-                        .ToList();
-                    foreach(User user in users)
-                    {
-                        user.pointsAvailable = true;
-                        session.Store(user);
-                    }
-                    session.SaveChanges();
-                    return true;
-                }
-                catch
-                {
-                    return false;
                 }
             }
         }
@@ -181,26 +177,22 @@ namespace Repository.UserRepository
             }
         }
 
-        public bool GetUserDaily(string userName)
+        public TimeSpan GetUserDaily(string userName)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
+                TimeSpan timePassed = new TimeSpan(0, 0, 0);
                 try
                 {
                     User user = session.Query<User>().First(x => x.UserName.Equals(userName));
-                    if (user.pointsAvailable != false)
-                    {
-                        user.pointsAvailable = false;
-                        session.Store(user);
-                        session.SaveChanges();
-                        return true;
-                    }
+                    timePassed = DateTime.Now - user.lastDailyTime;
+                        return timePassed;
                 }
                 catch
                 {
-                    return false;
+                    return timePassed;
                 }
-                return false;
+                return timePassed;
             }
         }
 

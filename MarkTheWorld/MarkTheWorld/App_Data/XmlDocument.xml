@@ -541,7 +541,7 @@
             Paima paskutinius 10 vartotojo įvykių
             </summary>
         </member>
-        <member name="M:MarkTheWorld.Controllers.Api.UserController.PostUserColor(System.String,Data.DataHelpers.Colors)">
+        <member name="M:MarkTheWorld.Controllers.Api.UserController.PostUserColor(System.String,Data.DataHelpers.Color)">
             <summary>
             Patalpina vartotojo spalvą
             </summary>

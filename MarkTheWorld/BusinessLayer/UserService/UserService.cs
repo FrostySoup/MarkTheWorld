@@ -62,7 +62,7 @@ namespace BusinessLayer.UserService
 
         public bool checkUserDaily(string userName)
         {
-            return repository.GetUserDaily(userName);
+            return false;// repository.GetUserDaily(userName);
         }
 
         public List<UserEvent> getUserEvents(string userName)
@@ -70,17 +70,12 @@ namespace BusinessLayer.UserService
             return repository.GetUserEvents(userName);
         }
 
-        public bool renewDailies()
-        {
-            return repository.SetDailies();
-        }
-
-        public bool postUserColors(string userName, Colors colors)
+        public bool postUserColors(string userName, Color colors)
         {
             return repository.SetColors(userName, colors);
         }
 
-        public Colors getUserColors(string userName)
+        public Color getUserColors(string userName)
         {
             return repository.GetColors(userName);
         }
@@ -97,9 +92,6 @@ namespace BusinessLayer.UserService
             user.name = userName;
             user.points = repository.GetTotalPoints(userName);
             //Not implemented
-            user.flagAdress = "lt.png";
-            //user.flagAdress = HttpContext.Current.Server.MapPath("~/App_Data/Flags/lt.png");
-            //Not implemented
             user.pictureAdress = "profpicTest.png";
             //user.pictureAdress = HttpContext.Current.Server.MapPath("~/App_Data/ProfilePictures/profpicTest.png");
 
@@ -109,9 +101,17 @@ namespace BusinessLayer.UserService
             Dot[] dots = dotService.getAlluserDots(userName);
             points = dotService.getUserPointsName(dots);
             user.dailies.points = points;
+            Country country = repository.GetCountry(userName);
+            user.countryName = country.name;
+            user.flagAdress = country.code + ".png";
 
-            //Not implemented
-            user.dailies.timeLeft = new DateTime();
+            TimeSpan time = repository.GetUserDaily(userName);
+            if (time.TotalDays >= 1)
+                user.dailies.timeLeft = new TimeSpan(0, 0, 0);
+            else {
+                TimeSpan newSpan = new TimeSpan(24, 0, 0);
+                user.dailies.timeLeft = newSpan - time;
+            }
 
             return user;
         }

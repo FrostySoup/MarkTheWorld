@@ -23,10 +23,10 @@ namespace Data
 
         public List<UserEvent> eventsHistory { get; set; }
 
-        public bool pointsAvailable { get; set; }
-
-        public Colors colors { get; set; }
+        public Color colors { get; set; }
 
         public string countryCode { get; set; }
+
+        public DateTime lastDailyTime { get; set; }
     }
 }

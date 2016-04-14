@@ -17,11 +17,9 @@ namespace Repository.UserRepository
         Guid GetTokenByName(string name);
         UserRegistrationModel GetOneUser(UserRegistrationPost user);
         List<TopUser> GetTopUsers();
-        bool GetUserDaily(string userName);
         List<UserEvent> GetUserEvents(string userName);
-        bool SetDailies();
-        bool SetColors(string userName, Colors colors);
-        Colors GetColors(string userName);
+        bool SetColors(string userName, Color colors);
+        Color GetColors(string userName);
         bool GetUsername(string userName);
         int GetTotalPoints(string userName);
     }

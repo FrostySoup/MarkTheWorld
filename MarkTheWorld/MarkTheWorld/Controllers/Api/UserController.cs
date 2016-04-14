@@ -96,6 +96,8 @@ namespace MarkTheWorld.Controllers.Api
             try
             {
                 user = userService.GetProfile(userName);
+                if (user.colors == null)
+                    return Content(HttpStatusCode.BadRequest, "User doesn't exist");
             }
             catch (Exception)
             {
@@ -188,7 +190,7 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(bool))]
         [Route("Color/{userName}")]
         [HttpPost]
-        public IHttpActionResult PostUserColor(string userName, Colors colors)
+        public IHttpActionResult PostUserColor(string userName, Color colors)
         {
             if (userName.Length < 3 || userName.Length > 25)
                 return Content(HttpStatusCode.BadRequest, "Wrong username length");
