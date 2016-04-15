@@ -138,7 +138,7 @@ namespace MarkTheWorld.Controllers.Api
         }
 
         /// <summary>
-        /// Patikrina ar vartotojas gali pasiimti taškų
+        /// Paima vartotojo daily reward
         /// </summary>
         [ResponseType(typeof(bool))]
         [Route("Daily/{userName}")]
@@ -150,7 +150,7 @@ namespace MarkTheWorld.Controllers.Api
             bool canTake = false;
             try
             {
-                 canTake = userService.checkUserDaily(userName);
+                 canTake = userService.takeUserDaily(userName);
             }
             catch (Exception)
             {

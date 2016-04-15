@@ -128,7 +128,7 @@ namespace BusinessLayer.DotService
 
         public int maxConnection(Dot[] squares)
         {
-            int maxCon = 0;
+            int maxCon = 1;
             List<DotSearch> dotsToSearch = new List<DotSearch>();
 
             int[] checkedDots = new int[squares.Length];

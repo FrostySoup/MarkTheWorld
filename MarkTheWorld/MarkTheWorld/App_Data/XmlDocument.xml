@@ -533,7 +533,7 @@
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.UserController.CheckPoints(System.String)">
             <summary>
-            Patikrina ar vartotojas gali pasiimti taškų
+            Paima vartotojo daily reward
             </summary>
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.UserController.GetUerEvents(System.String)">

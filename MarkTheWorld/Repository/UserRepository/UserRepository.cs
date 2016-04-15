@@ -61,6 +61,32 @@ namespace Repository.UserRepository
             }
         }
 
+        public bool GetUserDailyReward(string userName, int points)
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                TimeSpan timePassed = new TimeSpan(0, 0, 0);
+                try
+                {
+                    User user = session.Query<User>().First(x => x.UserName.Equals(userName));
+                    timePassed = DateTime.Now - user.lastDailyTime;
+                    if (timePassed.TotalDays >= 1)
+                    {
+                        user.lastDailyTime = DateTime.Now;
+                        user.points += points;
+                        session.Store(user);
+                        session.SaveChanges();
+                        return true;
+                    }
+                    else return false;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
         public bool SetColors(string userName, Color colors)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
@@ -192,7 +218,6 @@ namespace Repository.UserRepository
                 {
                     return timePassed;
                 }
-                return timePassed;
             }
         }
 
