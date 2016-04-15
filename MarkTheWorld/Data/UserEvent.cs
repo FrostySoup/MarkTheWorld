@@ -22,5 +22,9 @@ namespace Data
             lat = lati;
             userName = userN;
         }
+        public UserEvent(string ev)
+        {
+            events = ev;
+        }
     }
 }

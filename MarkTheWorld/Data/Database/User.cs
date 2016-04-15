@@ -28,5 +28,7 @@ namespace Data
         public string countryCode { get; set; }
 
         public DateTime lastDailyTime { get; set; }
+
+        public string profilePicture { get; set; }
     }
 }

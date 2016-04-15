@@ -17,10 +17,12 @@ namespace Repository.UserRepository
         Guid GetTokenByName(string name);
         UserRegistrationModel GetOneUser(UserRegistrationPost user);
         List<TopUser> GetTopUsers();
-        List<UserEvent> GetUserEvents(string userName);
-        bool SetColors(string userName, Color colors);
-        Color GetColors(string userName);
+        List<UserEvent> GetUserEvents(string userName);             
         bool GetUsername(string userName);
+
+        //profile functions
         int GetTotalPoints(string userName);
+        Color GetColors(string userName);
+        bool SetColors(string userName, Color colors);
     }
 }

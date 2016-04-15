@@ -72,13 +72,13 @@ namespace Repository.DotRepository
                                     //add event here
                                     if (userChanged.eventsHistory == null)
                                         userChanged.eventsHistory = new List<UserEvent>();
-                                    userChanged.eventsHistory.Add(new UserEvent("Player captured your point", dots[i].lon, dots[i].lat, user.UserName));
+                                    userChanged.eventsHistory.Add(new UserEvent("Player captured your square", dots[i].lon, dots[i].lat, user.UserName));
                                     if (userChanged.eventsHistory.Count > 10)
                                         userChanged.eventsHistory.RemoveRange(10, 1);
 
                                     if (user.eventsHistory == null)
                                         user.eventsHistory = new List<UserEvent>();
-                                    user.eventsHistory.Add(new UserEvent("You captured point", dots[i].lon, dots[i].lat, userChanged.UserName));
+                                    user.eventsHistory.Add(new UserEvent("You captured square", dots[i].lon, dots[i].lat, userChanged.UserName));
                                     if (user.eventsHistory.Count > 10)
                                         user.eventsHistory.RemoveRange(10, 1);
 
@@ -102,7 +102,7 @@ namespace Repository.DotRepository
 
                     if (user.eventsHistory == null)
                         user.eventsHistory = new List<UserEvent>();
-                    user.eventsHistory.Add(new UserEvent("You captured new point", dot.lng, dot.lat, null));
+                    user.eventsHistory.Add(new UserEvent("You captured new square", dot.lng, dot.lat, null));
                     if (user.eventsHistory.Count > 10)
                         user.eventsHistory.RemoveRange(10, 1);
 

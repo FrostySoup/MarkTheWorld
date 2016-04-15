@@ -100,9 +100,7 @@ namespace BusinessLayer.UserService
             user.colors = repository.GetColors(userName);
             user.name = userName;
             user.points = repository.GetTotalPoints(userName);
-            //Not implemented
-            user.pictureAddress = "profpicTest.png";
-            //user.pictureAdress = HttpContext.Current.Server.MapPath("~/App_Data/ProfilePictures/profpicTest.png");
+            user.pictureAddress = repository.GetProfilePic(userName);
 
             DotServices dotService = new DotServices();
             user.dailies = new DailyReward();

@@ -11,7 +11,7 @@ using Data.DataHelpers;
 
 namespace Repository.UserRepository
 {
-    public class UserRepository : GenericRepository.GenericRepository, IUserRepository
+    public partial class UserRepository : GenericRepository.GenericRepository, IUserRepository
     {
         public UserRegistrationModel AddUser(UserRegistrationPost userPost)
         {
@@ -27,6 +27,7 @@ namespace Repository.UserRepository
                 newUser.colors.blue = rnd.Next(1, 255);
                 newUser.colors.red = rnd.Next(1, 255);
                 newUser.colors.green = rnd.Next(1, 255);
+                newUser.profilePicture = "defaultAvatar" + rnd.Next(1, 16) + ".png";
                 try
                 {                    
                     UserRegistrationModel check = new UserRegistrationModel();
@@ -61,94 +62,6 @@ namespace Repository.UserRepository
             }
         }
 
-        public bool GetUserDailyReward(string userName, int points)
-        {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
-            {
-                TimeSpan timePassed = new TimeSpan(0, 0, 0);
-                try
-                {
-                    User user = session.Query<User>().First(x => x.UserName.Equals(userName));
-                    timePassed = DateTime.Now - user.lastDailyTime;
-                    if (timePassed.TotalDays >= 1)
-                    {
-                        user.lastDailyTime = DateTime.Now;
-                        user.points += points;
-                        session.Store(user);
-                        session.SaveChanges();
-                        return true;
-                    }
-                    else return false;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }
-
-        public bool SetColors(string userName, Color colors)
-        {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
-            {
-                try
-                {
-                    User user = session.Query<User>()
-                        .First(x => x.UserName.Equals(userName));
-
-                    user.colors = colors;
-                    session.Store(user);
-                    
-                    session.SaveChanges();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }
-
-        public int GetTotalPoints(string userName)
-        {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
-            {
-                try
-                {
-                    User user = session.Query<User>()
-                        .First(x => x.UserName.Equals(userName));
-                    if (user == null)
-                        return -1;
-                    if (user.points < 0)
-                        return 0;
-                    else return user.points;
-                }
-                catch
-                {
-                    return -1;
-                }
-            }
-        }
-
-        public Country GetCountry(string userName)
-        {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
-            {
-                try
-                {
-                    User user = session.Query<User>()
-                        .First(x => x.UserName.Equals(userName));
-                    if (user != null)
-                        return CountriesList.getCountry(user.countryCode);
-                    else return null;
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-        }
-
         public bool GetUsername(string userName)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
@@ -168,24 +81,7 @@ namespace Repository.UserRepository
             }
         }
 
-        public Color GetColors(string userName)
-        {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
-            {
-                try
-                {
-                    User user = session.Query<User>()
-                        .First(x => x.UserName.Equals(userName));
-                    if (user != null)
-                        return user.colors;
-                    else return null;
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-        }
+     
 
         public List<UserEvent> GetUserEvents(string userName)
         {
@@ -201,25 +97,7 @@ namespace Repository.UserRepository
                     return null;
                 }
             }
-        }
-
-        public TimeSpan GetUserDaily(string userName)
-        {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
-            {
-                TimeSpan timePassed = new TimeSpan(0, 0, 0);
-                try
-                {
-                    User user = session.Query<User>().First(x => x.UserName.Equals(userName));
-                    timePassed = DateTime.Now - user.lastDailyTime;
-                        return timePassed;
-                }
-                catch
-                {
-                    return timePassed;
-                }
-            }
-        }
+        }       
 
         public List<TopUser> GetTopUsers()
         {
