@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.DataHelpers;
+using Data.ReceivePostData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,12 @@ namespace Repository.UserRepository
 {
     public partial class UserRepository
     {
-        public bool GetUserDailyReward(string userName, int points)
+        public UserDailyReward GetUserDailyReward(string userName, int points)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
                 TimeSpan timePassed = new TimeSpan(0, 0, 0);
+                UserDailyReward dailies = new UserDailyReward();
                 try
                 {
                     User user = session.Query<User>().First(x => x.UserName.Equals(userName));
@@ -23,6 +25,9 @@ namespace Repository.UserRepository
                     {
                         user.lastDailyTime = DateTime.Now;
                         user.points += points;
+                        dailies.totalPoints = user.points;
+                        dailies.received = points;
+                        dailies.canGet = true;
                         if (user.eventsHistory == null)
                             user.eventsHistory = new List<UserEvent>();
                         if (points < 2)
@@ -33,13 +38,13 @@ namespace Repository.UserRepository
                             user.eventsHistory.RemoveRange(10, 1);
                         session.Store(user);
                         session.SaveChanges();
-                        return true;
+                        return dailies;
                     }
-                    else return false;
+                    else return dailies;
                 }
                 catch
                 {
-                    return false;
+                    return dailies;
                 }
             }
         }

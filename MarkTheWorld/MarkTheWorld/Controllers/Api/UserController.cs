@@ -147,10 +147,12 @@ namespace MarkTheWorld.Controllers.Api
         {
             if (userName.Length < 3 || userName.Length > 25)
                 return Content(HttpStatusCode.BadRequest, "Wrong username length");
-            bool canTake = false;
+            UserDailyReward canTake = new UserDailyReward();
             try
             {
-                 canTake = userService.takeUserDaily(userName);
+                canTake = userService.takeUserDaily(userName);
+                if (canTake.canGet != true)
+                    return Content(HttpStatusCode.BadRequest, "Can't get daily reward yet");
             }
             catch (Exception)
             {

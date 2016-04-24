@@ -18,7 +18,7 @@ namespace BusinessLayer.UserService
         User editApplicationUser(User ApplicationUser);
         User getOneByToken(Guid token);
         List<TopUser> getTopUsers();
-        bool takeUserDaily(string userName);
+        UserDailyReward takeUserDaily(string userName);
         List<UserEvent> getUserEvents(string userName);
         bool postUserColors(string userName, Color colors);
         Color getUserColors(string userName);

@@ -85,12 +85,12 @@ namespace BusinessLayer.UserService
             return repository.GetUsername(userName);
         }
 
-        public bool takeUserDaily(string userName)
+        public UserDailyReward takeUserDaily(string userName)
         {
             DotServices dotService = new DotServices();
             Dot[] dots = dotService.getAlluserDots(userName);
             int points = dotService.getUserPointsName(dots);
-            bool tookDaily = repository.GetUserDailyReward(userName, points);
+            UserDailyReward tookDaily = repository.GetUserDailyReward(userName, points);
             return tookDaily;
         }
 
