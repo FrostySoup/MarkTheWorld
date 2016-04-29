@@ -140,7 +140,7 @@ namespace MarkTheWorld.Controllers.Api
         /// <summary>
         /// Paima vartotojo daily reward
         /// </summary>
-        [ResponseType(typeof(bool))]
+        [ResponseType(typeof(UserDailyReward))]
         [Route("Daily/{userName}")]
         [HttpGet]
         public IHttpActionResult CheckPoints(string userName)
