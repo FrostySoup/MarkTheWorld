@@ -10,12 +10,11 @@ namespace Data.ReceivePostData
     {
         public int totalPoints { get; set; }
         public int received { get; set; }
-        public bool canGet { get; set; }
+        public int timeLeft { get; set; }
         public UserDailyReward()
         {
-            totalPoints = 0;
-            received = 0;
-            canGet = false;
+            totalPoints = -1;
+            received = -1;
         }
     }
 }

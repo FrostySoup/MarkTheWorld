@@ -32,7 +32,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Registracija, prideda naują vartotoją į duomenų bazę
         /// </summary>
         [ResponseType(typeof(UserRegistrationModel))]
-        [Route("User")]
+        [Route("user")]
         [HttpPost]
         public IHttpActionResult PostUser(UserRegistrationPost User)
         {
@@ -111,7 +111,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Login, gražina vartotojo token
         /// </summary>
         [ResponseType(typeof(UserRegistrationModel))]
-        [Route("User/Login")]
+        [Route("user/login")]
         [HttpPost]
         public IHttpActionResult GetUsers(UserRegistrationPost user)
         {
@@ -141,7 +141,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Paima vartotojo daily reward
         /// </summary>
         [ResponseType(typeof(UserDailyReward))]
-        [Route("Daily/{userName}")]
+        [Route("daily/{userName}")]
         [HttpGet]
         public IHttpActionResult CheckPoints(string userName)
         {
@@ -151,7 +151,7 @@ namespace MarkTheWorld.Controllers.Api
             try
             {
                 canTake = userService.takeUserDaily(userName);
-                if (canTake.canGet != true)
+                if (canTake.received < 0)
                     return Content(HttpStatusCode.BadRequest, "Can't get daily reward yet");
             }
             catch (Exception)
@@ -166,7 +166,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Paima paskutinius 10 vartotojo įvykių
         /// </summary>
         [ResponseType(typeof(List<UserEvent>))]
-        [Route("Events/{userName}")]
+        [Route("events/{userName}")]
         [HttpGet]
         public IHttpActionResult GetUerEvents(string userName)
         {
@@ -190,7 +190,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Patalpina vartotojo spalvą
         /// </summary>
         [ResponseType(typeof(bool))]
-        [Route("Color/{userName}")]
+        [Route("color/{userName}")]
         [HttpPost]
         public IHttpActionResult PostUserColor(string userName, Color colors)
         {
@@ -230,7 +230,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Gražina vartotojo spalvas
         /// </summary>
         [ResponseType(typeof(bool))]
-        [Route("Color/{userName}")]
+        [Route("color/{userName}")]
         [HttpGet]
         public IHttpActionResult GetUserColor(string userName)
         {

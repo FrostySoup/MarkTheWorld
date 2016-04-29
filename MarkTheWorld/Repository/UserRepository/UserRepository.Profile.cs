@@ -27,7 +27,8 @@ namespace Repository.UserRepository
                         user.points += points;
                         dailies.totalPoints = user.points;
                         dailies.received = points;
-                        dailies.canGet = true;
+                        TimeSpan day = new TimeSpan(24, 0, 0);
+                        dailies.timeLeft = (int)day.TotalSeconds;
                         if (user.eventsHistory == null)
                             user.eventsHistory = new List<UserEvent>();
                         if (points < 2)

@@ -50,7 +50,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Gražina visus kvadratėlius tam tikroje teritorijoje
         /// </summary>
         [ResponseType(typeof(SquaresWithInfo))]
-        [Route("Squares")]
+        [Route("squares")]
         [HttpPost]
         public IHttpActionResult GetSquares(CornersCorrds corners)
         {
@@ -81,7 +81,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Gražina tik tam tikro žaidėjo kvadratėlius, pagal prisijungimo vardą
         /// </summary>
         [ResponseType(typeof(List<Square>))]
-        [Route("Squares/{name}")]
+        [Route("squares/{name}")]
         [HttpPost]
         public IHttpActionResult GetUserSquaresByName(CornersCorrds corners, string name)
         {
@@ -110,7 +110,7 @@ namespace MarkTheWorld.Controllers.Api
         /// <summary>
         /// Gražina tam tikro žaidėjo taškų skaičių, kurį jis gali gauti kartą per parą
         /// </summary>
-        [Route("Points/{name}")]
+        [Route("points/{name}")]
         [HttpGet]
         public IHttpActionResult GetPointsByName(string name)
         {
@@ -134,7 +134,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Gražina tik tam tikro žaidėjo taškus, pagal prisijungimo vardą
         /// </summary>
         [ResponseType(typeof(List<GroupedDotsForApi>))]
-        [Route("Dots/{name}/{zoomLevel}")]
+        [Route("dots/{name}/{zoomLevel}")]
         [HttpPost]
         public IHttpActionResult GetUserDotsByName(CornersCorrds corners, string name, double zoomLevel)
         {
@@ -163,7 +163,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Gražina visus apjungtus taškus tam tikroje teritorijoje
         /// </summary>
         [ResponseType(typeof(List<GroupedDotsForApi>))]
-        [Route("Dots/{zoomLevel}")]
+        [Route("dots/{zoomLevel}")]
         [HttpPost]
         public IHttpActionResult GetDots(CornersCorrds corners, double zoomLevel)
         {
