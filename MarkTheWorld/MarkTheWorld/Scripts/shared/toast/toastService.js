@@ -12,7 +12,7 @@
                     parent : $document[0].querySelector('#toastBounds'),
                     hideDelay: hideDelay,
                     locals: { 'message' : message },
-                    position: 'top right'
+                    position: 'bottom right'
                 });
             }
         };

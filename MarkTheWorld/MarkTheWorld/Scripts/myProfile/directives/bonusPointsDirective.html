@@ -1,0 +1,12 @@
+<div ng-switch on="vm.situation">
+    <div ng-switch-when="timer">
+        <p>{{ vm.pointsBonus + (vm.pointsBonus > 1 ? ' points' : ' point') }} in {{ vm.formattedTimeLeft }}</p>
+    </div>
+    <div ng-switch-when="pointsAvailable">
+        <p>You have {{ vm.pointsBonus + (vm.pointsBonus > 1 ? ' points' : ' point') }} available!</p>
+
+        <md-button class="md-secondary" ng-disabled="vm.takingPoints" ng-click="vm.takePoints()">
+            Claim
+        </md-button>
+    </div>
+</div>

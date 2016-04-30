@@ -11,37 +11,36 @@
     <md-dialog-content>
         <div layout layout-align="start center">
             <div layout="column" class="user-avatar">
-                <img src="http://lorempixel.com/100/100/people/" />
+                <img ng-src="~/../Content/img/avatars/{{vm.profileData.pictureAddress}}" />
                 <p>Tap to change</p>
             </div>
             <div class="profile-main-info" layout="column">
-                <h3>Frisson</h3>
+                <h3>{{vm.profileData.name}}</h3>
                 <table>
                     <tr>
                         <td class="row-title">Country:</td>
-                        <td><img ng-src="~/../Content/img/flags/{{vm.flagAddress}}"/></td>
+                        <td><img ng-src="~/../Content/img/flags/{{vm.profileData.flagAddress}}" title="{{vm.profileData.countryName}}" alt="{{vm.profileData.countryName}}"/></td>
                     </tr>
                     <tr>
                         <td class="row-title">Points:</td>
-                        <td>565</td>
+                        <td>{{ vm.profileData.points }}</td>
                     </tr>
                 </table>
             </div>
         </div>
         <md-subheader>Daily reward</md-subheader>
-        <md-divider ></md-divider>
+        <md-divider></md-divider>
         <md-list>
             <md-list-item class="md-list-item-reward">
                 <md-icon md-svg-src="~/../Content/img/icons/ic_monetization_on.svg" class="s32"></md-icon>
-                <p count-down date="January 1, 2017 12:00:00">...</p>
-                <md-button class="md-secondary" ng-click="doSecondaryAction($event)">Explain</md-button>
+                <bonus-points profile-data="vm.profileData"></bonus-points>
             </md-list-item>
         </md-list>
         <md-subheader>Account settings</md-subheader>
-        <md-divider ></md-divider>
+        <md-divider></md-divider>
         <md-list>
             <md-list-item>
-                <div class="user-color"></div>
+                <div ng-attr-style="background: rgb({{vm.profileData.colors.red}},{{vm.profileData.colors.green}},{{vm.profileData.colors.blue}})" class="user-color"></div>
                 <p>Color</p>
                 <md-button class="md-secondary" ng-click="doSecondaryAction($event)">Edit</md-button>
             </md-list-item>
