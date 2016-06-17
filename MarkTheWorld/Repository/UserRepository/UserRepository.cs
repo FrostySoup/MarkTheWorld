@@ -17,16 +17,11 @@ namespace Repository.UserRepository
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
-                User newUser = new User();
+                User newUser = generateUser();
                 newUser.PasswordHash = userPost.PasswordHash;
                 newUser.UserName = userPost.UserName;
                 newUser.countryCode = userPost.CountryCode;
-                newUser.lastDailyTime = DateTime.Now;
                 Random rnd = new Random();
-                newUser.colors = new Color();
-                newUser.colors.blue = rnd.Next(1, 255);
-                newUser.colors.red = rnd.Next(1, 255);
-                newUser.colors.green = rnd.Next(1, 255);
                 newUser.profilePicture = "defaultAvatar" + rnd.Next(1, 16) + ".png";
                 try
                 {                    
@@ -60,6 +55,18 @@ namespace Repository.UserRepository
                     return check;
                 }
             }
+        }       
+
+        public User generateUser()
+        {
+            User newUser = new User();
+            newUser.lastDailyTime = DateTime.Now;
+            Random rnd = new Random();
+            newUser.colors = new Color();
+            newUser.colors.blue = rnd.Next(1, 255);
+            newUser.colors.red = rnd.Next(1, 255);
+            newUser.colors.green = rnd.Next(1, 255);
+            return newUser;
         }
 
         public bool GetUsername(string userName)
@@ -157,6 +164,7 @@ namespace Repository.UserRepository
                     if (oneObject != null)
                     {
                         check.success = true;
+                        check.username = oneObject.UserName;
                         check.message = message2.Success;
                         check.Token = oneObject.Token;
                         return check;
@@ -220,5 +228,6 @@ namespace Repository.UserRepository
                 }
             }
         }
+
     }
 }

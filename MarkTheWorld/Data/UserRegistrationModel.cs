@@ -15,6 +15,7 @@ namespace Data
         /// </summary>
         public message2 message { get; set; }
         public Guid Token { get; set; }
+        public string username { get; set; }
     }
 
     public enum message2

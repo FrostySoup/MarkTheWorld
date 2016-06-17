@@ -9,7 +9,11 @@ namespace Data.DataHelpers
     static public class CountriesList
     {
         static public Country[] getCodes() {
-            Country[] codes = new Country[243]{
+            Country[] codes = new Country[244]{
+             new Country{
+                name= "Unknown",
+                code= "UN"
+            },
              new Country{
                 name= "Afghanistan",
                 code= "AF"
@@ -988,7 +992,7 @@ namespace Data.DataHelpers
         static public bool checkCode(string code)
         {
             Country[] codes = getCodes();
-            for (int i = 0; i < codes.Length; i++)
+            for (int i = 1; i < codes.Length; i++)
             {
                 if (code.Equals(codes[i].code))
                     return true;
@@ -998,12 +1002,12 @@ namespace Data.DataHelpers
         static public Country getCountry(string code)
         {
             Country[] codes = getCodes();
-            for (int i = 0; i < codes.Length; i++)
+            for (int i = 1; i < codes.Length; i++)
             {
                 if (code.Equals(codes[i].code))
                     return codes[i];
             }
-            return null;
+            return codes[0];
         }
     }
 }             

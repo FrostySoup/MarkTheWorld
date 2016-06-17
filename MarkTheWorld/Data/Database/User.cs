@@ -11,6 +11,7 @@ namespace Data
     {
         public string Id { get; set; }
 
+        // 3 < name < 25
         public string UserName { get; set; }
 
         public Guid Token { get; set; }
@@ -30,5 +31,7 @@ namespace Data
         public DateTime lastDailyTime { get; set; }
 
         public string profilePicture { get; set; }
+
+        public int fbID { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.DataHelpers.Facebook;
 
 namespace Repository.UserRepository
 {
@@ -49,6 +50,7 @@ namespace Repository.UserRepository
                 }
             }
         }
+        
 
         public string GetProfilePic(string userName)
         {
@@ -68,7 +70,7 @@ namespace Repository.UserRepository
                     return "defaultAvatar1.png";
                 }
             }
-        }
+        }      
 
         public bool SetColors(string userName, Color colors)
         {
