@@ -28,11 +28,11 @@ namespace Repository.UserRepository
                     UserRegistrationModel check = new UserRegistrationModel();
                     check.success = false;
                     check.message = message2.UserNameTaken;
-                    check.Token = System.Guid.NewGuid();
+                    check.Token = System.Guid.NewGuid().ToString();
                     User oneObject = session.Query<User>().First(x => x.UserName.Equals(newUser.UserName));
                     if (oneObject == null)
                     {
-                        newUser.Token = check.Token;
+                        newUser.Token = check.Token.ToString();
                         session.Store(newUser);
                         session.SaveChanges();
                         check.success = true;
@@ -47,8 +47,8 @@ namespace Repository.UserRepository
                 {
                     UserRegistrationModel check = new UserRegistrationModel();
                     check.success = true;
-                    check.Token = System.Guid.NewGuid();
-                    newUser.Token = check.Token;
+                    check.Token = System.Guid.NewGuid().ToString();
+                    newUser.Token = check.Token.ToString();
                     session.Store(newUser);
                     session.SaveChanges();
                     check.message = message2.Success;
@@ -197,7 +197,7 @@ namespace Repository.UserRepository
             }
         }
 
-        public User GetOneByToken(Guid token)
+        public User GetOneByToken(string token)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
@@ -213,7 +213,7 @@ namespace Repository.UserRepository
             }
         }
 
-        public Guid GetTokenByName(string name)
+        public string GetTokenByName(string name)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
@@ -224,7 +224,7 @@ namespace Repository.UserRepository
                 }
                 catch
                 {
-                    return new Guid();
+                    return new Guid().ToString();
                 }
             }
         }

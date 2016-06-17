@@ -12,9 +12,9 @@ namespace Repository.UserRepository
     public interface IUserRepository
     {
         User GetOneByName(string name);
-        User GetOneByToken(Guid token);
+        User GetOneByToken(string token);
         UserRegistrationModel AddUser(UserRegistrationPost user);
-        Guid GetTokenByName(string name);
+        string GetTokenByName(string name);
         UserRegistrationModel GetOneUser(UserRegistrationPost user);
         List<TopUser> GetTopUsers();
         List<UserEvent> GetUserEvents(string userName);             

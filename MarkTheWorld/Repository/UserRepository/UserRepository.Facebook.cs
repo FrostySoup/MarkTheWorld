@@ -17,13 +17,9 @@ namespace Repository.UserRepository
                 try
                 {
                     User user = session.Query<User>().First(x => x.fbID.Equals(id));
-                    Guid newGuid;
-                    if (Guid.TryParse(token, out newGuid))
-                    {
-                        user.Token = new Guid(token);
-                        session.Store(user);
-                        session.SaveChanges();
-                    }
+                    user.Token = token;
+                    session.Store(user);
+                    session.SaveChanges();
                     return false;
                 }
                 catch
@@ -71,15 +67,7 @@ namespace Repository.UserRepository
                     newUser.fbID = fb.userID;
                     newUser.countryCode = fb.countryCode;
                     newUser.UserName = fb.userName;
-                    Guid newGuid;
-                    if (Guid.TryParse(fb.token, out newGuid))
-                    {
-                        newUser.Token = new Guid(fb.token);
-                    }
-                    else
-                    {
-                        fb.token = "Invalid token";
-                    }
+                    newUser.Token = fb.token;
                     session.Store(newUser);
                     session.SaveChanges();
                     return fb.token;

@@ -12,6 +12,6 @@ namespace Data
         public double lng { get; set; }
         public string message { get; set; }
         public DateTime date { get; set; }
-        public Guid username { get; set; }
+        public string username { get; set; }
     }
 }

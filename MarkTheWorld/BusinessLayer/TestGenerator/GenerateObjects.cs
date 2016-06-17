@@ -30,7 +30,7 @@ namespace BusinessLayer.TestGenerator
             return repository.AddUser(user);
         }
 
-        public UserRegistrationModel generateDots(Guid token)
+        public UserRegistrationModel generateDots(string token)
         {
             DotFromViewModel dot = new DotFromViewModel();
             Random rnd = new Random();

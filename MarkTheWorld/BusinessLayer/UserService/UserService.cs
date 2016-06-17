@@ -45,7 +45,7 @@ namespace BusinessLayer.UserService
             return repository.Edit(ApplicationUser);
         }
 
-        public User getOneByToken(Guid token)
+        public User getOneByToken(string token)
         {
             return repository.GetOneByToken(token);
         }
