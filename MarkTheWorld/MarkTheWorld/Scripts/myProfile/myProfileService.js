@@ -3,9 +3,9 @@
     'use strict';
 
     function myProfileService($mdDialog, $http, $q, $interval, accountService) {
-
-        var returnObject = {
+        return {
             showDialog: function (ev) {
+                var self = this;
                 $mdDialog.show({
                     controller: 'myProfileController',
                     controllerAs: 'vm',
@@ -13,11 +13,10 @@
                     parent: angular.element(document.body),
                     targetEvent: ev,
                     fullscreen: true,
-                    clickOutsideToClose: true,
-                    onRemoving: function () {
-                        returnObject.cancelInterval();
-                    }
-                })
+                    clickOutsideToClose: true
+                }).finally(function () {
+                    self.cancelInterval();
+                });
             },
 
             getProfileData: function () {
@@ -82,8 +81,6 @@
 
             interval: undefined
         };
-
-        return returnObject;
     }
 
     angular.module('myProfile').factory('myProfileService', myProfileService);

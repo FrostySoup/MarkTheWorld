@@ -19,6 +19,11 @@ body {
     height: 32px;
 }
 
+.s29 {
+    width: 29px;
+    height: 29px;
+}
+
 .s24 {
     width: 24px;
     height: 24px;
@@ -68,6 +73,21 @@ md-dialog .md-button.md-icon-button {
     border: 1px solid initial;
 }
 
+.menu-item-facebook {
+    background: #3e5a98;
+    color: white;
+}
+
+md-menu-item>.md-button span.icon-button-facebook {
+    background-image: url(/Content/img/icons/facebook-icon.png);
+    background-repeat: no-repeat;
+    width: 29px;
+    height: 29px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: -1px 10px 0 0;
+}
+
 /* dialogs */
 
 md-dialog .md-toolbar-tools {
@@ -89,6 +109,10 @@ md-dialog .md-subheader {
 md-dialog.dialog-my-profile .user-avatar {
     padding: 8px 0 8px;
     margin-right: 8px;
+}
+
+md-dialog.dialog-my-profile .user-avatar:hover {
+    cursor: pointer;
 }
 
 md-dialog.dialog-my-profile .user-avatar img {

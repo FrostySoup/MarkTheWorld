@@ -2,11 +2,19 @@
 (function () {
     'use strict';
 
-    function myProfileController($mdDialog, myProfileService) {
+    function myProfileController($mdDialog, myProfileService, myProfilePictureService) {
         var vm = this;
 
         vm.cancel = function () {
             $mdDialog.cancel();
+        };
+
+        vm.myProfilePicture = function () {
+            myProfilePictureService.showDialog().finally(
+                function () {
+                    myProfileService.showDialog();
+                }
+            );
         };
 
         myProfileService.getProfileData().then(

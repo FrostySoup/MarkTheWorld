@@ -733,5 +733,5 @@
         "code": "ZW"
     }];
 
-    angular.module('account').value('countries', countries);
+    angular.module('sideNav').value('countries', countries);
 }());

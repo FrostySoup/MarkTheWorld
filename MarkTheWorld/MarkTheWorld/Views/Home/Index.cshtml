@@ -9,85 +9,31 @@
     <meta name="viewport" content="initial-scale=1"/>
     <title>Mark The World - visit planet Earth and leave your mark!</title>
 </head>
-<body layout="column" ng-controller="AppCtrl" ng-cloak>
-<md-toolbar class="md-primary">
-    <div class="md-toolbar-tools">
-        <h3>Mark The Planet</h3>
-        <span flex=""></span>
-        <md-menu>
-            <md-button class="md-icon-button" aria-label="Account" ng-click="openMenu($mdOpenMenu, $event)">
-                <md-icon md-svg-icon="~/Content/img/icons/ic_account_box_white_48px.svg" class="s48" aria-label="Account"></md-icon>
-            </md-button>
-            <md-menu-content width="4">
-                <md-menu-item ng-show="!isLogged()">
-                    <md-button ng-click="toggleRight('login')">
-                        Login
-                    </md-button>
-                </md-menu-item>
-                <md-menu-item ng-show="!isLogged()">
-                    <md-button ng-click="toggleRight('register')">
-                        Register
-                    </md-button>
-                </md-menu-item>
-                <div ng-show="isLogged()">
-                    <md-menu-item>
-                        <p>Logged as: {{getLoggedUser()}}</p>
-                    </md-menu-item>
-                    <md-menu-divider></md-menu-divider>
-                    <md-menu-item>
-                        <md-button ng-click="myProfile($event)">
-                            My profile
-                        </md-button>
-                    </md-menu-item>
-                    <md-menu-item>
-                        <md-button ng-click="logout($event)">
-                            Logout
-                        </md-button>
-                    </md-menu-item>
-                </div>
+<body layout="column" ng-controller="AppController" ng-cloak>
 
-            </md-menu-content>
-        </md-menu>
+<top-toolbar action="rightSideNavAction"></top-toolbar>
 
-        <md-menu>
-            <md-button aria-label="Account" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)">
-                <md-icon md-svg-src="~/Content/img/icons/ic_more_vert_white_48px.svg" class="s48" aria-label="Account"></md-icon>
-            </md-button>
-            <md-menu-content width="4">
-                <md-menu-item>
-                    <md-button aria-label="Top markers" ng-click="topMarkers($event)">
-                        <md-icon md-svg-src="~/Content/img/icons/ic_people_black_48px.svg" class="s24" md-menu-align-target></md-icon>
-                        Top Markers
-                    </md-button>
-                </md-menu-item>
-            </md-menu-content>
-        </md-menu>
-    </div>
-</md-toolbar>
 <div id="toastBounds" flex layout layout-padding>
     <game-map id="map" flex></game-map>
 </div>
 <div layout>
-    <md-button ng-show="isLogged()" class="md-fab-settings md-fab md-fab-bottom-right" aria-label="Map settings" ng-click="mapSettings($event)">
+    <md-button ng-show="user.isLogged" class="md-fab-settings md-fab md-fab-bottom-right" aria-label="Map settings" ng-click="mapSettings($event)">
         <md-tooltip md-direction="top">
             Leave a mark!
         </md-tooltip>
         <md-icon md-svg-src="~/Content/img/icons/ic_settings_48px.svg" class="s36" aria-label="Map settings"></md-icon>
     </md-button>
-    <md-button ng-show="isLogged()" class="md-fab md-fab-bottom-right" aria-label="Mark your spot" ng-click="addNewSquare($event)">
+    <md-button ng-show="user.isLogged" class="md-fab md-fab-bottom-right" aria-label="Mark your spot" ng-click="addNewSquare($event)">
         <md-icon md-svg-src="~/Content/img/icons/ic_add_location_48px.svg" class="s36" aria-label="Mark your spot"></md-icon>
     </md-button>
 </div>
-<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
-    <div ui-view>
-    </div>
-</md-sidenav>
+
+<side-nav action="rightSideNavAction"></side-nav>
 
 <!-- Angular Material requires Angular.js Libraries -->
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
 
 <!-- Angular Material Library -->
