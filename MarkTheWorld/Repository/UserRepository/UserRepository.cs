@@ -17,27 +17,22 @@ namespace Repository.UserRepository
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
-                User newUser = new User();
+                User newUser = generateUser();
                 newUser.PasswordHash = userPost.PasswordHash;
                 newUser.UserName = userPost.UserName;
                 newUser.countryCode = userPost.CountryCode;
-                newUser.lastDailyTime = DateTime.Now;
                 Random rnd = new Random();
-                newUser.colors = new Color();
-                newUser.colors.blue = rnd.Next(1, 255);
-                newUser.colors.red = rnd.Next(1, 255);
-                newUser.colors.green = rnd.Next(1, 255);
                 newUser.profilePicture = "defaultAvatar" + rnd.Next(1, 16) + ".png";
                 try
                 {                    
                     UserRegistrationModel check = new UserRegistrationModel();
                     check.success = false;
                     check.message = message2.UserNameTaken;
-                    check.Token = System.Guid.NewGuid();
+                    check.Token = System.Guid.NewGuid().ToString();
                     User oneObject = session.Query<User>().First(x => x.UserName.Equals(newUser.UserName));
                     if (oneObject == null)
                     {
-                        newUser.Token = check.Token;
+                        newUser.Token = check.Token.ToString();
                         session.Store(newUser);
                         session.SaveChanges();
                         check.success = true;
@@ -52,14 +47,26 @@ namespace Repository.UserRepository
                 {
                     UserRegistrationModel check = new UserRegistrationModel();
                     check.success = true;
-                    check.Token = System.Guid.NewGuid();
-                    newUser.Token = check.Token;
+                    check.Token = System.Guid.NewGuid().ToString();
+                    newUser.Token = check.Token.ToString();
                     session.Store(newUser);
                     session.SaveChanges();
                     check.message = message2.Success;
                     return check;
                 }
             }
+        }       
+
+        public User generateUser()
+        {
+            User newUser = new User();
+            newUser.lastDailyTime = DateTime.Now;
+            Random rnd = new Random();
+            newUser.colors = new Color();
+            newUser.colors.blue = rnd.Next(1, 255);
+            newUser.colors.red = rnd.Next(1, 255);
+            newUser.colors.green = rnd.Next(1, 255);
+            return newUser;
         }
 
         public bool GetUsername(string userName)
@@ -157,6 +164,7 @@ namespace Repository.UserRepository
                     if (oneObject != null)
                     {
                         check.success = true;
+                        check.username = oneObject.UserName;
                         check.message = message2.Success;
                         check.Token = oneObject.Token;
                         return check;
@@ -189,7 +197,7 @@ namespace Repository.UserRepository
             }
         }
 
-        public User GetOneByToken(Guid token)
+        public User GetOneByToken(string token)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
@@ -205,7 +213,7 @@ namespace Repository.UserRepository
             }
         }
 
-        public Guid GetTokenByName(string name)
+        public string GetTokenByName(string name)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
@@ -216,9 +224,10 @@ namespace Repository.UserRepository
                 }
                 catch
                 {
-                    return new Guid();
+                    return new Guid().ToString();
                 }
             }
         }
+
     }
 }

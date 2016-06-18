@@ -561,5 +561,20 @@
             Gražina iki 10 vartotojų turinčių daugiausia pažymėtų taškų
             </summary>
         </member>
+        <member name="M:MarkTheWorld.Controllers.Api.UserWithFBController.PostLogin(Data.DataHelpers.FbClientLogin)">
+            <summary>
+            Nurodo ar duotas username yra jau užimtas/ true-neužimtas, false-užimtas
+            </summary>
+        </member>
+        <member name="M:MarkTheWorld.Controllers.Api.UserWithFBController.PostRegister(Data.DataHelpers.Facebook.FbRegisterClient)">
+            <summary>
+            Nurodo ar duotas username yra jau užimtas/ true-neužimtas, false-užimtas
+            </summary>
+        </member>
+        <member name="M:MarkTheWorld.Controllers.Api.UserWithFBController.GetLogin">
+            <summary>
+            Nurodo ar duotas username yra jau užimtas/ true-neužimtas, false-užimtas
+            </summary>
+        </member>
     </members>
 </doc>

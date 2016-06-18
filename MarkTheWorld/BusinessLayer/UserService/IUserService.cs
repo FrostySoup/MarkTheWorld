@@ -16,7 +16,7 @@ namespace BusinessLayer.UserService
         UserRegistrationModel getOne(UserRegistrationPost user);
         User deleteOne(string id);   //delete one
         User editApplicationUser(User ApplicationUser);
-        User getOneByToken(Guid token);
+        User getOneByToken(string token);
         List<TopUser> getTopUsers();
         UserDailyReward takeUserDaily(string userName);
         List<UserEvent> getUserEvents(string userName);

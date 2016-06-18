@@ -25,7 +25,7 @@ namespace MarkTheWorld.Controllers.Api
         /// Leidžia patalpinti tašką duomenų bazėje
         /// </summary>
         [ResponseType(typeof(UserRegistrationModel))]
-        [Route("Dot")]
+        [Route("dot")]
         [HttpPost]
         public IHttpActionResult PostDot(DotFromViewModel dot)
         {          

@@ -59,18 +59,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppUser.cs" />
-    <Compile Include="DataHelpers\Country.cs" />
-    <Compile Include="DataHelpers\Colors.cs" />
-    <Compile Include="DataHelpers\CornersCorrds.cs" />
-    <Compile Include="DataHelpers\CountriesList.cs" />
-    <Compile Include="DataHelpers\DailyReward.cs" />
-    <Compile Include="DataHelpers\DotSearch.cs" />
+    <Compile Include="DataHelpers\Facebook\FbRegisterClient.cs" />
+    <Compile Include="DataHelpers\Facebook\FbServerLogin.cs" />
+    <Compile Include="DataHelpers\Facebook\FBUser.cs" />
+    <Compile Include="DataHelpers\Profile\Country.cs" />
+    <Compile Include="DataHelpers\Profile\Colors.cs" />
+    <Compile Include="DataHelpers\Map\CornersCorrds.cs" />
+    <Compile Include="DataHelpers\Profile\CountriesList.cs" />
+    <Compile Include="DataHelpers\Profile\DailyReward.cs" />
+    <Compile Include="DataHelpers\Map\DotSearch.cs" />
     <Compile Include="DataHelpers\ErrorStatus.cs" />
-    <Compile Include="DataHelpers\GroupedDots.cs" />
-    <Compile Include="DataHelpers\GroupedSquares.cs" />
-    <Compile Include="DataHelpers\Markers.cs" />
-    <Compile Include="DataHelpers\SquaresWithInfo.cs" />
-    <Compile Include="DataHelpers\UserProfile.cs" />
+    <Compile Include="DataHelpers\Facebook\FbClientLogin.cs" />
+    <Compile Include="DataHelpers\Map\GroupedDots.cs" />
+    <Compile Include="DataHelpers\Map\GroupedSquares.cs" />
+    <Compile Include="DataHelpers\Map\Markers.cs" />
+    <Compile Include="DataHelpers\Map\SquaresWithInfo.cs" />
+    <Compile Include="DataHelpers\Profile\UserProfile.cs" />
     <Compile Include="DotFromViewModel.cs" />
     <Compile Include="Database\Dot.cs" />
     <Compile Include="GroupedDotsForApi.cs" />
@@ -91,6 +95,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

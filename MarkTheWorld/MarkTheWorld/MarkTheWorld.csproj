@@ -230,6 +230,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\DotController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
+    <Compile Include="Controllers\Api\UserWithFBController.cs" />
     <Compile Include="Controllers\DummyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -241,6 +242,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Dummy.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -290,6 +292,7 @@
     <Content Include="Scripts\controllers\simpleModalController.js" />
     <Content Include="Scripts\controllers\pointInfoController.js" />
     <Content Include="Scripts\controllers\sideBarCtrl.js" />
+    <Content Include="Scripts\JQueryTestDeleteOnFinal\Jquery.js" />
     <Content Include="Scripts\mapSettings\mapSettings.html" />
     <Content Include="Scripts\mapSettings\mapSettings.js" />
     <Content Include="Scripts\mapSettings\mapSettingsController.js" />

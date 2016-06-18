@@ -14,7 +14,8 @@ namespace Data
         /// Enum for 4 different responses
         /// </summary>
         public message2 message { get; set; }
-        public Guid Token { get; set; }
+        public string Token { get; set; }
+        public string username { get; set; }
     }
 
     public enum message2
