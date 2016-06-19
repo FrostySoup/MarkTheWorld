@@ -58,7 +58,7 @@ namespace BusinessLayer.UserService
             fb.token = getLongLiveToken(new FbClientLogin
             {
                 Token = fb.token,
-                Id = fb.userID.ToString()
+                Id = fb.userID
             });
             return repository.RegisterFbUser(fb, photo);
         }
@@ -125,9 +125,9 @@ namespace BusinessLayer.UserService
             }
         }
 
-        public bool checkUserById(string id, string token)
+        public bool checkUserById(int id)
         {
-            return repository.CheckFbUser(id, token);
+            return repository.CheckFbUser(id);
         }
     }
 }

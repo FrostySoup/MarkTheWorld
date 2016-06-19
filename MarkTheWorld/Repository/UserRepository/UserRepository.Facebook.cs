@@ -10,14 +10,13 @@ namespace Repository.UserRepository
 {
     public partial class UserRepository : GenericRepository.GenericRepository, IUserRepository
     {
-        public bool CheckFbUser(string id, string token)
+        public bool CheckFbUser(int id)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
                 try
                 {
                     User user = session.Query<User>().First(x => x.fbID.Equals(id));
-                    user.Token = token;
                     session.Store(user);
                     session.SaveChanges();
                     return false;

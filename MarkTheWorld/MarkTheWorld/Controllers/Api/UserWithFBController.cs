@@ -31,7 +31,7 @@ namespace MarkTheWorld.Controllers.Api
         {
             try
             {
-                bool newUser = userService.checkUserById(fb.Id, fb.Token);
+                bool newUser = userService.checkUserById(fb.Id);
                 FbServerLogin user = new FbServerLogin();
                 user.newUser = newUser;
                 user.longToken = "";
