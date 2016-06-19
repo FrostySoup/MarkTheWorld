@@ -54,6 +54,25 @@
                 return deferredObject.promise;
             },
 
+            logout: function () {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                userService.isLogged = false;
+                userService.username = '';
+                userService.token = '';
+            },
+
+            appStartUpLoginCheck: function () {
+                var token = localStorage.getItem('token');
+                var username = localStorage.getItem('username');
+
+                if (token !== null && username !== null) {
+                    userService.isLogged = true;
+                    userService.username = username;
+                    userService.token = token;
+                }
+            },
+
             //todo: should be moved elsewhere
             addPoint: function (message, lat, lng) {
                 var deferredObject = $q.defer();
@@ -78,14 +97,6 @@
                     });
 
                 return deferredObject.promise;
-            },
-
-            logout: function () {
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
-                userService.isLogged = false;
-                userService.username = '';
-                userService.token = '';
             }
         };
     }

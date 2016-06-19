@@ -1,0 +1,41 @@
+<md-toolbar ng-click="vm.close()" class="md-theme-light">
+    <h1 class="md-toolbar-tools">Complete registration</h1>
+    <md-progress-linear class="register-form-loader md-warn" ng-show="registerForm.$pending.unique" md-mode="indeterminate"></md-progress-linear>
+</md-toolbar>
+<!--todo: [polishing] labai jau messy username realizacija, bet ji reikalinga tam, kad nepradingtu errorai, kartais pasimato dvigubas erroras-->
+<md-content class="login-form" layout-padding layout="column">
+    <form ng-submit="vm.completeRegistration(registerForm, vm.registerData)" name="registerForm" novalidate>
+        <md-input-container md-is-error="( registerForm.register_username.$invalid && ( registerForm.register_username.$touched || registerForm.$submitted )) || registerForm.register_username.$error.unique" class="md-block">
+            <label for="register_username">Username</label>
+            <!--todo: [polishing] md-autofocus neveikia-->
+            <input minlength="3" required maxlength="25" type="text" id="register_username" name="register_username" unique-username="{delay: 500}" ng-model="vm.registerData.username" md-autofocus>
+            <div ng-messages class="errors">
+                <div ng-if="(registerForm.register_username.$touched || registerForm.$submitted) && (registerForm.register_username.$error.required || registerForm.register_username.$error.minlength)" class="error md-input-messages-animation">
+                    The username should be at least 3 characters long
+                </div>
+                <div ng-if="registerForm.register_username.$error.unique" class="error md-input-messages-animation">
+                    This username is already taken
+                </div>
+            </div>
+        </md-input-container>
+        <!--TODO: [polishing] auto country suggestion-->
+        <md-input-container class="md-block" md-is-error="registerForm.register_country.$invalid && (registerForm.$submitted || registerForm.register_country.$dirty)">
+            <label>Country</label>
+            <md-select name="register_country" id="register_country" ng-model="vm.registerData.countryCode" ng-required="true">
+                <md-option ng-repeat="country in vm.countries" ng-value="country.code">{{ country.name }}</md-option>
+            </md-select>
+            <div class="md-errors-spacer"></div>
+            <div ng-messages="registerForm.register_country.$error">
+                <div ng-message="required">You should select the country</div>
+            </div>
+        </md-input-container>
+        <md-button ng-disabled="vm.requesting" type="submit" layout-fill class="md-raised md-primary">
+            Register
+            <md-progress-circular ng-show="vm.requesting" md-mode="indeterminate" class="md-hue-2" md-diameter="42px"></md-progress-circular>
+        </md-button>
+        <div ng-show="vm.requestError" class="panel-error">
+            <md-icon md-svg-src="~/../Content/img/icons/ic_announcement.svg" class="s32" aria-label="Error"></md-icon>
+            <div class="panel-error-text">{{ vm.requestError }}</div>
+        </div>
+    </form>
+</md-content>

@@ -10,12 +10,14 @@
     <title>Mark The World - visit planet Earth and leave your mark!</title>
 </head>
 <body layout="column" ng-controller="AppController" ng-cloak>
+<div id="fb-root"></div>
 
 <top-toolbar action="rightSideNavAction"></top-toolbar>
 
 <div id="toastBounds" flex layout layout-padding>
     <game-map id="map" flex></game-map>
 </div>
+
 <div layout>
     <md-button ng-show="user.isLogged" class="md-fab-settings md-fab md-fab-bottom-right" aria-label="Map settings" ng-click="mapSettings($event)">
         <md-tooltip md-direction="top">

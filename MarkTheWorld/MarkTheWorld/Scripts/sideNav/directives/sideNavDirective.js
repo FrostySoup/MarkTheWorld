@@ -5,18 +5,27 @@
     function sideNavDirective() {
         return {
             templateUrl: '/Scripts/sideNav/directives/sideNavDirective.html',
-            scope: {
-                action: "="
-            },
             bindToController: true,
             controllerAs: 'vm',
+            scope: {},
             restrict: 'E',
-            controller: function ($mdSidenav) {
+            controller: function ($mdSidenav, sideNavEventServiceService) {
                 var vm = this;
-                vm.switchPanel = function (newAction) {
+
+                sideNavEventServiceService.listen(function (event, data) {
+                    vm.sideNavAction = data.action;
+                    vm.extraData = data.extraData;
+                    $mdSidenav('right_side_nav').open();
+                });
+
+                vm.openPanel = function (sideNavAction) {
+                    vm.sideNavAction = sideNavAction;
+                    sideNavEventServiceService.emit({ action: sideNavAction });
+                };
+
+                vm.switchPanel = function (sideNavAction) {
                     $mdSidenav('right_side_nav').close().then(function () {
-                        vm.action = newAction;
-                        $mdSidenav('right_side_nav').open();
+                        sideNavEventServiceService.emit({ action: sideNavAction });
                     });
                 };
             }

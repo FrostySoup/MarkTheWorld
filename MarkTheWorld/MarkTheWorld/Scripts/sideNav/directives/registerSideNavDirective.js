@@ -7,6 +7,7 @@
             templateUrl: '/Scripts/sideNav/directives/registerSideNavDirective.html',
             bindToController: true,
             controllerAs: 'vm',
+            scope: {},
             restrict: 'E',
             controller: function ($mdSidenav, accountService, simpleModalService, countries) {
                 var vm = this;

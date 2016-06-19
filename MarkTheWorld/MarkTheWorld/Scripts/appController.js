@@ -2,12 +2,8 @@
 (function () {
     'use strict';
 
-    function AppController($scope, $mdSidenav) {
-
-        $scope.openRightSideNav = function (action) {
-            $scope.rightSideNavAction = action;
-            $mdSidenav('right_side_nav').open();
-        };
+    function AppController(accountService) {
+        accountService.appStartUpLoginCheck();
     }
 
     angular.module('markTheWorld').controller('AppController', AppController);

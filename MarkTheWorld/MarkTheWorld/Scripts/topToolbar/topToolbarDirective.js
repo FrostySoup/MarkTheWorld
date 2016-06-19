@@ -6,23 +6,20 @@
     function topToolbarDirective() {
         return {
             templateUrl: '/Scripts/topToolbar/topToolbarDirective.html',
-            scope: {
-                action: "="
-            },
             bindToController: true,
             controllerAs: 'vm',
+            scope: {},
             restrict: 'E',
             replace: true,
-            controller: function (userService, accountService, myProfileService, $mdSidenav) {
+            controller: function (userService, accountService, myProfileService, facebookLoginService, sideNavEventServiceService) {
                 var vm = this;
 
                 vm.user = userService;
 
                 vm.url = '/Scripts/topToolbar/directives/accountMenuItemLoggedDirective.html';
 
-                vm.openRightSideNav = function (action) {
-                    vm.action = action;
-                    $mdSidenav('right_side_nav').open();
+                vm.openRightSideNav = function (sideNavAction) {
+                    sideNavEventServiceService.emit({ action: sideNavAction });
                 };
 
                 vm.logout = function (ev) {
@@ -32,6 +29,21 @@
                 vm.myProfile = function (ev) {
                     myProfileService.showDialog(ev);
                 };
+
+                vm.facebookLogin = function () {
+                    facebookLoginService.login();
+
+                    //    .then(
+                    //    function () {
+                    //        ...
+                    //    },
+                    //    function (error) {
+                    //        ...
+                    //    }
+                    //);
+                };
+
+                //------------------
 
                 vm.fbLogin = function () {
                     FB.login(function(response) {
