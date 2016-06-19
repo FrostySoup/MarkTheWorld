@@ -10,14 +10,13 @@ namespace Repository.UserRepository
 {
     public partial class UserRepository : GenericRepository.GenericRepository, IUserRepository
     {
-        public bool CheckFbUser(string id, string token)
+        public bool CheckFbUser(int id)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
                 try
                 {
                     User user = session.Query<User>().First(x => x.fbID.Equals(id));
-                    user.Token = token;
                     session.Store(user);
                     session.SaveChanges();
                     return false;
@@ -52,7 +51,7 @@ namespace Repository.UserRepository
             }
         }
 
-        public string RegisterFbUser(FbRegisterClient fb)
+        public string RegisterFbUser(FbRegisterClient fb, string photo)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
@@ -68,6 +67,7 @@ namespace Repository.UserRepository
                     newUser.countryCode = fb.countryCode;
                     newUser.UserName = fb.userName;
                     newUser.Token = fb.token;
+                    newUser.profilePicture = photo;
                     session.Store(newUser);
                     session.SaveChanges();
                     return fb.token;

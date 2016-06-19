@@ -31,12 +31,24 @@ namespace MarkTheWorld.Controllers.Api
         {
             try
             {
-                FbServerLogin fbUser = userService.getLongLiveToken(fb);
-                return Ok(fbUser);
+                bool newUser = userService.checkUserById(fb.Id);
+                FbServerLogin user = new FbServerLogin();
+                user.newUser = newUser;
+                user.longToken = "";
+                if (!newUser)
+                {
+                    user.longToken = userService.getLongLiveToken(fb);
+                }
+
+                FbServerLogin userTemp = userService.getUserParams(fb);
+                user.username = userTemp.username;
+                user.country = userTemp.country;
+
+                return Ok(user);
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Invalid object sent");
             }
         }
 
@@ -50,14 +62,23 @@ namespace MarkTheWorld.Controllers.Api
         {
             try
             {
-                string token = userService.register(fb);
-                if (token.Equals("Invalid token"))
-                    return Content(HttpStatusCode.BadRequest, "Invalid token");
-                return Ok(token);
+                if (fb != null)
+                {
+                    string token = userService.register(fb);
+                    if (token == null)
+                        return Content(HttpStatusCode.BadRequest, "User already registered");
+                    if (token.Equals("Invalid token"))
+                        return Content(HttpStatusCode.BadRequest, "Invalid token");
+                    return Ok(token);
+                }
+                else
+                {
+                    return Content(HttpStatusCode.BadRequest, "Invalid object sent");
+                }
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Invalid object sent");
             }
         }
 
