@@ -138,6 +138,8 @@ namespace Repository.UserRepository
             }
         }
 
+        
+
         public UserRegistrationModel GetOneUser(UserRegistrationPost user)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())

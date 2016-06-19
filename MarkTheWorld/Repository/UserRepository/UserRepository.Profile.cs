@@ -70,8 +70,9 @@ namespace Repository.UserRepository
                     return "defaultAvatar1.png";
                 }
             }
-        }      
+        }
 
+        
         public bool SetColors(string userName, Color colors)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
