@@ -14,7 +14,6 @@
 
                     $http.get('api/username/' + modelValue)
                         .then(function (response) {
-                            console.log(response);
                             if (response.data === true) {
                                 deferredObject.resolve();
                             }
@@ -22,8 +21,7 @@
                                 deferredObject.reject();
                             }
                         },
-                        function (error) {
-                            console.log('Unique username check error: ', error);
+                        function () {
                             deferredObject.reject();
                         });
 
@@ -32,7 +30,7 @@
 
                 var pendingValidation;
 
-                ctrl.$asyncValidators.unique = function (modelValue, viewValue) {
+                ctrl.$asyncValidators.unique = function (modelValue) {
                     if (pendingValidation) {
                         $timeout.cancel(pendingValidation);
                     }
@@ -49,5 +47,5 @@
         };
     }
 
-    angular.module('account').directive('uniqueUsername', uniqueUsernameDirective);
+    angular.module('sideNav').directive('uniqueUsername', uniqueUsernameDirective);
 }());

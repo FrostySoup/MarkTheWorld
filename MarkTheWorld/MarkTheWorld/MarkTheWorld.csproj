@@ -258,6 +258,8 @@
     <Content Include="Content\img\ErrorPageIcons\MarkThePlanetLogoText.png" />
     <Content Include="Content\img\ErrorPageIcons\MarkTheWorldLogo.png" />
     <Content Include="Content\img\ErrorPageIcons\signal.png" />
+    <Content Include="Content\img\icons\faceBook.svg" />
+    <Content Include="Content\img\icons\facebook-icon.png" />
     <Content Include="Content\img\icons\ic_account_box_black_36px.svg" />
     <Content Include="Content\img\icons\ic_account_box_white_36px.svg" />
     <Content Include="Content\img\icons\ic_account_box_white_48px.svg" />

@@ -57,8 +57,8 @@
                         map.setCenter({lat: data.data.location.lat, lng: data.data.location.lng});
                     });
 
-                    map.addListener('center_changed', mapService.positionChangeHandler);
-                    map.addListener('zoom_changed', mapService.positionChangeHandler);
+                    //map.addListener('center_changed', mapService.positionChangeHandler);
+                    //map.addListener('zoom_changed', mapService.positionChangeHandler);
                 });
             }
         };

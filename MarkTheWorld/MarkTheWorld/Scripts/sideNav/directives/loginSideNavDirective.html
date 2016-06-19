@@ -2,7 +2,7 @@
     <h1 class="md-toolbar-tools">Login</h1>
 </md-toolbar>
 <md-content class="login-form" layout-padding layout="column">
-    <form ng-submit="login(loginForm, loginData)" name="loginForm" novalidate>
+    <form ng-submit="vm.login(loginForm, loginData)" name="loginForm" novalidate>
         <md-input-container class="md-block">
             <label for="login_username">Username</label>
             <input required minlength="3" maxlength="25" type="text" id="login_username" name="login_username" ng-model="loginData.username" md-autofocus>
@@ -19,17 +19,17 @@
                 <div ng-message="maxlength">The password should be shorter</div>
             </div>
         </md-input-container>
-        <md-button ng-disabled="requesting.login" type="submit" layout-fill class="md-raised md-primary">
+        <md-button ng-disabled="vm.requesting" type="submit" layout-fill class="md-raised md-primary">
             Login
-            <md-progress-circular ng-show="requesting.login" md-mode="indeterminate" class="md-hue-2" md-diameter="42px"></md-progress-circular>
+            <md-progress-circular ng-show="vm.requesting" md-mode="indeterminate" class="md-hue-2" md-diameter="42px"></md-progress-circular>
         </md-button>
-        <div ng-show="requestError.login" class="panel-error">
+        <div ng-show="vm.requestError" class="panel-error">
             <md-icon md-svg-src="~/../Content/img/icons/ic_announcement.svg" class="s32" aria-label="Error"></md-icon>
-            <div class="panel-error-text">{{ requestError.login }}</div>
+            <div class="panel-error-text">{{ vm.requestError }}</div>
         </div>
     </form>
     <p>
-        <a ng-click="go('register')">Don't have an account? Register here.</a>
+        <a ng-click="vm.switchPanel({ newAction: 'register' })">Don't have an account? Register here.</a>
     </p>
     </form>
 </md-content>

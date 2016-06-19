@@ -1,0 +1,10 @@
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right_side_nav">
+    <div ng-switch on="vm.action">
+        <div ng-switch-when="login">
+            <login-side-nav switch-panel="vm.switchPanel(newAction)"></login-side-nav>
+        </div>
+        <div ng-switch-when="register">
+            <register-side-nav></register-side-nav>
+        </div>
+    </div>
+</md-sidenav>

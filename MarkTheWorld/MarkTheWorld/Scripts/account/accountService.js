@@ -3,11 +3,17 @@
 (function () {
     'use strict';
 
-    function accountService($http, $q, confirmDialogService) {
+    function accountService($http, $q, userService) {
+        function loginSuccess(user) {
+            localStorage.setItem('username', user.username);
+            localStorage.setItem('token', user.Token);
+            userService.isLogged = true;
+            userService.username = user.username;
+            userService.token = user.Token;
+        }
+
         return {
             login: function (loginData) {
-                console.log('tyring to login');
-
                 var deferredObject = $q.defer();
 
                 $http.post('/api/User/Login',
@@ -16,7 +22,8 @@
                         "PasswordHash": loginData.password
                     }).then(
                     function (success) {
-                        deferredObject.resolve(success);
+                        loginSuccess(success.data);
+                        deferredObject.resolve();
                     },
                     function (error) {
                         deferredObject.reject(error);
@@ -36,7 +43,8 @@
                         "CountryCode": registerData.countryCode
                     }).then(
                     function (success) {
-                        deferredObject.resolve(success);
+                        loginSuccess(success.data);
+                        deferredObject.resolve();
                     },
                     function (error) {
                         deferredObject.reject(error);
@@ -46,6 +54,7 @@
                 return deferredObject.promise;
             },
 
+            //todo: should be moved elsewhere
             addPoint: function (message, lat, lng) {
                 var deferredObject = $q.defer();
 
@@ -71,35 +80,12 @@
                 return deferredObject.promise;
             },
 
-            isLogged: function () {
-                return localStorage.getItem('token') !== null;
-            },
-
-            getMapUser: function () {
-                return localStorage.getItem('mapUser');
-            },
-
-            setMapUser: function (mapUser) {
-                return localStorage.setItem('mapUser', mapUser);
-            },
-
-            getLoggedUser: function () {
-                return localStorage.getItem('username');
-            },
-
-            logout: function (ev) {
-                confirmDialogService.showConfirmDialog({
-                    title: 'Logging out',
-                    message: 'Are you sure you want to log out?',
-                    ariaLabel: 'Logging out',
-                    ev: ev,
-                    okText: 'Yes',
-                    cancelText: 'No'
-                }).then(function () {
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('user');
-                    localStorage.removeItem('onlyMyOwnMarks');
-                });
+            logout: function () {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                userService.isLogged = false;
+                userService.username = '';
+                userService.token = '';
             }
         };
     }
