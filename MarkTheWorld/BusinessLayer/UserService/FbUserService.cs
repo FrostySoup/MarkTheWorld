@@ -1,4 +1,5 @@
-﻿using Data.Database;
+﻿using Data;
+using Data.Database;
 using Data.DataHelpers;
 using Data.DataHelpers.Facebook;
 using System;
@@ -50,6 +51,11 @@ namespace BusinessLayer.UserService
                 country = country,
                 username = usName
             };
+        }
+
+        public string getUserParamesDb(string token)
+        {        
+            return repository.GetOneByToken(token).UserName;
         }
 
         public string register(FbRegisterClient fb)
@@ -106,6 +112,13 @@ namespace BusinessLayer.UserService
             string strStart = "=";
             string strEnd = "&expires";
             string token = getBetween(jsonResponse, strStart, strEnd);
+
+            bool newToken = repository.SaveNewToken(fb.Id, token);
+
+            if (!newToken)
+            {
+                token = "";
+            }
 
             return token;
         }

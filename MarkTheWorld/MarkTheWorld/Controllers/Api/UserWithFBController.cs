@@ -38,12 +38,16 @@ namespace MarkTheWorld.Controllers.Api
                 if (!newUser)
                 {
                     user.longToken = userService.getLongLiveToken(fb);
+                    if (user.longToken.Equals(""))
+                        return Content(HttpStatusCode.NoContent, "Couldn't receive user token");
+                    user.username = userService.getUserParamesDb(user.longToken);
                 }
-
-                FbServerLogin userTemp = userService.getUserParams(fb);
-                user.username = userTemp.username;
-                user.country = userTemp.country;
-
+                else
+                {
+                    FbServerLogin userTemp = userService.getUserParams(fb);
+                    user.username = userTemp.username;
+                    user.country = userTemp.country;
+                }
                 return Ok(user);
             }
             catch (Exception)

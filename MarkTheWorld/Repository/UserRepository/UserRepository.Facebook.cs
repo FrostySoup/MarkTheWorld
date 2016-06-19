@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.DataHelpers;
 using Data.DataHelpers.Facebook;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,30 @@ namespace Repository.UserRepository
                     User user = session.Query<User>().First(x => x.fbID.Equals(id));
                     session.Store(user);
                     session.SaveChanges();
+                    return false;
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+        }
+
+        public bool SaveNewToken(string id, string token)
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                try
+                {
+                    User user = session.Query<User>()
+                        .First(x => x.fbID.Equals(id));
+                    if (user != null)
+                    {
+                        user.Token = token;
+                        session.Store(user);
+                        session.SaveChanges();
+                        return true;
+                    }
                     return false;
                 }
                 catch
