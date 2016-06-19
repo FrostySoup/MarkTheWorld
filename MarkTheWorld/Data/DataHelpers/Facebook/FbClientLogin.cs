@@ -8,7 +8,7 @@ namespace Data.DataHelpers
 {
     public class FbClientLogin
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Token { get; set; }
     }
 }
