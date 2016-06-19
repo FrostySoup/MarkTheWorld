@@ -5,6 +5,7 @@
 
     function accountService($http, $q, userService, facebookLoginService) {
         function loginSuccess(user) {
+            console.log('login success', user);
             localStorage.setItem('username', user.username);
             localStorage.setItem('token', user.Token);
             userService.isLogged = true;
