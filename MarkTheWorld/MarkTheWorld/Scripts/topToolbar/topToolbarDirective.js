@@ -11,7 +11,7 @@
             scope: {},
             restrict: 'E',
             replace: true,
-            controller: function (userService, accountService, myProfileService, facebookLoginService, sideNavEventServiceService) {
+            controller: function (userService, accountService, myProfileService, facebookLoginService, sideNavEventServiceService, toastService) {
                 var vm = this;
 
                 vm.user = userService;
@@ -23,7 +23,14 @@
                 };
 
                 vm.logout = function (ev) {
-                    accountService.logout(ev);
+                    accountService.logout(ev).then(
+                        function (success) {
+                            toastService.showToast('Logged out successfully', 5000);
+                        },
+                        function (error) {
+                            console.log(error);
+                        }
+                    );
                 };
 
                 vm.myProfile = function (ev) {
@@ -31,42 +38,14 @@
                 };
 
                 vm.facebookLogin = function () {
-                    facebookLoginService.login();
-
-                    //    .then(
-                    //    function () {
-                    //        ...
-                    //    },
-                    //    function (error) {
-                    //        ...
-                    //    }
-                    //);
-                };
-
-                //------------------
-
-                vm.fbLogin = function () {
-                    FB.login(function(response) {
-                        console.log(response);
-                    });
-                };
-
-                vm.fbStatus = function () {
-                    FB.getLoginStatus(function(response) {
-                        console.log(response);
-                    });
-                };
-
-                vm.fbLogout = function () {
-                    FB.logout(function(response) {
-                        console.log(response);
-                    });
-                };
-
-                vm.fbMe = function () {
-                    FB.api('/me', function(response) {
-                        console.log( response);
-                    });
+                    facebookLoginService.login().then(
+                        function (success) {
+                            toastService.showToast('Welcome back, ' + success.username, 5000);
+                        },
+                        function (error) {
+                            console.log(error);
+                        }
+                    );
                 };
             }
         };

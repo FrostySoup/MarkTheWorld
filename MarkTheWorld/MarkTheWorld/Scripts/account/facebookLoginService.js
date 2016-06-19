@@ -3,25 +3,29 @@
 (function () {
     'use strict';
 
-    function facebookLoginService(facebookLoginInitializerService, $http, $q, sideNavEventServiceService) {
-        var loginCallBack = function (response) {
+    function facebookLoginService(facebookLoginInitializerService, $http, $q, userService, sideNavEventServiceService) {
+        function loginCallBack(response, deferredObject) {
             $http.post('/api/fblogin',
                 {
                     "Id": response.authResponse.userID,
                     "Token": response.authResponse.accessToken
                 }).then(
                 function (success) {
-                    console.log('success', success);
                     if (success.data.newUser === true) {
                         sideNavEventServiceService.emit({ action: 'complete', extraData: { fbResponse: response, apiResponse: success.data }});
+                        deferredObject.reject();
+                    } else {
+                        loginSuccess({username: success.data.username, Token: success.data.longToken });
+                        deferredObject.resolve(success.data);
                     }
                 },
                 function (error) {
                     //TODO: [preRelease] error api call toasts
+                    deferredObject.reject(error);
                     console.log('error', error);
                 }
             );
-        };
+        }
 
         function loginSuccess(user) {
             localStorage.setItem('username', user.username);
@@ -32,14 +36,36 @@
         }
 
         return {
-            login: function () {
+            logout: function () {
+                var deferredObject = $q.defer();
+
                 facebookLoginInitializerService.facebookInitialized.then(function () {
-                    FB.login(function (response) {
-                        if (response.status === 'connected' && angular.isDefined(response.authResponse)) {
-                            loginCallBack(response);
+                    FB.getLoginStatus(function (response) {
+                        if (response.status === 'connected') {
+                            FB.logout(function() {
+                                deferredObject.resolve();
+                            });
+                        } else {
+                            deferredObject.resolve();
                         }
                     });
                 });
+
+                return deferredObject.promise;
+            },
+
+            login: function () {
+                var deferredObject = $q.defer();
+
+                facebookLoginInitializerService.facebookInitialized.then(function () {
+                    FB.login(function (response) {
+                        if (response.status === 'connected') {
+                            loginCallBack(response, deferredObject);
+                        }
+                    });
+                });
+
+                return deferredObject.promise;
             },
 
             completeRegistration: function (registerData, fbResponse) {
@@ -53,7 +79,7 @@
                         "userName": registerData.username
                     }).then(
                     function (success) {
-                        loginSuccess({ username: registerData.username, token: success.Token });
+                        loginSuccess({ username: registerData.username, Token: success.data });
                         deferredObject.resolve(success);
                     },
                     function (error) {

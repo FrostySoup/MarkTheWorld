@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    function accountService($http, $q, userService) {
+    function accountService($http, $q, userService, facebookLoginService) {
         function loginSuccess(user) {
             localStorage.setItem('username', user.username);
             localStorage.setItem('token', user.Token);
@@ -55,11 +55,19 @@
             },
 
             logout: function () {
+                var deferredObject = $q.defer();
+
                 localStorage.removeItem('token');
-                localStorage.removeItem('user');
+                localStorage.removeItem('username');
                 userService.isLogged = false;
                 userService.username = '';
                 userService.token = '';
+
+                facebookLoginService.logout().then(function() {
+                    deferredObject.resolve();
+                });
+
+                return deferredObject.promise;
             },
 
             appStartUpLoginCheck: function () {

@@ -11,7 +11,7 @@
                 extraData: "="
             },
             restrict: 'E',
-            controller: function ($mdSidenav, $scope, facebookLoginService, simpleModalService, countries) {
+            controller: function ($mdSidenav, $scope, facebookLoginService, simpleModalService, toastService, countries) {
                 var vm = this;
 
                 vm.requesting = false;
@@ -38,10 +38,9 @@
                     vm.requestError = undefined;
 
                     facebookLoginService.completeRegistration(registerData, fbResponse).then(
-                        function (success) {
-                            console.log(success);
-                            simpleModalService.showModal('Success!', 'Welcome ' + registerData.username + '!');
+                        function () {
                             vm.close();
+                            toastService.showToast('Welcome, ' + registerData.username, 5000);
                         },
                         function (error) {
                             vm.requestError = error.data;

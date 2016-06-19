@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    function myProfileService($mdDialog, $http, $q, $interval, accountService) {
+    function myProfileService($mdDialog, $http, $q, $interval, userService) {
         return {
             showDialog: function (ev) {
                 var self = this;
@@ -21,7 +21,7 @@
 
             getProfileData: function () {
                 var deferredObject = $q.defer();
-                var username = accountService.getLoggedUser();
+                var username = userService.username;
 
                 if (username === null) {
                     deferredObject.reject('Username isn\'t set');
@@ -41,7 +41,7 @@
 
             takePoints: function () {
                 var deferredObject = $q.defer();
-                var username = accountService.getLoggedUser();
+                var username = userService.username;
 
                 if (username === null) {
                     deferredObject.reject('Username isn\'t set');

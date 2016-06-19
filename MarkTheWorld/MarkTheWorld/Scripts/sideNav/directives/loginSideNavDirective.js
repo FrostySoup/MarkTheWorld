@@ -11,7 +11,7 @@
             bindToController: true,
             controllerAs: 'vm',
             restrict: 'E',
-            controller: function ($mdSidenav, accountService) {
+            controller: function ($mdSidenav, accountService, toastService) {
                 var vm = this;
 
                 vm.requesting = false;
@@ -27,6 +27,7 @@
 
                     accountService.login(loginData).then(
                         function () {
+                            toastService.showToast('Welcome back, ' + loginData.username, 5000);
                             vm.close();
                         },
                         function (error) {

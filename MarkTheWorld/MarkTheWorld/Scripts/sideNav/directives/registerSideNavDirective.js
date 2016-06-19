@@ -9,7 +9,7 @@
             controllerAs: 'vm',
             scope: {},
             restrict: 'E',
-            controller: function ($mdSidenav, accountService, simpleModalService, countries) {
+            controller: function ($mdSidenav, accountService, countries) {
                 var vm = this;
 
                 vm.requesting = false;
@@ -26,7 +26,7 @@
 
                     accountService.register(registerData).then(
                         function () {
-                            simpleModalService.showModal('Success!', 'Welcome ' + registerData.username + '!');
+                            toastService.showToast('Welcome, ' + loginData.username, 5000);
                             vm.close();
                         },
                         function (error) {
