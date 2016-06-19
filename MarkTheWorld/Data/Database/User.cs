@@ -32,6 +32,6 @@ namespace Data
 
         public string profilePicture { get; set; }
 
-        public int fbID { get; set; }
+        public string fbID { get; set; }
     }
 }

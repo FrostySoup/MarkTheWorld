@@ -10,7 +10,7 @@ namespace Repository.UserRepository
 {
     public partial class UserRepository : GenericRepository.GenericRepository, IUserRepository
     {
-        public bool CheckFbUser(int id)
+        public bool CheckFbUser(string id)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {

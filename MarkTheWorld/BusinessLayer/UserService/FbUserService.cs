@@ -125,7 +125,7 @@ namespace BusinessLayer.UserService
             }
         }
 
-        public bool checkUserById(int id)
+        public bool checkUserById(string id)
         {
             return repository.CheckFbUser(id);
         }
