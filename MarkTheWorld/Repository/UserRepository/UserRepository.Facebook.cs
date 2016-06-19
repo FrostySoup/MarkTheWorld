@@ -52,7 +52,7 @@ namespace Repository.UserRepository
             }
         }
 
-        public string RegisterFbUser(FbRegisterClient fb)
+        public string RegisterFbUser(FbRegisterClient fb, string photo)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
@@ -68,6 +68,7 @@ namespace Repository.UserRepository
                     newUser.countryCode = fb.countryCode;
                     newUser.UserName = fb.userName;
                     newUser.Token = fb.token;
+                    newUser.profilePicture = photo;
                     session.Store(newUser);
                     session.SaveChanges();
                     return fb.token;
