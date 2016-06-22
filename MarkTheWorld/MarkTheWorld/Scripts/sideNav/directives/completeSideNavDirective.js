@@ -11,15 +11,23 @@
                 extraData: "="
             },
             restrict: 'E',
-            controller: function ($mdSidenav, $scope, facebookLoginService, simpleModalService, toastService, countries) {
+            controller: function ($mdSidenav, $scope, facebookLoginService, $q, toastService, statesUS, countries) {
                 var vm = this;
 
                 vm.requesting = false;
                 vm.requestError = undefined;
                 vm.countries = countries;
+                vm.statesUS = statesUS;
                 vm.registerData = {};
 
                 var fbResponse = {};
+
+                // the fix for strange dropdown position
+                vm.statesDropFix = function () {
+                    var deferredObject = $q.defer();
+                    deferredObject.resolve();
+                    return deferredObject.promise;
+                };
 
                 $scope.$watch('vm.extraData', function (extraData) {
                     if (angular.isDefined(extraData)) {

@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    function myProfileController($mdDialog, myProfileService, myProfilePictureService) {
+    function myProfileController($mdDialog, myProfileService, myProfilePictureService, myProfileColorService) {
         var vm = this;
 
         vm.cancel = function () {
@@ -17,10 +17,19 @@
             );
         };
 
+        vm.myProfileColor = function () {
+            myProfileColorService.showDialog(vm.profileData.colors).finally(
+                function () {
+                    myProfileService.showDialog();
+                }
+            );
+        };
+
         myProfileService.getProfileData().then(
             //TODO: [preRelease] there should be an elegant preloader and nice failure handling
             function (success) {
                 vm.profileData = success.data;
+                console.log(success);
             },
             function (error) {
                 console.log(error);

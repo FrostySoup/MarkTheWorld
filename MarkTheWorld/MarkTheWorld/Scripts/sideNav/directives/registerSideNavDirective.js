@@ -9,12 +9,20 @@
             controllerAs: 'vm',
             scope: {},
             restrict: 'E',
-            controller: function ($mdSidenav, accountService, countries, toastService) {
+            controller: function ($mdSidenav, accountService, countries, statesUS, $q, toastService) {
                 var vm = this;
 
                 vm.requesting = false;
                 vm.requestError = undefined;
                 vm.countries = countries;
+                vm.statesUS = statesUS;
+
+                // the fix for strange dropdown position
+                vm.statesDropFix = function () {
+                    var deferredObject = $q.defer();
+                    deferredObject.resolve();
+                    return deferredObject.promise;
+                };
 
                 vm.register = function (registerForm, registerData) {
                     if (!registerForm.$valid) {

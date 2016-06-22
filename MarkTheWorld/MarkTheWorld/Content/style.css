@@ -99,6 +99,24 @@ md-dialog .md-subheader {
     background-color: rgb(245,245,245);
 }
 
+/* my color dialog */
+md-dialog.dialog-my-profile .color-sliders-container {
+    padding-right: 16px;
+}
+
+md-slider.md-default-theme.md-green .md-thumb:after, md-slider.md-green .md-thumb:after {
+    border-color: rgb(85, 231, 62);
+    background-color: rgb(85, 231, 62);
+}
+
+md-slider.md-default-theme.md-green .md-focus-ring, md-slider.md-green .md-focus-ring {
+    background-color: rgb(85, 231, 62);
+}
+
+md-slider.md-default-theme.md-green .md-track.md-track-fill, md-slider.md-green .md-track.md-track-fill {
+    background-color: rgb(85, 231, 62);
+}
+
 /* my profile dialog */
 @media (min-width: 960px) {
     md-dialog.dialog-my-profile {
@@ -126,12 +144,20 @@ md-dialog.dialog-my-profile .user-avatar p {
     margin: 3px 0 0 0;
 }
 
+md-dialog.dialog-my-profile .user-avatar img {
+    width: 100px;
+    height: 100px;
+}
+
 md-dialog.dialog-my-profile .user-color {
     border-radius: 3px;
     width: 28px;
     height: 28px;
     margin-left: 2px;
     margin-right: 10px;
+    -webkit-box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 md-dialog.dialog-my-profile .md-list-item-user-password md-icon, md-dialog.dialog-my-profile .md-list-item-reward md-icon {

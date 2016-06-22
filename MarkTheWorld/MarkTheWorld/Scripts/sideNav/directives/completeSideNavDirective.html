@@ -29,6 +29,16 @@
                 <div ng-message="required">You should select the country</div>
             </div>
         </md-input-container>
+        <md-input-container ng-if="vm.registerData.countryCode==='US'" class="md-block" md-is-error="registerForm.register_stateUS.$invalid && (registerForm.$submitted || registerForm.register_stateUS.$dirty)">
+            <label>State</label>
+            <md-select name="register_stateUS" md-on-open="vm.statesDropFix()" id="register_stateUS" ng-model="vm.registerData.stateUSCode" ng-required="true">
+                <md-option ng-repeat="state in vm.statesUS" ng-value="state.code">{{ state.name }}</md-option>
+            </md-select>
+            <div class="md-errors-spacer"></div>
+            <div ng-messages="registerForm.register_stateUS.$error">
+                <div ng-message="required">You should select the state</div>
+            </div>
+        </md-input-container>
         <md-button ng-disabled="vm.requesting" type="submit" layout-fill class="md-raised md-primary">
             Register
             <md-progress-circular ng-show="vm.requesting" md-mode="indeterminate" class="md-hue-2" md-diameter="42px"></md-progress-circular>
