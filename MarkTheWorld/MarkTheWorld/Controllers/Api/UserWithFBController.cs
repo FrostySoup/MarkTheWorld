@@ -29,6 +29,8 @@ namespace MarkTheWorld.Controllers.Api
         [HttpPost]
         public IHttpActionResult PostLogin(FbClientLogin fb)
         {
+            if (fb == null)
+                return Content(HttpStatusCode.NoContent, "Wrong obejct sent");
             try
             {
                 bool newUser = userService.checkUserById(fb.Id);
@@ -37,10 +39,11 @@ namespace MarkTheWorld.Controllers.Api
                 user.longToken = "";
                 if (!newUser)
                 {
-                    user.longToken = userService.getLongLiveToken(fb);
-                    if (user.longToken.Equals(""))
+                    FbNameToken tokenAndName = userService.getLongLiveToken(fb);
+                    user.username = tokenAndName.username;
+                    user.longToken = tokenAndName.token;
+                    if (user.longToken == null)
                         return Content(HttpStatusCode.NoContent, "Couldn't receive user token");
-                    user.username = userService.getUserParamesDb(user.longToken);
                 }
                 else
                 {
@@ -48,11 +51,12 @@ namespace MarkTheWorld.Controllers.Api
                     user.username = userTemp.username;
                     user.country = userTemp.country;
                 }
+                
                 return Ok(user);
             }
             catch (Exception)
             {
-                return Content(HttpStatusCode.BadRequest, "Invalid object sent");
+                return Content(HttpStatusCode.BadRequest, "Unkown error");
             }
         }
 
@@ -82,7 +86,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return Content(HttpStatusCode.BadRequest, "Invalid object sent");
+                return Content(HttpStatusCode.BadRequest, "Unknown error");
             }
         }
 

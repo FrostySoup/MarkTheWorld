@@ -29,7 +29,7 @@ namespace Repository.UserRepository
             }
         }
 
-        public bool SaveNewToken(string id, string token)
+        public FbNameToken SaveNewToken(string id, string token)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
@@ -42,13 +42,17 @@ namespace Repository.UserRepository
                         user.Token = token;
                         session.Store(user);
                         session.SaveChanges();
-                        return true;
+                        return new FbNameToken
+                        {
+                            token = user.Token,
+                            username = user.UserName
+                        };
                     }
-                    return false;
+                    return null;
                 }
                 catch
                 {
-                    return true;
+                    return null;
                 }
             }
         }

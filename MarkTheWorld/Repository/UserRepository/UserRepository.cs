@@ -20,12 +20,14 @@ namespace Repository.UserRepository
                 User newUser = generateUser();
                 newUser.PasswordHash = userPost.PasswordHash;
                 newUser.UserName = userPost.UserName;
-                newUser.countryCode = userPost.CountryCode;
+                newUser.countryCode = userPost.CountryCode;         
                 Random rnd = new Random();
                 newUser.profilePicture = "defaultAvatar" + rnd.Next(1, 16) + ".png";
+                UserRegistrationModel check = new UserRegistrationModel();
+                check.username = userPost.UserName;
                 try
                 {                    
-                    UserRegistrationModel check = new UserRegistrationModel();
+                    
                     check.success = false;
                     check.message = message2.UserNameTaken;
                     check.Token = System.Guid.NewGuid().ToString();
@@ -45,7 +47,6 @@ namespace Repository.UserRepository
                 }
                 catch
                 {
-                    UserRegistrationModel check = new UserRegistrationModel();
                     check.success = true;
                     check.Token = System.Guid.NewGuid().ToString();
                     newUser.Token = check.Token.ToString();
