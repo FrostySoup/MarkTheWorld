@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.DotService;
+using BusinessLayer.Filters;
 using BusinessLayer.TestGenerator;
 using BusinessLayer.UserService;
 using Data;
@@ -18,6 +19,7 @@ using System.Web.Http.Description;
 
 namespace MarkTheWorld.Controllers.Api
 {
+    [ValidateViewModel]
     [RoutePrefix("api")]
     public class UserController : ApiController
     {
@@ -37,10 +39,6 @@ namespace MarkTheWorld.Controllers.Api
         public IHttpActionResult PostUser(UserRegistrationPost User)
         {
             UserRegistrationModel userCopy = new UserRegistrationModel();
-            if (User == null)
-                return Content(HttpStatusCode.BadRequest, "Invalid object");
-            if (!User.checkIfValiable())
-                return Content(HttpStatusCode.BadRequest, "Wrong length of username or password");
             if (!CountriesList.checkCode(User.CountryCode))
                 return Content(HttpStatusCode.BadRequest, "Invalid country code");
             try
@@ -92,6 +90,8 @@ namespace MarkTheWorld.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetProfile(string userName)
         {
+            if (userName.Length < 3 || userName.Length > 25)
+                return Content(HttpStatusCode.BadRequest, "Wrong username length");
             UserProfile user = new UserProfile();
             try
             {
@@ -115,11 +115,7 @@ namespace MarkTheWorld.Controllers.Api
         [HttpPost]
         public IHttpActionResult GetUsers(UserRegistrationPost user)
         {
-            if (User == null)
-                return Content(HttpStatusCode.BadRequest, "Invalid object");
             UserRegistrationModel userCopy = new UserRegistrationModel();
-            if (!user.checkIfValiable())
-                return Content(HttpStatusCode.BadRequest, "Wrong length of username or password");
             try
             {
                 userCopy = userService.getOne(user);
@@ -196,8 +192,6 @@ namespace MarkTheWorld.Controllers.Api
         {
             if (userName.Length < 3 || userName.Length > 25)
                 return Content(HttpStatusCode.BadRequest, "Wrong username length");
-            if (colors == null)
-                return Content(HttpStatusCode.BadRequest, "Object missing");
             try
             {
                 return Ok(userService.postUserColors(userName, colors));
@@ -216,6 +210,8 @@ namespace MarkTheWorld.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetUsername(string userName)
         {
+            if (userName.Length < 3 || userName.Length > 25)
+                return Content(HttpStatusCode.BadRequest, "Wrong username length");
             try
             {
                 return Ok(userService.checkUsername(userName));

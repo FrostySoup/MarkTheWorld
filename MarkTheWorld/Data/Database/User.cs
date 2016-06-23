@@ -1,6 +1,7 @@
 ﻿using Data.DataHelpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,12 @@ namespace Data
     {
         public string Id { get; set; }
 
-        // 3 < name < 25
+        [StringLength(25, MinimumLength = 4)]
         public string UserName { get; set; }
 
         public string Token { get; set; }
 
+        [StringLength(30, MinimumLength = 6)]
         public string PasswordHash { get; set; }
 
         public List<string> dotsId { get; set; }
@@ -27,6 +29,8 @@ namespace Data
         public Color colors { get; set; }
 
         public string countryCode { get; set; }
+
+        public string state { get; set; }
 
         public DateTime lastDailyTime { get; set; }
 

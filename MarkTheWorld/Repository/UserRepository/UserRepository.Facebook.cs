@@ -97,6 +97,8 @@ namespace Repository.UserRepository
                     newUser.UserName = fb.userName;
                     newUser.Token = fb.token;
                     newUser.profilePicture = photo;
+                    if (fb.state != null)
+                        newUser.state = fb.state;
                     session.Store(newUser);
                     session.SaveChanges();
                     return fb.token;

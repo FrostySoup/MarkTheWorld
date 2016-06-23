@@ -20,6 +20,8 @@ namespace Repository.UserRepository
                 User newUser = generateUser();
                 newUser.PasswordHash = userPost.PasswordHash;
                 newUser.UserName = userPost.UserName;
+                if (userPost == null)
+                    newUser.state = userPost.State;
                 newUser.countryCode = userPost.CountryCode;         
                 Random rnd = new Random();
                 newUser.profilePicture = "defaultAvatar" + rnd.Next(1, 16) + ".png";
