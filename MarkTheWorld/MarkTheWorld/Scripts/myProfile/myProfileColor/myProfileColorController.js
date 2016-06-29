@@ -5,11 +5,11 @@
     function myProfileColorController($mdDialog, myProfileColorService, toastService) {
         var vm = this;
 
-        vm.requesting = false;
-
         vm.cancel = function () {
             $mdDialog.cancel();
         };
+
+        vm.requesting = false;
 
         vm.saveColor = function () {
             vm.requesting = true;

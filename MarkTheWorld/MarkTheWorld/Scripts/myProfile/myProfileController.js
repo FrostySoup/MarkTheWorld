@@ -28,8 +28,8 @@
         myProfileService.getProfileData().then(
             //TODO: [preRelease] there should be an elegant preloader and nice failure handling
             function (success) {
-                vm.profileData = success.data;
                 console.log(success);
+                vm.profileData = success.data;
             },
             function (error) {
                 console.log(error);
