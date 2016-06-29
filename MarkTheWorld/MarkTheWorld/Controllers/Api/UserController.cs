@@ -4,6 +4,7 @@ using BusinessLayer.TestGenerator;
 using BusinessLayer.UserService;
 using Data;
 using Data.DataHelpers;
+using Data.DataHelpers.User.ReceivedData;
 using Data.ReceivePostData;
 using MarkTheWorld.Models;
 using System;
@@ -113,12 +114,13 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(UserRegistrationModel))]
         [Route("user/login")]
         [HttpPost]
-        public IHttpActionResult GetUsers(UserRegistrationPost user)
+        public IHttpActionResult GetUsers(UserLoginPost user)
         {
+            UserRegistrationPost userLogin = new UserRegistrationPost(user);
             UserRegistrationModel userCopy = new UserRegistrationModel();
             try
             {
-                userCopy = userService.getOne(user);
+                userCopy = userService.getOne(userLogin);
                 if (userCopy.message != message2.Success)
                 {
                     ErrorStatus errorCheck = new ErrorStatus(userCopy);

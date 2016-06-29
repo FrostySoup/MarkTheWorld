@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.DataHelpers.User.ReceivedData;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,5 +24,11 @@ namespace Data.ReceivePostData
 
         [StringLength(4, MinimumLength = 1)]
         public string State { get; set; }
+
+        public UserRegistrationPost(UserLoginPost user)
+        {
+            UserName = user.UserName;
+            PasswordHash = user.PasswordHash;
+        }
     }
 }
