@@ -15,12 +15,13 @@ namespace MarkTheWorld.Controllers.Api
     [RoutePrefix("api")]
     public class UploadingController : ApiController
     {
+        [Route("uploading")]
+        [HttpPost]
         public Task<IEnumerable<Photo>> Post()
         {
             var folderName = "Content/uploadedImages";
             var PATH = HttpContext.Current.Server.MapPath("~/" + folderName);
             var rootUrl = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.AbsolutePath, String.Empty);
-
             if (Request.Content.IsMimeMultipartContent())
             {
                 var streamProvider = new CustomMultipartFormDataStreamProvider(PATH);
