@@ -275,6 +275,8 @@
     <Content Include="Content\img\icons\ic_more_vert_white_48px.svg" />
     <Content Include="Content\img\icons\ic_people_black_48px.svg" />
     <Content Include="Content\img\icons\ic_settings_48px.svg" />
+    <Content Include="Content\img\icons\ic_tune.svg" />
+    <Content Include="Content\img\icons\ic_view_module.svg" />
     <Content Include="Content\img\icons\settings.png" />
     <Content Include="Content\style.css" />
     <Content Include="Content\styles\css\style.css" />

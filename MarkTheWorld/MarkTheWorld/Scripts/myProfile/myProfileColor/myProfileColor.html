@@ -1,4 +1,4 @@
-<md-dialog class="dialog-my-profile">
+<md-dialog class="dialog-my-profile dialog-my-profile-color">
     <md-toolbar>
         <div class="md-toolbar-tools">
             <h2>My Profile Color</h2>
@@ -8,38 +8,16 @@
             </md-button>
         </div>
     </md-toolbar>
-    <md-dialog-content>
-        <div layout-padding class="color-sliders-container">
-            <div layout>
-                <div flex="15" layout layout-align="start center">
-                    <span>Red:</span>
-                </div>
-                <md-slider flex min="0" max="255" ng-model="vm.color.red" aria-label="red">
-                </md-slider>
-            </div>
-            <div layout>
-                <div flex="15" layout layout-align="start center">
-                    <span>Green:</span>
-                </div>
-                <md-slider flex class="md-green" min="0" max="255" ng-model="vm.color.green" aria-label="green">
-                </md-slider>
-            </div>
-            <div layout>
-                <div flex="15" layout layout-align="start center">
-                    <span>Blue:</span>
-                </div>
-                <md-slider flex class="md-primary" min="0" max="255" ng-model="vm.color.blue" aria-label="blue">
-                </md-slider>
-            </div>
-        </div>
-        <md-divider></md-divider>
+    <md-dialog-content flex>
         <div layout layout-padding>
             <div flex="nogrow" layout layout-align="start center">
                 <span>Your color:</span>
             </div>
-            <div ng-attr-style="background: rgb({{vm.color.red}},{{vm.color.green}},{{vm.color.blue}})" class="user-color"></div>
+            <div ng-attr-style="background: rgb({{vm.color.red}},{{vm.color.green}},{{vm.color.blue}})"
+                 class="user-color"></div>
         </div>
         <md-divider></md-divider>
+        <profile-color-container color="vm.color"></profile-color-container>
     </md-dialog-content>
     <md-dialog-actions>
         <md-button ng-disabled="vm.requesting" ng-click="vm.saveColor()" class="md-secondary">Save</md-button>

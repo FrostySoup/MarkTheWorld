@@ -29,7 +29,6 @@
             //TODO: [preRelease] there should be an elegant preloader and nice failure handling
             function (success) {
                 vm.profileData = success.data;
-                console.log(success);
             },
             function (error) {
                 console.log(error);

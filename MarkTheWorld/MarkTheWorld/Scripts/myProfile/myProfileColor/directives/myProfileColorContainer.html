@@ -1,0 +1,54 @@
+<md-tabs md-stretch-tabs="always" md-align-tabs="bottom">
+    <md-tab label="Picker">
+        <md-tab-label>
+            <md-icon md-svg-src="~/../Content/img/icons/ic_view_module.svg" class="s24"></md-icon>
+            Palette
+        </md-tab-label>
+        <md-tab-body>
+            <div class="color-picker-palette">
+            </div>
+        </md-tab-body>
+    </md-tab>
+    <md-tab>
+        <md-tab-label>
+            <md-icon md-svg-src="~/../Content/img/icons/ic_tune.svg" class="s24"></md-icon>
+            Sliders
+        </md-tab-label>
+        <md-tab-body>
+            <div layout-padding layout="column" layout-align="space-between stretch" layout-fill class="color-sliders-container">
+                <div layout>
+                    <div layout layout-align="start center" class="color-sliders-name">
+                        <span>Red:</span>
+                    </div>
+                    <md-slider flex min="0" max="255" ng-model="vm.color.red" aria-label="red">
+                    </md-slider>
+                    <div layout layout-align="end center">
+                        <input min="0" max="255" type="number" ng-model="vm.color.red">
+                    </div>
+                </div>
+                <div layout>
+                    <div layout layout-align="start center" class="color-sliders-name">
+                        <span>Green:</span>
+                    </div>
+                    <md-slider flex class="md-green" min="0" max="255" ng-model="vm.color.green"
+                               aria-label="green">
+                    </md-slider>
+                    <div layout layout-align="end center">
+                        <input min="0" max="255" type="number" ng-model="vm.color.green">
+                    </div>
+                </div>
+                <div layout>
+                    <div layout layout-align="start center" class="color-sliders-name">
+                        <span>Blue:</span>
+                    </div>
+                    <md-slider flex class="md-primary" min="0" max="255" ng-model="vm.color.blue"
+                               aria-label="blue">
+                    </md-slider>
+                    <div layout layout-align="end center">
+                        <input min="0" max="255" type="number" ng-model="vm.color.blue">
+                    </div>
+                </div>
+            </div>
+        </md-tab-body>
+    </md-tab>
+</md-tabs>

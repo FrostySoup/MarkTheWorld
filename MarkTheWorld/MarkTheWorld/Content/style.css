@@ -100,8 +100,101 @@ md-dialog .md-subheader {
 }
 
 /* my color dialog */
+
+@media (min-width: 960px) {
+    md-dialog.dialog-my-profile.dialog-my-profile-color {
+        min-width: 450px;
+        height: 500px;
+    }
+}
+
+md-dialog.dialog-my-profile.dialog-my-profile-color profile-color-container .md-tab,
+md-dialog.dialog-my-profile.dialog-my-profile-color profile-color-container md-pagination-wrapper,
+md-dialog.dialog-my-profile.dialog-my-profile-color profile-color-container md-tabs-canvas,
+md-dialog.dialog-my-profile.dialog-my-profile-color profile-color-container md-tabs-wrapper {
+    max-height: 36px;
+    height: 36px;
+}
+
+md-dialog.dialog-my-profile.dialog-my-profile-color profile-color-container .md-tab {
+    padding: 8px 24px;
+}
+
+md-dialog.dialog-my-profile.dialog-my-profile-color profile-color-container md-tabs[md-align-tabs=bottom] {
+    padding-bottom: 36px;
+}
+
+md-dialog.dialog-my-profile.dialog-my-profile-color profile-color-container md-tabs[md-align-tabs=bottom] md-tabs-content-wrapper {
+    bottom: 36px;
+}
+
+md-dialog.dialog-my-profile.dialog-my-profile-color md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
+    min-height: 258px;
+}
+
+md-dialog.dialog-my-profile.dialog-my-profile-color .md-tab md-icon {
+    margin-top: -2px;
+}
+
+md-dialog.dialog-my-profile.dialog-my-profile-color .md-tab:last-of-type md-icon {
+    margin-right: 2px;
+}
+
+md-dialog.dialog-my-profile.dialog-my-profile-color .md-tab {
+    background: rgba(0,0,0,.075);
+}
+
+md-dialog.dialog-my-profile.dialog-my-profile-color .md-tab.md-active {
+    background: #fff;
+}
+
+md-dialog.dialog-my-profile .color-picker-palette {
+    padding: 4px;
+}
+
+md-dialog.dialog-my-profile .color-picker-palette .color-cell {
+    cursor: pointer;
+    height: 25px;
+}
+
 md-dialog.dialog-my-profile .color-sliders-container {
     padding-right: 16px;
+}
+
+md-dialog.dialog-my-profile .color-sliders-container input {
+    padding: 2px 2px 1px;
+    border-width: 0 0 1px;
+    line-height: 26px;
+    height: 30px;
+    min-width: 50px;
+    width: 50px;
+    border-radius: 0;
+    border-style: solid;
+    border-color: rgba(0,0,0,0.12);
+    margin-left: 24px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+md-dialog.dialog-my-profile .color-sliders-container input:focus {
+    outline: 0;
+    border-color: rgb(63, 81, 181);
+    border-width: 0 0 2px;
+    padding-bottom: 0;
+}
+
+md-dialog.dialog-my-profile .color-sliders-container .color-sliders-name {
+    min-width: 70px;
+}
+
+md-slider.md-default-theme.md-primary .md-thumb:after, md-slider.md-primary .md-thumb:after {
+    border-color: rgb(63,81,181);
+    background-color: rgb(63,81,181);
+}
+
+md-slider.md-default-theme.md-min .md-thumb:after, md-slider.md-min .md-thumb:after {
+    border-color: rgb(255,64,129);
+    background-color: rgb(255,64,129);
 }
 
 md-slider.md-default-theme.md-green .md-thumb:after, md-slider.md-green .md-thumb:after {
@@ -150,7 +243,6 @@ md-dialog.dialog-my-profile .user-avatar img {
 }
 
 md-dialog.dialog-my-profile .user-color {
-    border-radius: 3px;
     width: 28px;
     height: 28px;
     margin-left: 2px;
