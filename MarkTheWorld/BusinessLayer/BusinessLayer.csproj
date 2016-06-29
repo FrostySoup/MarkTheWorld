@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
@@ -62,6 +63,8 @@
     <Compile Include="DotService\DotServices.Functions.cs" />
     <Compile Include="DotService\IDotService.cs" />
     <Compile Include="Filters\ValidateViewModelAttribute.cs" />
+    <Compile Include="PhotoUpload\CustomMultipartFormDataStreamProvider.cs" />
+    <Compile Include="PhotoUpload\ImageThumb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestGenerator\GenerateObjects.cs" />
     <Compile Include="UserService\FbUserService.cs" />
@@ -81,6 +84,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

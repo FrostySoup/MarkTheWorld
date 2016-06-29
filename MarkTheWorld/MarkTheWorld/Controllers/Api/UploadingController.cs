@@ -12,6 +12,7 @@ using System.Web.Http;
 
 namespace MarkTheWorld.Controllers.Api
 {
+    [RoutePrefix("api")]
     public class UploadingController : ApiController
     {
         public Task<IEnumerable<Photo>> Post()
