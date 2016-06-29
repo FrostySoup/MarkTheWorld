@@ -80,6 +80,7 @@
     <Compile Include="Database\Dot.cs" />
     <Compile Include="DataHelpers\Map\GroupedDotsForApi.cs" />
     <Compile Include="DataHelpers\User\Photo.cs" />
+    <Compile Include="DataHelpers\User\ReceivedData\UserLoginPost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuadTrees\QuadTree.cs" />
     <Compile Include="DataHelpers\User\UserDailyReward.cs" />

@@ -25,6 +25,8 @@ namespace Data.ReceivePostData
         [StringLength(4, MinimumLength = 1)]
         public string State { get; set; }
 
+        public UserRegistrationPost(){ }
+
         public UserRegistrationPost(UserLoginPost user)
         {
             UserName = user.UserName;

@@ -526,7 +526,7 @@
             Paima duomenis reikalingus profilio langui
             </summary>
         </member>
-        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetUsers(Data.ReceivePostData.UserRegistrationPost)">
+        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetUsers(Data.DataHelpers.User.ReceivedData.UserLoginPost)">
             <summary>
             Login, gražina vartotojo token
             </summary>
