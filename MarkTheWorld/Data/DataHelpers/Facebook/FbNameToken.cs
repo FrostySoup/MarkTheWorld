@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Data.DataHelpers.Facebook
 {
-    public class FbRegisterClient
+    public class FbNameToken
     {
+        public string username { get; set; }
         public string token { get; set; }
-        public string userID { get; set; }
-        public string userName { get; set; }
-        public string countryCode { get; set; }
     }
 }

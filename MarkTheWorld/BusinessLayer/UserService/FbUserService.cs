@@ -60,12 +60,15 @@ namespace BusinessLayer.UserService
 
         public string register(FbRegisterClient fb)
         {
-            string photo = getPhoto(fb.token);
-            fb.token = getLongLiveToken(new FbClientLogin
+            string photo = "https://graph.facebook.com/"+ fb.userID + "/picture?width=100&height=100";
+            FbNameToken token = getLongLiveToken(new FbClientLogin
             {
                 Token = fb.token,
                 Id = fb.userID
             });
+            if (token.token == null)
+                return "";
+            fb.token = token.token;
             return repository.RegisterFbUser(fb, photo);
         }
 
@@ -86,7 +89,10 @@ namespace BusinessLayer.UserService
                 Facebook.User converted = sr.Deserialize<Facebook.User>(jsondata);
 
                 if (converted.picture.data.url != null)
+                {
+                    converted.picture.data.url = converted.picture.data.url.Replace("p50x50", "p100x100");
                     return converted.picture.data.url;
+                }
                 else
                     return null;
             }
@@ -96,31 +102,36 @@ namespace BusinessLayer.UserService
             }
         }
 
-        public string getLongLiveToken(FbClientLogin fb)
+        public FbNameToken getLongLiveToken(FbClientLogin fb)
         {
-
             string url = string.Format("https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id={0}&client_secret={1}&fb_exchange_token={2}",
                 "211779402536909", "25bd7558cf8e380a176243ef5a96128e", fb.Token);
             Uri targetUserUri = new Uri(url);
-            HttpWebRequest user = (HttpWebRequest)HttpWebRequest.Create(targetUserUri);
+            try { 
+                HttpWebRequest user = (HttpWebRequest)HttpWebRequest.Create(targetUserUri);
 
-            // Read the returned JSON object response
-            StreamReader userInfo = new StreamReader(user.GetResponse().GetResponseStream());
-            string jsonResponse = string.Empty;
-            jsonResponse = userInfo.ReadToEnd();
+                // Read the returned JSON object response
+                StreamReader userInfo = new StreamReader(user.GetResponse().GetResponseStream());
+                string jsonResponse = string.Empty;
+                jsonResponse = userInfo.ReadToEnd();
 
-            string strStart = "=";
-            string strEnd = "&expires";
-            string token = getBetween(jsonResponse, strStart, strEnd);
+                string strStart = "=";
+                string strEnd = "&expires";
+                string token = getBetween(jsonResponse, strStart, strEnd);
 
-            bool newToken = repository.SaveNewToken(fb.Id, token);
+                FbNameToken newToken = repository.SaveNewToken(fb.Id, token);
 
-            if (!newToken)
-            {
-                token = "";
+                if (newToken == null)
+                {
+                    newToken = new FbNameToken();
+                    newToken.token = token;
+                }
+                return newToken;
             }
-
-            return token;
+            catch
+            {
+                return null;
+            }
         }
 
         public static string getBetween(string strSource, string strStart, string strEnd)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,19 +9,19 @@ namespace Data.ReceivePostData
 {
     public class UserRegistrationPost
     {
+        [Required]
+        [StringLength(25, MinimumLength = 4)]
         public string UserName { get; set; }
 
+        [Required]
+        [StringLength(30, MinimumLength = 6)]
         public string PasswordHash { get; set; }
 
+        [Required]
+        [StringLength(4, MinimumLength = 1)]
         public string CountryCode { get; set; }
 
-        public bool checkIfValiable()
-        {
-            if (UserName.Length > 25 || UserName.Length < 3)
-                return false;
-            if (PasswordHash.Length > 30 || PasswordHash.Length < 6)
-                return false;
-            return true;
-        }
+        [StringLength(4, MinimumLength = 1)]
+        public string State { get; set; }
     }
 }

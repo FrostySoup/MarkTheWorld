@@ -61,6 +61,7 @@
     <Compile Include="DotService\DotServices.cs" />
     <Compile Include="DotService\DotServices.Functions.cs" />
     <Compile Include="DotService\IDotService.cs" />
+    <Compile Include="Filters\ValidateViewModelAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestGenerator\GenerateObjects.cs" />
     <Compile Include="UserService\FbUserService.cs" />

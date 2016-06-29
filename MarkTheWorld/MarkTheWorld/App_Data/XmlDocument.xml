@@ -563,17 +563,12 @@
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.UserWithFBController.PostLogin(Data.DataHelpers.FbClientLogin)">
             <summary>
-            Nurodo ar duotas username yra jau užimtas/ true-neužimtas, false-užimtas
+            Facebook prisijungimas, newUser -> true - naujas vartotojas, false - senas vartotojas
             </summary>
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.UserWithFBController.PostRegister(Data.DataHelpers.Facebook.FbRegisterClient)">
             <summary>
-            Nurodo ar duotas username yra jau užimtas/ true-neužimtas, false-užimtas
-            </summary>
-        </member>
-        <member name="M:MarkTheWorld.Controllers.Api.UserWithFBController.GetLogin">
-            <summary>
-            Nurodo ar duotas username yra jau užimtas/ true-neužimtas, false-užimtas
+            Užregistruoja naują facebook vartotoją sistemoje
             </summary>
         </member>
     </members>

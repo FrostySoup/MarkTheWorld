@@ -58,30 +58,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataHelpers\Facebook\FbNameToken.cs" />
+    <Compile Include="DataHelpers\Map\ReceivedData\DotFromViewModel.cs" />
     <Compile Include="DataHelpers\User\AppUser.cs" />
-    <Compile Include="DataHelpers\Facebook\FbRegisterClient.cs" />
+    <Compile Include="DataHelpers\Facebook\ReceivedData\FbRegisterClient.cs" />
     <Compile Include="DataHelpers\Facebook\FbServerLogin.cs" />
     <Compile Include="DataHelpers\Facebook\FBUser.cs" />
     <Compile Include="DataHelpers\Profile\Country.cs" />
-    <Compile Include="DataHelpers\Profile\Colors.cs" />
-    <Compile Include="DataHelpers\Map\CornersCorrds.cs" />
+    <Compile Include="DataHelpers\Profile\ReceivedData\Colors.cs" />
+    <Compile Include="DataHelpers\Map\ReceivedData\CornersCorrds.cs" />
     <Compile Include="DataHelpers\Profile\CountriesList.cs" />
     <Compile Include="DataHelpers\Profile\DailyReward.cs" />
     <Compile Include="DataHelpers\Map\DotSearch.cs" />
     <Compile Include="DataHelpers\ErrorStatus.cs" />
-    <Compile Include="DataHelpers\Facebook\FbClientLogin.cs" />
+    <Compile Include="DataHelpers\Facebook\ReceivedData\FbClientLogin.cs" />
     <Compile Include="DataHelpers\Map\GroupedDots.cs" />
     <Compile Include="DataHelpers\Map\GroupedSquares.cs" />
     <Compile Include="DataHelpers\Map\Markers.cs" />
     <Compile Include="DataHelpers\Map\SquaresWithInfo.cs" />
     <Compile Include="DataHelpers\Profile\UserProfile.cs" />
-    <Compile Include="DataHelpers\Map\DotFromViewModel.cs" />
     <Compile Include="Database\Dot.cs" />
     <Compile Include="DataHelpers\Map\GroupedDotsForApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuadTrees\QuadTree.cs" />
-    <Compile Include="ReceivePostData\UserDailyReward.cs" />
-    <Compile Include="ReceivePostData\UserRegistrationPost.cs" />
+    <Compile Include="DataHelpers\User\UserDailyReward.cs" />
+    <Compile Include="DataHelpers\User\ReceivedData\UserRegistrationPost.cs" />
     <Compile Include="DataHelpers\Map\Square.cs" />
     <Compile Include="DataHelpers\StringValueAttribute.cs" />
     <Compile Include="DataHelpers\User\TopUser.cs" />
@@ -95,7 +96,9 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ReceivePostData\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

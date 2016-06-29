@@ -1,4 +1,5 @@
-﻿using BusinessLayer.UserService;
+﻿using BusinessLayer.Filters;
+using BusinessLayer.UserService;
 using Data.DataHelpers;
 using Data.DataHelpers.Facebook;
 using System;
@@ -12,7 +13,7 @@ using System.Web.Http.Description;
 namespace MarkTheWorld.Controllers.Api
 {
     [RoutePrefix("api")]
-
+    [ValidateViewModel]
     public class UserWithFBController : ApiController
     {
         private readonly FbUserService userService;
@@ -22,7 +23,7 @@ namespace MarkTheWorld.Controllers.Api
             userService = new FbUserService();
         }
         /// <summary>
-        /// Nurodo ar duotas username yra jau užimtas/ true-neužimtas, false-užimtas
+        /// Facebook prisijungimas, newUser -> true - naujas vartotojas, false - senas vartotojas
         /// </summary>
         [ResponseType(typeof(FbServerLogin))]
         [Route("fblogin")]
@@ -37,10 +38,11 @@ namespace MarkTheWorld.Controllers.Api
                 user.longToken = "";
                 if (!newUser)
                 {
-                    user.longToken = userService.getLongLiveToken(fb);
-                    if (user.longToken.Equals(""))
+                    FbNameToken tokenAndName = userService.getLongLiveToken(fb);
+                    user.username = tokenAndName.username;
+                    user.longToken = tokenAndName.token;
+                    if (user.longToken == null)
                         return Content(HttpStatusCode.NoContent, "Couldn't receive user token");
-                    user.username = userService.getUserParamesDb(user.longToken);
                 }
                 else
                 {
@@ -48,16 +50,17 @@ namespace MarkTheWorld.Controllers.Api
                     user.username = userTemp.username;
                     user.country = userTemp.country;
                 }
+                
                 return Ok(user);
             }
             catch (Exception)
             {
-                return Content(HttpStatusCode.BadRequest, "Invalid object sent");
+                return Content(HttpStatusCode.BadRequest, "Unkown error");
             }
         }
 
         /// <summary>
-        /// Nurodo ar duotas username yra jau užimtas/ true-neužimtas, false-užimtas
+        /// Užregistruoja naują facebook vartotoją sistemoje
         /// </summary>
         [ResponseType(typeof(string))]
         [Route("fbRegister")]
@@ -66,41 +69,17 @@ namespace MarkTheWorld.Controllers.Api
         {
             try
             {
-                if (fb != null)
-                {
-                    string token = userService.register(fb);
-                    if (token == null)
-                        return Content(HttpStatusCode.BadRequest, "User already registered");
-                    if (token.Equals("Invalid token"))
-                        return Content(HttpStatusCode.BadRequest, "Invalid token");
-                    return Ok(token);
-                }
-                else
-                {
-                    return Content(HttpStatusCode.BadRequest, "Invalid object sent");
-                }
-            }
-            catch (Exception)
-            {
-                return Content(HttpStatusCode.BadRequest, "Invalid object sent");
-            }
-        }
+                string token = userService.register(fb);
+                if (token == null)
+                    return Content(HttpStatusCode.BadRequest, "User already registered");
+                if (token.Equals("Invalid token") || token.Equals(""))
+                    return Content(HttpStatusCode.BadRequest, "Invalid token");
+                return Ok(token);
 
-        /// <summary>
-        /// Nurodo ar duotas username yra jau užimtas/ true-neužimtas, false-užimtas
-        /// </summary>
-        [ResponseType(typeof(bool))]
-        [Route("check")]
-        [HttpGet]
-        public IHttpActionResult GetLogin()
-        {
-            try
-            {
-                return Ok(true);
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown error");
             }
         }
 
