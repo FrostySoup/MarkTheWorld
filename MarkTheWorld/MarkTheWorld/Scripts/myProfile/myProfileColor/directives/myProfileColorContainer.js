@@ -20,7 +20,7 @@
                         vm.color.blue = +rgb[2];
                     });
                 };
-
+                //TODO: [preRelease] gets called everytime user opens the dialog
                 //TODO: [polishing] probably not the greatest way to wait for DOM ready
                 $timeout(function () { myProfileColorService.createDOM($element, vm.updateColor); });
             }
