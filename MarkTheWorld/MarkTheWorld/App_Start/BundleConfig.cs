@@ -32,8 +32,10 @@ namespace MarkTheWorld
                 .Include("~/Scripts/app.js")
                 .Include("~/Scripts/appController.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/style.css"));
+            bundles.Add(new StyleBundle("~/Content/css")
+                .Include("~/Content/styles/css/app.css")
+                .Include("~/Content/styles/css/libs/ng-img-crop.css")
+                );
         }
     }
 }

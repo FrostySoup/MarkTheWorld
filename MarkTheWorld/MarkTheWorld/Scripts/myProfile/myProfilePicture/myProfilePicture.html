@@ -1,4 +1,4 @@
-<md-dialog class="dialog-my-profile">
+<md-dialog style="height: 500px" class="dialog-my-profile">
     <md-toolbar>
         <div class="md-toolbar-tools">
             <h2>My Profile Picture</h2>
@@ -8,14 +8,21 @@
             </md-button>
         </div>
     </md-toolbar>
-    <md-dialog-content>
-        <form name="form">
-            Single Image with validations
-            <div class="button" ngf-select ng-model="vm.file" name="file" ngf-pattern="'image/*'"
-                 ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100">Select</div>
-            <button type="submit" ng-click="vm.submit()">submit</button>
-        </form>
-
-        <img ngf-src="vm.file" />
+    <md-dialog-content layout="column" flex>
+        <md-list>
+            <md-list-item>
+                <p>Selected file: {{ vm.file.name }}</p>
+                <md-button class="md-secondary" ngf-select ng-model="vm.file" name="file" ngf-capture="'camera'" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="100" ngf-min-height="100">Browse</md-button>
+            </md-list-item>
+        </md-list>
+        <div flex layout="column">
+            <img-crop image="vm.file | ngfDataUrl" area-min-size="100" result-image="vm.croppedFileUrl"></img-crop>
+        </div>
     </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="vm.cancel()" class="md-secondary">Cancel</md-button>
+        <form style="margin: 0;" name="form">
+            <md-button ng-disabled="vm.requesting" ng-click="vm.submit(vm.croppedFileUrl)" class="md-secondary">Save</md-button>
+        </form>
+    </md-dialog-actions>
 </md-dialog>

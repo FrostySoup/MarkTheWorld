@@ -2,5 +2,5 @@
 (function () {
     'use strict';
 
-    angular.module('myProfilePicture', ['ngFileUpload']);
+    angular.module('myProfilePicture', ['ngFileUpload', 'ngImgCrop']);
 }());
