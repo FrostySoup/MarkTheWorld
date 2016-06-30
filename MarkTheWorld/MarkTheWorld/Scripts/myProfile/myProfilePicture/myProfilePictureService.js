@@ -12,6 +12,7 @@
                     templateUrl: 'scripts/myProfile/myProfilePicture/myProfilePicture.html',
                     parent: angular.element(document.body),
                     fullscreen: true,
+                    focusOnOpen: false,
                     clickOutsideToClose: true
                 });
             }

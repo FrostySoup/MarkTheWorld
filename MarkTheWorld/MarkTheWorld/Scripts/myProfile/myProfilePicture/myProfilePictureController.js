@@ -2,25 +2,30 @@
 (function () {
     'use strict';
 
-    function myProfilePictureController($scope, $mdDialog, Upload) {
+    function myProfilePictureController($scope, $mdDialog, Upload, userService) {
         var vm = this;
+
+        vm.croppedFileUrl = '';
 
         vm.cancel = function () {
             $mdDialog.cancel();
         };
 
         // upload later on form submit or something similar
-        vm.submit = function() {
-            if ($scope.form.file.$valid && vm.file) {
-                vm.upload(vm.file);
-            }
+        vm.submit = function () {
+            //if ($scope.form.file.$valid && vm.file) {
+                vm.upload();
+            //}
         };
 
         // upload on file select or drop
-        vm.upload = function (file) {
+        vm.upload = function () {
             Upload.upload({
                 url: 'api/uploading',
-                data: {file: file, 'username': $scope.username}
+                data: {
+                    file: Upload.dataUrltoBlob(vm.croppedFileUrl, vm.file.name),
+                    token: userService.token
+                }
             }).then(function (resp) {
                 console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
             }, function (resp) {
