@@ -13,15 +13,13 @@ namespace BusinessLayer.PhotoUpload
 {
     public static class ImageThumb
     {
-        public static Photo toThumb(string path)
+        public static string toThumb(string path)
         {
             string root = HttpRuntime.AppDomainAppPath;
 
-            Photo photo = new Photo();
-
             if (root == null)
-                return photo;
-
+                return "";
+            path = path.Replace("\\", "/");
             root = root.Replace("\\", "/");
             int end = 0;
 
@@ -34,13 +32,11 @@ namespace BusinessLayer.PhotoUpload
             Image thumb = image.GetThumbnailImage(100, 100, () => false, IntPtr.Zero);
             var thumbUrl = photoUrl.Replace("OriginalPhoto", "thumb");
             thumb.Save(thumbUrl);
-            photo.Name = "name";
-            photo.Path = thumbUrl;
-            photo.Size = new FileInfo(thumbUrl).Length;
             thumb.Dispose();
             image.Dispose();
             System.IO.File.Delete(photoUrl);
-            return photo;
+            string imageName = thumbUrl.Substring(thumbUrl.LastIndexOf('/') + 1);
+            return imageName;
         }
     }
 }
