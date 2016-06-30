@@ -37,8 +37,8 @@ namespace MarkTheWorld.Controllers.Api
                     {
                         var info = new FileInfo(i.LocalFileName);
                         var path = rootUrl + "/" + folderName + "/" + info.Name;
-                        ImageThumb.toThumb(path);
-                        return new Photo(info.Name, path, info.Length / 1024);
+                        Photo photo = ImageThumb.toThumb(path);
+                        return photo;
                     });
                     return fileInfo;
                 });
