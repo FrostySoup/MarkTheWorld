@@ -42,7 +42,6 @@
         vm.handleSelectedFile = function (fileForm) {
             vm.pending = true;
             if (fileForm.$valid && vm.file) {
-                //TODO: [preRelease] preloader needed
                 Upload.base64DataUrl(vm.file).then(
                     function (url) {
                         vm.cropFileSource = url;
@@ -76,13 +75,15 @@
                 function (image) {
                     if (image.width < 100 || image.height < 100) {
                         vm.fileError = 'Image dimensions should be at least 100x100';
+                        vm.webImageUrl = '';
                         return;
                     }
                     vm.cropFileSource = image.src;
                     vm.fileSelected = true;
                 },
                 function () {
-                    vm.fileError = 'Couldn\'t load your image';
+                    vm.fileError = 'Couldn\'t load the image';
+                    vm.webImageUrl = '';
                 }
             ).finally(function () {
                 vm.pending = false;
@@ -99,10 +100,12 @@
 
         vm.upload = function () {
             vm.pending = true;
+            var fileName = vm.file ? vm.file.name.substr(0, vm.file.name.lastIndexOf(".")) + ".png" : 'web-image.png';
+
             Upload.upload({
                 url: 'api/uploading',
                 data: {
-                    file: Upload.dataUrltoBlob(vm.croppedFileUrl, vm.file.name),
+                    file: Upload.dataUrltoBlob(vm.croppedFileUrl, fileName),
                     token: userService.token
                 }
             }).then(
