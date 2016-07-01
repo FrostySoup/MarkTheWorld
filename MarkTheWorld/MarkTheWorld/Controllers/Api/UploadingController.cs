@@ -1,4 +1,6 @@
 ﻿using BusinessLayer.PhotoUpload;
+using BusinessLayer.UserService;
+using Data;
 using Data.DataHelpers.User;
 using System;
 using System.Collections.Generic;
@@ -6,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -17,32 +20,37 @@ namespace MarkTheWorld.Controllers.Api
     {
         [Route("uploading")]
         [HttpPost]
-        public Task<IEnumerable<Photo>> Post()
+        public async Task<HttpResponseMessage> Post()
         {
-            var folderName = "Content/uploadedImages";
+            var folderName = "Content/img/avatars";
             var PATH = HttpContext.Current.Server.MapPath("~/" + folderName);
             var rootUrl = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.AbsolutePath, String.Empty);
             if (Request.Content.IsMimeMultipartContent())
             {
                 var streamProvider = new CustomMultipartFormDataStreamProvider(PATH);
+                var result = await Request.Content.ReadAsMultipartAsync(streamProvider);               
+                var path = result.FileData[0].LocalFileName;
 
-                var task = Request.Content.ReadAsMultipartAsync(streamProvider).ContinueWith<IEnumerable<Photo>>(t =>
+                UserService userServ = new UserService();
+                string userToken = result.FormData["token"];
+                User user = userServ.getOneByToken(userToken);
+                if (user == null)
                 {
-                    if (t.IsFaulted || t.IsCanceled)
+                    System.IO.File.Delete(path);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "User not found!");
+                }
+                else {
+                    string userOldPhotoPath = user.profilePicture;                    
+                    string imageName = ImageThumb.toThumb(path);
+                    user.profilePicture = imageName;
+                    userServ.editApplicationUser(user);
+                    if (!userOldPhotoPath.Contains("facebook") && !userOldPhotoPath.Contains("default"))
                     {
-                        throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                        try { System.IO.File.Delete(PATH + "\\" + userOldPhotoPath); }
+                        catch { /*failed to remove image*/}
                     }
-
-                    var fileInfo = streamProvider.FileData.Select(i =>
-                    {
-                        var info = new FileInfo(i.LocalFileName);
-                        var path = rootUrl + "/" + folderName + "/" + info.Name;
-                        ImageThumb.toThumb(path);
-                        return new Photo(info.Name, path, info.Length / 1024);
-                    });
-                    return fileInfo;
-                });
-                return task;
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, "success!");
             }
             else
             {

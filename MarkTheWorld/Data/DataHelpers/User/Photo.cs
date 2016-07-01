@@ -18,5 +18,6 @@ namespace Data.DataHelpers.User
             Path = p;
             Size = s;
         }
+        public Photo() { }
     }
 }
