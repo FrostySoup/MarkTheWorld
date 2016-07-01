@@ -2,9 +2,8 @@
 (function () {
     'use strict';
 
-    function AppController(accountService, myProfilePictureService) {
+    function AppController(accountService) {
         accountService.appStartUpLoginCheck();
-        myProfilePictureService.showDialog()
     }
 
     angular.module('markTheWorld').controller('AppController', AppController);

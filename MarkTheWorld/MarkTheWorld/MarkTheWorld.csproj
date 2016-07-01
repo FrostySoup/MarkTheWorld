@@ -504,9 +504,12 @@
     <Content Include="Content\img\icons\ic_account_circle_white_48px.svg" />
     <Content Include="Content\img\icons\ic_add_location_48px.svg" />
     <Content Include="Content\img\icons\ic_announcement.svg" />
+    <Content Include="Content\img\icons\ic_chevron_right.svg" />
     <Content Include="Content\img\icons\ic_clear_white_36px.svg" />
     <Content Include="Content\img\icons\ic_clear_white_48px.svg" />
     <Content Include="Content\img\icons\ic_face_black_24px.svg" />
+    <Content Include="Content\img\icons\ic_file_upload.svg" />
+    <Content Include="Content\img\icons\ic_info_outline.svg" />
     <Content Include="Content\img\icons\ic_lock_open.svg" />
     <Content Include="Content\img\icons\ic_monetization_on.svg" />
     <Content Include="Content\img\icons\ic_more_vert_white_48px.svg" />

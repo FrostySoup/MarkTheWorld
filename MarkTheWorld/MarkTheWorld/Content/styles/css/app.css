@@ -210,6 +210,107 @@ md-slider.md-default-theme.md-green .md-track.md-track-fill, md-slider.md-green 
     background-color: rgb(85, 231, 62);
 }
 
+/* common dialogs */
+.panel-error {
+    position: relative;
+    width: 100%;
+    background: rgb(255,204,188);
+    color: #3E2723;
+    margin-top: 8px;
+    height: 42px;
+    line-height: 42px;
+    border-radius: 3px;
+    font-size: 13px;
+    opacity: 1;
+    white-space: nowrap;
+}
+
+.panel-error md-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 6px;
+    color: rgb(130, 98, 89);
+}
+
+.panel-error .panel-error-text {
+    padding-left: 44px;
+    text-align: left;
+    overflow: hidden;
+}
+
+.panel-error.ng-hide-add, .panel-error.ng-hide-remove {
+  transition: opacity linear 0.3s;
+}
+
+.panel-error.ng-hide {
+  opacity: 0;
+}
+
+/* my picture dialog */
+md-dialog.dialog-my-profile-picture .profile-picture-first-step p {
+    text-align: center;
+    opacity: 0.5;
+    margin: 20px 0 16px;
+}
+
+md-dialog.dialog-my-profile-picture {
+    max-width: 450px;
+}
+
+md-dialog.dialog-my-profile-picture .md-button.md-icon-button {
+    padding: 8px;
+}
+
+md-dialog.dialog-my-profile-picture .profile-picture-first-step md-input-container {
+    margin: 0;
+    padding-bottom: 0;
+}
+
+md-dialog.dialog-my-profile-picture .profile-picture-first-step .image-url {
+    width: 100%;
+}
+
+md-dialog.dialog-my-profile-picture .profile-picture-first-step {
+    margin: 0;
+}
+
+md-dialog.dialog-my-profile-picture .profile-picture-first-step .button-image-url {
+    margin: 0;
+    min-width: 32px;
+    border: 1px solid rgb(63, 81, 181);
+}
+
+md-dialog.dialog-my-profile-picture .profile-picture-first-step .button-image-url[disabled] {
+    border: 1px solid rgba(158,158,158,0.2);
+}
+
+md-dialog.dialog-my-profile-picture .profile-picture-first-step .button-browse {
+    min-height: 42px;
+    padding-right: 11px;
+    margin: 0;
+}
+
+md-dialog.dialog-my-profile-picture .md-errors-spacer {
+    display: none;
+}
+
+md-dialog.dialog-my-profile-picture .profile-picture-first-step .panel-error {
+    width: 100%;
+    margin: 0;
+}
+
+md-dialog.dialog-my-profile-picture .profile-picture-second-step p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-right: 32px;
+}
+
+md-dialog.dialog-my-profile-picture .profile-picture-second-step md-divider {
+    margin-bottom: 8px;
+}
+
 /* my profile dialog */
 @media (min-width: 960px) {
     md-dialog.dialog-my-profile {
@@ -354,44 +455,6 @@ md-input-container.md-input-invalid md-select .md-select-value {
     overflow: hidden;
     transition: all .3s cubic-bezier(.55,0,.55,.2);
     padding-top: 5px;
-}
-
-.login-form .panel-error {
-    position: relative;
-    width: 100%;
-    background: rgb(255,204,188);
-    color: #3E2723;
-    margin-top: 8px;
-    height: 42px;
-    line-height: 42px;
-    border-radius: 3px;
-    font-size: 13px;
-    opacity: 1;
-    white-space: nowrap;
-}
-
-.login-form .panel-error md-icon {
-    position: absolute;
-    height: 32px;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 6px;
-    width: 32px;
-    color: #FF5722;
-}
-
-.login-form .panel-error .panel-error-text {
-    padding-left: 44px;
-    text-align: left;
-    overflow: hidden;
-}
-
-.login-form .panel-error.ng-hide-add, .login-form .panel-error.ng-hide-remove {
-  transition: opacity linear 0.3s;
-}
-
-.login-form .panel-error.ng-hide {
-  opacity: 0;
 }
 
 /*----------------------------*/

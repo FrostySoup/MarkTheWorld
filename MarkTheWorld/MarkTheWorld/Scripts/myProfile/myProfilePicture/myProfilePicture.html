@@ -1,28 +1,65 @@
-<md-dialog style="height: 500px" class="dialog-my-profile">
+<md-dialog style="height: 500px" class="dialog-my-profile dialog-my-profile-picture">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h2>My Profile Picture</h2>
+            <h2>Upload New Profile Picture</h2>
             <span flex></span>
             <md-button class="md-icon-button" ng-click="vm.cancel()" aria-label="Close dialog" title="Close dialog">
                 <md-icon md-svg-src="~/../Content/img/icons/ic_clear_white_48px.svg" class="s32"></md-icon>
             </md-button>
         </div>
+        <md-progress-linear class="register-form-loader md-warn" ng-show="vm.pending" md-mode="indeterminate"></md-progress-linear>
     </md-toolbar>
-    <md-dialog-content layout="column" flex>
-        <md-list>
-            <md-list-item>
-                <p>Selected file: {{ vm.file.name }}</p>
-                <md-button class="md-secondary" ngf-select ng-model="vm.file" name="file" ngf-capture="'camera'" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="100" ngf-min-height="100">Browse</md-button>
-            </md-list-item>
-        </md-list>
-        <div flex layout="column">
-            <img-crop image="vm.file | ngfDataUrl" area-min-size="100" result-image="vm.croppedFileUrl"></img-crop>
+
+    <md-dialog-content ng-switch on="vm.fileSelected" layout="column" flex>
+        <div ng-switch-when="true" layout="column" flex class="profile-picture-second-step">
+            <md-list>
+                <md-list-item>
+                    <p>{{ vm.file.name || vm.webImageUrl }}</p>
+                    <md-icon ng-click="vm.cancelImageCrop()" class="md-secondary md-hue-3" md-svg-src="~/../Content/img/icons/ic_delete.svg"
+                             aria-label="Cancel picture crop"></md-icon>
+                </md-list-item>
+            </md-list>
+            <md-divider></md-divider>
+            <div flex layout="column">
+                <img-crop image="vm.cropFileSource" area-min-size="100" result-image="vm.croppedFileUrl"></img-crop>
+            </div>
         </div>
+        <form name="vm.pictureUploadForm" ng-submit="vm.handleEnteredURL(vm.webImageUrl)" novalidate ng-switch-default layout-padding layout="column" flex
+              class="profile-picture-first-step">
+            <div flex="25"></div>
+            <div flex="50" layout="column" layout-align="center center">
+                <md-button class="md-raised md-primary button-browse" ngf-select="vm.handleSelectedFile(vm.pictureUploadForm.file)" ng-model="vm.file"
+                           name="file" ngf-capture="'camera'"
+                           ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="100"
+                           ngf-min-height="100">
+                    <md-icon md-svg-src="~/../Content/img/icons/ic_file_upload.svg"></md-icon>
+                    Browse
+                </md-button>
+                <p class="md-subhead">or...</p>
+
+                <div layout layout-align="center end" class="image-url">
+                    <md-input-container flex class="md-block">
+                        <label>Enter web image URL</label>
+                        <input name="image_url" id="image_url" ng-model="vm.webImageUrl" http-prefix>
+                    </md-input-container>
+                    <md-button type="submit" class="md-primary button-image-url" ng-disabled="!vm.webImageUrl" aria-label="Submit URL">
+                        <md-icon md-svg-src="~/../Content/img/icons/ic_chevron_right.svg"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+            <div flex="25" layout="column">
+                <!--TODO: [preRelease] Longer error doesn't fit-->
+                <div ng-show="vm.fileError" class="panel-error">
+                    <md-icon md-svg-src="~/../Content/img/icons/ic_info_outline.svg" class="s32"
+                             aria-label="Error"></md-icon>
+                    <div class="panel-error-text">{{ vm.fileError }}</div>
+                </div>
+            </div>
+        </form>
     </md-dialog-content>
+
     <md-dialog-actions>
         <md-button ng-click="vm.cancel()" class="md-secondary">Cancel</md-button>
-        <form style="margin: 0;" name="form">
-            <md-button ng-disabled="vm.requesting" ng-click="vm.submit(vm.croppedFileUrl)" class="md-secondary">Save</md-button>
-        </form>
+        <md-button ng-disabled="vm.pending" ng-click="vm.upload()" ng-if="vm.fileSelected" class="md-secondary">Save</md-button>
     </md-dialog-actions>
 </md-dialog>

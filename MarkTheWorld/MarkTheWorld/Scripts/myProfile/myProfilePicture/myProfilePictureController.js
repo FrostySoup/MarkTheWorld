@@ -1,38 +1,120 @@
 /*global angular */
+/*global Image */
 (function () {
     'use strict';
 
-    function myProfilePictureController($scope, $mdDialog, Upload, userService) {
+    function myProfilePictureController($mdDialog, Upload, userService, $q) {
         var vm = this;
 
         vm.croppedFileUrl = '';
+        vm.cropFileSource = '';
 
         vm.cancel = function () {
             $mdDialog.cancel();
         };
 
-        // upload later on form submit or something similar
-        vm.submit = function () {
-            //if ($scope.form.file.$valid && vm.file) {
-                vm.upload();
-            //}
+        vm.fileSelected = false;
+        vm.file = null;
+        vm.webImageUrl = '';
+        vm.fileError = '';
+        vm.pending = false;
+
+        function formImage(src) {
+            var deferred = $q.defer();
+            var image = new Image();
+
+            if (src.substring(0, 4).toLowerCase() === 'http') {
+                image.crossOrigin = 'anonymous';
+            }
+
+            image.onerror = function () {
+                deferred.reject();
+            };
+
+            image.onload = function () {
+                deferred.resolve(image);
+            };
+            image.src = src;
+
+            return deferred.promise;
+        }
+
+        vm.handleSelectedFile = function (fileForm) {
+            vm.pending = true;
+            if (fileForm.$valid && vm.file) {
+                //TODO: [preRelease] preloader needed
+                Upload.base64DataUrl(vm.file).then(
+                    function (url) {
+                        vm.cropFileSource = url;
+                        vm.fileSelected = true;
+                        vm.pending = false;
+                    }
+                );
+            } else {
+                var error = Object.keys(fileForm.$error)[0];
+                switch (error) {
+                case 'pattern':
+                    vm.fileError = 'Only images are allowed';
+                    break;
+                case 'minHeight':
+                    vm.fileError = 'Image dimensions should be at least 100x100';
+                    break;
+                case 'minWidth':
+                    vm.fileError = 'Image dimensions should be at least 100x100';
+                    break;
+                case 'maxSize':
+                    vm.fileError = 'Image should be smaller than 20MB';
+                    break;
+                }
+            }
         };
 
-        // upload on file select or drop
+        vm.handleEnteredURL = function (url) {
+            vm.pending = true;
+
+            formImage(url).then(
+                function (image) {
+                    if (image.width < 100 || image.height < 100) {
+                        vm.fileError = 'Image dimensions should be at least 100x100';
+                        return;
+                    }
+                    vm.cropFileSource = image.src;
+                    vm.fileSelected = true;
+                },
+                function () {
+                    vm.fileError = 'Couldn\'t load your image';
+                }
+            ).finally(function () {
+                vm.pending = false;
+            });
+        };
+
+        vm.cancelImageCrop = function () {
+            vm.fileSelected = false;
+            vm.file = null;
+            vm.webImageUrl = '';
+            vm.fileError = '';
+            vm.pending = false;
+        };
+
         vm.upload = function () {
+            vm.pending = true;
             Upload.upload({
                 url: 'api/uploading',
                 data: {
                     file: Upload.dataUrltoBlob(vm.croppedFileUrl, vm.file.name),
                     token: userService.token
                 }
-            }).then(function (resp) {
-                console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
-            }, function (resp) {
-                console.log('Error status: ' + resp.status);
-            }, function (evt) {
-                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            }).then(
+                function (success) {
+                    console.log(success);
+                    vm.cancel();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            ).finally(function () {
+                vm.pending = false;
             });
         };
     }
