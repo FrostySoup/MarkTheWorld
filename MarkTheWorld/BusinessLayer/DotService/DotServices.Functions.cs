@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using Data;
 using Data.DataHelpers;
 using CSharpQuadTree;
+using Data.DataHelpers.Map;
 
 namespace BusinessLayer.DotService
 {
     public partial class DotServices
     {
+        private Repository.UserRepository.UserRepository userRepository = new Repository.UserRepository.UserRepository();
+
         public List<SquaresWithInfo> groupSquares(List<Square> squares)
         {
             List<SquaresWithInfo> grSquares = new List<SquaresWithInfo>();
+
+
             foreach (Square square in squares)
             {
+                Color squareColor = userRepository.GetColors(square.username);
                 bool foundMatch = false;
                 foreach (SquaresWithInfo grSquare in grSquares)
                 {
@@ -25,7 +31,7 @@ namespace BusinessLayer.DotService
                 }
                 if (!foundMatch)
                 {
-                    grSquares.Add(new SquaresWithInfo(square.neX, square.neY, square.swX, square.swY, new Markers(square.date, square.username, square.message)));
+                    grSquares.Add(new SquaresWithInfo(square.neX, square.neY, square.swX, square.swY, new Markers(square.date, square.username, square.message), squareColor));
                 }
             }
 
@@ -123,8 +129,7 @@ namespace BusinessLayer.DotService
             }
 
             return groupedDotsApi;
-        }
-
+        }      
 
         public int maxConnection(Dot[] squares)
         {

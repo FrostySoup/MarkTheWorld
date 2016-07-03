@@ -30,26 +30,32 @@ namespace BusinessLayer.TestGenerator
             return repository.AddUser(user);
         }
 
-        public UserRegistrationModel generateDots(string token)
+        public void generateDots(string token, int numberToGen)
         {
             DotFromViewModel dot = new DotFromViewModel();
             Random rnd = new Random();
             dot.lat = rnd.NextDouble() * 90;
             dot.lng = rnd.NextDouble() * (180 - 0) + 0;
             dot.message = "Same message";
-            dot.username = token;
-            return repositoryDot.AddOne(dot);
+            dot.token = token;
+            repositoryDot.AddOne(dot);
+            for (int i = 1; i < numberToGen; i++)
+            {
+                DotFromViewModel dotNew = new DotFromViewModel();
+                dotNew.lat = dot.lat + rnd.NextDouble() * 0.03;
+                dotNew.lng = dot.lng + rnd.NextDouble() * 0.03;
+                dotNew.message = "Same message";
+                dotNew.token = token;
+                repositoryDot.AddOne(dotNew);
+            }
         }
 
         public void GenerateXUsersWithYDots (int xUsers, int yDots){
             UserRegistrationModel users;
             for (int i = 0; i < xUsers; i++)
             {
-                users = generateUser();
-                for (int j = 0; j < yDots; j++)
-                {
-                    generateDots(users.Token);
-                }
+                users = generateUser();             
+                generateDots(users.Token, yDots);
             }
 
         }

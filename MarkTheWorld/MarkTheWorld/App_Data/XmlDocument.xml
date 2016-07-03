@@ -491,6 +491,11 @@
             Gražina visus kvadratėlius tam tikroje teritorijoje
             </summary>
         </member>
+        <member name="M:MarkTheWorld.Controllers.Api.DotController.CheckDot(Data.DotFromViewModel)">
+            <summary>
+            Patikrina ar galima patalpinti tašką
+            </summary>
+        </member>
         <member name="M:MarkTheWorld.Controllers.Api.DotController.GetUserSquaresByName(Data.DataHelpers.CornersCorrds,System.String)">
             <summary>
             Gražina tik tam tikro žaidėjo kvadratėlius, pagal prisijungimo vardą

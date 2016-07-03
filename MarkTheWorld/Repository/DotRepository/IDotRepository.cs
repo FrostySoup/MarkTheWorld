@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.DataHelpers.Map;
 
 namespace Repository.DotRepository
 {
@@ -15,5 +16,6 @@ namespace Repository.DotRepository
         List<Dot> GetAllUserByName(CornersCorrds corners, string name);
         UserRegistrationModel AddGroup(List<DotFromViewModel> dot);
         Dot[] GetAllDotsByName(string name);
+        CanMarkSpot CheckDotResults(DotFromViewModel dot);
     }
 }

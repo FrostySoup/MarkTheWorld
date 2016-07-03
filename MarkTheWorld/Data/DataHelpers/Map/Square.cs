@@ -15,9 +15,10 @@ namespace Data
         public double swY { get; set; }
         public string message { get; set; }
         public string username { get; set; }
+        public Color colors { get; set; }
         public DateTime date { get; set; }
 
-        public Square(string messag, DateTime data, CornersCorrds corners, string usernam)
+        public Square(string messag, DateTime data, CornersCorrds corners, string usernam, Color color)
         {
             neX = corners.neX;
             neY = corners.neY;
@@ -26,6 +27,7 @@ namespace Data
             message = messag;
             date = data;
             username = usernam;
+            colors = color;
         }
     }
 }
