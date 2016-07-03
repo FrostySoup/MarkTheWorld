@@ -1,7 +1,9 @@
 ﻿using BusinessLayer.DotService;
 using BusinessLayer.Filters;
+using BusinessLayer.UserService;
 using Data;
 using Data.DataHelpers;
+using Data.DataHelpers.Map;
 using MarkTheWorld.Models;
 using System;
 using System.Collections.Generic;
@@ -47,29 +49,50 @@ namespace MarkTheWorld.Controllers.Api
         /// <summary>
         /// Gražina visus kvadratėlius tam tikroje teritorijoje
         /// </summary>
-        [ResponseType(typeof(SquaresWithInfo))]
+        [ResponseType(typeof(Square))]
         [Route("squares")]
         [HttpPost]
         public IHttpActionResult GetSquares(CornersCorrds corners)
         {
             List<Dot> dots = new List<Dot>();
             List<Square> squares = new List<Square>();
-            List<SquaresWithInfo> squaresSend = new List<SquaresWithInfo>();
+            UserService userService = new UserService();
             try
             {
                 dots = dotService.getAllDots(corners);
                 foreach (Dot dot in dots)
                 {
-                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon), dot.username));                    
+                    Color squareColor = userService.getUserColors(dot.username);
+                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon), dot.username, squareColor));                    
                 }
-                squaresSend = dotService.groupSquares(squares);
             }
             catch (Exception)
             {
                 return InternalServerError();
             }
 
-            return Ok(squaresSend);
+            return Ok(squares);
+        }
+
+        /// <summary>
+        /// Patikrina ar galima patalpinti tašką
+        /// </summary>
+        [ResponseType(typeof(CanMarkSpot))]
+        [Route("dotCheck")]
+        [HttpPost]
+        public IHttpActionResult CheckDot(DotFromViewModel dot)
+        {
+            CanMarkSpot results = new CanMarkSpot();
+            try
+            {
+                results = dotService.CheckDot(dot);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok(results);
         }
 
         /// <summary>
@@ -84,12 +107,14 @@ namespace MarkTheWorld.Controllers.Api
                 return Content(HttpStatusCode.BadRequest, "Wrong username length");
             List<Dot> gameDots = new List<Dot>();
             List<Square> squares = new List<Square>();
+            UserService userService = new UserService();
             try
             {
+                Color squareColor = userService.getUserColors(name);
                 gameDots = dotService.getUserDotsName(corners, name);
                 foreach (Dot dot in gameDots)
-                {
-                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon), name));
+                {                  
+                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon), name, squareColor));
                 }
             }
             catch (Exception)
@@ -149,6 +174,8 @@ namespace MarkTheWorld.Controllers.Api
 
             return Ok(groupedDots);
         }
+
+
 
         /// <summary>
         /// Gražina visus apjungtus taškus tam tikroje teritorijoje

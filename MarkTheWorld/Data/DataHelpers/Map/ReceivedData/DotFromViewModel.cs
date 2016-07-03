@@ -21,8 +21,7 @@ namespace Data
 
         public DateTime date { get; set; }
 
-        [StringLength(25, MinimumLength = 4)]
         [Required]
-        public string username { get; set; }
+        public string token { get; set; }
     }
 }

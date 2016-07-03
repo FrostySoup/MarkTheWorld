@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Data;
 using Data.DataHelpers;
 using CSharpQuadTree;
+using Data.DataHelpers.Map;
 
 namespace BusinessLayer.DotService
 {
@@ -55,6 +56,11 @@ namespace BusinessLayer.DotService
         public Dot[] getAlluserDots(string name)
         {
             return repositoryDot.GetAllDotsByName(name);
+        }
+
+        public CanMarkSpot CheckDot(DotFromViewModel dot)
+        {
+            return repositoryDot.CheckDotResults(dot);
         }
 
     }

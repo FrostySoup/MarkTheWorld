@@ -52,6 +52,7 @@
     <Compile Include="DataForIndex\DotForIndex.cs" />
     <Compile Include="DocumentStoreHolder.cs" />
     <Compile Include="DotRepository\DotRepository.cs" />
+    <Compile Include="DotRepository\DotRepository.Functions.cs" />
     <Compile Include="DotRepository\IDotRepository.cs" />
     <Compile Include="GenericRepository\GenericRepository.cs" />
     <Compile Include="GenericRepository\IGenericRepository.cs" />

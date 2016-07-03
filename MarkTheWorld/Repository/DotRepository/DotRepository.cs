@@ -11,10 +11,11 @@ using Repository.DataForIndex;
 using System.Collections;
 using Raven.Abstractions.Data;
 using Raven.Client.Document;
+using Data.DataHelpers.Map;
 
 namespace Repository.DotRepository
 {
-    public class DotRepository : GenericRepository.GenericRepository, IDotRepository
+    public partial class DotRepository : GenericRepository.GenericRepository, IDotRepository
     {
         public UserRegistrationModel AddGroup(List<DotFromViewModel> dot)
         {
@@ -30,7 +31,6 @@ namespace Repository.DotRepository
             }
         }
 
-
         public UserRegistrationModel AddOne(DotFromViewModel dot)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
@@ -40,7 +40,7 @@ namespace Repository.DotRepository
                 reg.message = 0;
                 try
                 {                 
-                    User user = session.Query<User>().First(x => x.Token.Equals(dot.username));
+                    User user = session.Query<User>().First(x => x.Token.Equals(dot.token));
                     if (user.Id == null)
                         return reg;
                     Dot dotCopy = new Dot();
@@ -58,7 +58,7 @@ namespace Repository.DotRepository
                             int lat2 = (int)(dot.lat * 100);
                             if (lat == lat2)
                             {
-                                if (dot.username.Equals(dots[i].username))
+                                if (user.UserName.Equals(dots[i].username))
                                 {
                                     reg.message = message2.AlreadyMarked;
                                     return reg;
@@ -231,5 +231,53 @@ namespace Repository.DotRepository
             }
         }
 
+        public CanMarkSpot CheckDotResults(DotFromViewModel dot)
+        {            
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                CanMarkSpot reg = new CanMarkSpot();
+                reg.CanMark = false;
+                try
+                {
+                    User user = session.Query<User>().First(x => x.Token.Equals(dot.token));
+                    if (user.Id == null)
+                        return reg;
+                    Dot dotCopy = new Dot();
+                    Dot[] dots = session
+                        .Query<Dot>()
+                        .Take(5000)
+                        .ToArray();
+                    for (int i = 0; i < dots.Length; i++)
+                    {
+                        int lng = (int)(dots[i].lon * 100);
+                        int lng2 = (int)(dot.lng * 100);
+                        if (lng == lng2)
+                        {
+                            int lat = (int)(dots[i].lat * 100);
+                            int lat2 = (int)(dot.lat * 100);
+                            if (lat == lat2)
+                            {
+                                if (user.UserName.Equals(dots[i].username))
+                                {
+                                    return reg;
+                                }
+                                else
+                                {
+                                    reg.MarkedUsername = dots[i].username;
+                                    reg.CanMark = true;
+                                    return reg;
+                                }
+                            }
+                        }
+                    }
+                    reg.CanMark = true;
+                    return reg;
+                }
+                catch
+                {
+                    return reg;
+                }
+            }      
+         }
     }
 }
