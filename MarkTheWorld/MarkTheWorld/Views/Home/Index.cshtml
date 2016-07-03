@@ -18,17 +18,18 @@
     <game-map id="map" flex></game-map>
 </div>
 
-<div layout>
-    <md-button ng-show="user.isLogged" class="md-fab-settings md-fab md-fab-bottom-right" aria-label="Map settings" ng-click="mapSettings($event)">
+    <md-button class="md-fab md-fab-bottom-right md-fab-claim-spot" aria-label="Mark your spot" ng-click="temp($event)">
+        <md-icon md-svg-src="~/Content/img/icons/ic_add_location_48px.svg" class="s36" aria-label="Mark your spot"></md-icon>
+    </md-button>
+
+@*<div layout>
+    <md-button class="md-fab-settings md-fab md-fab-bottom-right" aria-label="Map settings" ng-click="mapSettings($event)">
         <md-tooltip md-direction="top">
             Leave a mark!
         </md-tooltip>
         <md-icon md-svg-src="~/Content/img/icons/ic_settings_48px.svg" class="s36" aria-label="Map settings"></md-icon>
     </md-button>
-    <md-button ng-show="user.isLogged" class="md-fab md-fab-bottom-right" aria-label="Mark your spot" ng-click="addNewSquare($event)">
-        <md-icon md-svg-src="~/Content/img/icons/ic_add_location_48px.svg" class="s36" aria-label="Mark your spot"></md-icon>
-    </md-button>
-</div>
+</div>*@
 
 <side-nav action="rightSideNavAction"></side-nav>
 

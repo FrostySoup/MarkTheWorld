@@ -28,7 +28,7 @@ namespace MarkTheWorld
                 .IncludeDirectory("~/Scripts/myProfile/myProfileColor/directives", "*.js")
                 .IncludeDirectory("~/Scripts/map", "*.js")
                 .IncludeDirectory("~/Scripts/map/services", "*.js")
-                .IncludeDirectory("~/Scripts/newSquare", "*.js")
+                .IncludeDirectory("~/Scripts/claimSpot", "*.js")
                 .IncludeDirectory("~/Scripts/account", "*.js")
                 .Include("~/Scripts/app.js")
                 .Include("~/Scripts/appController.js"));

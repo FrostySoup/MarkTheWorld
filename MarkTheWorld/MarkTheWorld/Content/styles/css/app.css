@@ -57,8 +57,33 @@ md-dialog .md-button.md-icon-button {
 
 /* buttons */
 
-.md-button.md-fab {
-    background-color: #757575;
+@-webkit-keyframes jump {
+    0% {
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
+    }
+    100% {
+        -webkit-transform: translateY(-4px);
+                transform: translateY(-4px);
+    }
+}
+
+@keyframes jump {
+    0% {
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
+    }
+    100% {
+        -webkit-transform: translateY(-4px);
+                transform: translateY(-4px);
+    }
+}
+
+.md-fab-claim-spot md-icon {
+    -webkit-animation: jump 0.3s ease-out 0s infinite;
+            animation: jump 0.3s ease-out 0s infinite;
+    -webkit-animation-direction: alternate;
+            animation-direction: alternate;
 }
 
 .md-button.md-fab.md-fab-settings {
@@ -97,6 +122,42 @@ md-dialog .md-toolbar-tools {
 md-dialog .md-subheader {
     padding: 0;
     background-color: rgb(245,245,245);
+}
+
+.panel-error {
+    position: relative;
+    width: 100%;
+    background: rgb(255,204,188);
+    color: #3E2723;
+    margin-top: 8px;
+    height: 42px;
+    line-height: 42px;
+    border-radius: 3px;
+    font-size: 13px;
+    opacity: 1;
+    white-space: nowrap;
+}
+
+.panel-error md-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 6px;
+    color: rgb(130, 98, 89);
+}
+
+.panel-error .panel-error-text {
+    padding-left: 44px;
+    text-align: left;
+    overflow: hidden;
+}
+
+.panel-error.ng-hide-add, .panel-error.ng-hide-remove {
+  transition: opacity linear 0.3s;
+}
+
+.panel-error.ng-hide {
+  opacity: 0;
 }
 
 /* my color dialog */
@@ -210,43 +271,6 @@ md-slider.md-default-theme.md-green .md-track.md-track-fill, md-slider.md-green 
     background-color: rgb(85, 231, 62);
 }
 
-/* common dialogs */
-.panel-error {
-    position: relative;
-    width: 100%;
-    background: rgb(255,204,188);
-    color: #3E2723;
-    margin-top: 8px;
-    height: 42px;
-    line-height: 42px;
-    border-radius: 3px;
-    font-size: 13px;
-    opacity: 1;
-    white-space: nowrap;
-}
-
-.panel-error md-icon {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 6px;
-    color: rgb(130, 98, 89);
-}
-
-.panel-error .panel-error-text {
-    padding-left: 44px;
-    text-align: left;
-    overflow: hidden;
-}
-
-.panel-error.ng-hide-add, .panel-error.ng-hide-remove {
-  transition: opacity linear 0.3s;
-}
-
-.panel-error.ng-hide {
-  opacity: 0;
-}
-
 /* my picture dialog */
 md-dialog.dialog-my-profile-picture .profile-picture-first-step p {
     text-align: center;
@@ -256,6 +280,7 @@ md-dialog.dialog-my-profile-picture .profile-picture-first-step p {
 
 md-dialog.dialog-my-profile-picture {
     max-width: 450px;
+    height: 500px;
 }
 
 md-dialog.dialog-my-profile-picture .md-button.md-icon-button {

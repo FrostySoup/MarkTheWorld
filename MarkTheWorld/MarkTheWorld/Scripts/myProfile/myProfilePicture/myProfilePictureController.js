@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    function myProfilePictureController($mdDialog, Upload, userService, $q) {
+    function myProfilePictureController($mdDialog, Upload, userService, myProfilePictureService) {
         var vm = this;
 
         vm.croppedFileUrl = '';
@@ -18,26 +18,6 @@
         vm.webImageUrl = '';
         vm.fileError = '';
         vm.pending = false;
-
-        function formImage(src) {
-            var deferred = $q.defer();
-            var image = new Image();
-
-            if (src.substring(0, 4).toLowerCase() === 'http') {
-                image.crossOrigin = 'anonymous';
-            }
-
-            image.onerror = function () {
-                deferred.reject();
-            };
-
-            image.onload = function () {
-                deferred.resolve(image);
-            };
-            image.src = src;
-
-            return deferred.promise;
-        }
 
         vm.handleSelectedFile = function (fileForm) {
             vm.pending = true;
@@ -71,7 +51,7 @@
         vm.handleEnteredURL = function (url) {
             vm.pending = true;
 
-            formImage(url).then(
+            myProfilePictureService.formImage(url).then(
                 function (image) {
                     if (image.width < 100 || image.height < 100) {
                         vm.fileError = 'Image dimensions should be at least 100x100';

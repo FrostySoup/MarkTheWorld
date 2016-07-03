@@ -26,11 +26,11 @@
                     )
                 });
                 //TODO: should use accountService
-                rec.addListener('click', function(e) {
-                    if (localStorage.getItem('onlyMyOwnMarks') !== 'true') {
-                        squareDetailsService.showDialog(value.markers);
-                    }
-                });
+                //rec.addListener('click', function(e) {
+                //    if (localStorage.getItem('onlyMyOwnMarks') !== 'true') {
+                //        squareDetailsService.showDialog(value.markers);
+                //    }
+                //});
                 rectanglesArray.push(rec);
             });
         }
@@ -42,8 +42,8 @@
                 var arrayLength = rectanglesArray.length;
 
                 for (var i = 0; i < arrayLength; i++) {
-                    if (Math.round(rectanglesArray[i].getBounds().R.j * 1000) / 1000 === Math.round(element.neY * 1000) / 1000 &&
-                        Math.round(rectanglesArray[i].getBounds().j.j * 1000) / 1000 === Math.round(element.swX * 1000) / 1000) {
+                    if (Math.round(rectanglesArray[i].getBounds().f.b * 1000) / 1000 === Math.round(element.neY * 1000) / 1000 &&
+                        Math.round(rectanglesArray[i].getBounds().b.b * 1000) / 1000 === Math.round(element.swX * 1000) / 1000) {
                         return true;
                     }
                 }
@@ -66,8 +66,8 @@
             function newRecsContains(element) {
                 var arrayLength = newRecs.length;
                 for (var i = 0; i < arrayLength; i++) {
-                    if (Math.round(element.getBounds().R.j * 1000) / 1000 === Math.round(newRecs[i].neY * 1000) / 1000 &&
-                        Math.round(element.getBounds().j.j * 1000) / 1000 === Math.round(newRecs[i].swX * 1000) / 1000) {
+                    if (Math.round(element.getBounds().f.b * 1000) / 1000 === Math.round(newRecs[i].neY * 1000) / 1000 &&
+                        Math.round(element.getBounds().b.b * 1000) / 1000 === Math.round(newRecs[i].swX * 1000) / 1000) {
                         return true;
                     }
                 }

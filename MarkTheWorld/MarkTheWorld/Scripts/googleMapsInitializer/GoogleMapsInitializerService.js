@@ -8,7 +8,7 @@
         var mapsDefer = $q.defer();
 
         // Google's url for async maps initialization accepting callback function
-        var asyncUrl = 'https://maps.googleapis.com/maps/api/js?callback=';
+        var asyncUrl = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAwKyMjlVSL0h2mO89h_t0rkVSUlSzoyVw&callback=';
 
         // async loader
         var asyncLoad = function (asyncUrl, callbackName) {

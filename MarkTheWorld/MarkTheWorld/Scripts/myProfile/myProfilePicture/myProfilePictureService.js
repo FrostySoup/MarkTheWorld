@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    function myProfilePictureService($mdDialog) {
+    function myProfilePictureService($mdDialog, $q) {
 
         return {
             showDialog: function () {
@@ -15,6 +15,26 @@
                     focusOnOpen: false,
                     clickOutsideToClose: true
                 });
+            },
+
+            formImage: function(src) {
+                var deferred = $q.defer();
+                var image = new Image();
+
+                if (src.substring(0, 4).toLowerCase() === 'http') {
+                    image.crossOrigin = 'anonymous';
+                }
+
+                image.onerror = function () {
+                    deferred.reject();
+                };
+
+                image.onload = function () {
+                    deferred.resolve(image);
+                };
+                image.src = src;
+
+                return deferred.promise;
             }
         };
     }

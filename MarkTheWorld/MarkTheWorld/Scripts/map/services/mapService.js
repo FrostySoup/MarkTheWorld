@@ -7,6 +7,48 @@
         var clickedPosition = {};
         var map;
 
+        function init(m) {
+            map = m;
+            var marker;
+
+            // only for testing purposes
+            map.addListener('click', function(e) {
+                if (marker) {
+                    marker.setMap(null);
+                }
+                marker = new google.maps.Marker({
+                    map: map,
+                    animation: google.maps.Animation.DROP,
+                    draggable: true,
+                    position: { lat: e.latLng.lat(), lng: e.latLng.lng() }
+                });
+
+                marker.addListener('dragend', function (e) {
+                    clickedPosition = { 'lat' : e.latLng.lat(), 'lng' : e.latLng.lng() };
+                    console.log('position:', 'lat:' + marker.position.lat(), 'lng:' + marker.position.lng(), 'zoom:', map.getZoom());
+                });
+
+                clickedPosition = { 'lat' : e.latLng.lat(), 'lng' : e.latLng.lng() };
+                console.log('position:', 'lat:' + marker.position.lat(), 'lng:' + marker.position.lng(), 'zoom:', map.getZoom());
+            });
+
+            map.addListener('center_changed', debounce(updateMap, 250));
+            map.addListener('zoom_changed', debounce(updateMap, 250));
+
+            setCurrentPosition();
+        }
+
+        function setCurrentPosition() {
+            var req = {
+                method: 'POST',
+                url: 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBBmLH1JbsTdr8CeJYP8icbQqcymux3ffA'
+            };
+
+            $http(req).then(function(data) {
+                map.setCenter({lat: data.data.location.lat, lng: data.data.location.lng});
+            });
+        }
+
         function debounce(func, wait, immediate) {
             var timeout;
             return function () {
@@ -44,7 +86,6 @@
                     "swY": map.getBounds().getSouthWest().lat()
                 }
             ).then(function (response) {
-                    console.log(response, 'response');
                     markersService.handleMarkers(response.data, map);
                 }, function (response) {
                     console.log('Error: ', response.statusText);
@@ -53,9 +94,6 @@
 
         function drawRectangles() {
             var url = '/api/Squares';
-            if (accountService.getMapUser() !== null && accountService.getMapUser() !== 'all') {
-                url = '/api/Squares/' + accountService.getMapUser();
-            }
 
             $http.post(
                 url, {
@@ -67,6 +105,7 @@
             ).then(function (response) {
                     rectanglesService.handleRecs(response.data, map);
                 }, function (response) {
+                    //TODO: [preRelease] There should be a toast in such cases
                     console.log('Error: ', response.statusText);
                 });
         }
@@ -80,13 +119,7 @@
               return clickedPosition;
             },
 
-            setClickedPosition: function(clickedP) {
-                clickedPosition = clickedP;
-            },
-
-            setMap: function(m) {
-                map = m;
-            }
+            init: init
         };
     }
 

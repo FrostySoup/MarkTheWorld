@@ -1,0 +1,45 @@
+<md-dialog class="dialog-my-profile">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Claim Spot</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.cancel()" aria-label="Close dialog" title="Close dialog">
+                <md-icon md-svg-src="~/../Content/img/icons/ic_clear_white_48px.svg" class="s32"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div layout-padding>
+            <p style="margin: 0;background: #f7f7f7;
+    border-radius: 3px;
+    text-align: center;">You are about to be the first to claim this spot!</p>
+        </div>
+        <div layout layout-align="center center">
+            <md-button style="padding: 3px 14px;" class="md-raised md-primary">
+                Claim Now
+            </md-button>
+        </div>
+
+        <md-subheader>Optional details</md-subheader>
+        <md-divider></md-divider>
+
+        <div layout-padding>
+            <div>
+                <md-input-container style="margin-bottom: 0;" flex class="md-block">
+                    <label>Message</label>
+                    <input md-maxlength="150" name="image_url" id="image_url" ng-model="vm.webImageUrl" http-prefix>
+                </md-input-container>
+            </div>
+
+            <div layout layout-align="center center">
+                <md-button style="padding: 3px 14px;" class="md-raised md-primary">
+                    Add Picture
+                </md-button>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="vm.cancel()" class="md-secondary">Cancel</md-button>
+        <!--<md-button class="md-secondary">Claim</md-button>-->
+    </md-dialog-actions>
+</md-dialog>
