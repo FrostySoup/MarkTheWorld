@@ -11,7 +11,7 @@ namespace Repository.DotRepository
 {
     public interface IDotRepository
     {
-        UserRegistrationModel AddOne(DotFromViewModel dot);
+        UserRegistrationModel AddOne(DotFromViewModel dot, string name, string path);
         List<Dot> GetAll(CornersCorrds corners);
         List<Dot> GetAllUserByName(CornersCorrds corners, string name);
         UserRegistrationModel AddGroup(List<DotFromViewModel> dot);

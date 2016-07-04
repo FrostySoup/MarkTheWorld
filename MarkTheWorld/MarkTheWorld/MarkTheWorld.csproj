@@ -599,6 +599,7 @@
   <ItemGroup>
     <Folder Include="App_Data\Flags\" />
     <Folder Include="App_Data\ProfilePictures\" />
+    <Folder Include="Content\img\dotLocation\" />
     <Folder Include="Content\uploadedImages\" />
     <Folder Include="Scripts\libs\" />
   </ItemGroup>

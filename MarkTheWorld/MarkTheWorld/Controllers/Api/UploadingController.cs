@@ -1,4 +1,5 @@
-﻿using BusinessLayer.PhotoUpload;
+﻿using BusinessLayer.DotService;
+using BusinessLayer.PhotoUpload;
 using BusinessLayer.UserService;
 using Data;
 using Data.DataHelpers.User;
@@ -18,6 +19,9 @@ namespace MarkTheWorld.Controllers.Api
     [RoutePrefix("api")]
     public class UploadingController : ApiController
     {
+
+        private readonly DotServices dotService;
+
         [Route("uploading")]
         [HttpPost]
         public async Task<HttpResponseMessage> Post()
@@ -57,5 +61,47 @@ namespace MarkTheWorld.Controllers.Api
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotAcceptable, "This request is not properly formatted"));
             }
         }
+
+        [Route("dotPhoto")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> PhotoPost()
+        {
+            var folderName = "Content/img/dotLocation";
+            var PATH = HttpContext.Current.Server.MapPath("~/" + folderName);
+            var rootUrl = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.AbsolutePath, String.Empty);
+            if (Request.Content.IsMimeMultipartContent())
+            {
+                var streamProvider = new CustomMultipartFormDataStreamProvider(PATH);
+                var result = await Request.Content.ReadAsMultipartAsync(streamProvider);
+                var path = result.FileData[0].LocalFileName;
+
+                UserService userServ = new UserService();
+                string userToken = result.FormData["token"];
+                string message = result.FormData["message"];
+                double lon = 0;
+                double lat = 0;
+                try {
+                    lon = Convert.ToDouble(result.FormData["lon"]);
+                    lat = Convert.ToDouble(result.FormData["lat"]);
+                }
+                catch
+                {
+                    throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotAcceptable, "Lon and lat is not properly formatted"));
+                }
+                string imageName = ImageThumb.toThumb(path);
+
+                DotFromViewModel dot = new DotFromViewModel(lon, lat, message, userToken);
+
+                dotService.storeDot(dot, imageName);
+                return Request.CreateResponse(HttpStatusCode.OK, "success!");
+            }
+            else
+            {
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotAcceptable, "This request is not properly formatted"));
+            }
+        }
+
     }
+
+
 }

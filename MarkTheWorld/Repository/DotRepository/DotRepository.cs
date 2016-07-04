@@ -31,7 +31,7 @@ namespace Repository.DotRepository
             }
         }
 
-        public UserRegistrationModel AddOne(DotFromViewModel dot)
+        public UserRegistrationModel AddOne(DotFromViewModel dot, string imagePath, string path)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
@@ -60,6 +60,8 @@ namespace Repository.DotRepository
                             {
                                 if (user.UserName.Equals(dots[i].username))
                                 {
+                                    if (imagePath != null)
+                                        System.IO.File.Delete(imagePath);
                                     reg.message = message2.AlreadyMarked;
                                     return reg;
                                 }
@@ -82,6 +84,8 @@ namespace Repository.DotRepository
                                     if (user.eventsHistory.Count > 10)
                                         user.eventsHistory.RemoveRange(10, 1);
 
+                                    removeOld(dots[i].photoPath, path);
+                                    dots[i].photoPath = cutImageName(imagePath);
                                     dots[i].date = DateTime.Today;
                                     dots[i].message = dot.message;
                                     dots[i].lat = dot.lat;
@@ -111,6 +115,7 @@ namespace Repository.DotRepository
                     dotCopy.lat = dot.lat;
                     dotCopy.lon = dot.lng;
                     dotCopy.username = user.UserName;
+                    dotCopy.photoPath = cutImageName(imagePath);
                     session.Store(dotCopy);
                     if (user.dotsId == null)
                         user.dotsId = new List<string>();
