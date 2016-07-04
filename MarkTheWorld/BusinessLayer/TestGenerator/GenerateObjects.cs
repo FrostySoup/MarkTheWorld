@@ -38,7 +38,7 @@ namespace BusinessLayer.TestGenerator
             dot.lng = rnd.NextDouble() * (180 - 0) + 0;
             dot.message = "Same message";
             dot.token = token;
-            repositoryDot.AddOne(dot);
+            repositoryDot.AddOne(dot, null, null);
             for (int i = 1; i < numberToGen; i++)
             {
                 DotFromViewModel dotNew = new DotFromViewModel();
@@ -46,7 +46,7 @@ namespace BusinessLayer.TestGenerator
                 dotNew.lng = dot.lng + rnd.NextDouble() * 0.03;
                 dotNew.message = "Same message";
                 dotNew.token = token;
-                repositoryDot.AddOne(dotNew);
+                repositoryDot.AddOne(dotNew, null, null);
             }
         }
 

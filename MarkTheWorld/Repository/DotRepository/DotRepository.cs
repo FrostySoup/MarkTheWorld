@@ -85,12 +85,7 @@ namespace Repository.DotRepository
                                         user.eventsHistory.RemoveRange(10, 1);
 
                                     removeOld(dots[i].photoPath, path);
-                                    dots[i].photoPath = cutImageName(imagePath);
-                                    dots[i].date = DateTime.Today;
-                                    dots[i].message = dot.message;
-                                    dots[i].lat = dot.lat;
-                                    dots[i].lon = dot.lng;
-                                    dots[i].username = user.UserName;
+                                    dots[i] = changeDotValues(DateTime.Today, dot.message, dot.lng, dot.lat, user.UserName, cutImageName(imagePath), dots[i]);                                   
                                     user.dotsId.Add(dots[i].Id);
                                     session.Store(dots[i]);
                                     session.Store(userChanged);
@@ -110,12 +105,7 @@ namespace Repository.DotRepository
                     if (user.eventsHistory.Count > 10)
                         user.eventsHistory.RemoveRange(10, 1);
 
-                    dotCopy.date = DateTime.Today;
-                    dotCopy.message = dot.message;
-                    dotCopy.lat = dot.lat;
-                    dotCopy.lon = dot.lng;
-                    dotCopy.username = user.UserName;
-                    dotCopy.photoPath = cutImageName(imagePath);
+                    dotCopy = changeDotValues(DateTime.Today, dot.message, dot.lng, dot.lat, user.UserName, cutImageName(imagePath));                    
                     session.Store(dotCopy);
                     if (user.dotsId == null)
                         user.dotsId = new List<string>();
@@ -131,7 +121,7 @@ namespace Repository.DotRepository
                     return reg;
                 }
             }
-        }
+        }       
 
         public List<Dot> GetAll(CornersCorrds corners)
         {
