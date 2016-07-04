@@ -115,6 +115,13 @@ md-menu-item>.md-button span.icon-button-facebook {
 
 /* dialogs */
 
+@media (min-width: 960px) {
+    md-dialog {
+        height: 500px;
+        min-width: 450px;
+    }
+}
+
 md-dialog .md-toolbar-tools {
     padding-right: 8px;
 }
@@ -160,69 +167,95 @@ md-dialog .md-subheader {
   opacity: 0;
 }
 
-/* my color dialog */
+/* claim spot dialog */
 
-@media (min-width: 960px) {
-    md-dialog.dialog-my-profile.dialog-my-profile-color {
-        min-width: 450px;
-        height: 500px;
-    }
+md-dialog.dialog-claim-spot md-dialog-content .panel-info.layout-row {
+    margin: 8px;
+    padding: 8px;
+    background: rgb(245,245,245);
+    border-radius: 3px;
 }
 
-md-dialog.dialog-my-profile.dialog-my-profile-color profile-color-container .md-tab,
-md-dialog.dialog-my-profile.dialog-my-profile-color profile-color-container md-pagination-wrapper,
-md-dialog.dialog-my-profile.dialog-my-profile-color profile-color-container md-tabs-canvas,
-md-dialog.dialog-my-profile.dialog-my-profile-color profile-color-container md-tabs-wrapper {
+md-dialog.dialog-claim-spot .panel-info md-icon {
+    margin: 0;
+    opacity: 0.5;
+}
+
+md-dialog.dialog-claim-spot .panel-info p{
+    margin: 0;
+    margin-left: 8px;
+}
+
+md-dialog.dialog-claim-spot .button-claim {
+    padding: 3px 14px;
+    margin: 16px 0 24px;
+}
+
+md-dialog.dialog-claim-spot .button-add-picture {
+    margin: 0;
+}
+
+md-dialog.dialog-claim-spot md-input-container {
+    margin-bottom: 0;
+    margin-top: 8px;
+}
+
+/* my color dialog */
+
+md-dialog.dialog-my-profile-color profile-color-container .md-tab,
+md-dialog.dialog-my-profile-color profile-color-container md-pagination-wrapper,
+md-dialog.dialog-my-profile-color profile-color-container md-tabs-canvas,
+md-dialog.dialog-my-profile-color profile-color-container md-tabs-wrapper {
     max-height: 36px;
     height: 36px;
 }
 
-md-dialog.dialog-my-profile.dialog-my-profile-color profile-color-container .md-tab {
+md-dialog.dialog-my-profile-color profile-color-container .md-tab {
     padding: 8px 24px;
 }
 
-md-dialog.dialog-my-profile.dialog-my-profile-color profile-color-container md-tabs[md-align-tabs=bottom] {
+md-dialog.dialog-my-profile-color profile-color-container md-tabs[md-align-tabs=bottom] {
     padding-bottom: 36px;
 }
 
-md-dialog.dialog-my-profile.dialog-my-profile-color profile-color-container md-tabs[md-align-tabs=bottom] md-tabs-content-wrapper {
+md-dialog.dialog-my-profile-color profile-color-container md-tabs[md-align-tabs=bottom] md-tabs-content-wrapper {
     bottom: 36px;
 }
 
-md-dialog.dialog-my-profile.dialog-my-profile-color md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
+md-dialog.dialog-my-profile-color md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
     min-height: 258px;
 }
 
-md-dialog.dialog-my-profile.dialog-my-profile-color .md-tab md-icon {
+md-dialog.dialog-my-profile-color .md-tab md-icon {
     margin-top: -2px;
 }
 
-md-dialog.dialog-my-profile.dialog-my-profile-color .md-tab:last-of-type md-icon {
+md-dialog.dialog-my-profile-color .md-tab:last-of-type md-icon {
     margin-right: 2px;
 }
 
-md-dialog.dialog-my-profile.dialog-my-profile-color .md-tab {
+md-dialog.dialog-my-profile-color .md-tab {
     background: rgba(0,0,0,.075);
 }
 
-md-dialog.dialog-my-profile.dialog-my-profile-color .md-tab.md-active {
+md-dialog.dialog-my-profile-color .md-tab.md-active {
     background: #fff;
 }
 
-md-dialog.dialog-my-profile .color-picker-palette {
+md-dialog.dialog-my-profile-color .color-picker-palette {
     padding: 4px;
 }
 
-md-dialog.dialog-my-profile .color-picker-palette .color-cell {
+md-dialog.dialog-my-profile-color .color-picker-palette .color-cell {
     cursor: pointer;
     height: 25px;
 }
 
-md-dialog.dialog-my-profile .color-sliders-container {
+md-dialog.dialog-my-profile-color .color-sliders-container {
     padding-right: 16px;
 }
 
-md-dialog.dialog-my-profile .color-sliders-container input {
+md-dialog.dialog-my-profile-color .color-sliders-container input {
     padding: 2px 2px 1px;
     border-width: 0 0 1px;
     line-height: 26px;
@@ -237,14 +270,14 @@ md-dialog.dialog-my-profile .color-sliders-container input {
     -webkit-appearance: none;
 }
 
-md-dialog.dialog-my-profile .color-sliders-container input:focus {
+md-dialog.dialog-my-profile-color .color-sliders-container input:focus {
     outline: 0;
     border-color: rgb(63, 81, 181);
     border-width: 0 0 2px;
     padding-bottom: 0;
 }
 
-md-dialog.dialog-my-profile .color-sliders-container .color-sliders-name {
+md-dialog.dialog-my-profile-color .color-sliders-container .color-sliders-name {
     min-width: 70px;
 }
 
@@ -339,7 +372,7 @@ md-dialog.dialog-my-profile-picture .profile-picture-second-step md-divider {
 /* my profile dialog */
 @media (min-width: 960px) {
     md-dialog.dialog-my-profile {
-        min-width: 450px;
+        height: initial;
     }
 }
 
@@ -368,7 +401,7 @@ md-dialog.dialog-my-profile .user-avatar img {
     height: 100px;
 }
 
-md-dialog.dialog-my-profile .user-color {
+md-dialog.dialog-my-profile .user-color, md-dialog.dialog-my-profile-color .user-color {
     width: 28px;
     height: 28px;
     margin-left: 2px;

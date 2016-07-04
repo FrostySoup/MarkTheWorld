@@ -502,8 +502,11 @@
     <Content Include="Content\img\icons\ic_account_box_white_48px.svg" />
     <Content Include="Content\img\icons\ic_account_circle_white_36px.svg" />
     <Content Include="Content\img\icons\ic_account_circle_white_48px.svg" />
-    <Content Include="Content\img\icons\ic_add_location_48px.svg" />
+    <Content Include="Content\img\icons\ic_add_a_photo.svg" />
+    <Content Include="Content\img\icons\ic_add_location.svg" />
     <Content Include="Content\img\icons\ic_announcement.svg" />
+    <Content Include="Content\img\icons\ic_cancel.svg" />
+    <Content Include="Content\img\icons\ic_check_circle.svg" />
     <Content Include="Content\img\icons\ic_chevron_right.svg" />
     <Content Include="Content\img\icons\ic_clear_white_36px.svg" />
     <Content Include="Content\img\icons\ic_clear_white_48px.svg" />
