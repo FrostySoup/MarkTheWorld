@@ -7,6 +7,7 @@ using Data;
 using Data.DataHelpers;
 using CSharpQuadTree;
 using Data.DataHelpers.Map;
+using System.Web;
 
 namespace BusinessLayer.DotService
 {
@@ -31,9 +32,10 @@ namespace BusinessLayer.DotService
             return repositoryDot.GetAll(corners);
         }
 
-        public UserRegistrationModel storeDot(DotFromViewModel dot)
+        public UserRegistrationModel storeDot(DotFromViewModel dot, string image = null)
         {
-            return repositoryDot.AddOne(dot);
+            string path = HttpRuntime.AppDomainAppPath;
+            return repositoryDot.AddOne(dot, image, path);
         }
 
         public List<CornersCorrds> getAllSquares(List<Dot> dots)

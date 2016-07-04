@@ -23,5 +23,16 @@ namespace Data
 
         [Required]
         public string token { get; set; }
+
+        public DotFromViewModel() { }
+
+        public DotFromViewModel(double la, double ln, string messag, string toke)
+        {
+            lat = la;
+            lng = ln;
+            message = messag;
+            date = DateTime.Now;
+            token = toke;
+        }
     }
 }
