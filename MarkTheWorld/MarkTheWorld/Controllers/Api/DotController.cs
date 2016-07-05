@@ -40,7 +40,12 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
+            }
+
+            if (dotCopy.message != message2.Success)
+            {
+                return Content(HttpStatusCode.BadRequest, dotCopy.messageToString());
             }
 
             return Ok(dotCopy);
@@ -68,7 +73,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
 
             return Ok(squares);
@@ -89,7 +94,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
 
             return Ok(results);
@@ -119,7 +124,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
 
             return Ok(squares);
@@ -142,7 +147,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
 
             return Ok(points);
@@ -169,7 +174,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
 
             return Ok(groupedDots);
@@ -196,7 +201,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
 
             return Ok(groupedDots);

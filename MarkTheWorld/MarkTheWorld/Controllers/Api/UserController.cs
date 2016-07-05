@@ -77,7 +77,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
 
             return Ok(true);
@@ -102,7 +102,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
 
             return Ok(user);
@@ -129,7 +129,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
 
             return Ok(userCopy);
@@ -154,7 +154,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
 
             return Ok(canTake);
@@ -178,7 +178,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
 
             return Ok(events);
@@ -200,7 +200,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
         }
 
@@ -220,7 +220,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
         }
 
@@ -240,7 +240,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
         }
 
@@ -259,7 +259,7 @@ namespace MarkTheWorld.Controllers.Api
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
 
             return Ok(users);
