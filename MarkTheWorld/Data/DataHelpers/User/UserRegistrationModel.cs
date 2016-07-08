@@ -16,6 +16,25 @@ namespace Data
         public message2 message { get; set; }
         public string Token { get; set; }
         public string username { get; set; }
+        public string messageToString()
+        {
+            string result = "";
+            if (message == message2.NoUserName)
+            {
+                result = "No account found with that username";
+            }else if (message == message2.AlreadyMarked)
+            {
+                result = "You have already marked this spot";
+            }
+            else if(message == message2.PassMissmatch)
+            {
+                result = "The password you entered is incorrect";
+            }else if (message == message2.UserNameTaken)
+            {
+                result = "This username is already taken";
+            }
+            return result;
+        }
     }
 
     public enum message2
@@ -39,6 +58,6 @@ namespace Data
 
         [Display(Name = "You have already marked this spot")]
         [StringValue("You have already marked this spot")]
-        AlreadyMarked = 4
+        AlreadyMarked = 4     
     }
 }
