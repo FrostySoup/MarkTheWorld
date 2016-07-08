@@ -22,6 +22,11 @@ namespace MarkTheWorld.Controllers.Api
 
         private readonly DotServices dotService;
 
+        public UploadingController()
+        {
+            dotService = new DotServices();
+        }
+
         [Route("uploading")]
         [HttpPost]
         public async Task<HttpResponseMessage> Post()
@@ -62,6 +67,14 @@ namespace MarkTheWorld.Controllers.Api
             }
         }
 
+        /// <summary>
+        /// Dot with photo, prarams:
+        /// token - string
+        /// message (optional) - string
+        /// lon - double
+        /// lat - double
+        /// file
+        /// </summary>
         [Route("dotPhoto")]
         [HttpPost]
         public async Task<HttpResponseMessage> PhotoPost()
@@ -81,7 +94,7 @@ namespace MarkTheWorld.Controllers.Api
                 double lon = 0;
                 double lat = 0;
                 try {
-                    lon = Convert.ToDouble(result.FormData["lon"]);
+                    lon = Convert.ToDouble(result.FormData["lng"]);
                     lat = Convert.ToDouble(result.FormData["lat"]);
                 }
                 catch
@@ -90,9 +103,9 @@ namespace MarkTheWorld.Controllers.Api
                 }
                 string imageName = ImageThumb.toThumb(path);
 
-                DotFromViewModel dot = new DotFromViewModel(lon, lat, message, userToken);
+                DotFromViewModel dot = new DotFromViewModel(lat, lon, message, userToken);
 
-                dotService.storeDot(dot, imageName);
+                dotService.storeDot(dot, image: imageName);
                 return Request.CreateResponse(HttpStatusCode.OK, "success!");
             }
             else

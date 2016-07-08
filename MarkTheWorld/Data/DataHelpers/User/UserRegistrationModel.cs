@@ -24,7 +24,7 @@ namespace Data
                 result = "No account found with that username";
             }else if (message == message2.AlreadyMarked)
             {
-                result = "You have already marked this spot";
+                result = "This spot already belongs to you";
             }
             else if(message == message2.PassMissmatch)
             {

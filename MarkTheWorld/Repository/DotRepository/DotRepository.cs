@@ -61,7 +61,7 @@ namespace Repository.DotRepository
                                 if (user.UserName.Equals(dots[i].username))
                                 {
                                     if (imagePath != null)
-                                        System.IO.File.Delete(imagePath);
+                                        removeOld(imagePath, path);
                                     reg.message = message2.AlreadyMarked;
                                     return reg;
                                 }
@@ -85,7 +85,9 @@ namespace Repository.DotRepository
                                         user.eventsHistory.RemoveRange(10, 1);
 
                                     removeOld(dots[i].photoPath, path);
-                                    dots[i] = changeDotValues(DateTime.Today, dot.message, dot.lng, dot.lat, user.UserName, cutImageName(imagePath), dots[i]);                                   
+                                    dots[i] = changeDotValues(DateTime.Today, dot.message, dot.lng, dot.lat, user.UserName, cutImageName(imagePath), dots[i]);
+                                    if (user.dotsId == null)
+                                        user.dotsId = new List<string>();
                                     user.dotsId.Add(dots[i].Id);
                                     session.Store(dots[i]);
                                     session.Store(userChanged);
