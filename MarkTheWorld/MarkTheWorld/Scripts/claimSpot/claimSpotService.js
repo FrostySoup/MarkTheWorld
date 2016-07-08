@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    function claimSpotService($mdDialog, $q, $http, userService) {
+    function claimSpotService($mdDialog, $q, $http, userService, Upload) {
         return {
             showDialog: function (ev) {
                 $mdDialog.show({
@@ -16,23 +16,44 @@
                     clickOutsideToClose: true
                 });
             },
+
             claim: function (file, message) {
                 var deferredObject = $q.defer();
 
-                $http.post('/api/Dot',
-                    {
-                        "username": userService.token,
-                        "lat": userService.currentPosition.lat,
-                        "lng": userService.currentPosition.lng,
-                        "message": message
+                if (!file) {
+                    $http.post('/api/Dot',
+                        {
+                            "token": userService.token,
+                            "lat": userService.currentPosition.lat,
+                            "lng": userService.currentPosition.lng,
+                            "message": message
+                        }).then(
+                        function (success) {
+                            deferredObject.resolve(success);
+                        },
+                        function (error) {
+                            deferredObject.reject(error);
+                        }
+                    );
+                } else {
+                    Upload.upload({
+                        url: 'api/dotPhoto',
+                        data: {
+                            file: file,
+                            token: userService.token,
+                            lat: userService.currentPosition.lat,
+                            lng: userService.currentPosition.lng,
+                            message: message
+                        }
                     }).then(
-                    function (success) {
-                        deferredObject.resolve(success);
-                    },
-                    function (error) {
-                        deferredObject.reject(error);
-                    }
-                );
+                        function (success) {
+                            deferredObject.resolve(success);
+                        },
+                        function (error) {
+                            deferredObject.reject(error);
+                        }
+                    );
+                }
 
                 return deferredObject.promise;
             }

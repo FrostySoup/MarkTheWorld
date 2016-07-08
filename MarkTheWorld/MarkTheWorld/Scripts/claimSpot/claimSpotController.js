@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    function claimSpotController($mdDialog, claimSpotService, toastService) {
+    function claimSpotController($mdDialog, claimSpotService, toastService, mapService) {
         var vm = this;
         vm.file = null;
         vm.message = '';
@@ -42,8 +42,10 @@
         vm.claim = function () {
             claimSpotService.claim(vm.file, vm.message).then(
                 function (success) {
-                    toastService.showToast('Spot claimed!', 5000);
-                    vm.cancel();
+                    $mdDialog.hide().then(function () {
+                        toastService.showToast('Spot claimed!', 5000);
+                        mapService.updateMap();
+                    });
                 },
                 function (error) {
                     console.log('error', error);

@@ -25,10 +25,13 @@
 
                 marker.addListener('dragend', function (e) {
                     clickedPosition = { 'lat' : e.latLng.lat(), 'lng' : e.latLng.lng() };
+                    userService.currentPosition = { lat: e.latLng.lat(), lng: e.latLng.lng() };
                     console.log('position:', 'lat:' + marker.position.lat(), 'lng:' + marker.position.lng(), 'zoom:', map.getZoom());
                 });
 
                 clickedPosition = { 'lat' : e.latLng.lat(), 'lng' : e.latLng.lng() };
+
+                userService.currentPosition = { lat: e.latLng.lat(), lng: e.latLng.lng() };
                 console.log('position:', 'lat:' + marker.position.lat(), 'lng:' + marker.position.lng(), 'zoom:', map.getZoom());
             });
 
