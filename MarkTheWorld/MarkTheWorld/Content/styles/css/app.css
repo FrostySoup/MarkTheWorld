@@ -169,24 +169,29 @@ md-dialog .md-subheader {
 /* claim spot dialog */
 
 md-dialog.dialog-claim-spot md-dialog-content .panel-info.layout-row {
-    margin: 8px;
+    margin: 16px 8px 8px;
     padding: 8px;
     background: rgb(245,245,245);
     border-radius: 3px;
 }
 
-md-dialog.dialog-claim-spot .panel-info md-icon {
-    margin: 0;
-    opacity: 0.5;
+md-dialog.dialog-claim-spot form {
+    padding: 0;
+    margin-bottom: 8px;
 }
 
-md-dialog.dialog-claim-spot .panel-info p{
+md-dialog.dialog-claim-spot .panel-info md-icon {
+    margin: 0;
+    opacity: 0.3;
+}
+
+md-dialog.dialog-claim-spot .panel-info p {
     margin: 0;
     margin-left: 8px;
 }
 
 md-dialog.dialog-claim-spot .button-claim {
-    padding: 3px 14px;
+    padding: 3px 16px 3px 12px;
     margin: 16px 0 24px;
 }
 
@@ -214,12 +219,24 @@ md-dialog.dialog-claim-spot .file-preview button {
 }
 
 md-dialog.dialog-claim-spot .file-preview img {
-    max-width: 250px;
-    max-height: 250px;
+    max-width: 100%;
+    max-height: 450px;
     border: 1px solid #828282;
 }
 
-md-dialog.dialog-claim-spot .panel-error {
+@media (min-width: 960px) {
+    md-dialog.dialog-claim-spot .file-preview img {
+        max-width: 350px;
+        max-height: 350px;
+    }
+}
+
+md-dialog.dialog-claim-spot .panel-error.error-claim {
+    margin-top: 0;
+    padding: 0;
+}
+
+md-dialog.dialog-claim-spot .panel-error.error-file {
     margin-top: 24px;
 }
 

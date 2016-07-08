@@ -3,7 +3,7 @@
     'use strict';
     var rectanglesArray = [];
 
-    function rectanglesService(squareDetailsService) {
+    function rectanglesService() {
 
         function removeUnneededRecsFromMap(unneededRecs) {
             var arrayLength = unneededRecs.length;
@@ -14,11 +14,12 @@
 
         function addNewRecsToMap(recsToBeAdded, map) {
             angular.forEach(recsToBeAdded, function (value) {
+                var rgb = value.colors.red + ',' + value.colors.green + ',' + value.colors.blue;
                 var rec = new google.maps.Rectangle({
-                    strokeColor: 'rgb(255,64,129)',
+                    strokeColor: 'rgb(' + rgb + ')',
                     strokeOpacity: 1,
                     strokeWeight: 1,
-                    fillColor: 'rgb(255,64,129)',
+                    fillColor: 'rgb(' + rgb + ')',
                     map: map,
                     bounds: new google.maps.LatLngBounds(
                         new google.maps.LatLng(value.swY, value.swX),

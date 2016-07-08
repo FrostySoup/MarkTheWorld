@@ -7,17 +7,25 @@
                 <md-icon md-svg-src="~/../Content/img/icons/ic_clear_white_48px.svg" class="s32"></md-icon>
             </md-button>
         </div>
+        <md-progress-linear class="register-form-loader md-warn" ng-show="vm.pending" md-mode="indeterminate"></md-progress-linear>
     </md-toolbar>
     <md-dialog-content flex-sm flex-xs layout="column">
         <div>
             <div layout layout-align="start center" class="panel-info">
-                <md-icon md-svg-src="~/../Content/img/icons/ic_add_location.svg" class="s32"></md-icon>
+                <md-icon md-svg-src="~/../Content/img/icons/ic_check_circle.svg" class="s32"
+                         aria-label="Info"></md-icon>
                 <p>You are about to be the first to claim this spot!</p>
             </div>
-            <div layout layout-align="center center">
-                <md-button ng-click="vm.claim()" class="md-raised md-primary button-claim">
-                    Claim Now
+            <div layout="column" layout-align="center center" layout-padding>
+                <md-button ng-click="vm.claim()" ng-disabled="vm.pending" class="md-raised md-primary button-claim">
+                    <md-icon md-svg-src="~/../Content/img/icons/ic_add_location.svg"></md-icon>
+                    Claim
                 </md-button>
+                <div ng-if="vm.claimError" class="panel-error error-claim">
+                    <md-icon md-svg-src="~/../Content/img/icons/ic_info_outline.svg" class="s32"
+                             aria-label="Error"></md-icon>
+                    <div class="panel-error-text">{{ vm.claimError }}</div>
+                </div>
             </div>
 
             <md-subheader>Optional details</md-subheader>
@@ -41,7 +49,7 @@
                         <md-icon md-svg-src="~/../Content/img/icons/ic_add_a_photo.svg"
                                  aria-label="Mark your spot"></md-icon>
                     </md-button>
-                    <div ng-if="vm.fileError" class="panel-error">
+                    <div ng-if="vm.fileError" class="panel-error error-file">
                         <md-icon md-svg-src="~/../Content/img/icons/ic_info_outline.svg" class="s32"
                                  aria-label="Error"></md-icon>
                         <div class="panel-error-text">{{ vm.fileError }}</div>
@@ -61,6 +69,6 @@
     </md-dialog-content>
     <md-dialog-actions>
         <md-button ng-click="vm.cancel()" class="md-secondary">Cancel</md-button>
-        <md-button ng-click="vm.claim()" class="md-secondary">Claim</md-button>
+        <md-button ng-click="vm.claim()" ng-disabled="vm.pending" class="md-secondary">Claim</md-button>
     </md-dialog-actions>
 </md-dialog>

@@ -31,22 +31,7 @@
                 );
             } else {
                 var error = Object.keys(fileForm.$error)[0];
-                switch (error) {
-                case 'pattern':
-                    vm.fileError = 'Only images are allowed';
-                    break;
-                case 'minHeight':
-                    vm.fileError = 'Image dimensions should be at least 100x100';
-                    break;
-                case 'minWidth':
-                    vm.fileError = 'Image dimensions should be at least 100x100';
-                    break;
-                case 'maxSize':
-                    vm.fileError = 'Image should be smaller than 20MB';
-                    break;
-                default:
-                    vm.fileError = 'Your picture couldn\'t be processed';
-                }
+                vm.fileError = myProfilePictureService.fileError(error);
             }
         };
 

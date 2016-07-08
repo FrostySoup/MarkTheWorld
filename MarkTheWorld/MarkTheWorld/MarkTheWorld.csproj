@@ -506,6 +506,7 @@
     <Content Include="Content\img\icons\ic_add_location.svg" />
     <Content Include="Content\img\icons\ic_announcement.svg" />
     <Content Include="Content\img\icons\ic_cancel.svg" />
+    <Content Include="Content\img\icons\ic_check.svg" />
     <Content Include="Content\img\icons\ic_check_circle.svg" />
     <Content Include="Content\img\icons\ic_chevron_right.svg" />
     <Content Include="Content\img\icons\ic_clear_white_36px.svg" />
