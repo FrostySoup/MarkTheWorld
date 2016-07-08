@@ -8,7 +8,7 @@
             </md-button>
         </div>
     </md-toolbar>
-    <md-dialog-content flex layout="column">
+    <md-dialog-content flex-sm flex-xs layout="column">
         <div>
             <div layout layout-align="start center" class="panel-info">
                 <md-icon md-svg-src="~/../Content/img/icons/ic_add_location.svg" class="s32"></md-icon>
@@ -31,37 +31,31 @@
                     </md-input-container>
                 </div>
 
-                <div ng-hide="vm.file" layout layout-align="center center">
-                    <md-button ngf-select ng-model="vm.file" class="md-fab md-primary button-add-picture"
-                               aria-label="Mark your spot">
+                <form name="vm.pictureUploadForm" novalidate ng-hide="vm.file" layout="column" layout-align="center center">
+                    <md-button class="md-fab md-primary button-add-picture" ngf-select="vm.handleSelectedFile(vm.pictureUploadForm.file)" ng-model="vm.file" name="file"
+                               ngf-capture="'camera'"
+                               ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="100" ngf-min-height="100" aria-label="Mark your spot">
                         <md-tooltip md-direction="top">
                             Take a picture at the spot!
                         </md-tooltip>
                         <md-icon md-svg-src="~/../Content/img/icons/ic_add_a_photo.svg"
                                  aria-label="Mark your spot"></md-icon>
                     </md-button>
-                </div>
-                <div layout layout-align="center center" style="padding: 8px 16px;">
-                    <div ng-if="vm.file" style="position: relative;" class="image-container">
-                        <md-button class="md-fab md-mini md-primary" style="position: absolute;
-left: -24px;
-    top: -24px;" class="md-icon-button" aria-label="Cancel picture">
-                            <md-icon ng-click="vm.cancelImageUpload()" md-svg-src="~/../Content/img/icons/ic_cancel.svg"
-                                    ></md-icon>
+                    <div ng-if="vm.fileError" class="panel-error">
+                        <md-icon md-svg-src="~/../Content/img/icons/ic_info_outline.svg" class="s32"
+                                 aria-label="Error"></md-icon>
+                        <div class="panel-error-text">{{ vm.fileError }}</div>
+                    </div>
+                </form>
+                <div ng-if="vm.file" layout layout-align="center center" class="file-preview">
+                    <div>
+                        <md-button class="md-fab md-mini md-primary" class="md-icon-button" aria-label="Cancel picture">
+                            <md-icon ng-click="vm.cancelImageUpload()"
+                                     md-svg-src="~/../Content/img/icons/ic_cancel.svg"></md-icon>
                         </md-button>
-                        <img style="    max-width: 250px;
-    max-height: 250px;width: 100%;
-    height: auto;
-    border: 1px solid #828282;" ngf-src="vm.file" alt=""/>
+                        <img ngf-src="vm.file" alt="Spot picture"/>
                     </div>
                 </div>
-
-
-                <!--<div ngf-background="file" style="height: 200px;background-position: center top;-->
-                <!--background-repeat: no-repeat;-->
-                <!--background-size: cover;-->
-                <!--background-origin: content-box;">-->
-                <!--</div>-->
             </div>
         </div>
     </md-dialog-content>

@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    function mapService($http, rectanglesService, markersService, accountService) {
+    function mapService($http, rectanglesService, markersService, userService) {
         var clickedPosition = {};
         var map;
 
@@ -46,6 +46,7 @@
 
             $http(req).then(function(data) {
                 map.setCenter({lat: data.data.location.lat, lng: data.data.location.lng});
+                userService.currentPosition = { lat: data.data.location.lat, lng: data.data.location.lng };
             });
         }
 

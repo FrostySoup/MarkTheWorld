@@ -44,6 +44,8 @@
                 case 'maxSize':
                     vm.fileError = 'Image should be smaller than 20MB';
                     break;
+                default:
+                    vm.fileError = 'Your picture couldn\'t be processed';
                 }
             }
         };
@@ -62,7 +64,7 @@
                     vm.fileSelected = true;
                 },
                 function () {
-                    vm.fileError = 'Couldn\'t load the image';
+                    vm.fileError = 'Your picture couldn\'t be loaded';
                     vm.webImageUrl = '';
                 }
             ).finally(function () {

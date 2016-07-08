@@ -7,7 +7,8 @@
         return {
             isLogged: false,
             username: '',
-            token: ''
+            token: '',
+            currentPosition: null
         };
     }
     angular.module('account').factory('userService', userService);

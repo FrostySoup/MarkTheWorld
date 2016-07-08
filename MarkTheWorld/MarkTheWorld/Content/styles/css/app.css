@@ -117,7 +117,6 @@ md-menu-item>.md-button span.icon-button-facebook {
 
 @media (min-width: 960px) {
     md-dialog {
-        height: 500px;
         min-width: 450px;
     }
 }
@@ -198,6 +197,30 @@ md-dialog.dialog-claim-spot .button-add-picture {
 md-dialog.dialog-claim-spot md-input-container {
     margin-bottom: 0;
     margin-top: 8px;
+}
+
+md-dialog.dialog-claim-spot .file-preview {
+    padding: 8px 16px;
+}
+
+md-dialog.dialog-claim-spot .file-preview > div {
+    position: relative;
+}
+
+md-dialog.dialog-claim-spot .file-preview button {
+    position: absolute;
+    left: -24px;
+    top: -24px;
+}
+
+md-dialog.dialog-claim-spot .file-preview img {
+    max-width: 250px;
+    max-height: 250px;
+    border: 1px solid #828282;
+}
+
+md-dialog.dialog-claim-spot .panel-error {
+    margin-top: 24px;
 }
 
 /* my color dialog */

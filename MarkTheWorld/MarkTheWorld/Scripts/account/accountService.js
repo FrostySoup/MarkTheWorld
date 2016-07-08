@@ -80,32 +80,6 @@
                     userService.username = username;
                     userService.token = token;
                 }
-            },
-
-            //todo: should be moved elsewhere
-            addPoint: function (message, lat, lng) {
-                var deferredObject = $q.defer();
-
-                $http.post('/api/Dot',
-                    {
-                        "username": localStorage.getItem('token'),
-                        "lat": lat,
-                        "lng": lng,
-                        "message": message
-                    }).
-                    success(function (data) {
-                        if (data) {
-                            console.log('addPoint success', data);
-                            deferredObject.resolve(data);
-                        } else {
-                            deferredObject.resolve(false);
-                        }
-                    }).
-                    error(function () {
-                        deferredObject.resolve(false);
-                    });
-
-                return deferredObject.promise;
             }
         };
     }
