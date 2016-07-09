@@ -58,7 +58,12 @@ namespace Repository.UserRepository
                     return check;
                 }
             }
-        }       
+        }
+
+        public Color GetColorsById(string dotId)
+        {
+            throw new NotImplementedException();
+        }
 
         public User generateUser()
         {

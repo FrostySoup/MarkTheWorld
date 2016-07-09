@@ -68,7 +68,7 @@ namespace MarkTheWorld.Controllers.Api
                 foreach (Dot dot in dots)
                 {
                     Color squareColor = userService.getUserColors(dot.username);
-                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon), dot.username, squareColor));                    
+                    squares.Add(new Square(dotService.coordsToSquare(dot.lat, dot.lon), squareColor, dot.Id));                    
                 }
             }
             catch (Exception)
@@ -77,6 +77,30 @@ namespace MarkTheWorld.Controllers.Api
             }
 
             return Ok(squares);
+        }
+
+        /// <summary>
+        /// Gražina visus kvadratėlius tam tikroje teritorijoje
+        /// </summary>
+        [ResponseType(typeof(Square))]
+        [Route("square/{Id}")]
+        [HttpGet]
+        public IHttpActionResult GetSquareInfo(string Id)
+        {
+            DotClick clicked;
+            try
+            {
+                clicked = dotService.GetDotWithInfo(Id);
+            }
+            catch (Exception)
+            {
+                return Content(HttpStatusCode.BadRequest, "Unknown server error");
+            }
+            if (clicked == null)
+                return Content(HttpStatusCode.BadRequest, "Dot not found");
+            else
+                clicked.photoPath = "~/../Content/img/dotLocation/" + clicked.photoPath;
+            return Ok(clicked);
         }
 
         /// <summary>
@@ -119,7 +143,7 @@ namespace MarkTheWorld.Controllers.Api
                 gameDots = dotService.getUserDotsName(corners, name);
                 foreach (Dot dot in gameDots)
                 {                  
-                    squares.Add(new Square(dot.message, dot.date, dotService.coordsToSquare(dot.lat, dot.lon), name, squareColor));
+                    squares.Add(new Square(dotService.coordsToSquare(dot.lat, dot.lon), squareColor, dot.Id));
                 }
             }
             catch (Exception)

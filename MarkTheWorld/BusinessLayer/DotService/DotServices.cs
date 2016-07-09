@@ -65,5 +65,9 @@ namespace BusinessLayer.DotService
             return repositoryDot.CheckDotResults(dot);
         }
 
+        public DotClick GetDotWithInfo(string id)
+        {
+            return repositoryDot.GetDotById(id);
+        }
     }
 }

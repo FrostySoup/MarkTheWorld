@@ -20,7 +20,6 @@ namespace BusinessLayer.DotService
         int getUserPointsName(Dot[] squares);
 
         //functions
-        List<SquaresWithInfo> groupSquares(List<Square> squares);
         List<GroupedDotsForApi> groupDots(List<Dot> dots, CornersCorrds corners, double zoomLevel);
         int maxConnection(Dot[] squares);
     }
