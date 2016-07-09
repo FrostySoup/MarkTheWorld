@@ -5,6 +5,7 @@ using Data;
 using Data.DataHelpers.User;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -91,13 +92,15 @@ namespace MarkTheWorld.Controllers.Api
                 UserService userServ = new UserService();
                 string userToken = result.FormData["token"];
                 string message = result.FormData["message"];
+                var lng = result.FormData["lng"];
+                var lat2 = result.FormData["lat"];
                 double lon = 0;
                 double lat = 0;
                 try {
-                    lon = Convert.ToDouble(result.FormData["lng"]);
-                    lat = Convert.ToDouble(result.FormData["lat"]);
+                    lon = double.Parse(result.FormData["lng"], CultureInfo.InvariantCulture);
+                    lat = double.Parse(result.FormData["lat"], CultureInfo.InvariantCulture);
                 }
-                catch
+                catch (Exception e)
                 {
                     throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotAcceptable, "Lon and lat is not properly formatted"));
                 }

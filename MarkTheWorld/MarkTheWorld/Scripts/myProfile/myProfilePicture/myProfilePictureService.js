@@ -17,7 +17,7 @@
                 });
             },
 
-            formImage: function(src) {
+            formImage: function (src) {
                 var deferred = $q.defer();
                 var image = new Image();
 
@@ -35,6 +35,21 @@
                 image.src = src;
 
                 return deferred.promise;
+            },
+
+            fileError: function (error) {
+                switch (error) {
+                case 'pattern':
+                    return 'Only images are allowed';
+                case 'minHeight':
+                    return 'Image dimensions should be at least 100x100';
+                case 'minWidth':
+                    return 'Image dimensions should be at least 100x100';
+                case 'maxSize':
+                    return 'Image should be smaller than 20MB';
+                default:
+                    return 'Your picture couldn\'t be processed';
+                }
             }
         };
     }

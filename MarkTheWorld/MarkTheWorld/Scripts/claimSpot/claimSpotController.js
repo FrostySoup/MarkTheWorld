@@ -2,11 +2,13 @@
 (function () {
     'use strict';
 
-    function claimSpotController($mdDialog, claimSpotService, toastService, mapService) {
+    function claimSpotController($mdDialog, claimSpotService, myProfilePictureService, toastService, mapService) {
         var vm = this;
         vm.file = null;
         vm.message = '';
         vm.fileError = '';
+        vm.claimError = '';
+        vm.pending = false;
 
         vm.cancel = function () {
             $mdDialog.cancel();
@@ -20,26 +22,12 @@
         vm.handleSelectedFile = function (fileForm) {
             if (!fileForm.$valid || !vm.file) {
                 var error = Object.keys(fileForm.$error)[0];
-                switch (error) {
-                case 'pattern':
-                    vm.fileError = 'Only images are allowed';
-                    break;
-                case 'minHeight':
-                    vm.fileError = 'Image dimensions should be at least 100x100';
-                    break;
-                case 'minWidth':
-                    vm.fileError = 'Image dimensions should be at least 100x100';
-                    break;
-                case 'maxSize':
-                    vm.fileError = 'Image should be smaller than 20MB';
-                    break;
-                default:
-                    vm.fileError = 'Your picture couldn\'t be processed';
-                }
+                vm.fileError = myProfilePictureService.fileError(error);
             }
         };
 
         vm.claim = function () {
+            vm.pending = true;
             claimSpotService.claim(vm.file, vm.message).then(
                 function (success) {
                     $mdDialog.hide().then(function () {
@@ -48,24 +36,14 @@
                     });
                 },
                 function (error) {
-                    console.log('error', error);
+                    if (error.status === 400) {
+                        vm.claimError = error.data;
+                    }
                 }
-            );
+            ).finally(function () {
+                vm.pending = false;
+            });
         };
-
-        //$scope.confirm = function (message) {
-        //    accountService.addPoint(message, mapService.getClickedPosition().lat, mapService.getClickedPosition().lng)
-        //        .then(function (data) {
-        //            if (data.success === true) {
-        //                $mdDialog.hide().then(function () {
-        //                    simpleModalService.showModal('Congrats!', 'You marked a spot!');
-        //                    mapService.updateMap();
-        //                });
-        //            } else {
-        //                simpleModalService.showModal('Error!', data.message);
-        //            }
-        //        });
-        //};
     }
     angular.module('claimSpot').controller('claimSpotController', claimSpotController);
 }());
