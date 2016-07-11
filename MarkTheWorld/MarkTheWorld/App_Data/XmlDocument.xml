@@ -491,6 +491,11 @@
             Gražina visus kvadratėlius tam tikroje teritorijoje
             </summary>
         </member>
+        <member name="M:MarkTheWorld.Controllers.Api.DotController.GetSquareInfo(System.String)">
+            <summary>
+            Gražina visus kvadratėlius tam tikroje teritorijoje
+            </summary>
+        </member>
         <member name="M:MarkTheWorld.Controllers.Api.DotController.CheckDot(Data.DotFromViewModel)">
             <summary>
             Patikrina ar galima patalpinti tašką

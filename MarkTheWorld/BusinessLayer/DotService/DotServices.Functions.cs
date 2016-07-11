@@ -11,33 +11,6 @@ namespace BusinessLayer.DotService
     {
         private Repository.UserRepository.UserRepository userRepository = new Repository.UserRepository.UserRepository();
 
-        public List<SquaresWithInfo> groupSquares(List<Square> squares)
-        {
-            List<SquaresWithInfo> grSquares = new List<SquaresWithInfo>();
-
-
-            foreach (Square square in squares)
-            {
-                Color squareColor = userRepository.GetColors(square.username);
-                bool foundMatch = false;
-                foreach (SquaresWithInfo grSquare in grSquares)
-                {
-                    if (!foundMatch)
-                        if (Math.Abs(square.neX - grSquare.neX) < 0.0001 && Math.Abs(square.neY - grSquare.neY) < 0.0001)
-                        {
-                            foundMatch = true;
-                            grSquare.markers.Add(new Markers(square.date, square.username, square.message));
-                        }
-                }
-                if (!foundMatch)
-                {
-                    grSquares.Add(new SquaresWithInfo(square.neX, square.neY, square.swX, square.swY, new Markers(square.date, square.username, square.message), squareColor));
-                }
-            }
-
-            return grSquares;
-        }
-
         public CornersCorrds coordsToSquare(double lat, double lng)
         {
             CornersCorrds corners = new CornersCorrds();

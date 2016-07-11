@@ -17,5 +17,6 @@ namespace Repository.DotRepository
         UserRegistrationModel AddGroup(List<DotFromViewModel> dot);
         Dot[] GetAllDotsByName(string name);
         CanMarkSpot CheckDotResults(DotFromViewModel dot);
+        DotClick GetDotById(string id);
     }
 }

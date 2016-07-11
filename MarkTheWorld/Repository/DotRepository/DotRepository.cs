@@ -276,5 +276,27 @@ namespace Repository.DotRepository
                 }
             }      
          }
+
+        public DotClick GetDotById(string Id)
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                try
+                {
+                    Dot myDot = session.Load<Dot>(Id);
+                    return new DotClick
+                    {
+                        message = myDot.message,
+                        date = myDot.date,
+                        username = myDot.username,
+                        photoPath = myDot.photoPath
+                    };
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
     }
 }

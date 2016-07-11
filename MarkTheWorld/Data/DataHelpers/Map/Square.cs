@@ -13,21 +13,17 @@ namespace Data
         public double neY { get; set; }
         public double swX { get; set; }
         public double swY { get; set; }
-        public string message { get; set; }
-        public string username { get; set; }
         public Color colors { get; set; }
-        public DateTime date { get; set; }
+        public string dotId { get; set; }
 
-        public Square(string messag, DateTime data, CornersCorrds corners, string usernam, Color color)
+        public Square(CornersCorrds corners, Color color, string id)
         {
             neX = corners.neX;
             neY = corners.neY;
             swX = corners.swX;
             swY = corners.swY;
-            message = messag;
-            date = data;
-            username = usernam;
             colors = color;
+            dotId = id;
         }
     }
 }
