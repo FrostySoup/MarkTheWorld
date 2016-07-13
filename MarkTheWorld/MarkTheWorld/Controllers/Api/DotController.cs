@@ -1,4 +1,5 @@
-﻿using BusinessLayer.DotService;
+﻿using BusinessLayer.ColorHelper;
+using BusinessLayer.DotService;
 using BusinessLayer.Filters;
 using BusinessLayer.UserService;
 using Data;
@@ -16,7 +17,6 @@ using System.Web.Http.Description;
 namespace MarkTheWorld.Controllers.Api
 {
     [RoutePrefix("api")]
-    [ValidateViewModel]
     public class DotController : ApiController
     {
         private readonly DotServices dotService;
@@ -31,6 +31,7 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(UserRegistrationModel))]
         [Route("dot")]
         [HttpPost]
+        [ValidateViewModel]
         public IHttpActionResult PostDot(DotFromViewModel dot)
         {          
             UserRegistrationModel dotCopy = new UserRegistrationModel();
@@ -57,18 +58,31 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(Square))]
         [Route("squares")]
         [HttpPost]
-        public IHttpActionResult GetSquares(CornersCorrds corners)
+        [ValidateViewModel]
+        public IHttpActionResult GetSquares(CornersCorrds corners, string name = "")
         {
             List<Dot> dots = new List<Dot>();
             List<Square> squares = new List<Square>();
             UserService userService = new UserService();
             try
             {
-                dots = dotService.getAllDots(corners);
-                foreach (Dot dot in dots)
+                if (string.IsNullOrEmpty(name))
                 {
-                    Color squareColor = userService.getUserColors(dot.username);
-                    squares.Add(new Square(dotService.coordsToSquare(dot.lat, dot.lon), squareColor, dot.Id));                    
+                    dots = dotService.getAllDots(corners);
+                    foreach (Dot dot in dots)
+                    {
+                        Colors squareColor = userService.getUserColors(dot.username);
+                        squares.Add(new Square(dotService.coordsToSquare(dot.lat, dot.lon), squareColor, dot.Id, ColorService.Darken(squareColor)));
+                    }
+                }
+                else
+                {
+                    Colors squareColor = userService.getUserColors(name);
+                    dots = dotService.getUserDotsName(corners, name);
+                    foreach (Dot dot in dots)
+                    {
+                        squares.Add(new Square(dotService.coordsToSquare(dot.lat, dot.lon), squareColor, dot.Id, ColorService.Darken(squareColor)));
+                    }
                 }
             }
             catch (Exception)
@@ -80,11 +94,12 @@ namespace MarkTheWorld.Controllers.Api
         }
 
         /// <summary>
-        /// Gražina visus kvadratėlius tam tikroje teritorijoje
+        /// Gražina vieną kvadratėlį pagal Id
         /// </summary>
         [ResponseType(typeof(Square))]
         [Route("square/{Id}")]
         [HttpGet]
+        [ValidateViewModel]
         public IHttpActionResult GetSquareInfo(string Id)
         {
             DotClick clicked;
@@ -109,6 +124,7 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(CanMarkSpot))]
         [Route("dotCheck")]
         [HttpPost]
+        [ValidateViewModel]
         public IHttpActionResult CheckDot(DotFromViewModel dot)
         {
             CanMarkSpot results = new CanMarkSpot();
@@ -125,7 +141,7 @@ namespace MarkTheWorld.Controllers.Api
         }
 
         /// <summary>
-        /// Gražina tik tam tikro žaidėjo kvadratėlius, pagal prisijungimo vardą
+        /// (REMOVE LATER)
         /// </summary>
         [ResponseType(typeof(List<Square>))]
         [Route("squares/{name}")]
@@ -139,11 +155,11 @@ namespace MarkTheWorld.Controllers.Api
             UserService userService = new UserService();
             try
             {
-                Color squareColor = userService.getUserColors(name);
+                Colors squareColor = userService.getUserColors(name);
                 gameDots = dotService.getUserDotsName(corners, name);
                 foreach (Dot dot in gameDots)
                 {                  
-                    squares.Add(new Square(dotService.coordsToSquare(dot.lat, dot.lon), squareColor, dot.Id));
+                    squares.Add(new Square(dotService.coordsToSquare(dot.lat, dot.lon), squareColor, dot.Id, ColorService.Darken(squareColor)));
                 }
             }
             catch (Exception)
@@ -159,6 +175,7 @@ namespace MarkTheWorld.Controllers.Api
         /// </summary>
         [Route("points/{name}")]
         [HttpGet]
+        [ValidateViewModel]
         public IHttpActionResult GetPointsByName(string name)
         {
             if (name.Length < 3 || name.Length > 25)
@@ -183,6 +200,7 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(List<GroupedDotsForApi>))]
         [Route("dots/{name}/{zoomLevel}")]
         [HttpPost]
+        [ValidateViewModel]
         public IHttpActionResult GetUserDotsByName(CornersCorrds corners, string name, double zoomLevel)
         {
             if (name.Length < 3 || name.Length > 25)
@@ -212,6 +230,7 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(List<GroupedDotsForApi>))]
         [Route("dots/{zoomLevel}")]
         [HttpPost]
+        [ValidateViewModel]
         public IHttpActionResult GetDots(CornersCorrds corners, double zoomLevel)
         {
             if (zoomLevel > 15 && zoomLevel < 0)

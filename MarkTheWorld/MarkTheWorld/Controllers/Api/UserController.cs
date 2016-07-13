@@ -190,7 +190,7 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(bool))]
         [Route("color/{userName}")]
         [HttpPost]
-        public IHttpActionResult PostUserColor(string userName, Color colors)
+        public IHttpActionResult PostUserColor(string userName, Colors colors)
         {
             if (userName.Length < 3 || userName.Length > 25)
                 return Content(HttpStatusCode.BadRequest, "Wrong username length");

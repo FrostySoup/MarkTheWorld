@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.DataHelpers.Facebook
+namespace Data.DataHelpers.User.SendData
 {
-    public class FbNameToken
+    public class Registration
     {
-        public string username { get; set; }
         public string token { get; set; }
-        public string photoPath { get; set; }
+        public string photo { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Data
 {
@@ -13,16 +14,18 @@ namespace Data
         public double neY { get; set; }
         public double swX { get; set; }
         public double swY { get; set; }
-        public Color colors { get; set; }
+        public string colors { get; set; }
+        public string borderColors { get; set; }
         public string dotId { get; set; }
 
-        public Square(CornersCorrds corners, Color color, string id)
+        public Square(CornersCorrds corners, Colors color, string id, string borders)
         {
             neX = corners.neX;
             neY = corners.neY;
             swX = corners.swX;
             swY = corners.swY;
-            colors = color;
+            borderColors = borders;
+            colors = string.Format("rgb({0}, {1}, {2})", color.red, color.green, color.blue);
             dotId = id;
         }
     }

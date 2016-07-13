@@ -49,6 +49,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,15 +60,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataHelpers\Facebook\FbNameToken.cs" />
-    <Compile Include="DataHelpers\Map\CanMarkSpot.cs" />
+    <Compile Include="DataHelpers\Map\SendData\CanMarkSpot.cs" />
     <Compile Include="DataHelpers\Map\DotClick.cs" />
     <Compile Include="DataHelpers\Map\ReceivedData\DotFromViewModel.cs" />
     <Compile Include="DataHelpers\User\AppUser.cs" />
     <Compile Include="DataHelpers\Facebook\ReceivedData\FbRegisterClient.cs" />
-    <Compile Include="DataHelpers\Facebook\FbServerLogin.cs" />
+    <Compile Include="DataHelpers\Facebook\SendData\FbServerLogin.cs" />
     <Compile Include="DataHelpers\Facebook\FBUser.cs" />
     <Compile Include="DataHelpers\Profile\Country.cs" />
-    <Compile Include="DataHelpers\Profile\ReceivedData\Colors.cs" />
+    <Compile Include="DataHelpers\Profile\Colors.cs" />
     <Compile Include="DataHelpers\Map\ReceivedData\CornersCorrds.cs" />
     <Compile Include="DataHelpers\Profile\CountriesList.cs" />
     <Compile Include="DataHelpers\Profile\DailyReward.cs" />
@@ -78,21 +79,22 @@
     <Compile Include="DataHelpers\Map\GroupedSquares.cs" />
     <Compile Include="DataHelpers\Map\Markers.cs" />
     <Compile Include="DataHelpers\Map\SquaresWithInfo.cs" />
-    <Compile Include="DataHelpers\Profile\UserProfile.cs" />
+    <Compile Include="DataHelpers\Profile\SendData\UserProfile.cs" />
     <Compile Include="Database\Dot.cs" />
-    <Compile Include="DataHelpers\Map\GroupedDotsForApi.cs" />
+    <Compile Include="DataHelpers\Map\SendData\GroupedDotsForApi.cs" />
     <Compile Include="DataHelpers\User\Photo.cs" />
     <Compile Include="DataHelpers\User\ReceivedData\UserLoginPost.cs" />
+    <Compile Include="DataHelpers\User\SendData\Registration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuadTrees\QuadTree.cs" />
-    <Compile Include="DataHelpers\User\UserDailyReward.cs" />
+    <Compile Include="DataHelpers\User\SendData\UserDailyReward.cs" />
     <Compile Include="DataHelpers\User\ReceivedData\UserRegistrationPost.cs" />
-    <Compile Include="DataHelpers\Map\Square.cs" />
+    <Compile Include="DataHelpers\Map\SendData\Square.cs" />
     <Compile Include="DataHelpers\StringValueAttribute.cs" />
-    <Compile Include="DataHelpers\User\TopUser.cs" />
+    <Compile Include="DataHelpers\User\SendData\TopUser.cs" />
     <Compile Include="Database\User.cs" />
-    <Compile Include="DataHelpers\User\UserEvent.cs" />
-    <Compile Include="DataHelpers\User\UserRegistrationModel.cs" />
+    <Compile Include="DataHelpers\User\SendData\UserEvent.cs" />
+    <Compile Include="DataHelpers\User\SendData\UserRegistrationModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -101,6 +103,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DataHelpers\Profile\ReceivedData\" />
     <Folder Include="ReceivePostData\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

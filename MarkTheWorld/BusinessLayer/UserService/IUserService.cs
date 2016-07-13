@@ -20,8 +20,8 @@ namespace BusinessLayer.UserService
         List<TopUser> getTopUsers();
         UserDailyReward takeUserDaily(string userName);
         List<UserEvent> getUserEvents(string userName);
-        bool postUserColors(string userName, Color colors);
-        Color getUserColors(string userName);
+        bool postUserColors(string userName, Colors colors);
+        Colors getUserColors(string userName);
         bool checkUsername(string userName);
         UserProfile GetProfile(string userName);
     }

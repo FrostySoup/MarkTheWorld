@@ -1,6 +1,7 @@
 ﻿using Data;
 using Data.DataHelpers;
 using Data.DataHelpers.Facebook;
+using Data.DataHelpers.User.SendData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,8 +43,12 @@ namespace Repository.UserRepository
                         user.Token = token;
                         session.Store(user);
                         session.SaveChanges();
+                        string profilePath = user.profilePicture;
+                        if (!profilePath.Contains("facebook"))
+                            profilePath = "~/../Content/img/avatars/" + profilePath;
                         return new FbNameToken
                         {
+                            photoPath = profilePath,
                             token = user.Token,
                             username = user.UserName
                         };
@@ -80,7 +85,7 @@ namespace Repository.UserRepository
             }
         }
 
-        public string RegisterFbUser(FbRegisterClient fb, string photo)
+        public Registration RegisterFbUser(FbRegisterClient fb, string photo)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
@@ -101,7 +106,11 @@ namespace Repository.UserRepository
                         newUser.state = fb.state;
                     session.Store(newUser);
                     session.SaveChanges();
-                    return fb.token;
+                    return new Registration
+                    {
+                        token = fb.token,
+                        photo = photo
+                    };
                 }
             }
         }

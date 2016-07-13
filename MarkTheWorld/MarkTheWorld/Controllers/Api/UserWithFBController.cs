@@ -2,6 +2,7 @@
 using BusinessLayer.UserService;
 using Data.DataHelpers;
 using Data.DataHelpers.Facebook;
+using Data.DataHelpers.User.SendData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,7 @@ namespace MarkTheWorld.Controllers.Api
                     FbNameToken tokenAndName = userService.getLongLiveToken(fb);
                     user.username = tokenAndName.username;
                     user.longToken = tokenAndName.token;
+                    user.photo = tokenAndName.photoPath;
                     if (user.longToken == null)
                         return Content(HttpStatusCode.NoContent, "Couldn't receive user token");
                 }
@@ -63,14 +65,14 @@ namespace MarkTheWorld.Controllers.Api
         /// <summary>
         /// Užregistruoja naują facebook vartotoją sistemoje
         /// </summary>
-        [ResponseType(typeof(string))]
+        [ResponseType(typeof(Registration))]
         [Route("fbRegister")]
         [HttpPost]
         public IHttpActionResult PostRegister(FbRegisterClient fb)
         {
             try
             {
-                string token = userService.register(fb);
+                Registration token = userService.register(fb);
                 if (token == null)
                     return Content(HttpStatusCode.BadRequest, "User already registered");
                 if (token.Equals("Invalid token") || token.Equals(""))

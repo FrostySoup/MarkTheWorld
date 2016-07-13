@@ -22,7 +22,7 @@ namespace Repository.UserRepository
 
         //profile functions
         int GetTotalPoints(string userName);
-        Color GetColors(string userName);
-        bool SetColors(string userName, Color colors);
+        Colors GetColors(string userName);
+        bool SetColors(string userName, Colors colors);
     }
 }

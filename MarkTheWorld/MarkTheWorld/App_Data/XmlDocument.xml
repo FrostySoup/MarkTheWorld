@@ -486,14 +486,14 @@
             Leidžia patalpinti tašką duomenų bazėje
             </summary>
         </member>
-        <member name="M:MarkTheWorld.Controllers.Api.DotController.GetSquares(Data.DataHelpers.CornersCorrds)">
+        <member name="M:MarkTheWorld.Controllers.Api.DotController.GetSquares(Data.DataHelpers.CornersCorrds,System.String)">
             <summary>
             Gražina visus kvadratėlius tam tikroje teritorijoje
             </summary>
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.DotController.GetSquareInfo(System.String)">
             <summary>
-            Gražina visus kvadratėlius tam tikroje teritorijoje
+            Gražina vieną kvadratėlį pagal Id
             </summary>
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.DotController.CheckDot(Data.DotFromViewModel)">
@@ -503,7 +503,7 @@
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.DotController.GetUserSquaresByName(Data.DataHelpers.CornersCorrds,System.String)">
             <summary>
-            Gražina tik tam tikro žaidėjo kvadratėlius, pagal prisijungimo vardą
+            (REMOVE LATER)
             </summary>
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.DotController.GetPointsByName(System.String)">
@@ -561,7 +561,7 @@
             Paima paskutinius 10 vartotojo įvykių
             </summary>
         </member>
-        <member name="M:MarkTheWorld.Controllers.Api.UserController.PostUserColor(System.String,Data.DataHelpers.Color)">
+        <member name="M:MarkTheWorld.Controllers.Api.UserController.PostUserColor(System.String,Data.DataHelpers.Colors)">
             <summary>
             Patalpina vartotojo spalvą
             </summary>

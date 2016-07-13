@@ -12,7 +12,7 @@ namespace Data.DataHelpers
         public string flagAddress { get; set; }
         public string countryName { get; set; }
         public int points { get; set; }
-        public Color colors { get; set; }
+        public string colors { get; set; }
         public string pictureAddress { get; set; }
         public DailyReward dailies { get; set; }
     }
