@@ -73,7 +73,7 @@ namespace Repository.UserRepository
         }
 
         
-        public bool SetColors(string userName, Color colors)
+        public bool SetColors(string userName, Colors colors)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
@@ -153,7 +153,7 @@ namespace Repository.UserRepository
             }
         }
 
-        public Color GetColors(string userName)
+        public Colors GetColors(string userName)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {

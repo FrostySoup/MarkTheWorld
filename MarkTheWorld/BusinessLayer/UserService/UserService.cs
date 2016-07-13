@@ -70,12 +70,12 @@ namespace BusinessLayer.UserService
             return repository.GetUserEvents(userName);
         }
 
-        public bool postUserColors(string userName, Color colors)
+        public bool postUserColors(string userName, Colors colors)
         {
             return repository.SetColors(userName, colors);
         }
 
-        public Color getUserColors(string userName)
+        public Colors getUserColors(string userName)
         {
             return repository.GetColors(userName);
         }
@@ -97,7 +97,7 @@ namespace BusinessLayer.UserService
         public UserProfile GetProfile(string userName)
         {
             UserProfile user = new UserProfile();
-            user.colors = repository.GetColors(userName);
+            user.colors = repository.GetColors(userName).colorsToString();
             user.name = userName;
             user.points = repository.GetTotalPoints(userName);
             user.pictureAddress = repository.GetProfilePic(userName);

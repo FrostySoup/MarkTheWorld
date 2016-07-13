@@ -2,6 +2,7 @@
 using Data.Database;
 using Data.DataHelpers;
 using Data.DataHelpers.Facebook;
+using Data.DataHelpers.User.SendData;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -58,7 +59,7 @@ namespace BusinessLayer.UserService
             return repository.GetOneByToken(token).UserName;
         }
 
-        public string register(FbRegisterClient fb)
+        public Registration register(FbRegisterClient fb)
         {
             string photo = "https://graph.facebook.com/"+ fb.userID + "/picture?width=100&height=100";
             FbNameToken token = getLongLiveToken(new FbClientLogin
@@ -67,7 +68,7 @@ namespace BusinessLayer.UserService
                 Id = fb.userID
             });
             if (token.token == null)
-                return "";
+                return null;
             fb.token = token.token;
             return repository.RegisterFbUser(fb, photo);
         }

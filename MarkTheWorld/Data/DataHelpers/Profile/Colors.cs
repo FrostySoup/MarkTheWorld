@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data.DataHelpers
 {
-    public class Color
+    public class Colors
     {
         [Required]
         [Range(0, 255)]
@@ -20,5 +20,10 @@ namespace Data.DataHelpers
         [Required]
         [Range(0, 255)]
         public int blue { get; set; }
+
+        public string colorsToString()
+        {
+            return string.Format("rgb({0}, {1}, {2})", red, green, blue);
+        }
     }
 }

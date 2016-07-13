@@ -26,7 +26,7 @@ namespace Data
 
         public List<UserEvent> eventsHistory { get; set; }
 
-        public Color colors { get; set; }
+        public Colors colors { get; set; }
 
         public string countryCode { get; set; }
 

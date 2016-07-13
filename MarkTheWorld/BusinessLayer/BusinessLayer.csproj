@@ -59,9 +59,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorHelper\ColorService.cs" />
+    <Compile Include="ColorHelper\HSLColor.cs" />
     <Compile Include="DotService\DotServices.cs" />
     <Compile Include="DotService\DotServices.Functions.cs" />
     <Compile Include="DotService\IDotService.cs" />
+    <Compile Include="Filters\ValidateGetSquaresAttribute.cs" />
     <Compile Include="Filters\ValidateViewModelAttribute.cs" />
     <Compile Include="PhotoUpload\CustomMultipartFormDataStreamProvider.cs" />
     <Compile Include="PhotoUpload\ImageThumb.cs" />

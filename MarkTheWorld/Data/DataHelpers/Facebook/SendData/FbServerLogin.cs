@@ -12,5 +12,6 @@ namespace Data.DataHelpers
         public Country country { get; set; }
         public string username { get; set; }
         public bool newUser { get; set; }
+        public string photo { get; set; }
     }
 }

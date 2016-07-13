@@ -13,8 +13,8 @@ namespace Data.DataHelpers
         public double swX { get; set; }
         public double swY { get; set; }
         public List<Markers> markers { get; set; }
-        public Color Colors { get; set; }
-        public SquaresWithInfo(double nex, double ney, double swx, double swy, Markers marker, Color colors)
+        public Colors Colors { get; set; }
+        public SquaresWithInfo(double nex, double ney, double swx, double swy, Markers marker, Colors colors)
         {
             neX = nex;
             neY = ney;
