@@ -1,0 +1,42 @@
+/* global module */
+'use strict';
+
+function topToolbarDirectiveController (userService, accountService, myProfileService, facebookLoginService, sideNavEventService, toastService) {
+    var vm = this;
+
+    vm.user = userService;
+
+    vm.url = '/Scripts/topToolbar/directives/accountMenuItemLoggedDirective.html';
+
+    vm.openRightSideNav = function (sideNavAction) {
+        sideNavEventService.emit({ action: sideNavAction });
+    };
+
+    vm.logout = function (ev) {
+        accountService.logout(ev).then(
+            function (success) {
+                toastService.showToast('Logged out successfully', 5000);
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
+    };
+
+    vm.myProfile = function (ev) {
+        myProfileService.showDialog(ev);
+    };
+
+    vm.facebookLogin = function () {
+        facebookLoginService.login().then(
+            function (success) {
+                toastService.showToast('Welcome back, ' + success.username, 5000);
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
+    };
+}
+
+module.exports = ['userService', 'accountService', 'myProfileService', 'facebookLoginService', 'sideNavEventService', 'toastService', topToolbarDirectiveController];

@@ -532,6 +532,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\bundles\main.js" />
     <Content Include="Scripts\controllers\topMarkersCtrl.js" />
     <Content Include="Scripts\controllers\mapSettingsCtrl.js" />
     <Content Include="Scripts\controllers\addPointCtrl.js" />

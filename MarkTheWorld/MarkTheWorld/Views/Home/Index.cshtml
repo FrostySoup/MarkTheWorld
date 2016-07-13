@@ -9,7 +9,7 @@
     <meta name="viewport" content="initial-scale=1"/>
     <title>Mark The World - visit planet Earth and leave your mark!</title>
 </head>
-<body layout="column" ng-controller="AppController" ng-cloak>
+<body layout="column" ng-controller="appController" ng-cloak>
 <div id="fb-root"></div>
 
 <top-toolbar action="rightSideNavAction"></top-toolbar>
@@ -33,15 +33,7 @@
 
 <side-nav action="rightSideNavAction"></side-nav>
 
-<!-- Angular Material requires Angular.js Libraries -->
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+<script src="~/Scripts/bundles/main.js"></script>
 
-<!-- Angular Material Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.6/angular-material.js"></script>
-
-@Scripts.Render("~/bundles/app")
 </body>
 </html>

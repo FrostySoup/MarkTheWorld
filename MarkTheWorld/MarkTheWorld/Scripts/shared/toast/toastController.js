@@ -1,13 +1,12 @@
-/*global angular */
-(function () {
-    'use strict';
+/*global module */
+'use strict';
 
-    function toastController($scope, $mdToast, message) {
-        $scope.message = message;
+function toastController($scope, $mdToast, message) {
+    $scope.message = message;
 
-        $scope.closeToast = function () {
-            $mdToast.hide();
-        };
-    }
-    angular.module('toast').controller('toastController', toastController);
-}());
+    $scope.closeToast = function () {
+        $mdToast.hide();
+    };
+}
+
+module.exports = ['$scope', '$mdToast', 'message', toastController];

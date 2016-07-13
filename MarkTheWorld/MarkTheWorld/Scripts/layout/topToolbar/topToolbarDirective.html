@@ -1,0 +1,67 @@
+<md-toolbar class="md-primary">
+    <div class="md-toolbar-tools">
+        <h3>Mark The Planet</h3>
+        <span flex=""></span>
+
+        <md-menu ng-if="vm.user.isLogged">
+            <md-button class="md-icon-button" aria-label="Account" ng-click="$mdOpenMenu($event)">
+                <img src="~/../Content/img/avatars/thumb20160711170513371_80DSC_0491.png" style="width: 40px; height: 40px;" alt=""/>
+                <!--<md-icon md-svg-icon="~/../Content/img/icons/ic_account_box_white_48px.svg" class="s48" aria-label="Account"></md-icon>-->
+            </md-button>
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <p>Logged as: {{ vm.user.username }}</p>
+                </md-menu-item>
+                <md-menu-divider></md-menu-divider>
+                <md-menu-item>
+                    <md-button ng-click="vm.myProfile($event)">
+                        My profile
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="vm.logout($event)">
+                        Logout
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+
+        <md-menu ng-if="!vm.user.isLogged">
+            <md-button class="md-icon-button" aria-label="Account" ng-click="$mdOpenMenu($event)">
+                <md-icon md-svg-icon="~/../Content/img/icons/ic_account_box_white_48px.svg" class="s48" aria-label="Account"></md-icon>
+            </md-button>
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button ng-click="vm.openRightSideNav('login')">
+                        Login
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="vm.openRightSideNav('register')">
+                        Register
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item class="menu-item-facebook">
+                    <md-button ng-click="vm.facebookLogin()">
+                        <span class="icon-button-facebook"></span>
+                        Log in with Facebook
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+
+        <!--<md-menu>-->
+            <!--<md-button aria-label="Account" class="md-icon-button" ng-click="$mdOpenMenu($event)">-->
+                <!--<md-icon md-svg-src="~/../Content/img/icons/ic_more_vert_white_48px.svg" class="s48" aria-label="Account"></md-icon>-->
+            <!--</md-button>-->
+            <!--<md-menu-content width="4">-->
+                <!--<md-menu-item>-->
+                    <!--<md-button aria-label="Top markers" ng-click="topMarkers($event)">-->
+                        <!--<md-icon md-svg-src="~/../Content/img/icons/ic_people_black_48px.svg" class="s24" md-menu-align-target></md-icon>-->
+                        <!--Top Markers-->
+                    <!--</md-button>-->
+                <!--</md-menu-item>-->
+            <!--</md-menu-content>-->
+        <!--</md-menu>-->
+    </div>
+</md-toolbar>
