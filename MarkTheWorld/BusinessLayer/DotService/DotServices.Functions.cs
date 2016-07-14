@@ -133,19 +133,19 @@ namespace BusinessLayer.DotService
                     conectedSquares.Add(squares[i]);
                     int connected = 1;
                     checkedDots[i] = 1;
-                    findConnections(connected, quadTree, squares[i], conectedSquares, checkedDots, ref maxCon);
+                    findConnections(ref connected, quadTree, squares[i], conectedSquares, checkedDots, ref maxCon);
                 }
             }
             return maxCon;
         }
 
-        private void findConnections(int connected, quadTreeNode quadTree, Dot dot, List<Dot> conectedSquares, int[] checkedDots, ref int max)
+        private void findConnections(ref int connected, quadTreeNode quadTree, Dot dot, List<Dot> conectedSquares, int[] checkedDots, ref int max)
         {
             CornersCorrds square = coordsToSquare(dot.lat, dot.lon);
-            double neX = square.neX + 0.01;
-            double neY = square.neY + 0.01;
-            double swX = square.swX - 0.01;
-            double swY = square.swY - 0.01;
+            double neX = square.neX + 0.011;
+            double neY = square.neY + 0.011;
+            double swX = square.swX - 0.011;
+            double swY = square.swY - 0.011;
             List<TBQuadTreeNodeData> block = new List<TBQuadTreeNodeData>();
             quadTree.TBQuadTreeGatherDataInRange(quadTree, new TBBoundingBox(swX, swY, neX, neY), block);
             foreach(TBQuadTreeNodeData node in block)
@@ -158,7 +158,7 @@ namespace BusinessLayer.DotService
                         checkedDots[node.number] = 1;
                         if (max < connected)
                             max = connected;
-                        findConnections(connected, quadTree, new Dot(node.x, node.y), conectedSquares, checkedDots, ref max);                     
+                        findConnections(ref connected, quadTree, new Dot(node.x, node.y), conectedSquares, checkedDots, ref max);                     
                     }
             }
         }
@@ -172,12 +172,14 @@ namespace BusinessLayer.DotService
                 double constant = 0.01;
                 if (squareOne.neX == squareTwo.neX)
                 {
-                    if (System.Math.Round(squareOne.neY + constant, 2) == System.Math.Round(squareTwo.neY, 2) || System.Math.Round(squareOne.neY - constant, 2) == System.Math.Round(squareTwo.neY, 2))
+                    if (Math.Abs(System.Math.Round(squareOne.neY + constant, 2) - System.Math.Round(squareTwo.neY, 2)) < 0.005 
+                        || Math.Abs(System.Math.Round(squareOne.neY - constant, 2) - System.Math.Round(squareTwo.neY, 2)) < 0.005)
                         return true;
                 }
                 else if (squareOne.neY == squareTwo.neY)
                 {
-                    if (System.Math.Round(squareOne.neX + constant, 2) == System.Math.Round(squareTwo.neX, 2) || System.Math.Round(squareOne.neX - constant, 2) == System.Math.Round(squareTwo.neX, 2))
+                    if (Math.Abs(System.Math.Round(squareOne.neX + constant, 2) - System.Math.Round(squareTwo.neX, 2)) < 0.005 
+                        || Math.Abs(System.Math.Round(squareOne.neX - constant, 2) - System.Math.Round(squareTwo.neX, 2)) < 0.005)
                         return true;
                 }
             }
