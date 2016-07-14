@@ -97,7 +97,7 @@ namespace BusinessLayer.UserService
         public UserProfile GetProfile(string userName)
         {
             UserProfile user = new UserProfile();
-            user.colors = repository.GetColors(userName).colorsToString();
+            user.colors = repository.GetColors(userName);
             user.name = userName;
             user.points = repository.GetTotalPoints(userName);
             user.pictureAddress = repository.GetProfilePic(userName);
