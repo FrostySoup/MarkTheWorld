@@ -18,7 +18,7 @@ gulp.task('browserify', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('./Scripts/**/*.js', ['browserify'])
+    gulp.watch(['./Scripts/**/*.js', '!./Scripts/.idea/*', '!./Scripts/bundles/*'], ['browserify'])
 });
 
 gulp.task('default', ['watch']);

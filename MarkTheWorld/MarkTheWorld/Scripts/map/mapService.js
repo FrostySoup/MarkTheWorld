@@ -106,6 +106,7 @@ function mapService($http, rectanglesService, markersService, userService) {
                     "swY": map.getBounds().getSouthWest().lat()
                 }
             ).then(function (response) {
+                    console.log(response);
                     rectanglesService.handleRecs(response.data, map);
                 }, function (response) {
                     //TODO: [preRelease] There should be a toast in such cases

@@ -13,12 +13,11 @@ function rectanglesService() {
 
     function addNewRecsToMap(recsToBeAdded, map) {
         angular.forEach(recsToBeAdded, function (value) {
-            var rgb = value.colors.red + ',' + value.colors.green + ',' + value.colors.blue;
             var rec = new google.maps.Rectangle({
-                strokeColor: 'rgb(' + rgb + ')',
+                strokeColor: value.borderColors,
                 strokeOpacity: 1,
                 strokeWeight: 1,
-                fillColor: 'rgb(' + rgb + ')',
+                fillColor: value.colors,
                 fillOpacity: 0.5,
                 map: map,
                 bounds: new google.maps.LatLngBounds(

@@ -4,9 +4,8 @@
         <span flex=""></span>
 
         <md-menu ng-if="vm.user.isLogged">
-            <md-button class="md-icon-button" aria-label="Account" ng-click="$mdOpenMenu($event)">
-                <img src="~/../Content/img/avatars/thumb20160711170513371_80DSC_0491.png" style="width: 40px; height: 40px;" alt=""/>
-                <!--<md-icon md-svg-icon="~/../Content/img/icons/ic_account_box_white_48px.svg" class="s48" aria-label="Account"></md-icon>-->
+            <md-button class="md-icon-button avatar-button" aria-label="Account" ng-click="$mdOpenMenu($event)">
+                <img ng-src="{{ vm.user.avatar }}" alt="{{ vm.user.username }}"/>
             </md-button>
             <md-menu-content width="4">
                 <md-menu-item>

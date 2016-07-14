@@ -6,7 +6,8 @@ function userService() {
         isLogged: false,
         username: '',
         token: '',
-        currentPosition: null
+        currentPosition: null,
+        avatar: null
     };
 }
 module.exports = [userService];

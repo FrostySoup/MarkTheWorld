@@ -1,7 +1,7 @@
 /*global module */
 'use strict';
 
-function myProfileController($mdDialog, myProfileService, myProfilePictureService, myProfileColorService) {
+function myProfileController($mdDialog, myProfileService, userService, myProfilePictureService, myProfileColorService) {
     var vm = this;
 
     vm.cancel = function () {
@@ -29,6 +29,7 @@ function myProfileController($mdDialog, myProfileService, myProfilePictureServic
         function (success) {
             console.log(success);
             vm.profileData = success.data;
+            userService.avatar = success.data.pictureAddress;
         },
         function (error) {
             console.log(error);
@@ -36,4 +37,4 @@ function myProfileController($mdDialog, myProfileService, myProfilePictureServic
     );
 }
 
-module.exports = ['$mdDialog', 'myProfileService', 'myProfilePictureService', 'myProfileColorService', myProfileController];
+module.exports = ['$mdDialog', 'myProfileService', 'userService', 'myProfilePictureService', 'myProfileColorService', myProfileController];

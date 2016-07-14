@@ -21,9 +21,9 @@
         </md-input-container>
         <md-button ng-disabled="vm.requesting" type="submit" layout-fill class="md-raised md-primary">
             Login
-            <md-progress-circular ng-show="vm.requesting" md-mode="indeterminate" class="md-hue-2" md-diameter="42px"></md-progress-circular>
+            <md-progress-circular ng-if="vm.requesting" md-mode="indeterminate" class="md-hue-2" md-diameter="42px"></md-progress-circular>
         </md-button>
-        <div ng-show="vm.requestError" class="panel-error">
+        <div ng-if="vm.requestError" class="panel-error">
             <md-icon md-svg-src="~/../Content/img/icons/ic_info_outline.svg" class="s32" aria-label="Error"></md-icon>
             <div class="panel-error-text">{{ vm.requestError }}</div>
         </div>

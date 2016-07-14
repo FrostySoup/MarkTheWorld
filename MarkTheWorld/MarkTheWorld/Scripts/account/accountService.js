@@ -6,9 +6,11 @@ function accountService($http, $q, userService, facebookLoginService) {
         console.log('login success', user);
         localStorage.setItem('username', user.username);
         localStorage.setItem('token', user.Token);
+        localStorage.setItem('avatar', user.photo);
         userService.isLogged = true;
         userService.username = user.username;
         userService.token = user.Token;
+        userService.avatar = user.photo;
     }
 
     return {
@@ -72,11 +74,15 @@ function accountService($http, $q, userService, facebookLoginService) {
         appStartUpLoginCheck: function () {
             var token = localStorage.getItem('token');
             var username = localStorage.getItem('username');
+            var avatar = localStorage.getItem('avatar');
 
             if (token !== null && username !== null) {
                 userService.isLogged = true;
                 userService.username = username;
                 userService.token = token;
+                if (avatar !== null) {
+                    userService.avatar = avatar;
+                }
             }
         }
     };
