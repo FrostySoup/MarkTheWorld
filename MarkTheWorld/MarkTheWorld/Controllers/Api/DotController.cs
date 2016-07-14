@@ -113,11 +113,8 @@ namespace MarkTheWorld.Controllers.Api
             }
             if (clicked == null)
                 return Content(HttpStatusCode.BadRequest, "Dot not found");
-            else
-                clicked.photoPath = "~/../Content/img/dotLocation/" + clicked.photoPath;
-            clicked.country = "Default";
-            clicked.pathCountryFlag = "~/../Content/img/flags/lt.png";
-            clicked.state = "Default";
+            else if (!string.IsNullOrEmpty(clicked.photoPath))
+                clicked.photoPath = "~/Content/img/dotLocation/" + clicked.photoPath;
             return Ok(clicked);
         }
 

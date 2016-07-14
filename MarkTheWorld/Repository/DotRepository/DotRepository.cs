@@ -284,8 +284,13 @@ namespace Repository.DotRepository
                 try
                 {
                     Dot myDot = session.Load<Dot>(Id);
+                    User user = session.Query<User>().Where(x => x.UserName.Equals(myDot.username)).First();
                     return new DotClick
                     {
+                        profilePic = user.profilePicture,
+                        country = user.countryCode,
+                        state = user.state,
+                        points = user.points,
                         message = myDot.message,
                         date = myDot.date,
                         username = myDot.username,

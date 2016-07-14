@@ -106,7 +106,7 @@ namespace MarkTheWorld.Controllers.Api
                 {
                     throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotAcceptable, "Lon and lat is not properly formatted"));
                 }
-                string imageName = ImageThumb.toThumb(path);
+                string imageName = ImageThumb.toFixedThumb(path);
 
                 DotFromViewModel dot = new DotFromViewModel(lat, lon, message, userToken);
 

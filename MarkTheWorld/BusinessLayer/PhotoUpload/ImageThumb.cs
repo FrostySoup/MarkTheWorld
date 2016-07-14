@@ -65,10 +65,18 @@ namespace BusinessLayer.PhotoUpload
             Image image = Image.FromFile(photoUrl);
 
             int[] sides = countSidesLength(700, image);
-            Image thumb = image.GetThumbnailImage(sides[0], sides[1], () => false, IntPtr.Zero);
+
+            Bitmap newImage = new Bitmap(sides[0], sides[1]);
             var thumbUrl = photoUrl.Replace("OriginalPhoto", "thumb");
-            thumb.Save(thumbUrl);
-            thumb.Dispose();
+            using (Graphics gr = Graphics.FromImage(newImage))
+            {
+                gr.SmoothingMode = SmoothingMode.HighQuality;
+                gr.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                gr.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                gr.DrawImage(image, new Rectangle(0, 0, sides[0], sides[1]));
+            }
+            newImage.Save(thumbUrl);
+            newImage.Dispose();
             image.Dispose();
             System.IO.File.Delete(photoUrl);
             return thumbUrl;

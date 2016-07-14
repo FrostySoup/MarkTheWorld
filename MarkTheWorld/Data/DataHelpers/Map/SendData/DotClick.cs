@@ -18,5 +18,6 @@ namespace Data.DataHelpers.Map
         public string pathCountryFlag { get; set; }
         public int points { get; set; }
         public int position { get; set; }
+        public string profilePic { get; set; }
     }
 }

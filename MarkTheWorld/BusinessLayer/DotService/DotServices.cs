@@ -67,7 +67,12 @@ namespace BusinessLayer.DotService
 
         public DotClick GetDotWithInfo(string id)
         {
-            return repositoryDot.GetDotById(id);
+            DotClick dot = repositoryDot.GetDotById(id);
+            dot.pathCountryFlag = "~/Content/img/flags/" + dot.country + ".png";
+            dot.country = CountriesList.getCountry(dot.country).name;
+            if (!dot.profilePic.Contains("facebook"))
+                dot.profilePic = "~/Content/img/avatars/" + dot.profilePic;
+            return dot;
         }
     }
 }
