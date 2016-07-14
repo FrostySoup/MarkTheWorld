@@ -12,5 +12,11 @@ namespace Data.DataHelpers.Map
         public DateTime date { get; set; }
         public string photoPath { get; set; }
         public string username { get; set; }
+
+        public string country { get; set; }
+        public string state { get; set; }
+        public string pathCountryFlag { get; set; }
+        public int points { get; set; }
+        public int position { get; set; }
     }
 }

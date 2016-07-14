@@ -8,6 +8,8 @@ using System.Drawing;
 using System.Web;
 using Data.DataHelpers.User;
 using System.IO;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace BusinessLayer.PhotoUpload
 {
@@ -29,10 +31,17 @@ namespace BusinessLayer.PhotoUpload
             photoUrl = root + path.Substring(end);
             Image image = Image.FromFile(photoUrl);
             //Jeigu čia gaunate klaidą vadinas neteisingai nurodėte kelią iki Content folderio Web.config folderyje
-            Image thumb = image.GetThumbnailImage(100, 100, () => false, IntPtr.Zero);
+            Bitmap newImage = new Bitmap(100, 100);
             var thumbUrl = photoUrl.Replace("OriginalPhoto", "thumb");
-            thumb.Save(thumbUrl);
-            thumb.Dispose();
+            using (Graphics gr = Graphics.FromImage(newImage))
+            {
+                gr.SmoothingMode = SmoothingMode.HighQuality;
+                gr.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                gr.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                gr.DrawImage(image, new Rectangle(0, 0, 100, 100));              
+            }
+            newImage.Save(thumbUrl);
+            newImage.Dispose();
             image.Dispose();
             System.IO.File.Delete(photoUrl);
             string imageName = thumbUrl.Substring(thumbUrl.LastIndexOf('/') + 1);

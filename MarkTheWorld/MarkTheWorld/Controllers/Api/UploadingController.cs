@@ -14,6 +14,7 @@ using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace MarkTheWorld.Controllers.Api
 {
@@ -30,6 +31,7 @@ namespace MarkTheWorld.Controllers.Api
 
         [Route("uploading")]
         [HttpPost]
+        [ResponseType(typeof(string))]
         public async Task<HttpResponseMessage> Post()
         {
             var folderName = "Content/img/avatars";
@@ -59,8 +61,8 @@ namespace MarkTheWorld.Controllers.Api
                         try { System.IO.File.Delete(PATH + "\\" + userOldPhotoPath); }
                         catch { /*failed to remove image*/}
                     }
-                }
-                return Request.CreateResponse(HttpStatusCode.OK, "success!");
+                }            
+                return Request.CreateResponse(HttpStatusCode.OK, "~/Content/img/avatars/" + user.profilePicture);
             }
             else
             {

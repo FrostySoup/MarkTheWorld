@@ -12,7 +12,7 @@ namespace BusinessLayer.ColorHelper
     {
         public static string Darken(Colors color)
         {
-            double darkenAmount = (double)((double)color.red / 255 + (double)color.green / 255 + (double)color.blue / 255) / 3;
+            double darkenAmount = 1-((double)((double)color.red / 255 + (double)color.green / 255 + (double)color.blue / 255) / 4);
             Color getColor = Color.FromArgb(color.red, color.green, color.blue);
             HSLColor hslColor = new HSLColor(getColor);
             hslColor.Luminosity *= darkenAmount; // 0 to 1

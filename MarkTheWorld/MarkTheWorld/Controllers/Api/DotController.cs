@@ -96,7 +96,7 @@ namespace MarkTheWorld.Controllers.Api
         /// <summary>
         /// Gražina vieną kvadratėlį pagal Id
         /// </summary>
-        [ResponseType(typeof(Square))]
+        [ResponseType(typeof(DotClick))]
         [Route("square/{Id}")]
         [HttpGet]
         [ValidateViewModel]
@@ -115,6 +115,9 @@ namespace MarkTheWorld.Controllers.Api
                 return Content(HttpStatusCode.BadRequest, "Dot not found");
             else
                 clicked.photoPath = "~/../Content/img/dotLocation/" + clicked.photoPath;
+            clicked.country = "Default";
+            clicked.pathCountryFlag = "~/../Content/img/flags/lt.png";
+            clicked.state = "Default";
             return Ok(clicked);
         }
 
