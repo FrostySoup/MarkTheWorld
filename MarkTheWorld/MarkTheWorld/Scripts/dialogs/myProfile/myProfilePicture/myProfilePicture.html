@@ -1,4 +1,4 @@
-<md-dialog class="dialog-my-profile-picture">
+<md-dialog style="height: 5000px" class="dialog-my-profile-picture">
     <md-toolbar>
         <div class="md-toolbar-tools">
             <h2>Upload New Profile Picture</h2>
@@ -21,7 +21,9 @@
             </md-list>
             <md-divider></md-divider>
             <div flex layout="column">
-                <img-crop image="vm.cropFileSource" area-min-size="100" result-image="vm.croppedFileUrl"></img-crop>
+                <img-crop image="vm.cropFileSource" area-min-size="100" result-image-quality="1" result-image="vm.croppedFileUrl"></img-crop>
+                <div>Cropped Image:</div>
+                <div><img ng-src="{{vm.croppedFileUrl}}" /></div>
             </div>
         </div>
         <form name="vm.pictureUploadForm" ng-submit="vm.handleEnteredURL(vm.webImageUrl)" novalidate ng-switch-default layout-padding layout="column" flex

@@ -584,9 +584,13 @@
     <Content Include="Scripts\mapSettings\mapSettings.js" />
     <Content Include="Scripts\mapSettings\mapSettingsController.js" />
     <Content Include="Scripts\mapSettings\mapSettingsService.js" />
-    <Content Include="Scripts\map\map.js" />
-    <Content Include="Scripts\map\services\mapService.js" />
-    <Content Include="Scripts\map\services\rectanglesService.js" />
+    <Content Include="Scripts\map\googleMapsInitializer\googleMapsInitializerService.js" />
+    <Content Include="Scripts\map\googleMapsInitializer\index.js" />
+    <Content Include="Scripts\map\index.js" />
+    <Content Include="Scripts\map\mapDirective.js" />
+    <Content Include="Scripts\map\mapService.js" />
+    <Content Include="Scripts\map\markersService.js" />
+    <Content Include="Scripts\map\rectanglesService.js" />
     <Content Include="Scripts\shared\shared.js" />
     <Content Include="Scripts\shared\simpleModal\simpleModal.js" />
     <Content Include="Scripts\shared\simpleModal\simpleModalController.js" />
