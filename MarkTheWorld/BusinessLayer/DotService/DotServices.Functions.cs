@@ -101,8 +101,35 @@ namespace BusinessLayer.DotService
                     groupedDotsApi.Add(new GroupedDotsForApi(block[i]));
             }
 
+            combineGroupedDots(groupedDotsApi, (lenghtPerSquare * 0.6));
+            groupedDotsApi.RemoveAll(item => item == null);
             return groupedDotsApi;
         }      
+
+        private void combineGroupedDots(List<GroupedDotsForApi> groupedDotsApi, double distanceAllowed)
+        {
+            for (int i = 0; i < groupedDotsApi.Count; i++)
+            {
+                for (int j = i+1; j < groupedDotsApi.Count; j++)
+                {
+                    if (checkTwoGroups(groupedDotsApi[i], groupedDotsApi[j], distanceAllowed))
+                    {
+                        groupedDotsApi[i].addDots(groupedDotsApi[j]);
+                        groupedDotsApi[j] = null;
+                    }
+                }
+            }
+        }
+
+        private bool checkTwoGroups(GroupedDotsForApi groupA, GroupedDotsForApi groupB, double distanceAllowed)
+        {
+            if (groupA == null || groupB == null)
+                return false;
+            double distance = Math.Pow(Math.Pow((groupA.lat - groupB.lat),2) + Math.Pow((groupA.lon - groupB.lon), 2), 0.5);
+            if ((distanceAllowed - distance) > 0)
+                return true;
+            return false;
+        }
 
         public int maxConnection(Dot[] squares)
         {

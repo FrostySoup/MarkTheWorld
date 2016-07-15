@@ -13,6 +13,15 @@ namespace Data
         public double lon { get; set; }
         public double lat { get; set; }
 
+        public void addDots(GroupedDotsForApi otherDots)
+        {            
+            double bigger = (double)(count / otherDots.count);
+            lon = (lon * bigger + otherDots.lon) / (1 + bigger);
+            lat = (lat * bigger + otherDots.lat) / (1 + bigger);
+            count += otherDots.count;
+            otherDots = null;
+        }
+
         public GroupedDotsForApi(List<TBQuadTreeNodeData> dots)
         {
             count = dots.Count;
