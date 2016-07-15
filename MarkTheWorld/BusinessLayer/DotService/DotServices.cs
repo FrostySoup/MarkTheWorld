@@ -68,10 +68,10 @@ namespace BusinessLayer.DotService
         public DotClick GetDotWithInfo(string id)
         {
             DotClick dot = repositoryDot.GetDotById(id);
-            dot.pathCountryFlag = "~/Content/img/flags/" + dot.country + ".png";
+            dot.pathCountryFlag = "/Content/img/flags/" + dot.country + ".png";
             dot.country = CountriesList.getCountry(dot.country).name;
             if (!dot.profilePic.Contains("facebook"))
-                dot.profilePic = "~/Content/img/avatars/" + dot.profilePic;
+                dot.profilePic = "/Content/img/avatars/" + dot.profilePic;
             return dot;
         }
     }

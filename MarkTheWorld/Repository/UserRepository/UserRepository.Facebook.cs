@@ -45,7 +45,7 @@ namespace Repository.UserRepository
                         session.SaveChanges();
                         string profilePath = user.profilePicture;
                         if (!profilePath.Contains("facebook"))
-                            profilePath = "~/../Content/img/avatars/" + profilePath;
+                            profilePath = "/Content/img/avatars/" + profilePath;
                         return new FbNameToken
                         {
                             photoPath = profilePath,

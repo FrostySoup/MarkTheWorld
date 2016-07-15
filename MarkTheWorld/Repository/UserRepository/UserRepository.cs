@@ -26,7 +26,7 @@ namespace Repository.UserRepository
                 Random rnd = new Random();
                 newUser.profilePicture = "defaultAvatar" + rnd.Next(1, 16) + ".png";
                 UserRegistrationModel check = new UserRegistrationModel();
-                check.photo = "~/../Content/img/avatars/" + newUser.profilePicture;             
+                check.photo = "/Content/img/avatars/" + newUser.profilePicture;             
                 check.username = userPost.UserName;
                 try
                 {                    
@@ -175,7 +175,7 @@ namespace Repository.UserRepository
                     if (oneObject != null)
                     {
                         check.success = true;
-                        check.photo = "~/../Content/img/avatars/" + oneObject.profilePicture;
+                        check.photo = "/Content/img/avatars/" + oneObject.profilePicture;
                         check.username = oneObject.UserName;
                         check.message = message2.Success;
                         check.Token = oneObject.Token;

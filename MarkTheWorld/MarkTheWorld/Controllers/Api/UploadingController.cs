@@ -62,7 +62,7 @@ namespace MarkTheWorld.Controllers.Api
                         catch { /*failed to remove image*/}
                     }
                 }            
-                return Request.CreateResponse(HttpStatusCode.OK, "~/Content/img/avatars/" + user.profilePicture);
+                return Request.CreateResponse(HttpStatusCode.OK, "/Content/img/avatars/" + user.profilePicture);
             }
             else
             {

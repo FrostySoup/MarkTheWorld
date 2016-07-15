@@ -102,7 +102,7 @@ namespace BusinessLayer.UserService
             user.points = repository.GetTotalPoints(userName);
             user.pictureAddress = repository.GetProfilePic(userName);
             if (!user.pictureAddress.Contains("facebook"))
-                user.pictureAddress = "~/../Content/img/avatars/" + user.pictureAddress;
+                user.pictureAddress = "/Content/img/avatars/" + user.pictureAddress;
             DotServices dotService = new DotServices();
             user.dailies = new DailyReward();
             int points = 0;

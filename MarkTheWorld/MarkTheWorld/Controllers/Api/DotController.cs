@@ -114,7 +114,7 @@ namespace MarkTheWorld.Controllers.Api
             if (clicked == null)
                 return Content(HttpStatusCode.BadRequest, "Dot not found");
             else if (!string.IsNullOrEmpty(clicked.photoPath))
-                clicked.photoPath = "~/Content/img/dotLocation/" + clicked.photoPath;
+                clicked.photoPath = "/Content/img/dotLocation/" + clicked.photoPath;
             return Ok(clicked);
         }
 
