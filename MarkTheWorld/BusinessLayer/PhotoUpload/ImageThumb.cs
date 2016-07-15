@@ -85,22 +85,22 @@ namespace BusinessLayer.PhotoUpload
         private static int[] countSidesLength(int maxSide, Image image)
         {
             int[] sides = { 100, 100 };
-            int x = image.Width;
-            int y = image.Height;
+            double x = image.Width;
+            double y = image.Height;
             if (x > y && x > 700)
             {
-                int ratio = x / 700;
+                double ratio = x / 700;
                 x = 700;
                 y = y / ratio;
             }
             else if (y > 700)
             {
-                int ratio = y / 700;
+                double ratio = y / 700;
                 y = 700;
                 x = x / ratio;
             }
-            sides[0] = x;
-            sides[1] = y;
+            sides[0] = (int)x;
+            sides[1] = (int)y;
             return sides;
         }
 
