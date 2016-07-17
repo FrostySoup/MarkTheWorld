@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.DotService;
+using Data.DataHelpers.User;
 
 namespace BusinessLayer.UserService
 {
@@ -123,6 +124,32 @@ namespace BusinessLayer.UserService
             }
 
             return user;
+        }
+
+        public List<string> GetUsersAutoComplete(string filter, int number)
+        {
+            List<string> usernames = repository.GetAll<User>().Select(x => x.UserName).ToList();
+            usernames = filterUsernames(filter, number, usernames);
+            return usernames;
+        }
+
+        private List<string> filterUsernames(string filter, int number, List<string> usernames)
+        {
+            List<StringFiltering> filterer = new List<StringFiltering>();
+            foreach (string name in usernames)
+            {
+                filterer.Add(new StringFiltering(name, filter));
+            }
+            List<StringFiltering> sorted = filterer.OrderBy(x => x.value).ToList();
+
+            usernames = new List<string>();
+            int i = 0;
+            while (i < sorted.Count && i < number && sorted[i].value != 100)
+            {
+                usernames.Add(sorted[i].username);
+                i++;
+            }
+            return usernames;
         }
     }
 }

@@ -113,7 +113,7 @@ namespace Repository.UserRepository
                     return null;
                 }
             }
-        }       
+        }
 
         public List<TopUser> GetTopUsers()
         {

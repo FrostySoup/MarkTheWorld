@@ -14,6 +14,7 @@ namespace Repository.GenericRepository
             {
                 var returnedObj = session
                     .Query<T>()
+                    .Take(10000)
                     .ToList();
                 return returnedObj;
             }

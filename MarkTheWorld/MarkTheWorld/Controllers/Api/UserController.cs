@@ -84,6 +84,27 @@ namespace MarkTheWorld.Controllers.Api
         }
 
         /// <summary>
+        /// Randa nurodytą kiekį vartotojų vardų pagal pateiktą string 
+        /// </summary>
+        [ResponseType(typeof(List<string>))]
+        [Route("autocomplete/{username}/{number}")]
+        [HttpGet]
+        public IHttpActionResult GetUsersAutoComplete(string username, int number)
+        {
+            List<string> usernames;
+            try
+            {
+                usernames = userService.GetUsersAutoComplete(username, number);
+            }
+            catch (Exception)
+            {
+                return Content(HttpStatusCode.BadRequest, "No users found");
+            }
+
+            return Ok(usernames);
+        }
+
+        /// <summary>
         /// Paima duomenis reikalingus profilio langui
         /// </summary>
         [ResponseType(typeof(UserProfile))]

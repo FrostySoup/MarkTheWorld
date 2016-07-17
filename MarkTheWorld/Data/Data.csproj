@@ -85,6 +85,7 @@
     <Compile Include="DataHelpers\User\Photo.cs" />
     <Compile Include="DataHelpers\User\ReceivedData\UserLoginPost.cs" />
     <Compile Include="DataHelpers\User\SendData\Registration.cs" />
+    <Compile Include="DataHelpers\User\StringFiltering.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuadTrees\QuadTree.cs" />
     <Compile Include="DataHelpers\User\SendData\UserDailyReward.cs" />
