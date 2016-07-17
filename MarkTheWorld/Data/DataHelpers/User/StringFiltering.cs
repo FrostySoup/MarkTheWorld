@@ -13,7 +13,7 @@ namespace Data.DataHelpers.User
 
         public StringFiltering(string user, string filter)
         {
-            value = user.IndexOf(filter);
+            value = user.ToLower().IndexOf(filter.ToLower());
             if (value == -1)
                 value = 100;
             username = user;
