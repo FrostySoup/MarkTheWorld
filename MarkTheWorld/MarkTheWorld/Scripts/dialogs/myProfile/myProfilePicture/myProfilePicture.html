@@ -1,4 +1,4 @@
-<md-dialog style="height: 5000px" class="dialog-my-profile-picture">
+<md-dialog class="dialog-my-profile-picture">
     <md-toolbar>
         <div class="md-toolbar-tools">
             <h2>Upload New Profile Picture</h2>
@@ -22,8 +22,6 @@
             <md-divider></md-divider>
             <div flex layout="column">
                 <img-crop image="vm.cropFileSource" area-min-size="100" result-image-quality="1" result-image="vm.croppedFileUrl"></img-crop>
-                <div>Cropped Image:</div>
-                <div><img ng-src="{{vm.croppedFileUrl}}" /></div>
             </div>
         </div>
         <form name="vm.pictureUploadForm" ng-submit="vm.handleEnteredURL(vm.webImageUrl)" novalidate ng-switch-default layout-padding layout="column" flex
@@ -51,7 +49,7 @@
             </div>
             <div flex="25" layout="column">
                 <!--TODO: [preRelease] Longer error doesn't fit-->
-                <div ng-show="vm.fileError" class="panel-error">
+                <div ng-if="vm.fileError" class="panel-error">
                     <md-icon md-svg-src="~/../Content/img/icons/ic_info_outline.svg" class="s32"
                              aria-label="Error"></md-icon>
                     <div class="panel-error-text">{{ vm.fileError }}</div>

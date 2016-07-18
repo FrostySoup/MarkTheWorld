@@ -1,7 +1,7 @@
 /*global module */
 'use strict';
 
-function myProfileColorController($mdDialog, myProfileColorService, toastService) {
+function myProfileColorController($mdDialog, myProfileColorService, mapService, toastService) {
     var vm = this;
 
     vm.cancel = function () {
@@ -15,6 +15,7 @@ function myProfileColorController($mdDialog, myProfileColorService, toastService
         myProfileColorService.saveColor(vm.color).then(
             function () {
                 toastService.showToast('Color changed', 5000);
+                mapService.updateRecColors();
                 vm.cancel();
             },
             function (error) {
@@ -26,4 +27,4 @@ function myProfileColorController($mdDialog, myProfileColorService, toastService
     };
 }
 
-module.exports = ['$mdDialog', 'myProfileColorService', 'toastService', myProfileColorController];
+module.exports = ['$mdDialog', 'myProfileColorService', 'mapService', 'toastService', myProfileColorController];

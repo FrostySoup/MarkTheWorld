@@ -179,6 +179,63 @@ md-dialog .md-subheader {
   opacity: 0;
 }
 
+/* filter map dialog */
+md-dialog.dialog-filter-map .md-dialog-content {
+    padding: 16px;
+}
+
+md-dialog.dialog-filter-map input {
+    padding-right: 20px;
+}
+
+md-dialog.dialog-filter-map .panel-error {
+    margin-top: 16px;
+}
+
+md-dialog.dialog-filter-map md-dialog-content .panel-info.layout-row {
+    margin-bottom: 16px;
+    padding: 8px;
+    background: rgb(245,245,245);
+    border-radius: 3px;
+}
+
+md-dialog.dialog-filter-map md-autocomplete {
+    padding-right: 120px;
+}
+
+md-dialog.dialog-filter-map md-autocomplete[md-floating-label] md-input-container {
+    padding-bottom: 0;
+    margin: 0;
+}
+
+md-dialog.dialog-filter-map md-autocomplete md-autocomplete-wrap md-progress-linear.md-inline {
+    bottom: -3px;
+}
+
+md-dialog.dialog-filter-map .list-item-filter {
+    margin-top: 8px;
+    padding-left: 14px;
+}
+
+md-dialog.dialog-filter-map .md-errors-spacer {
+    display: none;
+}
+
+md-dialog.dialog-filter-map .list-item-filter svg {
+    position: absolute;
+    right: 2px;
+    top: 9px;
+    width: 18px;
+    height: 18px;
+    color: rgba(0,0,0,0.54);
+    fill: currentColor;
+    cursor: pointer;
+}
+
+md-dialog.dialog-filter-map .list-item-filter svg:focus {
+    outline: none;
+}
+
 /* claim spot dialog */
 
 md-dialog.dialog-claim-spot md-dialog-content .panel-info.layout-row {
@@ -193,12 +250,12 @@ md-dialog.dialog-claim-spot form {
     margin-bottom: 8px;
 }
 
-md-dialog.dialog-claim-spot .panel-info md-icon {
+md-dialog.dialog-claim-spot .panel-info md-icon, md-dialog.dialog-filter-map .panel-info md-icon {
     margin: 0;
     opacity: 0.3;
 }
 
-md-dialog.dialog-claim-spot .panel-info p {
+md-dialog.dialog-claim-spot .panel-info p, md-dialog.dialog-filter-map .panel-info p {
     margin: 0 0 0 8px;
 }
 
@@ -230,14 +287,15 @@ md-dialog.dialog-claim-spot .file-preview button {
     top: -24px;
 }
 
-md-dialog.dialog-claim-spot .file-preview img {
+md-dialog.dialog-claim-spot .file-preview img, md-dialog.dialog-spot-details .attached-photo img {
     max-width: 100%;
     max-height: 450px;
-    border: 1px solid #828282;
+    border: 1px solid #e1e1e1;
+    padding: 4px;
 }
 
 @media (min-width: 960px) {
-    md-dialog.dialog-claim-spot .file-preview img {
+    md-dialog.dialog-claim-spot .file-preview img, md-dialog.dialog-spot-details .attached-photo img {
         max-width: 350px;
         max-height: 350px;
     }
@@ -420,6 +478,35 @@ md-dialog.dialog-my-profile-picture .profile-picture-second-step md-divider {
     margin-bottom: 8px;
 }
 
+/* spot details dialog */
+md-dialog.dialog-spot-details {
+    max-width: 450px;
+}
+
+blockquote {
+    display: block;
+    overflow: hidden;
+    padding: 16px 16px 8px 54px;
+    margin: 0;
+    position: relative;
+    word-break: break-all;
+}
+
+blockquote::before {
+    content: "\201C";
+    font-family: Georgia, serif;
+    font-size: 60px;
+    font-weight: bold;
+    color: #999;
+    position: absolute;
+    left: 16px;
+    top: 3px;
+}
+
+md-dialog.dialog-spot-details button {
+    padding: 0 8px;
+}
+
 /* my profile dialog */
 @media (min-width: 960px) {
     md-dialog.dialog-my-profile {
@@ -428,28 +515,36 @@ md-dialog.dialog-my-profile-picture .profile-picture-second-step md-divider {
 }
 
 md-dialog.dialog-my-profile .user-avatar {
-    padding: 8px 0 8px;
-    margin-right: 8px;
+    padding-right: 24px;
 }
 
 md-dialog.dialog-my-profile .user-avatar:hover {
     cursor: pointer;
 }
 
-md-dialog.dialog-my-profile .user-avatar img {
+md-dialog.dialog-my-profile .user-avatar img, md-dialog.dialog-spot-details .user-avatar img {
     border-radius: 50%;
-    margin: 0 16px 0;
+    width: 100px;
+    height: 100px;
 }
 
-md-dialog.dialog-my-profile .user-avatar p {
+md-dialog.dialog-my-profile .user-avatar p, md-dialog.dialog-spot-details .user-avatar p {
     font-size: 12px;
     text-align: center;
     margin: 3px 0 0 0;
 }
 
-md-dialog.dialog-my-profile .user-avatar img {
-    width: 100px;
-    height: 100px;
+md-dialog.dialog-my-profile .profile-main-info h3, md-dialog.dialog-spot-details .profile-main-info h3 {
+    margin: 0;
+}
+
+md-dialog.dialog-my-profile .row-title, md-dialog.dialog-spot-details .row-title {
+    text-align: right;
+    padding: 0 8px 0 0;
+}
+
+md-dialog.dialog-my-profile table, md-dialog.dialog-spot-details table {
+    border-spacing: 0 2px;
 }
 
 md-dialog.dialog-my-profile .user-color, md-dialog.dialog-my-profile-color .user-color {
@@ -466,19 +561,6 @@ md-dialog.dialog-my-profile .md-list-item-user-password md-icon, md-dialog.dialo
     margin: 0 8px 0 0;
     color: #757575;
     width: 32px;
-}
-
-md-dialog.dialog-my-profile .profile-main-info h3 {
-    margin: 0;
-}
-
-md-dialog.dialog-my-profile .row-title {
-    text-align: right;
-    padding: 0 8px 0 0;
-}
-
-md-dialog.dialog-my-profile table {
-    border-spacing: 0 2px;
 }
 
 /* login/register dialog */

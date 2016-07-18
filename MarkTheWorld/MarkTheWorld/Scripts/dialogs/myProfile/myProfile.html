@@ -9,12 +9,12 @@
         </div>
     </md-toolbar>
     <md-dialog-content>
-        <div layout layout-align="start center">
+        <div layout layout-padding layout-align="start center">
             <div layout="column" class="user-avatar" ng-click="vm.myProfilePicture()">
                 <img ng-src="{{vm.profileData.pictureAddress}}" />
                 <p>Tap to change</p>
             </div>
-            <div class="profile-main-info" layout="column">
+            <div class="profile-main-info">
                 <h3>{{vm.profileData.name}}</h3>
                 <table>
                     <tr>
@@ -43,11 +43,6 @@
                 <div ng-attr-style="background: rgb({{vm.profileData.colors.red}},{{vm.profileData.colors.green}},{{vm.profileData.colors.blue}})" class="user-color"></div>
                 <p>Color</p>
                 <md-button class="md-secondary" ng-click="vm.myProfileColor()">Edit</md-button>
-            </md-list-item>
-            <md-list-item class="md-list-item-user-password">
-                <md-icon md-svg-src="~/../Content/img/icons/ic_lock_open.svg" class="s32"></md-icon>
-                <p>Password</p>
-                <md-button class="md-secondary" ng-click="doSecondaryAction($event)">Edit</md-button>
             </md-list-item>
         </md-list>
     </md-dialog-content>

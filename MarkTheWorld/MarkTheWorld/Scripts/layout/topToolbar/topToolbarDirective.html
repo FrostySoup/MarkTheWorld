@@ -49,18 +49,18 @@
             </md-menu-content>
         </md-menu>
 
-        <!--<md-menu>-->
-            <!--<md-button aria-label="Account" class="md-icon-button" ng-click="$mdOpenMenu($event)">-->
-                <!--<md-icon md-svg-src="~/../Content/img/icons/ic_more_vert_white_48px.svg" class="s48" aria-label="Account"></md-icon>-->
-            <!--</md-button>-->
-            <!--<md-menu-content width="4">-->
-                <!--<md-menu-item>-->
-                    <!--<md-button aria-label="Top markers" ng-click="topMarkers($event)">-->
-                        <!--<md-icon md-svg-src="~/../Content/img/icons/ic_people_black_48px.svg" class="s24" md-menu-align-target></md-icon>-->
-                        <!--Top Markers-->
-                    <!--</md-button>-->
-                <!--</md-menu-item>-->
-            <!--</md-menu-content>-->
-        <!--</md-menu>-->
+        <md-menu>
+            <md-button aria-label="Account" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                <md-icon md-svg-src="~/../Content/img/icons/ic_more_vert_white_48px.svg" class="s48" aria-label="More"></md-icon>
+            </md-button>
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button aria-label="Filter map" ng-click="vm.filterMap($event)">
+                        <md-icon md-svg-src="~/../Content/img/icons/ic_filter_list.svg" class="s24" md-menu-align-target></md-icon>
+                        Filter map
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
     </div>
 </md-toolbar>

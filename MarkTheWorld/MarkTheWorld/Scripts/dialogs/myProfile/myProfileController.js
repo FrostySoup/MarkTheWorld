@@ -1,7 +1,7 @@
 /*global module */
 'use strict';
 
-function myProfileController($mdDialog, myProfileService, userService, myProfilePictureService, myProfileColorService) {
+function myProfileController($mdDialog, myProfileService, myProfilePictureService, myProfileColorService) {
     var vm = this;
 
     vm.cancel = function () {
@@ -27,9 +27,7 @@ function myProfileController($mdDialog, myProfileService, userService, myProfile
     myProfileService.getProfileData().then(
         //TODO: [preRelease] there should be an elegant preloader and nice failure handling
         function (success) {
-            console.log(success);
             vm.profileData = success.data;
-            userService.avatar = success.data.pictureAddress;
         },
         function (error) {
             console.log(error);
@@ -37,4 +35,4 @@ function myProfileController($mdDialog, myProfileService, userService, myProfile
     );
 }
 
-module.exports = ['$mdDialog', 'myProfileService', 'userService', 'myProfilePictureService', 'myProfileColorService', myProfileController];
+module.exports = ['$mdDialog', 'myProfileService', 'myProfilePictureService', 'myProfileColorService', myProfileController];

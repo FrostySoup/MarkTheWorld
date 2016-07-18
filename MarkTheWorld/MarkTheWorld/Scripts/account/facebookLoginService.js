@@ -13,7 +13,7 @@ function facebookLoginService(facebookLoginInitializerService, $http, $q, userSe
                     sideNavEventService.emit({ action: 'complete', extraData: { fbResponse: response, apiResponse: success.data }});
                     deferredObject.reject();
                 } else {
-                    loginSuccess({username: success.data.username, Token: success.data.longToken });
+                    loginSuccess({username: success.data.username, Token: success.data.longToken, photo: success.data.photo });
                     deferredObject.resolve(success.data);
                 }
             },
@@ -26,11 +26,14 @@ function facebookLoginService(facebookLoginInitializerService, $http, $q, userSe
     }
 
     function loginSuccess(user) {
+        console.log('fb user', user);
         localStorage.setItem('username', user.username);
         localStorage.setItem('token', user.Token);
+        localStorage.setItem('avatar', user.photo);
         userService.isLogged = true;
         userService.username = user.username;
         userService.token = user.Token;
+        userService.avatar = user.photo;
     }
 
     return {
@@ -77,7 +80,7 @@ function facebookLoginService(facebookLoginInitializerService, $http, $q, userSe
                     "userName": registerData.username
                 }).then(
                 function (success) {
-                    loginSuccess({ username: registerData.username, Token: success.data });
+                    loginSuccess({ username: registerData.username, Token: success.data, photo: success.data.photo });
                     deferredObject.resolve(success);
                 },
                 function (error) {
