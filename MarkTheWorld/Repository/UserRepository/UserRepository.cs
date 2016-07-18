@@ -115,29 +115,41 @@ namespace Repository.UserRepository
             }
         }
 
-        public List<TopUser> GetTopUsers()
+        public List<TopUser> GetTopUsers(string countryCode, int number)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
                 List<TopUser> users = new List<TopUser>();
                 try
                 {
-                    User[] oneObject = session
-                         .Query<UsersByMostDots.Result, UsersByMostDots>()
-                         .OrderByDescending(x => x.numberOfDots)
-                         .Take(10)
-                         .As<User>()
-                         .ToArray();
-                    for (int i = 0; i < oneObject.Length; i++)
+                    if (string.IsNullOrEmpty(countryCode))
                     {
-                        TopUser user = new TopUser();
-                        user.name = oneObject[i].UserName;
-                        if (oneObject[i].dotsId == null)
-                            user.numberOfMarks = 0;
-                        else
-                            user.numberOfMarks = oneObject[i].dotsId.Count;
-                        users.Add(user);
+                        users = session
+                             .Query<User>()
+                             .OrderByDescending(x => x.points)
+                             .Take(number)
+                             .Select(x => new TopUser
+                             {
+                                 points = x.points,
+                                 username = x.UserName
+                             })
+                             .ToList();
                     }
+                    else
+                    {
+                        users = session
+                             .Query<User>()
+                             .Where(x => x.countryCode.Equals(countryCode))
+                             .OrderByDescending(x => x.points)
+                             .Take(number)
+                             .Select(x => new TopUser
+                             {
+                                 points = x.points,
+                                 username = x.UserName
+                             })
+                             .ToList();
+                    }
+                    
                 }
                 catch
                 {

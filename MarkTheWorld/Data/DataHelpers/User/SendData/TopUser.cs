@@ -8,7 +8,7 @@ namespace Data
 {
     public class TopUser
     {
-        public string name { get; set; }
-        public int numberOfMarks { get; set; }
+        public string username { get; set; }
+        public int points { get; set; }
     }
 }

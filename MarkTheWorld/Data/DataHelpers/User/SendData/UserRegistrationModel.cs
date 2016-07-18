@@ -34,6 +34,11 @@ namespace Data
             {
                 result = "This username is already taken";
             }
+            else if (message == message2.NotInTerritory)
+            {
+                result = "You can't mark spot here";
+            }
+
             return result;
         }
     }
@@ -59,6 +64,7 @@ namespace Data
 
         [Display(Name = "You have already marked this spot")]
         [StringValue("You have already marked this spot")]
-        AlreadyMarked = 4     
+        AlreadyMarked = 4,
+        NotInTerritory = 5
     }
 }

@@ -8,6 +8,8 @@ namespace Data
 {
     public class Dot
     {
+        public double nextCapLat { get; set; }
+        public double nextCapLon { get; set; }
         public string Id { get; set; }
         public double lat { get; set; }
         public double lon { get; set; }

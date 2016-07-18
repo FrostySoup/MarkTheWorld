@@ -65,7 +65,7 @@ namespace Repository.DotRepository
                                     reg.message = message2.AlreadyMarked;
                                     return reg;
                                 }
-                                else
+                                else if (checkTerritory(dots[i]))
                                 {
                                     string name = dots[i].username;
                                     User userChanged = session.Query<User>().First(x => x.UserName.Equals(name));
@@ -101,21 +101,26 @@ namespace Repository.DotRepository
                         }
                     }
 
-                    if (user.eventsHistory == null)
-                        user.eventsHistory = new List<UserEvent>();
-                    user.eventsHistory.Add(new UserEvent("You captured new square", dot.lng, dot.lat, null));
-                    if (user.eventsHistory.Count > 10)
-                        user.eventsHistory.RemoveRange(10, 1);
+                    if (checkCenter(dot.lng, dot.lat))
+                    {
+                        if (user.eventsHistory == null)
+                            user.eventsHistory = new List<UserEvent>();
+                        user.eventsHistory.Add(new UserEvent("You captured new square", dot.lng, dot.lat, null));
+                        if (user.eventsHistory.Count > 10)
+                            user.eventsHistory.RemoveRange(10, 1);
 
-                    dotCopy = changeDotValues(DateTime.Today, dot.message, dot.lng, dot.lat, user.UserName, cutImageName(imagePath));                    
-                    session.Store(dotCopy);
-                    if (user.dotsId == null)
-                        user.dotsId = new List<string>();
-                    user.dotsId.Add(dotCopy.Id);
-                    session.Store(user);
-                    session.SaveChanges();
-                    reg.success = true;
-                    reg.message = message2.Success;
+                        dotCopy = changeDotValues(DateTime.Today, dot.message, dot.lng, dot.lat, user.UserName, cutImageName(imagePath));
+                        session.Store(dotCopy);
+                        if (user.dotsId == null)
+                            user.dotsId = new List<string>();
+                        user.dotsId.Add(dotCopy.Id);
+                        session.Store(user);
+                        session.SaveChanges();
+                        reg.success = true;
+                        reg.message = message2.Success;
+                        return reg;
+                    }
+                    reg.message = message2.NotInTerritory;
                     return reg;
                 }
                 catch
@@ -260,14 +265,20 @@ namespace Repository.DotRepository
                                 }
                                 else
                                 {
+                                    reg.Coorners = coordsToSquare(dot.lat, dot.lng);
+                                    reg.Lat = dots[i].nextCapLat;
+                                    reg.Lon = dots[i].nextCapLon;
                                     reg.MarkedUsername = dots[i].username;
-                                    reg.CanMark = true;
+                                    reg.CanMark = checkTerritory(dots[i]);
                                     return reg;
                                 }
                             }
                         }
                     }
-                    reg.CanMark = true;
+                    double[] holder = centreCapturePoint(dot.lat, dot.lng);
+                    reg.Lat = holder[1];
+                    reg.Lon = holder[0];
+                    reg.CanMark = checkCenter(dot.lat, dot.lng);
                     return reg;
                 }
                 catch
