@@ -1,7 +1,8 @@
 /* global module */
 'use strict';
 
-function topToolbarDirectiveController (userService, accountService, myProfileService, facebookLoginService, sideNavEventService, toastService) {
+function topToolbarDirectiveController (userService, accountService, myProfileService, facebookLoginService,
+                                        sideNavEventService, toastService, filterMapService) {
     var vm = this;
 
     vm.user = userService;
@@ -37,6 +38,10 @@ function topToolbarDirectiveController (userService, accountService, myProfileSe
             }
         );
     };
+
+    vm.filterMap = function (ev) {
+        filterMapService.showDialog(ev);
+    };
 }
 
-module.exports = ['userService', 'accountService', 'myProfileService', 'facebookLoginService', 'sideNavEventService', 'toastService', topToolbarDirectiveController];
+module.exports = ['userService', 'accountService', 'myProfileService', 'facebookLoginService', 'sideNavEventService', 'toastService', 'filterMapService', topToolbarDirectiveController];

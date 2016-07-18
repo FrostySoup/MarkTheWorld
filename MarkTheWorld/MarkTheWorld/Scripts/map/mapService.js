@@ -5,6 +5,10 @@
 function mapService($http, rectanglesService, markersService, userService) {
         var clickedPosition = {};
         var map;
+        var recStartingZoom = 11;
+        var mapFilter = {
+            filter: null
+        };
 
         function init(m) {
             map = m;
@@ -68,13 +72,33 @@ function mapService($http, rectanglesService, markersService, userService) {
         }
 
         function updateMap() {
-            if (map.getZoom() < 11) {
+            if (map.getZoom() < recStartingZoom) {
                 rectanglesService.removeAllRecs();
                 drawMarkers();
             }
             else {
                 markersService.removeAllMarkers();
                 drawRectangles();
+            }
+        }
+
+        function updateRecColors() {
+            if (map.getZoom() >= recStartingZoom) {
+                var url = '/api/Squares';
+
+                $http.post(
+                    url, {
+                        "neX": map.getBounds().getNorthEast().lng(),
+                        "neY": map.getBounds().getNorthEast().lat(),
+                        "swX": map.getBounds().getSouthWest().lng(),
+                        "swY": map.getBounds().getSouthWest().lat()
+                    }
+                ).then(function (response) {
+                        rectanglesService.updateRecColors(response.data);
+                    }, function (response) {
+                        //TODO: [preRelease] There should be a toast in such cases
+                        console.log('Error: ', response.statusText);
+                    });
             }
         }
 
@@ -98,6 +122,10 @@ function mapService($http, rectanglesService, markersService, userService) {
         function drawRectangles() {
             var url = '/api/Squares';
 
+            if (mapFilter.filter !== null) {
+                url += '?name=' + mapFilter.filter;
+            }
+
             $http.post(
                 url, {
                     "neX": map.getBounds().getNorthEast().lng(),
@@ -106,7 +134,6 @@ function mapService($http, rectanglesService, markersService, userService) {
                     "swY": map.getBounds().getSouthWest().lat()
                 }
             ).then(function (response) {
-                    console.log(response);
                     rectanglesService.handleRecs(response.data, map);
                 }, function (response) {
                     //TODO: [preRelease] There should be a toast in such cases
@@ -119,9 +146,9 @@ function mapService($http, rectanglesService, markersService, userService) {
 
             updateMap : updateMap,
 
-            getClickedPosition: function() {
-              return clickedPosition;
-            },
+            updateRecColors: updateRecColors,
+
+            mapFilter: mapFilter,
 
             init: init
         };

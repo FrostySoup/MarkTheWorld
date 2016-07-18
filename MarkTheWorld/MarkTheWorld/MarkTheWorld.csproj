@@ -514,6 +514,7 @@
     <Content Include="Content\img\icons\ic_delete.svg" />
     <Content Include="Content\img\icons\ic_face_black_24px.svg" />
     <Content Include="Content\img\icons\ic_file_upload.svg" />
+    <Content Include="Content\img\icons\ic_filter_list.svg" />
     <Content Include="Content\img\icons\ic_info_outline.svg" />
     <Content Include="Content\img\icons\ic_lock_open.svg" />
     <Content Include="Content\img\icons\ic_monetization_on.svg" />
@@ -539,9 +540,10 @@
     <Content Include="Scripts\appController.js" />
     <Content Include="Scripts\bundles\main.js" />
     <Content Include="Scripts\dialogs\claimSpot\claimSpot.html" />
-    <Content Include="Scripts\dialogs\claimSpot\claimSpot.js" />
     <Content Include="Scripts\dialogs\claimSpot\claimSpotController.js" />
     <Content Include="Scripts\dialogs\claimSpot\claimSpotService.js" />
+    <Content Include="Scripts\dialogs\claimSpot\index.js" />
+    <Content Include="Scripts\dialogs\index.js" />
     <Content Include="Scripts\dialogs\myProfile\directives\bonusPointsDirective.html" />
     <Content Include="Scripts\dialogs\myProfile\directives\bonusPointsDirective.js" />
     <Content Include="Scripts\dialogs\myProfile\myProfile.html" />
@@ -559,6 +561,10 @@
     <Content Include="Scripts\dialogs\myProfile\myProfilePicture\myProfilePictureController.js" />
     <Content Include="Scripts\dialogs\myProfile\myProfilePicture\myProfilePictureService.js" />
     <Content Include="Scripts\dialogs\myProfile\myProfileService.js" />
+    <Content Include="Scripts\dialogs\spotDetails\claimSpotController.js" />
+    <Content Include="Scripts\dialogs\spotDetails\claimSpotService.js" />
+    <Content Include="Scripts\dialogs\spotDetails\index.js" />
+    <Content Include="Scripts\dialogs\spotDetails\spotDetails.html" />
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\layout\index.js" />
     <Content Include="Scripts\layout\sideNav\completeFBRegistration\completeSideNavDirective.html" />
@@ -599,14 +605,6 @@
     <Content Include="Scripts\shared\toast\toast.js" />
     <Content Include="Scripts\shared\toast\toastController.js" />
     <Content Include="Scripts\shared\toast\toastService.js" />
-    <Content Include="Scripts\squareDetails\squareDetails.html" />
-    <Content Include="Scripts\squareDetails\squareDetails.js" />
-    <Content Include="Scripts\squareDetails\squareDetailsController.js" />
-    <Content Include="Scripts\squareDetails\squareDetailsService.js" />
-    <Content Include="Scripts\topMarkers\topMarkers.html" />
-    <Content Include="Scripts\topMarkers\topMarkers.js" />
-    <Content Include="Scripts\topMarkers\topMarkersController.js" />
-    <Content Include="Scripts\topMarkers\topMarkersService.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

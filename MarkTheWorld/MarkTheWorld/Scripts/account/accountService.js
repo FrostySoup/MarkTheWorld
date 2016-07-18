@@ -60,9 +60,12 @@ function accountService($http, $q, userService, facebookLoginService) {
 
             localStorage.removeItem('token');
             localStorage.removeItem('username');
+            localStorage.removeItem('avatar');
             userService.isLogged = false;
             userService.username = '';
             userService.token = '';
+            userService.currentPosition = null;
+            userService.avatar = null;
 
             facebookLoginService.logout().then(function() {
                 deferredObject.resolve();
@@ -84,6 +87,11 @@ function accountService($http, $q, userService, facebookLoginService) {
                     userService.avatar = avatar;
                 }
             }
+        },
+
+        updateAvatar: function (avatarAddress) {
+            localStorage.setItem('avatar', avatarAddress);
+            userService.avatar = avatarAddress;
         }
     };
 }

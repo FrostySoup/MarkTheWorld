@@ -1,7 +1,7 @@
 /*global module */
 'use strict';
 
-function myProfilePictureController($mdDialog, Upload, userService, myProfilePictureService) {
+function myProfilePictureController($mdDialog, Upload, userService, accountService, myProfilePictureService) {
     var vm = this;
 
     vm.croppedFileUrl = '';
@@ -75,7 +75,8 @@ function myProfilePictureController($mdDialog, Upload, userService, myProfilePic
             }
         }).then(
             function (success) {
-                console.log(success);
+                console.log('upload photo success', success);
+                accountService.updateAvatar(success.data);
                 vm.cancel();
             },
             function (error) {
@@ -87,4 +88,4 @@ function myProfilePictureController($mdDialog, Upload, userService, myProfilePic
     };
 }
 
-module.exports = ['$mdDialog', 'Upload', 'userService', 'myProfilePictureService', myProfilePictureController];
+module.exports = ['$mdDialog', 'Upload', 'userService', 'accountService', 'myProfilePictureService', myProfilePictureController];

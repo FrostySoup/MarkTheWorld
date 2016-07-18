@@ -12,7 +12,9 @@ gulp.task('browserify', function() {
         .bundle()
         .pipe(source('main.js'))
         .pipe(buffer())
+        .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(uglify())
+        .pipe(sourcemaps.write('./'))
         .on('error', gutil.log)
         .pipe(gulp.dest('./Scripts/bundles/'));
 });

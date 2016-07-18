@@ -77,7 +77,6 @@ function myProfileColorService($mdDialog, $q, $http, userService) {
                     "blue": color.blue
                 }).then(
                 function (success) {
-                    console.log(success);
                     deferredObject.resolve();
                 },
                 function (error) {

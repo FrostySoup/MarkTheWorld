@@ -1,0 +1,51 @@
+<md-dialog class="dialog-spot-details">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Spot Details</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.cancel()" aria-label="Close dialog" title="Close dialog">
+                <md-icon md-svg-src="~/../Content/img/icons/ic_clear_white_48px.svg" class="s32"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content flex-sm flex-xs layout="column">
+        <div>
+            <div layout layout-padding layout-align="start center">
+                <div layout="column" class="user-avatar" layout-align="center center">
+                    <img ng-src="{{ vm.spotDetails.profilePic }}" alt="{{ vm.spotDetails.username }}"
+                         title="{{ vm.spotDetails.username }}"/>
+                    <md-button class="md-raised md-primary" ng-click="vm.userMap(vm.spotDetails.username)">
+                        <md-icon md-svg-src="~/../Content/img/icons/ic_filter_list.svg"></md-icon>
+                        User Map
+                    </md-button>
+                </div>
+                <div class="profile-main-info">
+                    <h3>{{ vm.spotDetails.username }}</h3>
+                    <table>
+                        <tr>
+                            <td class="row-title">Country:</td>
+                            <td><img ng-src="{{vm.spotDetails.pathCountryFlag}}" title="{{vm.spotDetails.country}}"
+                                     alt="{{vm.spotDetails.country}}"/></td>
+                        </tr>
+                        <tr>
+                            <td class="row-title">Points:</td>
+                            <td>{{ vm.spotDetails.points }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <md-subheader ng-if="vm.spotDetails.message || vm.spotDetails.photoPath">Extra info</md-subheader>
+            <md-divider ng-if="vm.spotDetails.message || vm.spotDetails.photoPath"></md-divider>
+            <blockquote ng-if="vm.spotDetails.message">
+                {{ vm.spotDetails.message }}
+            </blockquote>
+            <div ng-if="vm.spotDetails.photoPath" layout="column" layout-align="center center" layout-padding
+                 class="attached-photo">
+                <img ng-src="{{ vm.spotDetails.photoPath }}"/>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="vm.cancel()" class="md-secondary">Close</md-button>
+    </md-dialog-actions>
+</md-dialog>

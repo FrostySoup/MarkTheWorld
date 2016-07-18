@@ -7,6 +7,8 @@ module.exports =
         .module('dialogs', [
             require('ng-file-upload'),
             require('./claimSpot'),
-            require('./myProfile')
+            require('./myProfile'),
+            require('./spotDetails'),
+            require('./filterMap')
         ])
         .name;

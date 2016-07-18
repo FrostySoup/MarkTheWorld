@@ -1,7 +1,7 @@
 /*global module */
 'use strict';
 
-function rectanglesService() {
+function rectanglesService(spotDetailsService) {
     var rectanglesArray = [];
 
     function removeUnneededRecsFromMap(unneededRecs) {
@@ -14,23 +14,24 @@ function rectanglesService() {
     function addNewRecsToMap(recsToBeAdded, map) {
         angular.forEach(recsToBeAdded, function (value) {
             var rec = new google.maps.Rectangle({
+                id: value.dotId,
                 strokeColor: value.borderColors,
-                strokeOpacity: 1,
-                strokeWeight: 1,
+                strokeOpacity: 0.7,
+                strokeWeight: 2,
                 fillColor: value.colors,
-                fillOpacity: 0.5,
+                fillOpacity: 0.6,
                 map: map,
                 bounds: new google.maps.LatLngBounds(
                     new google.maps.LatLng(value.swY, value.swX),
                     new google.maps.LatLng(value.neY, value.neX)
                 )
             });
-            //TODO: should use accountService
-            //rec.addListener('click', function(e) {
-            //    if (localStorage.getItem('onlyMyOwnMarks') !== 'true') {
-            //        squareDetailsService.showDialog(value.markers);
-            //    }
-            //});
+
+            rec.addListener('click', function(e) {
+                console.log('square event', e);
+                spotDetailsService.showDialog(e.Sa, rec.id);
+            });
+
             rectanglesArray.push(rec);
         });
     }
@@ -84,6 +85,23 @@ function rectanglesService() {
         return recsToBeRemoved;
     }
 
+    function updateRecColors(recs) {
+        var arrayLength = rectanglesArray.length;
+
+        angular.forEach(recs, function (element) {
+            for (var i = 0; i < arrayLength; i++) {
+                if (Math.round(rectanglesArray[i].getBounds().f.b * 1000) / 1000 === Math.round(element.neY * 1000) / 1000 &&
+                    Math.round(rectanglesArray[i].getBounds().b.b * 1000) / 1000 === Math.round(element.swX * 1000) / 1000 &&
+                    rectanglesArray[i].fillColor !== element.colors) {
+                    rectanglesArray[i].setOptions({
+                        fillColor: element.colors,
+                        strokeColor: element.borderColor
+                    });
+                }
+            }
+        });
+    }
+
     return {
         handleRecs : function(data, map) {
             var recsToBeRemoved = findUnneededRecs(data);
@@ -94,8 +112,9 @@ function rectanglesService() {
         removeAllRecs : function() {
             removeUnneededRecsFromMap(rectanglesArray);
             rectanglesArray.length = 0;
-        }
+        },
+        updateRecColors : updateRecColors
     };
 }
 
-module.exports = [rectanglesService];
+module.exports = ['spotDetailsService', rectanglesService];
