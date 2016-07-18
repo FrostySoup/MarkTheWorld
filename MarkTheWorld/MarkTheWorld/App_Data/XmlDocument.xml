@@ -581,7 +581,7 @@
             Gražina vartotojo spalvas
             </summary>
         </member>
-        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetTopUsers">
+        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetTopUsers(System.String,System.Int32)">
             <summary>
             Gražina iki 10 vartotojų turinčių daugiausia pažymėtų taškų
             </summary>

@@ -56,9 +56,9 @@ namespace BusinessLayer.UserService
             return repository.GetOneByName(name);
         }
 
-        public List<TopUser> getTopUsers()
+        public List<TopUser> getTopUsers(string countryCode, int number)
         {
-            return repository.GetTopUsers();
+            return repository.GetTopUsers(countryCode, number);
         }
 
         public bool checkUserDaily(string userName)

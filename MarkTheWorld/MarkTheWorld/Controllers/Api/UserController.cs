@@ -266,23 +266,28 @@ namespace MarkTheWorld.Controllers.Api
         }
 
         /// <summary>
-        /// Gražina iki 10 vartotojų turinčių daugiausia pažymėtų taškų
+        /// Gražina nurodyta kiekį vartotojų pagal valstybės kodą, jeigu šis nurodytas
+        /// Default: countryCode = "", number = 10
+        /// Nenurodžius coutryCode bus gražinami iš visų vartotojų atrinkti top users
         /// </summary>
         [ResponseType(typeof(List<TopUser>))]
         [Route("topList")]
-        [HttpGet]
-        public IHttpActionResult GetTopUsers()
+        [HttpPost]
+        public IHttpActionResult GetTopUsers(string countryCode = "", int number = 10)
         {
             List<TopUser> users = new List<TopUser>();
             try
             {
-                users = userService.getTopUsers();
+                users = userService.getTopUsers(countryCode, number);
             }
             catch (Exception)
             {
                 return Content(HttpStatusCode.BadRequest, "Unknown server error");
             }
-
+            if (users.Count < 1)
+            {
+                return Content(HttpStatusCode.BadRequest, "No users from this country found");
+            }
             return Ok(users);
         }
 
