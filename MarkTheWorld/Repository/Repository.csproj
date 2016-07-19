@@ -56,6 +56,7 @@
     <Compile Include="DotRepository\IDotRepository.cs" />
     <Compile Include="GenericRepository\GenericRepository.cs" />
     <Compile Include="GenericRepository\IGenericRepository.cs" />
+    <Compile Include="Index\DotByKeyIndex.cs" />
     <Compile Include="Index\UserDotsIndex.cs" />
     <Compile Include="Index\UsersByMostDots.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

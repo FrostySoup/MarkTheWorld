@@ -19,7 +19,7 @@ namespace BusinessLayer.UserService
         User getOneByToken(string token);
         List<TopUser> getTopUsers(string countryCode, int number);
         UserDailyReward takeUserDaily(string userName);
-        List<UserEvent> getUserEvents(string userName);
+        //List<UserEvent> getUserEvents(string userName);
         bool postUserColors(string userName, Colors colors);
         Colors getUserColors(string userName);
         bool checkUsername(string userName);

@@ -561,11 +561,6 @@
             Paima vartotojo daily reward
             </summary>
         </member>
-        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetUerEvents(System.String)">
-            <summary>
-            Paima paskutinius 10 vartotojo įvykių
-            </summary>
-        </member>
         <member name="M:MarkTheWorld.Controllers.Api.UserController.PostUserColor(System.String,Data.DataHelpers.Colors)">
             <summary>
             Patalpina vartotojo spalvą
@@ -583,7 +578,9 @@
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.UserController.GetTopUsers(System.String,System.Int32)">
             <summary>
-            Gražina iki 10 vartotojų turinčių daugiausia pažymėtų taškų
+            Gražina nurodyta kiekį vartotojų pagal valstybės kodą, jeigu šis nurodytas
+            Default: countryCode = "", number = 10
+            Nenurodžius coutryCode bus gražinami iš visų vartotojų atrinkti top users
             </summary>
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.UserWithFBController.PostLogin(Data.DataHelpers.FbClientLogin)">

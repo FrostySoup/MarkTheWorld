@@ -1,5 +1,7 @@
 ﻿using Data;
+using Data.Database;
 using Data.DataHelpers;
+using Raven.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,7 @@ namespace Repository.DotRepository
 {
     public partial class DotRepository
     {
+        const double circleR = 0.0025;
         private string cutImageName(string photoUrl)
         {
             if (photoUrl == null)
@@ -43,7 +46,6 @@ namespace Repository.DotRepository
         // coords[1] - y - lat
         private double[] generateCaptureSpot(double lon, double lat)
         {
-            double circleR = 0.0025;
             double[] coords = new double[2];
             CornersCorrds corners = coordsToSquare(lon, lat);
             double minimumX = corners.swX + circleR;
@@ -63,8 +65,14 @@ namespace Repository.DotRepository
             double[] coords = new double[2];
             CornersCorrds corners = coordsToSquare(lon, lat);
             Random random = new Random();
-            coords[0] = (corners.neX + corners.swX) / 2;
-            coords[1] = (corners.neY + corners.swY) / 2;
+            coords[0] = Math.Round(((corners.neX + corners.swX) / 2), 3);
+            coords[1] = Math.Round(((corners.neY + corners.swY) / 2), 3);
+            return coords;
+        }
+
+        private double[] centerCoords(DotFromViewModel dot)
+        {
+            double[] coords = centreCapturePoint(dot.lng, dot.lat);
             return coords;
         }
 
@@ -133,6 +141,53 @@ namespace Repository.DotRepository
                 {
                     file.WriteLine(oldPhoto);
                 }
+            }
+        }
+
+        private void addEvent(User userChanged, User user, Dot dot, IDocumentSession session)
+        {
+            Events myEvent = new Events("You captured square", dot.lon, dot.lat, userChanged.UserName);
+            Events opponentEvent = new Events("Player captured your square", dot.lon, dot.lat, user.UserName);
+            session.Store(myEvent);
+            session.Store(opponentEvent);
+
+            if (userChanged.eventsID == null)
+                userChanged.eventsID = new List<string>();           
+
+            userChanged.eventsID.Add(opponentEvent.id);
+            if (userChanged.eventsID.Count > 10)
+            {
+                Events eventToRemove = session.Load<Events>(userChanged.eventsID[10]);
+                if (eventToRemove != null)
+                    session.Delete(eventToRemove);
+                userChanged.eventsID.RemoveRange(10, 1);
+            }
+
+            if (user.eventsID == null)
+                user.eventsID = new List<string>();
+            user.eventsID.Add(myEvent.id);
+            if (user.eventsID.Count > 10)
+            {
+                Events eventToRemove = session.Load<Events>(user.eventsID[10]);
+                if (eventToRemove != null)
+                    session.Delete(eventToRemove);
+                user.eventsID.RemoveRange(10, 1);
+            }
+        }
+
+        private void addEventNewDot(IDocumentSession session, User user, double lon, double lat)
+        {
+            Events myEvent = new Events("You marked new square", lon, lat, null);
+            session.Store(myEvent);
+            if (user.eventsID == null)
+                user.eventsID = new List<string>();
+            user.eventsID.Add(myEvent.id);
+            if (user.eventsID.Count > 10)
+            {
+                Events eventToRemove = session.Load<Events>(user.eventsID[10]);
+                if (eventToRemove != null)
+                    session.Delete(eventToRemove);
+                user.eventsID.RemoveRange(10, 1);
             }
         }
     }

@@ -4,25 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data
+namespace Data.Database
 {
-    public class UserEvent
+    public class Events
     {
+        public string id { get; set; }
         public string events { get; set; }
         public double longt { get; set; }
         public double lat { get; set; }
         public string userName { get; set; }
 
-        public UserEvent() {}
+        public Events() { }
 
-        public UserEvent(string ev, double lon, double lati, string userN)
+        public Events(string ev, double lon, double lati, string userN)
         {
             events = ev;
             longt = lon;
             lat = lati;
             userName = userN;
         }
-        public UserEvent(string ev)
+        public Events(string ev)
         {
             events = ev;
         }

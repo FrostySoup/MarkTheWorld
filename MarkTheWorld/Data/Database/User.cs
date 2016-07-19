@@ -24,7 +24,7 @@ namespace Data
 
         public int points { get; set; }
 
-        public List<UserEvent> eventsHistory { get; set; }
+        public List<string> eventsID { get; set; }
 
         public Colors colors { get; set; }
 

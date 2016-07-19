@@ -38,95 +38,66 @@ namespace Repository.DotRepository
                 UserRegistrationModel reg = new UserRegistrationModel();
                 reg.success = false;
                 reg.message = 0;
-                try
-                {                 
-                    User user = session.Query<User>().First(x => x.Token.Equals(dot.token));
-                    if (user.Id == null)
+                double[] coords = centerCoords(dot);
+                string coordsKey = coords[0].ToString() + coords[1].ToString();               
+                User user = session.Query<User>().First(x => x.Token.Equals(dot.token));
+                if (user.Id == null)
+                    return reg;                
+                Dot[] dots = session
+                    .Query<DotByKey.Result, DotByKey>()
+                    .Where(x => x.Key.Equals(coordsKey))
+                    .Take(5000)
+                    .As<Dot>()
+                    .ToArray();
+                for (int i = 0; i < dots.Length; i++)
+                {                       
+                    if (user.UserName.Equals(dots[i].username))
+                    {
+                        if (imagePath != null)
+                            removeOld(imagePath, path);
+                        reg.message = message2.AlreadyMarked;
                         return reg;
-                    Dot dotCopy = new Dot();
-                    Dot[] dots = session
-                        .Query<Dot>()
-                        .Take(5000)
-                        .ToArray();
-                    for (int i = 0; i < dots.Length; i++)
-                    {
-                        int lng = (int)(dots[i].lon * 100);
-                        int lng2 = (int)(dot.lng * 100);
-                        if (lng == lng2)
-                        {
-                            int lat = (int)(dots[i].lat * 100);
-                            int lat2 = (int)(dot.lat * 100);
-                            if (lat == lat2)
-                            {
-                                if (user.UserName.Equals(dots[i].username))
-                                {
-                                    if (imagePath != null)
-                                        removeOld(imagePath, path);
-                                    reg.message = message2.AlreadyMarked;
-                                    return reg;
-                                }
-                                else if (checkTerritory(dots[i]))
-                                {
-                                    string name = dots[i].username;
-                                    User userChanged = session.Query<User>().First(x => x.UserName.Equals(name));
-                                    userChanged.dotsId.Remove(dots[i].Id);
-
-                                    //add event here
-                                    if (userChanged.eventsHistory == null)
-                                        userChanged.eventsHistory = new List<UserEvent>();
-                                    userChanged.eventsHistory.Add(new UserEvent("Player captured your square", dots[i].lon, dots[i].lat, user.UserName));
-                                    if (userChanged.eventsHistory.Count > 10)
-                                        userChanged.eventsHistory.RemoveRange(10, 1);
-
-                                    if (user.eventsHistory == null)
-                                        user.eventsHistory = new List<UserEvent>();
-                                    user.eventsHistory.Add(new UserEvent("You captured square", dots[i].lon, dots[i].lat, userChanged.UserName));
-                                    if (user.eventsHistory.Count > 10)
-                                        user.eventsHistory.RemoveRange(10, 1);
-
-                                    removeOld(dots[i].photoPath, path);
-                                    dots[i] = changeDotValues(DateTime.Today, dot.message, dot.lng, dot.lat, user.UserName, cutImageName(imagePath), dots[i]);
-                                    if (user.dotsId == null)
-                                        user.dotsId = new List<string>();
-                                    user.dotsId.Add(dots[i].Id);
-                                    session.Store(dots[i]);
-                                    session.Store(userChanged);
-                                    session.Store(user);
-                                    session.SaveChanges();
-                                    reg.success = true;
-                                    reg.message = message2.Success;
-                                    return reg;
-                                }
-                            }
-                        }
                     }
-
-                    if (checkCenter(dot.lng, dot.lat))
+                    else if (checkTerritory(dots[i]))
                     {
-                        if (user.eventsHistory == null)
-                            user.eventsHistory = new List<UserEvent>();
-                        user.eventsHistory.Add(new UserEvent("You captured new square", dot.lng, dot.lat, null));
-                        if (user.eventsHistory.Count > 10)
-                            user.eventsHistory.RemoveRange(10, 1);
+                        string name = dots[i].username;
+                        User userChanged = session.Query<User>().First(x => x.UserName.Equals(name));
+                        userChanged.dotsId.Remove(dots[i].Id);
 
-                        dotCopy = changeDotValues(DateTime.Today, dot.message, dot.lng, dot.lat, user.UserName, cutImageName(imagePath));
-                        session.Store(dotCopy);
+                        addEvent(userChanged, user, dots[i], session);
+
+                        removeOld(dots[i].photoPath, path);
+                        dots[i] = changeDotValues(DateTime.Today, dot.message, coords[1], coords[0], user.UserName, cutImageName(imagePath), dots[i]);
                         if (user.dotsId == null)
                             user.dotsId = new List<string>();
-                        user.dotsId.Add(dotCopy.Id);
+                        user.dotsId.Add(dots[i].Id);
+                        session.Store(dots[i]);
+                        session.Store(userChanged);
                         session.Store(user);
                         session.SaveChanges();
                         reg.success = true;
                         reg.message = message2.Success;
                         return reg;
                     }
-                    reg.message = message2.NotInTerritory;
-                    return reg;
                 }
-                catch
+
+                if (dots.Count() == 0 && checkCenter(dot.lng, dot.lat))
                 {
+                    addEventNewDot(session, user, dot.lng, dot.lat);
+                    Dot dotCopy = new Dot();
+                    dotCopy = changeDotValues(DateTime.Today, dot.message, coords[1], coords[0], user.UserName, cutImageName(imagePath));
+                    session.Store(dotCopy);
+                    if (user.dotsId == null)
+                        user.dotsId = new List<string>();
+                    user.dotsId.Add(dotCopy.Id);
+                    session.Store(user);
+                    session.SaveChanges();
+                    reg.success = true;
+                    reg.message = message2.Success;
                     return reg;
                 }
+                reg.message = message2.NotInTerritory;
+                return reg;
             }
         }       
 
@@ -241,44 +212,38 @@ namespace Repository.DotRepository
                 reg.CanMark = false;
                 try
                 {
+                    double[] coords = centerCoords(dot);
+                    string coordsKey = coords[0].ToString() + coords[1].ToString();
                     User user = session.Query<User>().First(x => x.Token.Equals(dot.token));
                     if (user.Id == null)
                         return reg;
                     Dot dotCopy = new Dot();
                     Dot[] dots = session
-                        .Query<Dot>()
-                        .Take(5000)
+                        .Query<DotByKey.Result, DotByKey>()
+                        .Where(x => x.Key.Equals(coordsKey))
+                        .As<Dot>()
                         .ToArray();
-                    for (int i = 0; i < dots.Length; i++)
+                    if (dots.Count() > 0)
                     {
-                        int lng = (int)(dots[i].lon * 100);
-                        int lng2 = (int)(dot.lng * 100);
-                        if (lng == lng2)
+                        if (user.UserName.Equals(dots[0].username))
                         {
-                            int lat = (int)(dots[i].lat * 100);
-                            int lat2 = (int)(dot.lat * 100);
-                            if (lat == lat2)
-                            {
-                                if (user.UserName.Equals(dots[i].username))
-                                {
-                                    return reg;
-                                }
-                                else
-                                {
-                                    reg.Coorners = coordsToSquare(dot.lat, dot.lng);
-                                    reg.Lat = dots[i].nextCapLat;
-                                    reg.Lon = dots[i].nextCapLon;
-                                    reg.MarkedUsername = dots[i].username;
-                                    reg.CanMark = checkTerritory(dots[i]);
-                                    return reg;
-                                }
-                            }
+                            return reg;
+                        }
+                        else
+                        {
+                            reg.Coorners = coordsToSquare(dot.lat, dot.lng);
+                            reg.Lat = dots[0].nextCapLat;
+                            reg.Lon = dots[0].nextCapLon;
+                            reg.MarkedUsername = dots[0].username;
+                            reg.CanMark = checkTerritory(dots[0]);
+                            return reg;
                         }
                     }
                     double[] holder = centreCapturePoint(dot.lat, dot.lng);
                     reg.Lat = holder[1];
                     reg.Lon = holder[0];
                     reg.CanMark = checkCenter(dot.lat, dot.lng);
+                    reg.CircleR = circleR;
                     return reg;
                 }
                 catch

@@ -30,14 +30,6 @@ namespace Repository.UserRepository
                         dailies.received = points;
                         TimeSpan day = new TimeSpan(24, 0, 0);
                         dailies.timeLeft = (int)day.TotalSeconds;
-                        if (user.eventsHistory == null)
-                            user.eventsHistory = new List<UserEvent>();
-                        if (points < 2)
-                            user.eventsHistory.Add(new UserEvent("You gained " + points + " point"));
-                        else
-                            user.eventsHistory.Add(new UserEvent("You gained " + points + " points"));
-                        if (user.eventsHistory.Count > 10)
-                            user.eventsHistory.RemoveRange(10, 1);
                         session.Store(user);
                         session.SaveChanges();
                         return dailies;

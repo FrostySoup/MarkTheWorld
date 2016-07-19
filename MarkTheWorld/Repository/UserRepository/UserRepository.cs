@@ -99,7 +99,7 @@ namespace Repository.UserRepository
 
      
 
-        public List<UserEvent> GetUserEvents(string userName)
+        /*public List<UserEvent> GetUserEvents(string userName)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
@@ -113,7 +113,7 @@ namespace Repository.UserRepository
                     return null;
                 }
             }
-        }
+        }*/
 
         public List<TopUser> GetTopUsers(string countryCode, int number)
         {

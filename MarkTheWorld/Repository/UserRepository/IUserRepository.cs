@@ -17,7 +17,7 @@ namespace Repository.UserRepository
         string GetTokenByName(string name);
         UserRegistrationModel GetOneUser(UserRegistrationPost user);
         List<TopUser> GetTopUsers(string countryCode, int number);
-        List<UserEvent> GetUserEvents(string userName);             
+        //List<UserEvent> GetUserEvents(string userName);             
         bool GetUsername(string userName);
 
         //profile functions

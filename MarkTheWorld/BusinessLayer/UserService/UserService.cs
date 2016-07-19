@@ -66,10 +66,10 @@ namespace BusinessLayer.UserService
             return false;// repository.GetUserDaily(userName);
         }
 
-        public List<UserEvent> getUserEvents(string userName)
+        /*public List<UserEvent> getUserEvents(string userName)
         {
             return repository.GetUserEvents(userName);
-        }
+        }*/
 
         public bool postUserColors(string userName, Colors colors)
         {

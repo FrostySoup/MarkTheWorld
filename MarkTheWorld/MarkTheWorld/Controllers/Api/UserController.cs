@@ -180,7 +180,7 @@ namespace MarkTheWorld.Controllers.Api
 
             return Ok(canTake);
         }
-
+        /*
         /// <summary>
         /// Paima paskutinius 10 vartotojo įvykių
         /// </summary>
@@ -203,7 +203,7 @@ namespace MarkTheWorld.Controllers.Api
             }
 
             return Ok(events);
-        }
+        }*/
 
         /// <summary>
         /// Patalpina vartotojo spalvą
