@@ -239,6 +239,7 @@ namespace Repository.DotRepository
                             return reg;
                         }
                     }
+                    reg.Coorners = coordsToSquare(dot.lat, dot.lng);
                     double[] holder = centreCapturePoint(dot.lat, dot.lng);
                     reg.Lat = holder[1];
                     reg.Lon = holder[0];
