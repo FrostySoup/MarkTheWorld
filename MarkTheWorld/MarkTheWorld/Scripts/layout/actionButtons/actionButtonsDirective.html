@@ -1,0 +1,9 @@
+<md-button class="md-fab md-fab-bottom-right md-fab-claim-spot" aria-label="Mark your spot"
+           ng-click="vm.claimSpot($event)">
+    <md-icon md-svg-src="~/../Content/img/icons/ic_add_location.svg" class="s36" aria-label="Mark your spot"></md-icon>
+</md-button>
+
+<md-button class="md-primary md-fab md-fab-bottom-right animate-if" aria-label="Map settings"
+           ng-if="vm.mapFiltered" ng-click="vm.clearFilter($event)">
+    <md-icon md-svg-src="~/../Content/img/icons/ic_filter_list.svg" aria-label="Map settings"></md-icon>
+</md-button>

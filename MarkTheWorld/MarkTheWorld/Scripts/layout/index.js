@@ -5,6 +5,7 @@ module.exports =
     require('angular')
         .module('layout', [
             require('./sideNav'),
-            require('./topToolbar')
+            require('./topToolbar'),
+            require('./actionButtons')
         ])
         .name;

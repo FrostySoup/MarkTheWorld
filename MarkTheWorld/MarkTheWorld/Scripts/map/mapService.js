@@ -30,11 +30,71 @@ function mapService($http, rectanglesService, markersService, userService) {
                     clickedPosition = { 'lat' : e.latLng.lat(), 'lng' : e.latLng.lng() };
                     userService.currentPosition = { lat: e.latLng.lat(), lng: e.latLng.lng() };
                     console.log('position:', 'lat:' + marker.position.lat(), 'lng:' + marker.position.lng(), 'zoom:', map.getZoom());
+
+                    $http.post('/api/dotCheck',
+                        {
+                            "token": userService.token,
+                            "lat": e.latLng.lat(),
+                            "lng": e.latLng.lng()
+                        }).then(
+                        function (success) {
+                            var cityCircle = new google.maps.Circle({
+                                //strokeColor: '#FF0000',
+                                strokeOpacity: 0,
+                                strokeWeight: 0,
+                                fillColor: '#FF0000',
+                                fillOpacity: 0.35,
+                                map: map,
+                                center: {'lat': success.data.Lat, 'lng': success.data.Lon},
+                                radius: 100
+                            });
+                            //var marker = new google.maps.Marker({
+                            //    position: {'lat': success.data.Lat, 'lng': success.data.Lon},
+                            //    icon: '~/../Content/img/icons/target.svg',
+                            //    map: map
+                            //});
+                            console.log(success);
+                        },
+                        function (error) {
+                            console.log(error);
+                        }
+                    );
                 });
 
                 clickedPosition = { 'lat' : e.latLng.lat(), 'lng' : e.latLng.lng() };
 
                 userService.currentPosition = { lat: e.latLng.lat(), lng: e.latLng.lng() };
+
+                $http.post('/api/dotCheck',
+                    {
+                        "token": userService.token,
+                        "lat": e.latLng.lat(),
+                        "lng": e.latLng.lng()
+                    }).then(
+                    function (success) {
+                        var cityCircle = new google.maps.Circle({
+                            //strokeColor: '#FF0000',
+                            strokeOpacity: 0,
+                            strokeWeight: 0,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: map,
+                            center: {'lat': success.data.Lat, 'lng': success.data.Lon},
+                            radius: 100
+                        });
+
+                        //var marker = new google.maps.Marker({
+                        //    position: {'lat': success.data.Lat, 'lng': success.data.Lon},
+                        //    icon: '~/../Content/img/icons/target.svg',
+                        //    map: map
+                        //});
+                        console.log(success);
+                    },
+                    function (error) {
+                        console.log(error);
+                    }
+                );
+
                 console.log('position:', 'lat:' + marker.position.lat(), 'lng:' + marker.position.lng(), 'zoom:', map.getZoom());
             });
 

@@ -5,6 +5,7 @@
 module.exports =
     require('angular')
         .module('shared', [
-            require('./toast')
+            require('./toast'),
+            require('./confirmDialog')
         ])
         .name;

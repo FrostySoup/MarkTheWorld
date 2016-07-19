@@ -3,7 +3,7 @@
 
 function spotDetailsService($mdDialog) {
     return {
-        showDialog: function (ev, id) {
+        showDialog: function (id) {
             $mdDialog.show({
                 controller: 'spotDetailsController',
                 controllerAs: 'vm',
@@ -13,7 +13,6 @@ function spotDetailsService($mdDialog) {
                 },
                 bindToController: true,
                 parent: angular.element(document.body),
-                targetEvent: ev,
                 fullscreen: true,
                 focusOnOpen: false,
                 clickOutsideToClose: true

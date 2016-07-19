@@ -1,7 +1,7 @@
 /*global module */
 'use strict';
 
-function spotDetailsController($mdDialog, $http, mapService) {
+function spotDetailsController($mdDialog, $http, mapService, filterMapEventService) {
     var vm = this;
 
     vm.cancel = function () {
@@ -11,12 +11,12 @@ function spotDetailsController($mdDialog, $http, mapService) {
     vm.userMap = function (username) {
         mapService.mapFilter.filter = username;
         mapService.updateMap();
+        filterMapEventService.emit(true);
         vm.cancel();
     };
 
     $http.get('/api/square/' + vm.id).then(
         function (success) {
-            console.log(success);
             vm.spotDetails = success.data;
         },
         function (error) {
@@ -25,4 +25,4 @@ function spotDetailsController($mdDialog, $http, mapService) {
     );
 }
 
-module.exports = ['$mdDialog', '$http', 'mapService', spotDetailsController];
+module.exports = ['$mdDialog', '$http', 'mapService', 'filterMapEventService', spotDetailsController];

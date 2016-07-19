@@ -3,7 +3,7 @@
 'use strict';
 module.exports =
     require('angular')
-        .module('sideNav', [
+        .module('layout.sideNav', [
             require('./completeFBRegistration'),
             require('./login'),
             require('./register')

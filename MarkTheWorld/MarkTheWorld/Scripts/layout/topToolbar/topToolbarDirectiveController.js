@@ -7,8 +7,6 @@ function topToolbarDirectiveController (userService, accountService, myProfileSe
 
     vm.user = userService;
 
-    vm.url = '/Scripts/topToolbar/directives/accountMenuItemLoggedDirective.html';
-
     vm.openRightSideNav = function (sideNavAction) {
         sideNavEventService.emit({ action: sideNavAction });
     };

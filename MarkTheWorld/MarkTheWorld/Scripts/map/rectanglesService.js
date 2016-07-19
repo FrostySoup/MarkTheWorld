@@ -12,6 +12,7 @@ function rectanglesService(spotDetailsService) {
     }
 
     function addNewRecsToMap(recsToBeAdded, map) {
+        console.log(recsToBeAdded);
         angular.forEach(recsToBeAdded, function (value) {
             var rec = new google.maps.Rectangle({
                 id: value.dotId,
@@ -28,8 +29,7 @@ function rectanglesService(spotDetailsService) {
             });
 
             rec.addListener('click', function(e) {
-                console.log('square event', e);
-                spotDetailsService.showDialog(e.Sa, rec.id);
+                spotDetailsService.showDialog(rec.id);
             });
 
             rectanglesArray.push(rec);

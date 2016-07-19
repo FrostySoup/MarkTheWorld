@@ -524,6 +524,7 @@
     <Content Include="Content\img\icons\ic_tune.svg" />
     <Content Include="Content\img\icons\ic_view_module.svg" />
     <Content Include="Content\img\icons\settings.png" />
+    <Content Include="Content\img\icons\target.svg" />
     <Content Include="Content\styles\css\app.css" />
     <Content Include="Content\styles\css\libs\ng-img-crop.css" />
     <Content Include="favicon.ico" />
