@@ -115,7 +115,7 @@ namespace Repository.UserRepository
             }
         }*/
 
-        public List<TopUser> GetTopUsers(string countryCode, int number)
+        public List<TopUser> GetTopUsers(string countryCode, int number, int startingPage)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
@@ -127,9 +127,11 @@ namespace Repository.UserRepository
                         users = session
                              .Query<User>()
                              .OrderByDescending(x => x.points)
+                             .Skip(startingPage * number)
                              .Take(number)
                              .Select(x => new TopUser
                              {
+                                 photoPath = x.profilePicture,
                                  points = x.points,
                                  username = x.UserName
                              })
@@ -141,9 +143,11 @@ namespace Repository.UserRepository
                              .Query<User>()
                              .Where(x => x.countryCode.Equals(countryCode))
                              .OrderByDescending(x => x.points)
+                             .Skip(startingPage * number)
                              .Take(number)
                              .Select(x => new TopUser
                              {
+                                 photoPath = x.profilePicture,
                                  points = x.points,
                                  username = x.UserName
                              })
@@ -155,6 +159,13 @@ namespace Repository.UserRepository
                 {
                     return users;
                 }
+                foreach (TopUser user in users)
+                {
+                    if (!user.photoPath.Contains("facebook"))
+                        user.photoPath = "/Content/img/avatars/" + user.photoPath;
+                }
+                if (users.Count > 0)
+                    TopUser.lowestNumber = startingPage * number;
                 return users;
             }
         }

@@ -16,7 +16,6 @@ namespace Repository.UserRepository
         UserRegistrationModel AddUser(UserRegistrationPost user);
         string GetTokenByName(string name);
         UserRegistrationModel GetOneUser(UserRegistrationPost user);
-        List<TopUser> GetTopUsers(string countryCode, int number);
         //List<UserEvent> GetUserEvents(string userName);             
         bool GetUsername(string userName);
 

@@ -17,7 +17,6 @@ namespace BusinessLayer.UserService
         User deleteOne(string id);   //delete one
         User editApplicationUser(User ApplicationUser);
         User getOneByToken(string token);
-        List<TopUser> getTopUsers(string countryCode, int number);
         UserDailyReward takeUserDaily(string userName);
         //List<UserEvent> getUserEvents(string userName);
         bool postUserColors(string userName, Colors colors);

@@ -273,12 +273,12 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(List<TopUser>))]
         [Route("topList")]
         [HttpPost]
-        public IHttpActionResult GetTopUsers(string countryCode = "", int number = 10)
+        public IHttpActionResult GetTopUsers(string countryCode = "", int number = 10, int startingPage = 0)
         {
             List<TopUser> users = new List<TopUser>();
             try
             {
-                users = userService.getTopUsers(countryCode, number);
+                users = userService.getTopUsers(countryCode, number, startingPage);
             }
             catch (Exception)
             {

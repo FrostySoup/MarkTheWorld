@@ -576,7 +576,7 @@
             Gražina vartotojo spalvas
             </summary>
         </member>
-        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetTopUsers(System.String,System.Int32)">
+        <member name="M:MarkTheWorld.Controllers.Api.UserController.GetTopUsers(System.String,System.Int32,System.Int32)">
             <summary>
             Gražina nurodyta kiekį vartotojų pagal valstybės kodą, jeigu šis nurodytas
             Default: countryCode = "", number = 10
