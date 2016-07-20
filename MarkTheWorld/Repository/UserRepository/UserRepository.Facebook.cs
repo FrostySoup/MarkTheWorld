@@ -48,6 +48,7 @@ namespace Repository.UserRepository
                             profilePath = "/Content/img/avatars/" + profilePath;
                         return new FbNameToken
                         {
+                            countryCode = user.countryCode,
                             photoPath = profilePath,
                             token = user.Token,
                             username = user.UserName

@@ -42,6 +42,8 @@ namespace MarkTheWorld.Controllers.Api
                 {
                     FbNameToken tokenAndName = userService.getLongLiveToken(fb);
                     user.username = tokenAndName.username;
+                    user.country = new Country();
+                    user.country.code = tokenAndName.countryCode;
                     user.longToken = tokenAndName.token;
                     user.photo = tokenAndName.photoPath;
                     if (user.longToken == null)

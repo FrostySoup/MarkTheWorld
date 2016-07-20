@@ -17,6 +17,7 @@ namespace Data
         public string Token { get; set; }
         public string username { get; set; }
         public string photo { get; set; }
+        public string countryCode { get; set; }
         public string messageToString()
         {
             string result = "";
