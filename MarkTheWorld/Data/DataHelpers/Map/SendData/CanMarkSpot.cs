@@ -10,8 +10,8 @@ namespace Data.DataHelpers.Map
     {
         public bool CanMark { get; set; }
         public string MarkedUsername { get; set; }
-        public CornersCorrds Coorners { get; set; }
-        public double CircleR { get; set; }
+        public CornersCorrds Corners { get; set; }
+        public AllCorners SmallSquare { get; set; }
         public double Lon { get; set; }
         public double Lat { get; set; }
     }

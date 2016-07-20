@@ -196,10 +196,19 @@ namespace Repository.DotRepository
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
-                Dot[] dots = session.Query<Dot>()
-                    .Where(x => x.username.Equals(name))
-                    .Take(2000)
-                    .ToArray();
+                Dot[] dots;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    dots = session.Query<Dot>()
+                        .Where(x => x.username.Equals(name))
+                        .Take(2000)
+                        .ToArray();
+                }
+                else {
+                    dots = session
+                        .Load<Dot>()
+                        .ToArray();
+                }
                 return dots;
             }
         }
@@ -231,20 +240,21 @@ namespace Repository.DotRepository
                         }
                         else
                         {
-                            reg.Coorners = coordsToSquare(dot.lat, dot.lng);
+                            reg.Corners = coordsToSquare(dot.lat, dot.lng);
                             reg.Lat = dots[0].nextCapLat;
                             reg.Lon = dots[0].nextCapLon;
+                            reg.SmallSquare = getSmallSquare(dots[0].nextCapLat, dots[0].nextCapLon);
                             reg.MarkedUsername = dots[0].username;
                             reg.CanMark = checkTerritory(dots[0]);
                             return reg;
                         }
                     }
-                    reg.Coorners = coordsToSquare(dot.lat, dot.lng);
+                    reg.Corners = coordsToSquare(dot.lat, dot.lng);
                     double[] holder = centreCapturePoint(dot.lat, dot.lng);
                     reg.Lat = holder[1];
                     reg.Lon = holder[0];
                     reg.CanMark = checkCenter(dot.lat, dot.lng);
-                    reg.CircleR = circleR;
+                    reg.SmallSquare = getSmallSquare(dot.lat, dot.lng);
                     return reg;
                 }
                 catch
@@ -252,7 +262,7 @@ namespace Repository.DotRepository
                     return reg;
                 }
             }      
-         }
+         }     
 
         public DotClick GetDotById(string Id)
         {

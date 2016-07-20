@@ -198,10 +198,10 @@ namespace MarkTheWorld.Controllers.Api
         /// Gražina tik tam tikro žaidėjo taškus, pagal prisijungimo vardą
         /// </summary>
         [ResponseType(typeof(List<GroupedDotsForApi>))]
-        [Route("dots/{name}/{zoomLevel}")]
+        [Route("dot/{zoomLevel}")]
         [HttpPost]
         [ValidateViewModel]
-        public IHttpActionResult GetUserDotsByName(CornersCorrds corners, string name, double zoomLevel)
+        public IHttpActionResult GetUserDotsByName(CornersCorrds corners, double zoomLevel, string name = "")
         {
             if (name.Length < 3 || name.Length > 25)
                 return Content(HttpStatusCode.BadRequest, "Wrong username length");
@@ -225,7 +225,7 @@ namespace MarkTheWorld.Controllers.Api
 
 
         /// <summary>
-        /// Gražina visus apjungtus taškus tam tikroje teritorijoje
+        /// REMOVE
         /// </summary>
         [ResponseType(typeof(List<GroupedDotsForApi>))]
         [Route("dots/{zoomLevel}")]

@@ -1,6 +1,7 @@
 ﻿using Data;
 using Data.Database;
 using Data.DataHelpers;
+using Data.DataHelpers.Map;
 using Raven.Client;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Repository.DotRepository
 {
     public partial class DotRepository
     {
-        const double circleR = 0.0025;
+        const double squareA = 0.0025;
         private string cutImageName(string photoUrl)
         {
             if (photoUrl == null)
@@ -48,10 +49,10 @@ namespace Repository.DotRepository
         {
             double[] coords = new double[2];
             CornersCorrds corners = coordsToSquare(lon, lat);
-            double minimumX = corners.swX + circleR;
-            double maximumX = corners.neX - circleR;
-            double minimumY = corners.swY + circleR;
-            double maximumY = corners.neY - circleR;
+            double minimumX = corners.swX + squareA;
+            double maximumX = corners.neX - squareA;
+            double minimumY = corners.swY + squareA;
+            double maximumY = corners.neY - squareA;
             Random random = new Random();
             coords[0] = random.NextDouble() * (maximumX - minimumX) + minimumX;
             coords[1] = random.NextDouble() * (maximumX - minimumY) + minimumY;
@@ -94,9 +95,9 @@ namespace Repository.DotRepository
 
         private bool checkIfInside(double lat, double lng, double allowedLat, double allowedLng)
         {
-            double range = Math.Pow(Math.Pow((lat - allowedLat), 2) + Math.Pow((lng - allowedLng), 2), 0.5);
-            if (range < 0.0025)
-                return true;
+            if (lat < allowedLat + squareA && lat > allowedLat - squareA)
+                if (lng < allowedLng + squareA && lng > allowedLng - squareA)
+                    return true;
             return false;
         }
 
@@ -190,5 +191,15 @@ namespace Repository.DotRepository
                 user.eventsID.RemoveRange(10, 1);
             }
         }
+
+
+        private AllCorners getSmallSquare(double lat, double lon)
+        {
+            double[] centerCoords = centreCapturePoint(lon, lat);
+            AllCorners corners = new AllCorners(lon, lat, squareA);
+            
+            return corners;
+        }
+
     }
 }

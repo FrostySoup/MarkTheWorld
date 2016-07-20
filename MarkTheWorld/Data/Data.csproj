@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Database\Events.cs" />
     <Compile Include="DataHelpers\Facebook\FbNameToken.cs" />
+    <Compile Include="DataHelpers\Map\AllCorners.cs" />
     <Compile Include="DataHelpers\Map\SendData\CanMarkSpot.cs" />
     <Compile Include="DataHelpers\Map\SendData\DotClick.cs" />
     <Compile Include="DataHelpers\Map\ReceivedData\DotFromViewModel.cs" />

@@ -511,14 +511,14 @@
             Gražina tam tikro žaidėjo taškų skaičių, kurį jis gali gauti kartą per parą
             </summary>
         </member>
-        <member name="M:MarkTheWorld.Controllers.Api.DotController.GetUserDotsByName(Data.DataHelpers.CornersCorrds,System.String,System.Double)">
+        <member name="M:MarkTheWorld.Controllers.Api.DotController.GetUserDotsByName(Data.DataHelpers.CornersCorrds,System.Double,System.String)">
             <summary>
             Gražina tik tam tikro žaidėjo taškus, pagal prisijungimo vardą
             </summary>
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.DotController.GetDots(Data.DataHelpers.CornersCorrds,System.Double)">
             <summary>
-            Gražina visus apjungtus taškus tam tikroje teritorijoje
+            REMOVE
             </summary>
         </member>
         <member name="M:MarkTheWorld.Controllers.Api.UploadingController.PhotoPost">
