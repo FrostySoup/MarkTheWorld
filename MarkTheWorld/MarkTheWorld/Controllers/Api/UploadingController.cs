@@ -2,6 +2,7 @@
 using BusinessLayer.PhotoUpload;
 using BusinessLayer.UserService;
 using Data;
+using Data.Database;
 using Data.DataHelpers.User;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace MarkTheWorld.Controllers.Api
 
                 UserService userServ = new UserService();
                 string userToken = result.FormData["token"];
-                User user = userServ.getOneByToken(userToken);
+                User user = await userServ.getOneByToken(userToken);
                 if (user == null)
                 {
                     System.IO.File.Delete(path);
@@ -55,7 +56,7 @@ namespace MarkTheWorld.Controllers.Api
                     string userOldPhotoPath = user.profilePicture;                    
                     string imageName = ImageThumb.toThumb(path);
                     user.profilePicture = imageName;
-                    userServ.editApplicationUser(user);
+                    await userServ.editApplicationUser(user);
                     if (!userOldPhotoPath.Contains("facebook") && !userOldPhotoPath.Contains("default"))
                     {
                         try { System.IO.File.Delete(PATH + "\\" + userOldPhotoPath); }

@@ -9,10 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.DotService;
 using Data.DataHelpers.User;
+using Data.Database;
 
 namespace BusinessLayer.UserService
 {
-    public class UserService : IUserService
+    public class UserService
     {
         private Repository.UserRepository.UserRepository repository = new Repository.UserRepository.UserRepository();
 
@@ -21,44 +22,34 @@ namespace BusinessLayer.UserService
             repository = new Repository.UserRepository.UserRepository();
         }
 
-        public List<User> getApplicationUserApplicationUsers(string ids)
+        public async Task<UserRegistrationModel> addUser(UserRegistrationPost user)
         {
-            return repository.GetAll<User>();
+            return await repository.AddUser(user);
         }
 
-        public UserRegistrationModel addUser(UserRegistrationPost user)
+        public async Task<UserRegistrationModel> getOne(UserRegistrationPost user)
         {
-            return repository.AddUser(user);
+            return await repository.GetOneUser(user);
         }
 
-        public UserRegistrationModel getOne(UserRegistrationPost user)
+       /* public async Task<User> editApplicationUser(User ApplicationUser)
         {
-            return repository.GetOneUser(user);
+            return await repository.Edit(ApplicationUser);
+        }*/
+
+        public async Task<User> getOneByToken(string token)
+        {
+            return await repository.GetOneByToken(token);
         }
 
-        public User deleteOne(string id)
+        public async Task<User> getOneByName(string name)
         {
-            return repository.Delete<User>(id);
+            return await repository.GetOneByName(name);
         }
 
-        public User editApplicationUser(User ApplicationUser)
+        public async Task<List<TopUser>> getTopUsers(string countryCode, int number, int startingNumber)
         {
-            return repository.Edit(ApplicationUser);
-        }
-
-        public User getOneByToken(string token)
-        {
-            return repository.GetOneByToken(token);
-        }
-
-        public User getOneByName(string name)
-        {
-            return repository.GetOneByName(name);
-        }
-
-        public List<TopUser> getTopUsers(string countryCode, int number, int startingNumber)
-        {
-            return repository.GetTopUsers(countryCode, number, startingNumber);
+            return await repository.GetTopUsers(countryCode, number, startingNumber);
         }
 
         public bool checkUserDaily(string userName)
@@ -71,50 +62,54 @@ namespace BusinessLayer.UserService
             return repository.GetUserEvents(userName);
         }*/
 
-        public bool postUserColors(string userName, Colors colors)
+        public async Task<bool> postUserColors(string userName, Colors colors)
         {
-            return repository.SetColors(userName, colors);
+            return await repository.SetColors(userName, colors);
         }
 
-        public Colors getUserColors(string userName)
+        public async Task<Colors> getUserColors(string userName)
         {
-            return repository.GetColors(userName);
+            return await repository.GetColors(userName);
         }
 
-        public bool checkUsername(string userName)
+        public async Task<bool> editApplicationUser(User user)
         {
-            return repository.GetUsername(userName);
+            return await repository.EditUser(user);
         }
 
-        public UserDailyReward takeUserDaily(string userName)
+        public async Task<bool> checkUsername(string userName)
+        {
+            return await repository.GetUsername(userName);
+        }
+
+        public async Task<UserDailyReward> takeUserDaily(string userName)
         {
             DotServices dotService = new DotServices();
-            Dot[] dots = dotService.getAlluserDots(userName);
+            Dot[] dots = await dotService.getAlluserDots(userName);
             int points = dotService.getUserPointsName(dots);
-            UserDailyReward tookDaily = repository.GetUserDailyReward(userName, points);
-            return tookDaily;
+            return await repository.GetUserDailyReward(userName, points);
         }
 
-        public UserProfile GetProfile(string userName)
+        public async Task<UserProfile> GetProfile(string userName)
         {
             UserProfile user = new UserProfile();
-            user.colors = repository.GetColors(userName);
+            user.colors = await repository.GetColors(userName);
             user.name = userName;
-            user.points = repository.GetTotalPoints(userName);
-            user.pictureAddress = repository.GetProfilePic(userName);
+            user.points = await repository.GetTotalPoints(userName);
+            user.pictureAddress = await repository.GetProfilePic(userName);
             if (!user.pictureAddress.Contains("facebook"))
                 user.pictureAddress = "/Content/img/avatars/" + user.pictureAddress;
             DotServices dotService = new DotServices();
             user.dailies = new DailyReward();
             int points = 0;
-            Dot[] dots = dotService.getAlluserDots(userName);
+            Dot[] dots = await dotService.getAlluserDots(userName);
             points = dotService.getUserPointsName(dots);
             user.dailies.points = points;
-            Country country = repository.GetCountry(userName);
+            Country country = await repository.GetCountry(userName);
             user.countryName = country.name;
             user.flagAddress = country.code.ToLower() + ".png";
 
-            TimeSpan time = repository.GetUserDaily(userName);
+            TimeSpan time = await repository.GetUserDaily(userName);
             TimeSpan saveTime = new TimeSpan(0, 0, 0);
             if (time.TotalDays >= 1)
                 user.dailies.timeLeft = 0;
@@ -126,9 +121,9 @@ namespace BusinessLayer.UserService
             return user;
         }
 
-        public List<string> GetUsersAutoComplete(string filter, int number)
+        public async Task<List<string>> GetUsersAutoComplete(string filter, int number)
         {
-            List<string> usernames = repository.GetAll<User>().Select(x => x.UserName).ToList();
+            List<string> usernames = (await repository.GetAll()).Select(x => x.UserName).ToList();
             usernames = filterUsernames(filter, number, usernames);
             return usernames;
         }

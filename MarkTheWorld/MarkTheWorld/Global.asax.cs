@@ -1,4 +1,5 @@
-﻿using BusinessLayer.UserService;
+﻿using BusinessLayer;
+using BusinessLayer.UserService;
 using MarkTheWorld.App_Start;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace MarkTheWorld
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            DbLink.DocumentRep();
         }
 
     }

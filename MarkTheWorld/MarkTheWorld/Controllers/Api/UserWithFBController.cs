@@ -30,17 +30,17 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(FbServerLogin))]
         [Route("fblogin")]
         [HttpPost]
-        public IHttpActionResult PostLogin(FbClientLogin fb)
+        public async Task<IHttpActionResult> PostLogin(FbClientLogin fb)
         {
             try
             {
-                bool newUser = userService.checkUserById(fb.Id);
+                bool newUser = await userService.checkUserById(fb.Id);
                 FbServerLogin user = new FbServerLogin();
                 user.newUser = newUser;
                 user.longToken = "";
                 if (!newUser)
                 {
-                    FbNameToken tokenAndName = userService.getLongLiveToken(fb);
+                    FbNameToken tokenAndName = await userService.getLongLiveToken(fb);
                     user.username = tokenAndName.username;
                     user.country = new Country();
                     user.country.code = tokenAndName.countryCode;
@@ -51,7 +51,7 @@ namespace MarkTheWorld.Controllers.Api
                 }
                 else
                 {
-                    FbServerLogin userTemp = userService.getUserParams(fb);
+                    FbServerLogin userTemp = await userService.getUserParams(fb);
                     user.username = userTemp.username;
                     user.country = userTemp.country;
                 }
@@ -70,11 +70,11 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(Registration))]
         [Route("fbRegister")]
         [HttpPost]
-        public IHttpActionResult PostRegister(FbRegisterClient fb)
+        public async Task<IHttpActionResult> PostRegister(FbRegisterClient fb)
         {
             try
             {
-                Registration token = userService.register(fb);
+                Registration token = await userService.register(fb);
                 if (token == null)
                     return Content(HttpStatusCode.BadRequest, "User already registered");
                 if (token.Equals("Invalid token") || token.Equals(""))

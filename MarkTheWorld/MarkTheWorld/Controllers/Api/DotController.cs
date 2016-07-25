@@ -3,6 +3,7 @@ using BusinessLayer.DotService;
 using BusinessLayer.Filters;
 using BusinessLayer.UserService;
 using Data;
+using Data.Database;
 using Data.DataHelpers;
 using Data.DataHelpers.Map;
 using MarkTheWorld.Models;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -32,12 +34,12 @@ namespace MarkTheWorld.Controllers.Api
         [Route("dot")]
         [HttpPost]
         [ValidateViewModel]
-        public IHttpActionResult PostDot(DotFromViewModel dot)
+        public async Task<IHttpActionResult> PostDot(DotFromViewModel dot)
         {          
             UserRegistrationModel dotCopy = new UserRegistrationModel();
             try
             {
-                dotCopy = dotService.storeDot(dot);
+                dotCopy = await dotService.storeDot(dot);
             }
             catch (Exception)
             {
@@ -59,7 +61,7 @@ namespace MarkTheWorld.Controllers.Api
         [Route("squares")]
         [HttpPost]
         [ValidateViewModel]
-        public IHttpActionResult GetSquares(CornersCorrds corners, string name = "")
+        public async Task<IHttpActionResult> GetSquares(CornersCorrds corners, string name = "")
         {
             List<Dot> dots = new List<Dot>();
             List<Square> squares = new List<Square>();
@@ -68,17 +70,17 @@ namespace MarkTheWorld.Controllers.Api
             {
                 if (string.IsNullOrEmpty(name))
                 {
-                    dots = dotService.getAllDots(corners);
+                    dots = await dotService.getAllDots(corners);
                     foreach (Dot dot in dots)
                     {
-                        Colors squareColor = userService.getUserColors(dot.username);
+                        Colors squareColor = await userService.getUserColors(dot.username);
                         squares.Add(new Square(dotService.coordsToSquare(dot.lat, dot.lon), squareColor, dot.Id, ColorService.Darken(squareColor)));
                     }
                 }
                 else
                 {
-                    Colors squareColor = userService.getUserColors(name);
-                    dots = dotService.getUserDotsName(corners, name);
+                    Colors squareColor = await userService.getUserColors(name);
+                    dots = await dotService.getUserDotsName(corners, name);
                     foreach (Dot dot in dots)
                     {
                         squares.Add(new Square(dotService.coordsToSquare(dot.lat, dot.lon), squareColor, dot.Id, ColorService.Darken(squareColor)));
@@ -100,12 +102,12 @@ namespace MarkTheWorld.Controllers.Api
         [Route("square/{Id}")]
         [HttpGet]
         [ValidateViewModel]
-        public IHttpActionResult GetSquareInfo(string Id)
+        public async Task<IHttpActionResult> GetSquareInfo(string Id)
         {
             DotClick clicked;
             try
             {
-                clicked = dotService.GetDotWithInfo(Id);
+                clicked = await dotService.GetDotWithInfo(Id);
             }
             catch (Exception)
             {
@@ -124,13 +126,13 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(CanMarkSpot))]
         [Route("dotCheck")]
         [HttpPost]
-        [ValidateViewModel]
-        public IHttpActionResult CheckDot(DotFromViewModel dot)
+        //[ValidateViewModel]
+        public async Task<IHttpActionResult> CheckDot(DotFromViewModel dot)
         {
             CanMarkSpot results = new CanMarkSpot();
             try
             {
-                results = dotService.CheckDot(dot);
+                results = await dotService.CheckDot(dot);
             }
             catch (Exception)
             {
@@ -146,7 +148,7 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(List<Square>))]
         [Route("squares/{name}")]
         [HttpPost]
-        public IHttpActionResult GetUserSquaresByName(CornersCorrds corners, string name)
+        public async Task<IHttpActionResult> GetUserSquaresByName(CornersCorrds corners, string name)
         {
             if (name.Length < 3 || name.Length > 25)
                 return Content(HttpStatusCode.BadRequest, "Wrong username length");
@@ -155,8 +157,8 @@ namespace MarkTheWorld.Controllers.Api
             UserService userService = new UserService();
             try
             {
-                Colors squareColor = userService.getUserColors(name);
-                gameDots = dotService.getUserDotsName(corners, name);
+                Colors squareColor = await userService.getUserColors(name);
+                gameDots = await dotService.getUserDotsName(corners, name);
                 foreach (Dot dot in gameDots)
                 {                  
                     squares.Add(new Square(dotService.coordsToSquare(dot.lat, dot.lon), squareColor, dot.Id, ColorService.Darken(squareColor)));
@@ -176,14 +178,14 @@ namespace MarkTheWorld.Controllers.Api
         [Route("points/{name}")]
         [HttpGet]
         [ValidateViewModel]
-        public IHttpActionResult GetPointsByName(string name)
+        public async Task<IHttpActionResult> GetPointsByName(string name)
         {
             if (name.Length < 3 || name.Length > 25)
                 return Content(HttpStatusCode.BadRequest, "Wrong username length");
             int points = 0;
             try
             {
-                Dot[] dots = dotService.getAlluserDots(name);
+                Dot[] dots = await dotService.getAlluserDots(name);
                 points = dotService.getUserPointsName(dots);
             }
             catch (Exception)
@@ -201,7 +203,7 @@ namespace MarkTheWorld.Controllers.Api
         [Route("dot/{zoomLevel}")]
         [HttpPost]
         [ValidateViewModel]
-        public IHttpActionResult GetUserDotsByName(CornersCorrds corners, double zoomLevel, string name = "")
+        public async Task<IHttpActionResult> GetUserDotsByName(CornersCorrds corners, double zoomLevel, string name = "")
         {
             if (name.Length < 3 || name.Length > 25)
                 return Content(HttpStatusCode.BadRequest, "Wrong username length");
@@ -211,7 +213,7 @@ namespace MarkTheWorld.Controllers.Api
             List<GroupedDotsForApi> groupedDots = new List<GroupedDotsForApi>();
             try
             {
-                gameDots = dotService.getUserDotsName(corners, name);
+                gameDots = await dotService.getUserDotsName(corners, name);
                 groupedDots = dotService.groupDots(gameDots, corners, zoomLevel);
             }
             catch (Exception)
@@ -231,7 +233,7 @@ namespace MarkTheWorld.Controllers.Api
         [Route("dots/{zoomLevel}")]
         [HttpPost]
         [ValidateViewModel]
-        public IHttpActionResult GetDots(CornersCorrds corners, double zoomLevel)
+        public async Task<IHttpActionResult> GetDots(CornersCorrds corners, double zoomLevel)
         {
             if (zoomLevel > 15 && zoomLevel < 0)
                 return Content(HttpStatusCode.BadRequest, "Wrong zoom level");
@@ -239,7 +241,7 @@ namespace MarkTheWorld.Controllers.Api
             List<GroupedDotsForApi> groupedDots = new List<GroupedDotsForApi>();
             try
             {
-                gameDots = dotService.getAllDots(corners);
+                gameDots = await dotService.getAllDots(corners);
                 groupedDots = dotService.groupDots(gameDots, corners, zoomLevel);
             }
             catch (Exception)

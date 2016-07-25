@@ -1,53 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Data;
-using Data.DataHelpers;
 using CSharpQuadTree;
 using Data.DataHelpers.Map;
 using System.Web;
+using Data.Database;
+using Data.DataHelpers;
+using Data;
 
 namespace BusinessLayer.DotService
 {
-    public partial class DotServices : IDotService
+    public partial class DotServices
     {
+        private Repository.DotRepository.DotRepository repositoryDot = new Repository.DotRepository.DotRepository();
 
-        private Repository.GenericRepository.IGenericRepository repository = new Repository.GenericRepository.GenericRepository();
-        private Repository.DotRepository.IDotRepository repositoryDot = new Repository.DotRepository.DotRepository();
-
-        public Dot deleteDot(string dotId)
+        public async Task<List<Dot>> getAllDots(CornersCorrds corners)
         {
-            return repository.Delete<Dot>(dotId);
+            return await repositoryDot.GetAll(corners);
         }
 
-        public UserRegistrationModel storegroupDots(List<DotFromViewModel> dot)
-        {
-            return repositoryDot.AddGroup(dot);
-        }
-
-        public List<Dot> getAllDots(CornersCorrds corners)
-        {
-            return repositoryDot.GetAll(corners);
-        }
-
-        public UserRegistrationModel storeDot(DotFromViewModel dot, string image = null)
+        public async Task<UserRegistrationModel> storeDot(DotFromViewModel dot, string image = null)
         {
             string path = HttpRuntime.AppDomainAppPath;
-            return repositoryDot.AddOne(dot, image, path);
+            return await repositoryDot.AddOne(dot, image, path);
         }
 
-        public List<CornersCorrds> getAllSquares(List<Dot> dots)
-        {
-            List<CornersCorrds> squares = new List<CornersCorrds>();
-           
-            return squares;
-        }
 
-        public List<Dot> getUserDotsName(CornersCorrds corners, string name)
+        public async Task<List<Dot>> getUserDotsName(CornersCorrds corners, string name)
         {
-            return repositoryDot.GetAllUserByName(corners, name);
+            return await repositoryDot.GetAllUserByName(corners, name);
         }
 
         public int getUserPointsName(Dot[] squares)
@@ -55,19 +36,19 @@ namespace BusinessLayer.DotService
             return maxConnection(squares);
         }
 
-        public Dot[] getAlluserDots(string name)
+        public async Task<Dot[]> getAlluserDots(string name)
         {
-            return repositoryDot.GetAllDotsByName(name);
+            return await repositoryDot.GetAllDotsByName(name);
         }
 
-        public CanMarkSpot CheckDot(DotFromViewModel dot)
+        public async Task<CanMarkSpot> CheckDot(DotFromViewModel dot)
         {
-            return repositoryDot.CheckDotResults(dot);
+            return await repositoryDot.CheckDotResults(dot);
         }
 
-        public DotClick GetDotWithInfo(string id)
+        public async Task<DotClick> GetDotWithInfo(string id)
         {
-            DotClick dot = repositoryDot.GetDotById(id);
+            DotClick dot = await repositoryDot.GetDotById(id);
             dot.pathCountryFlag = "/Content/img/flags/" + dot.country + ".png";
             dot.country = CountriesList.getCountry(dot.country).name;
             if (!dot.profilePic.Contains("facebook"))
