@@ -1,166 +1,143 @@
-﻿using Data;
-using Data.DataHelpers;
+﻿using Data.DataHelpers;
 using Data.ReceivePostData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Data.Database;
 using System.Threading.Tasks;
-using Data.DataHelpers.Facebook;
 
 namespace Repository.UserRepository
 {
     public partial class UserRepository
     {
-        public UserDailyReward GetUserDailyReward(string userName, int points)
+        public async Task<UserDailyReward> GetUserDailyReward(string userName, int points)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            TimeSpan timePassed = new TimeSpan(0, 0, 0);
+            UserDailyReward dailies = new UserDailyReward();
+            try
             {
-                TimeSpan timePassed = new TimeSpan(0, 0, 0);
-                UserDailyReward dailies = new UserDailyReward();
-                try
+                User user = await DocumentDBRepository<User>
+                                .GetItemAsync(x => x.UserName.Equals(userName));
+                timePassed = DateTime.Now - user.lastDailyTime;
+                if (timePassed.TotalDays >= 1)
                 {
-                    User user = session.Query<User>().First(x => x.UserName.Equals(userName));
-                    timePassed = DateTime.Now - user.lastDailyTime;
-                    if (timePassed.TotalDays >= 1)
-                    {
-                        user.lastDailyTime = DateTime.Now;
-                        user.points += points;
-                        dailies.totalPoints = user.points;
-                        dailies.received = points;
-                        TimeSpan day = new TimeSpan(24, 0, 0);
-                        dailies.timeLeft = (int)day.TotalSeconds;
-                        session.Store(user);
-                        session.SaveChanges();
-                        return dailies;
-                    }
-                    else return dailies;
-                }
-                catch
-                {
+                    user.lastDailyTime = DateTime.Now;
+                    user.points += points;
+                    dailies.totalPoints = user.points;
+                    dailies.received = points;
+                    TimeSpan day = new TimeSpan(24, 0, 0);
+                    dailies.timeLeft = (int)day.TotalSeconds;
+                    await DocumentDBRepository<User>.UpdateItemAsync(user.Id, user);
                     return dailies;
                 }
+                else return dailies;
+            }
+            catch
+            {
+                return dailies;
             }
         }
         
 
-        public string GetProfilePic(string userName)
+        public async Task<string> GetProfilePic(string userName)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            try
             {
-                try
-                {
-                    User user = session.Query<User>()
-                        .First(x => x.UserName.Equals(userName));
-                    if (user.profilePicture == null)
-                        return "defaultAvatar1.png";
-                    else
-                        return user.profilePicture;
-                }
-                catch
-                {
+                User user = await DocumentDBRepository<User>
+                                .GetItemAsync(x => x.UserName.Equals(userName));
+                if (user.profilePicture == null)
                     return "defaultAvatar1.png";
-                }
+                else
+                    return user.profilePicture;
+            }
+            catch
+            {
+                return "defaultAvatar1.png";
             }
         }
 
         
-        public bool SetColors(string userName, Colors colors)
+        public async Task<bool> SetColors(string userName, Colors colors)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            try
             {
-                try
-                {
-                    User user = session.Query<User>()
-                        .First(x => x.UserName.Equals(userName));
+                User user = await DocumentDBRepository<User>
+                    .GetItemAsync(x => x.UserName.Equals(userName));
 
-                    user.colors = colors;
-                    session.Store(user);
-
-                    session.SaveChanges();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                user.colors = colors;
+                await DocumentDBRepository<User>
+                    .UpdateItemAsync(user.Id, user);
+                return true;
             }
-        }
-
-        public int GetTotalPoints(string userName)
-        {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            catch
             {
-                try
-                {
-                    User user = session.Query<User>()
-                        .First(x => x.UserName.Equals(userName));
-                    if (user == null)
-                        return -1;
-                    if (user.points < 0)
-                        return 0;
-                    else return user.points;
-                }
-                catch
-                {
+                return false;
+            }
+        }       
+
+        public async Task<int> GetTotalPoints(string userName)
+        {
+            try
+            {
+                User user = await DocumentDBRepository<User>
+                    .GetItemAsync(x => x.UserName.Equals(userName));
+                if (user == null)
                     return -1;
-                }
+                if (user.points < 0)
+                    return 0;
+                else return user.points;
+            }
+            catch
+            {
+                return -1;
             }
         }
 
-        public Country GetCountry(string userName)
+        public async Task<Country> GetCountry(string userName)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            try
             {
-                try
-                {
-                    User user = session.Query<User>()
-                        .First(x => x.UserName.Equals(userName));
-                    if (user != null)
-                        return CountriesList.getCountry(user.countryCode);
-                    else return null;
-                }
-                catch
-                {
-                    return null;
-                }
+                User user = await DocumentDBRepository<User>
+                    .GetItemAsync(x => x.UserName.Equals(userName));
+                if (user != null)
+                    return CountriesList.getCountry(user.countryCode);
+                else return null;
+            }
+            catch
+            {
+                return null;
             }
         }
 
-        public TimeSpan GetUserDaily(string userName)
+        public async Task<TimeSpan> GetUserDaily(string userName)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            TimeSpan timePassed = new TimeSpan(0, 0, 0);
+            try
             {
-                TimeSpan timePassed = new TimeSpan(0, 0, 0);
-                try
-                {
-                    User user = session.Query<User>().First(x => x.UserName.Equals(userName));
-                    timePassed = DateTime.Now - user.lastDailyTime;
-                    return timePassed;
-                }
-                catch
-                {
-                    return timePassed;
-                }
+                User user = await DocumentDBRepository<User>
+                    .GetItemAsync(x => x.UserName.Equals(userName));
+                timePassed = DateTime.Now - user.lastDailyTime;
+                return timePassed;
+            }
+            catch
+            {
+                return timePassed;
             }
         }
 
-        public Colors GetColors(string userName)
+        public async Task<Colors> GetColors(string userName)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            try
             {
-                try
-                {
-                    User user = session.Query<User>()
-                        .First(x => x.UserName.Equals(userName));
-                    if (user != null)
-                        return user.colors;
-                    else return null;
-                }
-                catch
-                {
-                    return null;
-                }
+                User user = await DocumentDBRepository<User>
+                    .GetItemAsync(x => x.UserName.Equals(userName));
+                if (user != null)
+                    return user.colors;
+                else return null;
+            }
+            catch
+            {
+                return null;
             }
         }
 

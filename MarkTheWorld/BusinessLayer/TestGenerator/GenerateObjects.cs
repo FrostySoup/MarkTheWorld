@@ -12,9 +12,9 @@ namespace BusinessLayer.TestGenerator
     {
         private Repository.UserRepository.UserRepository repository = new Repository.UserRepository.UserRepository();
         //private Repository.GenericRepository.IGenericRepository repository = new Repository.GenericRepository.GenericRepository();
-        private Repository.DotRepository.IDotRepository repositoryDot = new Repository.DotRepository.DotRepository();
+        private Repository.DotRepository.DotRepository repositoryDot = new Repository.DotRepository.DotRepository();
 
-        public UserRegistrationModel generateUser()
+        public async Task<UserRegistrationModel> generateUser()
         {
             UserRegistrationPost user = new UserRegistrationPost();
             string[] pavardės = { "varšys", "driugys", "banilskis", "bobtuskis", "lakonavičius", "berdonskis", "pralešavičius", "vinciškis", "druiginksis", "lepavičius", "skis", "bakskys" };
@@ -27,10 +27,10 @@ namespace BusinessLayer.TestGenerator
             int pavardėRaid3 = rnd.Next(6);
             user.UserName = chars[pavardėRaid] + "" + chars2[pavardėRaid2] + "" + chars2[pavardėRaid3] + "" + pavardės[pavardė];
             user.PasswordHash = (pavardė * pavardė).ToString() + " vvvd";
-            return repository.AddUser(user);
+            return await repository.AddUser(user);
         }
 
-        public void generateDots(string token, int numberToGen)
+        public async void generateDots(string token, int numberToGen)
         {
             DotFromViewModel dot = new DotFromViewModel();
             Random rnd = new Random();
@@ -38,7 +38,7 @@ namespace BusinessLayer.TestGenerator
             dot.lng = rnd.NextDouble() * (180 - 0) + 0;
             dot.message = "Same message";
             dot.token = token;
-            repositoryDot.AddOne(dot, null, null);
+            await repositoryDot.AddOne(dot, null, null);
             for (int i = 1; i < numberToGen; i++)
             {
                 DotFromViewModel dotNew = new DotFromViewModel();
@@ -46,15 +46,15 @@ namespace BusinessLayer.TestGenerator
                 dotNew.lng = dot.lng + rnd.NextDouble() * 0.03;
                 dotNew.message = "Same message";
                 dotNew.token = token;
-                repositoryDot.AddOne(dotNew, null, null);
+                await repositoryDot.AddOne(dotNew, null, null);
             }
         }
 
-        public void GenerateXUsersWithYDots (int xUsers, int yDots){
+        public async void GenerateXUsersWithYDots (int xUsers, int yDots){
             UserRegistrationModel users;
             for (int i = 0; i < xUsers; i++)
             {
-                users = generateUser();             
+                users = await generateUser();             
                 generateDots(users.Token, yDots);
             }
 

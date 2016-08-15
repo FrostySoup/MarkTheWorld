@@ -1,69 +1,58 @@
 ﻿using Data;
 using Data.ReceivePostData;
-using Raven.Client;
-using Repository.Index;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Data.DataHelpers;
+using Data.Database;
 
 namespace Repository.UserRepository
 {
-    public partial class UserRepository : GenericRepository.GenericRepository, IUserRepository
+    public partial class UserRepository
     {
-        public UserRegistrationModel AddUser(UserRegistrationPost userPost)
+        public async Task<UserRegistrationModel> AddUser(UserRegistrationPost userPost)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
-            {
-                User newUser = generateUser();
-                newUser.PasswordHash = userPost.PasswordHash;
-                newUser.UserName = userPost.UserName;
-                if (userPost == null)
-                    newUser.state = userPost.State;
-                newUser.countryCode = userPost.CountryCode;         
-                Random rnd = new Random();
-                newUser.profilePicture = "defaultAvatar" + rnd.Next(1, 16) + ".png";
-                UserRegistrationModel check = new UserRegistrationModel();
-                check.photo = "/Content/img/avatars/" + newUser.profilePicture;             
-                check.username = userPost.UserName;
-                try
-                {                    
+            User newUser = generateUser();
+            newUser.PasswordHash = userPost.PasswordHash;
+            newUser.UserName = userPost.UserName;
+            if (userPost == null)
+                newUser.state = userPost.State;
+            newUser.countryCode = userPost.CountryCode;         
+            Random rnd = new Random();
+            newUser.profilePicture = "defaultAvatar" + rnd.Next(1, 16) + ".png";
+            UserRegistrationModel check = new UserRegistrationModel();
+            check.photo = "/Content/img/avatars/" + newUser.profilePicture;             
+            check.username = userPost.UserName;
+            try
+            {                    
                     
-                    check.success = false;
-                    check.message = message2.UserNameTaken;
-                    check.Token = System.Guid.NewGuid().ToString();
-                    User oneObject = session.Query<User>().First(x => x.UserName.Equals(newUser.UserName));
-                    if (oneObject == null)
-                    {
-                        newUser.Token = check.Token.ToString();
-                        session.Store(newUser);
-                        session.SaveChanges();
-                        check.success = true;
-                        check.message = message2.Success;
-                        return check;
-                    }
-                    check.success = false;
-                    check.message = message2.UserNameTaken;
-                    return check;
-                }
-                catch
+                check.success = false;
+                check.message = message2.UserNameTaken;
+                check.Token = System.Guid.NewGuid().ToString();
+                User oneObject = await DocumentDBRepository<User>.GetItemAsync(x => x.UserName.Equals(newUser.UserName));
+                if (oneObject == null)
                 {
-                    check.success = true;
-                    check.Token = System.Guid.NewGuid().ToString();
                     newUser.Token = check.Token.ToString();
-                    session.Store(newUser);
-                    session.SaveChanges();
+                    await DocumentDBRepository<User>.CreateItemAsync(newUser);
+                    check.success = true;
                     check.message = message2.Success;
                     return check;
                 }
+                check.success = false;
+                check.message = message2.UserNameTaken;
+                return check;
             }
-        }
-
-        public Colors GetColorsById(string dotId)
-        {
-            throw new NotImplementedException();
+            catch
+            {
+                check.success = true;
+                check.Token = System.Guid.NewGuid().ToString();
+                newUser.Token = check.Token.ToString();
+                await DocumentDBRepository<User>.CreateItemAsync(newUser);
+                check.message = message2.Success;
+                return check;
+            }
         }
 
         public User generateUser()
@@ -78,22 +67,19 @@ namespace Repository.UserRepository
             return newUser;
         }
 
-        public bool GetUsername(string userName)
+        public async Task<bool> GetUsername(string userName)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            try
             {
-                try
-                {
-                    User user = session.Query<User>()
-                        .First(x => x.UserName.Equals(userName));
-                    if (user != null)
-                        return false;
-                    else return true;
-                }
-                catch
-                {
-                    return true;
-                }
+                User user = await DocumentDBRepository<User>
+                                .GetItemAsync(x => x.UserName.Equals(userName));
+                if (user != null)
+                    return false;
+                else return true;
+            }
+            catch
+            {
+                return true;
             }
         }
 
@@ -115,153 +101,147 @@ namespace Repository.UserRepository
             }
         }*/
 
-        public List<TopUser> GetTopUsers(string countryCode, int number, int startingPage)
+        public async Task<List<TopUser>> GetTopUsers(string countryCode, int number, int startingPage)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            List<TopUser> users = new List<TopUser>();
+            try
             {
-                List<TopUser> users = new List<TopUser>();
-                try
+                if (string.IsNullOrEmpty(countryCode))
                 {
-                    if (string.IsNullOrEmpty(countryCode))
+                    users = (await DocumentDBRepository<User>.GetItemAsyncPages(x => x != null, x => x.points, number, startingPage * number)).Select(x => new TopUser
                     {
-                        users = session
-                             .Query<User>()
-                             .OrderByDescending(x => x.points)
-                             .Skip(startingPage * number)
-                             .Take(number)
-                             .Select(x => new TopUser
-                             {
-                                 photoPath = x.profilePicture,
-                                 points = x.points,
-                                 username = x.UserName
-                             })
-                             .ToList();
-                    }
-                    else
+                        photoPath = x.profilePicture,
+                        points = x.points,
+                        username = x.UserName
+                    }).ToList();
+                }
+                else
+                {
+                    users = (await DocumentDBRepository<User>.GetItemAsyncPages(x => x.countryCode.Equals(countryCode), x => x.points, number, startingPage * number)).Select(x => new TopUser
                     {
-                        users = session
-                             .Query<User>()
-                             .Where(x => x.countryCode.Equals(countryCode))
-                             .OrderByDescending(x => x.points)
-                             .Skip(startingPage * number)
-                             .Take(number)
-                             .Select(x => new TopUser
-                             {
-                                 photoPath = x.profilePicture,
-                                 points = x.points,
-                                 username = x.UserName
-                             })
-                             .ToList();
-                    }
-                    
-                }
-                catch
-                {
-                    return users;
-                }
-                foreach (TopUser user in users)
-                {
-                    if (!user.photoPath.Contains("facebook"))
-                        user.photoPath = "/Content/img/avatars/" + user.photoPath;
-                }
-                if (users.Count > 0)
-                    TopUser.lowestNumber = startingPage * number;
+                        photoPath = x.profilePicture,
+                        points = x.points,
+                        username = x.UserName
+                    }).ToList();                   
+                }                 
+            }
+            catch
+            {
                 return users;
             }
+            foreach (TopUser user in users)
+            {
+                if (!user.photoPath.Contains("facebook"))
+                    user.photoPath = "/Content/img/avatars/" + user.photoPath;
+            }
+            if (users.Count > 0)
+                TopUser.lowestNumber = startingPage * number;
+            return users;
         }
 
-        
-
-        public UserRegistrationModel GetOneUser(UserRegistrationPost user)
+        public async Task<List<User>> GetAll()
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            return await DocumentDBRepository<User>
+                .GetItemsAsync(x => x != null);
+                                
+        }
+
+        public async Task<UserRegistrationModel> GetOneUser(UserRegistrationPost user)
+        {
+            try
             {
-                try
+                UserRegistrationModel check = new UserRegistrationModel();
+                check.success = false;
+                User oneObject = await DocumentDBRepository<User>
+                                .GetItemAsync(x => x.UserName.Equals(user.UserName));
+                if (oneObject == null)
                 {
-                    UserRegistrationModel check = new UserRegistrationModel();
-                    check.success = false;
-                    User oneObject = session.Query<User>().First(x => x.UserName.Equals(user.UserName));
-                    if (oneObject == null)
-                    {
-                        check.success = false;
-                        check.message = message2.NoUserName;
-                        return check;
-                    }
-
-                    if (!oneObject.PasswordHash.Equals(user.PasswordHash))
-                    {
-                        check.success = false;
-                        check.message = message2.PassMissmatch;
-                        return check;
-                    }
-
-                    if (oneObject != null)
-                    {
-                        check.success = true;
-                        check.photo = "/Content/img/avatars/" + oneObject.profilePicture;
-                        check.username = oneObject.UserName;
-                        check.message = message2.Success;
-                        check.Token = oneObject.Token;
-                        check.countryCode = oneObject.countryCode;
-                        return check;
-                    }
-                    return check;
-                }
-                catch
-                {
-                    UserRegistrationModel check = new UserRegistrationModel();
                     check.success = false;
                     check.message = message2.NoUserName;
                     return check;
                 }
+
+                if (!oneObject.PasswordHash.Equals(user.PasswordHash))
+                {
+                    check.success = false;
+                    check.message = message2.PassMissmatch;
+                    return check;
+                }
+
+                if (oneObject != null)
+                {
+                    check.success = true;
+                    check.photo = "/Content/img/avatars/" + oneObject.profilePicture;
+                    check.username = oneObject.UserName;
+                    check.message = message2.Success;
+                    check.Token = oneObject.Token;
+                    check.countryCode = oneObject.countryCode;
+                    return check;
+                }
+                return check;
+            }
+            catch
+            {
+                UserRegistrationModel check = new UserRegistrationModel();
+                check.success = false;
+                check.message = message2.NoUserName;
+                return check;
             }
         }
 
-        public User GetOneByName(string name)
+        public async Task<User> GetOneByName(string name)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            try
             {
-                try
-                {
-                    User oneObject = session.Query<User>().First(x => x.UserName.Equals(name));
-                    return oneObject;
-                }
-                catch
-                {
-                    return null;
-                }
+                User oneObject = await DocumentDBRepository<User>
+                                .GetItemAsync(x => x.UserName.Equals(name));
+                return oneObject;
+            }
+            catch
+            {
+                return null;
             }
         }
 
-        public User GetOneByToken(string token)
+        public async Task<User> GetOneByToken(string token)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            try
             {
-                try
-                {
-                    User oneObject = session.Query<User>().First(x => x.Token.Equals(token));
-                    return oneObject;
-                }
-                catch
-                {
-                    return null;
-                }
+                User oneObject = await DocumentDBRepository<User>
+                                .GetItemAsync(x => x.Token.Equals(token));
+                return oneObject;
+            }
+            catch
+            {
+                return null;
             }
         }
 
-        public string GetTokenByName(string name)
+        public async Task<bool> EditUser(User user)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            try
             {
-                try
-                {
-                    User oneObject = session.Query<User>().First(x => x.UserName.Equals(name));
-                    return oneObject.Token;
-                }
-                catch
-                {
-                    return new Guid().ToString();
-                }
+                await DocumentDBRepository<User>
+                                .UpdateItemAsync(user.Id, user);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<string> GetTokenByName(string name)
+        {
+            try
+            {
+                User oneObject = await DocumentDBRepository<User>
+                                .GetItemAsync(x => x.UserName.Equals(name));
+                return oneObject.Token;
+            }
+            catch
+            {
+                return new Guid().ToString();
             }
         }
 

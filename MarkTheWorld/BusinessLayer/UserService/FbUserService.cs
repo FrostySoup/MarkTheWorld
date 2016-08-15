@@ -18,7 +18,7 @@ namespace BusinessLayer.UserService
     {
         private Repository.UserRepository.UserRepository repository = new Repository.UserRepository.UserRepository();
 
-        public FbServerLogin getUserParams(FbClientLogin fb)
+        public async Task<FbServerLogin> getUserParams(FbClientLogin fb)
         {
             Uri targetUserUri = new Uri("https://graph.facebook.com/me?fields=first_name,last_name,locale&access_token=" + fb.Token);
             HttpWebRequest user = (HttpWebRequest)HttpWebRequest.Create(targetUserUri);
@@ -46,7 +46,7 @@ namespace BusinessLayer.UserService
             usName = converted.first_name + converted.last_name;
             if (usName.Length > 22)
                 usName.Substring(0, 22);
-            usName = repository.CheckNameUnique(usName);
+            usName = await repository.CheckNameUnique(usName);
             return new FbServerLogin
             {
                 country = country,
@@ -54,15 +54,15 @@ namespace BusinessLayer.UserService
             };
         }
 
-        public string getUserParamesDb(string token)
+        public async Task<string> getUserParamesDb(string token)
         {        
-            return repository.GetOneByToken(token).UserName;
+            return (await repository.GetOneByToken(token)).UserName;
         }
 
-        public Registration register(FbRegisterClient fb)
+        public async Task<Registration> register(FbRegisterClient fb)
         {
             string photo = "https://graph.facebook.com/"+ fb.userID + "/picture?width=100&height=100";
-            FbNameToken token = getLongLiveToken(new FbClientLogin
+            FbNameToken token = await getLongLiveToken(new FbClientLogin
             {
                 Token = fb.token,
                 Id = fb.userID
@@ -70,7 +70,7 @@ namespace BusinessLayer.UserService
             if (token.token == null)
                 return null;
             fb.token = token.token;
-            return repository.RegisterFbUser(fb, photo);
+            return await repository.RegisterFbUser(fb, photo);
         }
 
         private string getPhoto(string token)
@@ -103,7 +103,7 @@ namespace BusinessLayer.UserService
             }
         }
 
-        public FbNameToken getLongLiveToken(FbClientLogin fb)
+        public async Task<FbNameToken> getLongLiveToken(FbClientLogin fb)
         {
             string url = string.Format("https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id={0}&client_secret={1}&fb_exchange_token={2}",
                 "211779402536909", "25bd7558cf8e380a176243ef5a96128e", fb.Token);
@@ -120,7 +120,7 @@ namespace BusinessLayer.UserService
                 string strEnd = "&expires";
                 string token = getBetween(jsonResponse, strStart, strEnd);
 
-                FbNameToken newToken = repository.SaveNewToken(fb.Id, token);
+                FbNameToken newToken = await repository.SaveNewToken(fb.Id, token);
 
                 if (newToken == null)
                 {
@@ -150,9 +150,9 @@ namespace BusinessLayer.UserService
             }
         }
 
-        public bool checkUserById(string id)
+        public async Task<bool> checkUserById(string id)
         {
-            return repository.CheckFbUser(id);
+            return await repository.CheckFbUser(id);
         }
     }
 }

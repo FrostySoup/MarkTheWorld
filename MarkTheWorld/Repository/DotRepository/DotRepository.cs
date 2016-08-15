@@ -5,103 +5,79 @@ using System.Text;
 using System.Threading.Tasks;
 using Data;
 using Data.DataHelpers;
-using Raven.Client;
-using Repository.Index;
-using Repository.DataForIndex;
-using System.Collections;
-using Raven.Abstractions.Data;
-using Raven.Client.Document;
 using Data.DataHelpers.Map;
+using Data.Database;
+using Microsoft.Azure.Documents.Client;
+using Microsoft.Azure.Documents.Linq;
 
 namespace Repository.DotRepository
 {
-    public partial class DotRepository : GenericRepository.GenericRepository, IDotRepository
+    public partial class DotRepository
     {
-        public UserRegistrationModel AddGroup(List<DotFromViewModel> dot)
+        public async Task<UserRegistrationModel> AddOne(DotFromViewModel dot, string imagePath, string path)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
-            {
-                UserRegistrationModel reg = new UserRegistrationModel();
-                foreach(DotFromViewModel d in dot)
-                {
-                    session.Store(d);
-                    session.SaveChanges();
-                }
+            UserRegistrationModel reg = new UserRegistrationModel();
+            reg.success = false;
+            reg.message = 0;
+            double[] coords = centerCoords(dot);
+            string coordsKey = coords[0].ToString() + coords[1].ToString();
+            User user = await DocumentDBRepository<User>.GetItemAsync(x => x.Token.Equals(dot.token));
+            if (user.Id == null)
                 return reg;
-            }
-        }
 
-        public UserRegistrationModel AddOne(DotFromViewModel dot, string imagePath, string path)
-        {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
-            {
-                UserRegistrationModel reg = new UserRegistrationModel();
-                reg.success = false;
-                reg.message = 0;
-                double[] coords = centerCoords(dot);
-                string coordsKey = coords[0].ToString() + coords[1].ToString();               
-                User user = session.Query<User>().First(x => x.Token.Equals(dot.token));
-                if (user.Id == null)
-                    return reg;                
-                Dot[] dots = session
-                    .Query<DotByKey.Result, DotByKey>()
-                    .Where(x => x.Key.Equals(coordsKey))
-                    .Take(5000)
-                    .As<Dot>()
-                    .ToArray();
-                for (int i = 0; i < dots.Length; i++)
-                {                       
-                    if (user.UserName.Equals(dots[i].username))
-                    {
-                        if (imagePath != null)
-                            removeOld(imagePath, path);
-                        reg.message = message2.AlreadyMarked;
-                        return reg;
-                    }
-                    else if (checkTerritory(dots[i]))
-                    {
-                        string name = dots[i].username;
-                        User userChanged = session.Query<User>().First(x => x.UserName.Equals(name));
-                        userChanged.dotsId.Remove(dots[i].Id);
+            List<Dot> dots = (await DocumentDBRepository<Dot>.GetItemsAsync(x => x != null)).Where(x => (x.lon.ToString() + x.lat.ToString()).Equals(coordsKey)).ToList();
 
-                        addEvent(userChanged, user, dots[i], session);
-
-                        removeOld(dots[i].photoPath, path);
-                        dots[i] = changeDotValues(DateTime.Today, dot.message, coords[1], coords[0], user.UserName, cutImageName(imagePath), dots[i]);
-                        if (user.dotsId == null)
-                            user.dotsId = new List<string>();
-                        user.dotsId.Add(dots[i].Id);
-                        session.Store(dots[i]);
-                        session.Store(userChanged);
-                        session.Store(user);
-                        session.SaveChanges();
-                        reg.success = true;
-                        reg.message = message2.Success;
-                        return reg;
-                    }
-                }
-
-                if (dots.Count() == 0 && checkCenter(dot.lng, dot.lat))
+            for (int i = 0; i < dots.Count; i++)
+            {                       
+                if (user.UserName.Equals(dots[i].username))
                 {
-                    addEventNewDot(session, user, dot.lng, dot.lat);
-                    Dot dotCopy = new Dot();
-                    dotCopy = changeDotValues(DateTime.Today, dot.message, coords[1], coords[0], user.UserName, cutImageName(imagePath));
-                    session.Store(dotCopy);
+                    if (imagePath != null)
+                        removeOld(imagePath, path);
+                    reg.message = message2.AlreadyMarked;
+                    return reg;
+                }
+                else if (checkTerritory(dots[i]))
+                {
+                    string name = dots[i].username;
+                    User userChanged = await DocumentDBRepository<User>.GetItemAsync(x => x.UserName.Equals(name));
+                    userChanged.dotsId.Remove(dots[i].Id);
+
+                    //addEvent(userChanged, user, dots[i]);
+
+                    removeOld(dots[i].photoPath, path);
+                    dots[i] = changeDotValues(DateTime.Today, dot.message, coords[1], coords[0], user.UserName, cutImageName(imagePath), dots[i]);
                     if (user.dotsId == null)
                         user.dotsId = new List<string>();
-                    user.dotsId.Add(dotCopy.Id);
-                    session.Store(user);
-                    session.SaveChanges();
+                    user.dotsId.Add(dots[i].Id);
+                    await DocumentDBRepository<Dot>.UpdateItemAsync(dots[i].Id, dots[i]);
+                    await DocumentDBRepository<User>.UpdateItemAsync(userChanged.Id, userChanged);
+                    await DocumentDBRepository<User>.UpdateItemAsync(user.Id, user);
                     reg.success = true;
                     reg.message = message2.Success;
                     return reg;
                 }
-                reg.message = message2.NotInTerritory;
+            }
+
+            if (dots.Count() == 0 && checkCenter(dot.lng, dot.lat))
+            {
+                //addEventNewDot(session, user, dot.lng, dot.lat);
+                Dot dotCopy = new Dot();
+                dotCopy = changeDotValues(DateTime.Today, dot.message, coords[1], coords[0], user.UserName, cutImageName(imagePath));
+                dotCopy.Id = await DocumentDBRepository<Dot>.CreateItemAsync(dotCopy);
+                if (user.dotsId == null)
+                    user.dotsId = new List<string>();
+                user.dotsId.Add(dotCopy.Id);
+                await DocumentDBRepository<User>.UpdateItemAsync(user.Id, user);
+
+                reg.success = true;
+                reg.message = message2.Success;
                 return reg;
             }
+            reg.message = message2.NotInTerritory;
+            return reg;
         }       
 
-        public List<Dot> GetAll(CornersCorrds corners)
+        public async Task <List<Dot>> GetAll(CornersCorrds corners)
         {
             double squareX = corners.neX - corners.swX;
             double squareY = corners.neY - corners.swY;
@@ -119,175 +95,109 @@ namespace Repository.DotRepository
                 neY = 89;
             if (swY > 90 || swY < -90)
                 swY = -89;              
-            List<Dot> dotsToSend = new List<Dot>();
-            IEnumerable<Dot> allDots = GetAll();
-            Dot[] dots = allDots.ToArray();
-            for (int i = 0; i < dots.Length; i++)
-            {
-                if (neX > dots[i].lon && neY > dots[i].lat &&
-                    swX < dots[i].lon && swY < dots[i].lat)
-                {
-                    if (dots[i].username == null)
-                        dots[i].username = "Unknown user";
-                    dotsToSend.Add(dots[i]);
-                }
-            }
+            List<Dot> dotsToSend = await DocumentDBRepository<Dot>.GetItemsAsync(x => x.lon < neX && x.lat < neY && swX < x.lon && swY < x.lat);
             return dotsToSend;
         }
 
-        public IEnumerable<Dot> GetAll()
+
+        public async Task<List<Dot>> GetAllUserByName(CornersCorrds corners, string name)
         {
-            var results = new List<Dot>();
-
-            var conventions = DocumentStoreHolder.Store.Conventions ?? new DocumentConvention();
-            var defaultIndexStartsWith = conventions.GetTypeTagName(typeof(Dot));
-
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            List<Dot> reg = new List<Dot>();
+            try
             {
-                using (var enumerator = session.Advanced.Stream<Dot>(defaultIndexStartsWith))
-                {
-                    while (enumerator.MoveNext())
-                        results.Add(enumerator.Current.Document);
-                }
+                List<Dot> dotsToSend = await DocumentDBRepository<Dot>
+                    .GetItemsAsync(x => x.username.Equals(name) && x.lon < corners.neX 
+                            && x.lat < corners.neY && corners.swX < x.lon && corners.swY < x.lat);
+                return reg;
             }
-
-            return results;
-        }
-
-        public List<Dot> GetAllUserByName(CornersCorrds corners, string name)
-        {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            catch
             {
-                List<Dot> reg = new List<Dot>();
-                try
-                {
-                    User user = session.Query<User>().First(x => x.UserName.Equals(name));
-                    if (user.Id == null)
-                        return reg;
-                    DotForIndex[] dots = session
-                        .Query<UserDotsIndex.Result, UserDotsIndex>()
-                        .Where(x => x.UserId.Equals(user.Id))
-                        .As<DotForIndex>()
-                        .Take(2000)
-                        .ToArray();
-                    for (int i = 0; i < dots.Length; i++)
-                    {
-                        if (corners.neX > dots[i].lon && corners.neY > dots[i].lat &&
-                        corners.swX < dots[i].lon && corners.swY < dots[i].lat)
-                        {
-                            Dot dotCopy = new Dot();
-                            dotCopy.Id = dots[i].Id;
-                            dotCopy.lat = (double)dots[i].lat;
-                            dotCopy.lon = (double)dots[i].lon;
-                            dotCopy.message = dots[i].message;
-                            reg.Add(dotCopy);
-                        }
-                    }
-                    return reg;
-                }
-                catch
-                {
-                    return reg;
-                }
+                return reg;
             }
         }
 
-        public Dot[] GetAllDotsByName(string name)
+        public async Task<Dot[]> GetAllDotsByName(string name)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            List<Dot> dots;
+            if (!string.IsNullOrEmpty(name))
             {
-                Dot[] dots;
-                if (!string.IsNullOrEmpty(name))
-                {
-                    dots = session.Query<Dot>()
-                        .Where(x => x.username.Equals(name))
-                        .Take(2000)
-                        .ToArray();
-                }
-                else {
-                    dots = session
-                        .Load<Dot>()
-                        .ToArray();
-                }
-                return dots;
+                 dots = await DocumentDBRepository<Dot>
+                    .GetItemsAsync(x => x.username.Equals(name));
+               
             }
+            else {
+                dots = await DocumentDBRepository<Dot>
+                    .GetItemsAsync(x => x != null);
+            }
+            return dots.ToArray();
         }
 
-        public CanMarkSpot CheckDotResults(DotFromViewModel dot)
+        public async Task<CanMarkSpot> CheckDotResults(DotFromViewModel dot)
         {            
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            CanMarkSpot reg = new CanMarkSpot();
+            reg.CanMark = false;
+            try
             {
-                CanMarkSpot reg = new CanMarkSpot();
-                reg.CanMark = false;
-                try
+                double[] coords = centerCoords(dot);
+                string coordsKey = coords[0].ToString() + coords[1].ToString();
+                User user = await DocumentDBRepository<User>.GetItemAsync(x => x.Token.Equals(dot.token));
+
+                if (user.Id == null)
+                    return reg;
+                Dot dotCopy = new Dot();
+                List<Dot> dots = (await DocumentDBRepository<Dot>.GetItemsAsync(x => x != null)).Where(x => (x.lon.ToString() + x.lat.ToString()).Equals(coordsKey)).ToList();
+                if (dots.Count() > 0)
                 {
-                    double[] coords = centerCoords(dot);
-                    string coordsKey = coords[0].ToString() + coords[1].ToString();
-                    User user = session.Query<User>().First(x => x.Token.Equals(dot.token));
-                    if (user.Id == null)
-                        return reg;
-                    Dot dotCopy = new Dot();
-                    Dot[] dots = session
-                        .Query<DotByKey.Result, DotByKey>()
-                        .Where(x => x.Key.Equals(coordsKey))
-                        .As<Dot>()
-                        .ToArray();
-                    if (dots.Count() > 0)
+                    if (user.UserName.Equals(dots[0].username))
                     {
-                        if (user.UserName.Equals(dots[0].username))
-                        {
-                            return reg;
-                        }
-                        else
-                        {
-                            reg.Corners = coordsToSquare(dot.lat, dot.lng);
-                            reg.Lat = dots[0].nextCapLat;
-                            reg.Lon = dots[0].nextCapLon;
-                            reg.SmallSquare = getSmallSquare(dots[0].nextCapLat, dots[0].nextCapLon);
-                            reg.MarkedUsername = dots[0].username;
-                            reg.CanMark = checkTerritory(dots[0]);
-                            return reg;
-                        }
+                        return reg;
                     }
-                    reg.Corners = coordsToSquare(dot.lat, dot.lng);
-                    double[] holder = centreCapturePoint(dot.lat, dot.lng);
-                    reg.Lat = holder[1];
-                    reg.Lon = holder[0];
-                    reg.CanMark = checkCenter(dot.lat, dot.lng);
-                    reg.SmallSquare = getSmallSquare(dot.lat, dot.lng);
-                    return reg;
+                    else
+                    {
+                        reg.Corners = coordsToSquare(dot.lat, dot.lng);
+                        reg.Lat = dots[0].nextCapLat;
+                        reg.Lon = dots[0].nextCapLon;
+                        reg.SmallSquare = getSmallSquare(dots[0].nextCapLat, dots[0].nextCapLon);
+                        reg.MarkedUsername = dots[0].username;
+                        reg.CanMark = checkTerritory(dots[0]);
+                        return reg;
+                    }
                 }
-                catch
-                {
-                    return reg;
-                }
-            }      
+                reg.Corners = coordsToSquare(dot.lat, dot.lng);
+                double[] holder = centreCapturePoint(dot.lat, dot.lng);
+                reg.Lat = holder[1];
+                reg.Lon = holder[0];
+                reg.CanMark = checkCenter(dot.lat, dot.lng);
+                reg.SmallSquare = getSmallSquare(dot.lat, dot.lng);
+                return reg;
+            }
+            catch
+            {
+                return reg;
+            }   
          }     
 
-        public DotClick GetDotById(string Id)
+        public async Task<DotClick> GetDotById(string Id)
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            try
             {
-                try
+                Dot myDot = await DocumentDBRepository<Dot>.GetItemAsyncByID(Id);
+                User user = await DocumentDBRepository<User>.GetItemAsync(x => x.UserName.Equals(myDot.username));
+                return new DotClick
                 {
-                    Dot myDot = session.Load<Dot>(Id);
-                    User user = session.Query<User>().Where(x => x.UserName.Equals(myDot.username)).First();
-                    return new DotClick
-                    {
-                        profilePic = user.profilePicture,
-                        country = user.countryCode,
-                        state = user.state,
-                        points = user.points,
-                        message = myDot.message,
-                        date = myDot.date,
-                        username = myDot.username,
-                        photoPath = myDot.photoPath
-                    };
-                }
-                catch
-                {
-                    return null;
-                }
+                    profilePic = user.profilePicture,
+                    country = user.countryCode,
+                    state = user.state,
+                    points = user.points,
+                    message = myDot.message,
+                    date = myDot.date,
+                    username = myDot.username,
+                    photoPath = myDot.photoPath
+                };
+            }
+            catch
+            {
+                return null;
             }
         }
     }

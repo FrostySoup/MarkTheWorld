@@ -14,6 +14,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -37,14 +38,14 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(UserRegistrationModel))]
         [Route("user")]
         [HttpPost]
-        public IHttpActionResult PostUser(UserRegistrationPost User)
+        public async Task<IHttpActionResult> PostUser(UserRegistrationPost User)
         {
             UserRegistrationModel userCopy = new UserRegistrationModel();
             if (!CountriesList.checkCode(User.CountryCode))
                 return Content(HttpStatusCode.BadRequest, "Invalid country code");
             try
             {
-                userCopy = userService.addUser(User);
+                userCopy = await userService.addUser(User);
                 if (userCopy.message != message2.Success)
                 {
                     ErrorStatus errorCheck = new ErrorStatus(userCopy);
@@ -89,12 +90,12 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(List<string>))]
         [Route("autocomplete/{username}/{number}")]
         [HttpGet]
-        public IHttpActionResult GetUsersAutoComplete(string username, int number)
+        public async Task<IHttpActionResult> GetUsersAutoComplete(string username, int number)
         {
             List<string> usernames;
             try
             {
-                usernames = userService.GetUsersAutoComplete(username, number);
+                usernames = await userService.GetUsersAutoComplete(username, number);
             }
             catch (Exception)
             {
@@ -110,16 +111,16 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(UserProfile))]
         [Route("profile/{userName}")]
         [HttpGet]
-        public IHttpActionResult GetProfile(string userName)
+        public async Task<IHttpActionResult> GetProfile(string userName)
         {
             if (userName.Length < 3 || userName.Length > 25)
                 return Content(HttpStatusCode.BadRequest, "Wrong username length");
             UserProfile user = new UserProfile();
             try
             {
-                if (userService.checkUsername(userName))
+                if (await userService.checkUsername(userName))
                     return Content(HttpStatusCode.BadRequest, "User doesn't exist");
-                user = userService.GetProfile(userName);                
+                user = await userService.GetProfile(userName);                
             }
             catch (Exception)
             {
@@ -135,13 +136,13 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(UserRegistrationModel))]
         [Route("user/login")]
         [HttpPost]
-        public IHttpActionResult GetUsers(UserLoginPost user)
+        public async Task<IHttpActionResult> GetUsers(UserLoginPost user)
         {
             UserRegistrationPost userLogin = new UserRegistrationPost(user);
             UserRegistrationModel userCopy = new UserRegistrationModel();
             try
             {
-                userCopy = userService.getOne(userLogin);
+                userCopy = await userService.getOne(userLogin);
                 if (userCopy.message != message2.Success)
                 {
                     ErrorStatus errorCheck = new ErrorStatus(userCopy);
@@ -162,14 +163,14 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(UserDailyReward))]
         [Route("daily/{userName}")]
         [HttpGet]
-        public IHttpActionResult CheckPoints(string userName)
+        public async Task<IHttpActionResult> CheckPoints(string userName)
         {
             if (userName.Length < 3 || userName.Length > 25)
                 return Content(HttpStatusCode.BadRequest, "Wrong username length");
             UserDailyReward canTake = new UserDailyReward();
             try
             {
-                canTake = userService.takeUserDaily(userName);
+                canTake = await userService.takeUserDaily(userName);
                 if (canTake.received < 0)
                     return Content(HttpStatusCode.BadRequest, "Can't get daily reward yet");
             }
@@ -211,13 +212,13 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(bool))]
         [Route("color/{userName}")]
         [HttpPost]
-        public IHttpActionResult PostUserColor(string userName, Colors colors)
+        public async Task<IHttpActionResult> PostUserColor(string userName, Colors colors)
         {
             if (userName.Length < 3 || userName.Length > 25)
                 return Content(HttpStatusCode.BadRequest, "Wrong username length");
             try
             {
-                return Ok(userService.postUserColors(userName, colors));
+                return Ok(await userService.postUserColors(userName, colors));
             }
             catch (Exception)
             {
@@ -231,13 +232,13 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(bool))]
         [Route("username/{userName}")]
         [HttpGet]
-        public IHttpActionResult GetUsername(string userName)
+        public async Task<IHttpActionResult> GetUsername(string userName)
         {
             if (userName.Length < 3 || userName.Length > 25)
                 return Content(HttpStatusCode.BadRequest, "Wrong username length");
             try
             {
-                return Ok(userService.checkUsername(userName));
+                return Ok(await userService.checkUsername(userName));
             }
             catch (Exception)
             {
@@ -251,13 +252,13 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(bool))]
         [Route("color/{userName}")]
         [HttpGet]
-        public IHttpActionResult GetUserColor(string userName)
+        public async Task<IHttpActionResult> GetUserColor(string userName)
         {
             if (userName.Length < 3 || userName.Length > 25)
                 return Content(HttpStatusCode.BadRequest, "Wrong username length");
             try
             {
-                return Ok(userService.getUserColors(userName));
+                return Ok(await userService.getUserColors(userName));
             }
             catch (Exception)
             {
@@ -273,12 +274,12 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(List<TopUser>))]
         [Route("topList")]
         [HttpPost]
-        public IHttpActionResult GetTopUsers(string countryCode = "", int number = 10, int startingPage = 0)
+        public async Task<IHttpActionResult> GetTopUsers(string countryCode = "", int number = 10, int startingPage = 0)
         {
             List<TopUser> users = new List<TopUser>();
             try
             {
-                users = userService.getTopUsers(countryCode, number, startingPage);
+                users = await userService.getTopUsers(countryCode, number, startingPage);
             }
             catch (Exception)
             {

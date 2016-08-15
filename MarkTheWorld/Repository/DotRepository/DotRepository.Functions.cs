@@ -2,7 +2,6 @@
 using Data.Database;
 using Data.DataHelpers;
 using Data.DataHelpers.Map;
-using Raven.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -144,8 +143,8 @@ namespace Repository.DotRepository
                 }
             }
         }
-
-        private void addEvent(User userChanged, User user, Dot dot, IDocumentSession session)
+        /*
+        private void addEvent(User userChanged, User user, Dot dot)
         {
             Events myEvent = new Events("You captured square", dot.lon, dot.lat, userChanged.UserName);
             Events opponentEvent = new Events("Player captured your square", dot.lon, dot.lat, user.UserName);
@@ -190,7 +189,7 @@ namespace Repository.DotRepository
                     session.Delete(eventToRemove);
                 user.eventsID.RemoveRange(10, 1);
             }
-        }
+        }*/
 
 
         private AllCorners getSmallSquare(double lat, double lon)
