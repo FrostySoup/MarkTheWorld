@@ -9,6 +9,7 @@ module.exports =
             require('./claimSpot'),
             require('./myProfile'),
             require('./spotDetails'),
-            require('./filterMap')
+            require('./filterMap'),
+            require('./toplist')
         ])
         .name;

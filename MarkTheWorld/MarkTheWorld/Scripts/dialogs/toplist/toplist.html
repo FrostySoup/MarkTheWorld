@@ -1,0 +1,121 @@
+<md-dialog class="dialog-toplist">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Toplist</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.cancel()" aria-label="Close dialog" title="Close dialog">
+                <md-icon md-svg-src="~/../Content/img/icons/ic_clear_white_48px.svg" class="s32"></md-icon>
+            </md-button>
+        </div>
+        <md-progress-linear class="register-form-loader md-warn" ng-if="vm.pending"
+                            md-mode="indeterminate"></md-progress-linear>
+    </md-toolbar>
+    <!--<md-tabs md-stretch-tabs="always">-->
+        <!--<md-tab label="World"></md-tab>-->
+        <!--<md-tab label="Country"></md-tab>-->
+    <!--</md-tabs>-->
+    <md-dialog-content flex-sm flex-xs layout="column">
+
+        <md-tabs md-swipe-content="true" md-stretch-tabs="always">
+            <md-tab label="Picker">
+                <md-tab-label>
+                    <md-icon md-svg-src="~/../Content/img/icons/earth-globe.svg" class="s24"></md-icon>
+                    World
+                </md-tab-label>
+                <md-tab-body>
+                    <div class="md-dialog-content">
+                        <div layout layout-align="start center" class="panel-info">
+                            <p flex>Showing 1..5 places</p>
+                            <md-button class="md-icon-button" aria-label="More">
+                                <md-icon md-svg-icon="~/../Content/img/icons/ic_chevron_left.svg"></md-icon>
+                            </md-button>
+                            <md-button class="md-icon-button" aria-label="More">
+                                <md-icon md-svg-icon="~/../Content/img/icons/ic_chevron_right.svg"></md-icon>
+                            </md-button>
+                        </div>
+
+                        <md-list>
+                            <md-list-item class="md-3-line" ng-repeat="item in [1, 2, 3]">
+                                <img ng-src="/Content/img/avatars/thumb20160715185127893_50as.png" class="md-avatar"
+                                     alt="{{item.who}}">
+
+                                <div layout layout-align="start center" layout-wrap class="md-list-item-text">
+                                    <div class="player-info" flex>
+                                        <h3>#1</h3>
+                                        <h4>125 pts</h4>
+                                        <h4><b>AndriusRimkus</b></h4>
+                                    </div>
+                                    <md-button class="md-raised md-primary"
+                                               ng-click="vm.userMap(vm.spotDetails.username)">
+                                        <md-icon md-svg-src="~/../Content/img/icons/ic_filter_list.svg"></md-icon>
+                                        User Map
+                                    </md-button>
+                                </div>
+                                <md-divider ng-if="!$last"></md-divider>
+                            </md-list-item>
+                        </md-list>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab>
+                <md-tab-label>
+                    <md-icon md-svg-src="~/../Content/img/icons/globe-country.svg" class="s24"></md-icon>
+                    Country
+                </md-tab-label>
+                <md-tab-body>
+                    <div class="md-dialog-content">
+                        <md-input-container class="md-block"
+                                            md-is-error="registerForm.register_country.$invalid && (registerForm.$submitted || registerForm.register_country.$dirty)">
+                            <label>Country</label>
+                            <md-select name="register_country" id="register_country" ng-model="registerData.countryCode"
+                                       ng-required="true">
+                                <md-option ng-repeat="country in vm.countries" ng-value="country.code">{{ country.name
+                                    }}
+                                </md-option>
+                            </md-select>
+                            <div class="md-errors-spacer"></div>
+                            <div ng-messages="registerForm.register_country.$error">
+                                <div ng-message="required">You should select the country</div>
+                            </div>
+                        </md-input-container>
+
+                        <div layout layout-align="start center" class="panel-info">
+                            <h5 flex>Showing 1..5</h5>
+                            <md-button class="md-icon-button" aria-label="More">
+                                <md-icon md-svg-icon="~/../Content/img/icons/ic_chevron_left.svg"></md-icon>
+                            </md-button>
+                            <md-button class="md-icon-button" aria-label="More">
+                                <md-icon md-svg-icon="~/../Content/img/icons/ic_chevron_right.svg"></md-icon>
+                            </md-button>
+                        </div>
+
+                        <md-list>
+                            <md-list-item class="md-3-line" ng-repeat="item in [1, 2, 3]">
+                                <img ng-src="/Content/img/avatars/thumb20160715185127893_50as.png" class="md-avatar"
+                                     alt="{{item.who}}">
+
+                                <div layout layout-align="start center" layout-wrap class="md-list-item-text">
+                                    <div class="player-info" flex>
+                                        <h3>#1</h3>
+                                        <h4>125 pts</h4>
+                                        <h4><b>AndriusRimkus</b></h4>
+                                    </div>
+                                    <md-button class="md-raised md-primary"
+                                               ng-click="vm.userMap(vm.spotDetails.username)">
+                                        <md-icon md-svg-src="~/../Content/img/icons/ic_filter_list.svg"></md-icon>
+                                        User Map
+                                    </md-button>
+                                </div>
+                                <md-divider ng-if="!$last"></md-divider>
+                            </md-list-item>
+                        </md-list>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+        </md-tabs>
+
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="vm.cancel()" class="md-secondary">Cancel</md-button>
+    </md-dialog-actions>
+</md-dialog>

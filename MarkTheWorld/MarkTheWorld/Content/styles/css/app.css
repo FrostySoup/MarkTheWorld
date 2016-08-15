@@ -433,6 +433,67 @@ md-slider.md-default-theme.md-green .md-track.md-track-fill, md-slider.md-green 
     background-color: rgb(85, 231, 62);
 }
 
+/* toplist dialog */
+
+md-dialog.dialog-toplist md-dialog-content {
+    position: relative;
+    height: 100%;
+}
+
+md-dialog.dialog-toplist md-tabs {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+md-dialog.dialog-toplist .md-dialog-content {
+    padding: 16px;
+}
+
+md-dialog.dialog-toplist .panel-info.layout-row {
+    padding: 8px;
+    padding-left: 14px;
+    background: rgb(245,245,245);
+    border-radius: 3px;
+}
+
+md-dialog.dialog-toplist button {
+    padding: 0 8px;
+}
+
+md-dialog.dialog-toplist .panel-info.layout-row p {
+    font-size: 14px;
+    margin: 0;
+}
+
+md-dialog.dialog-toplist .player-info {
+    margin-right: 16px;
+}
+
+md-dialog.dialog-toplist md-list-item {
+    padding: 16px 0;
+}
+
+md-dialog.dialog-toplist .md-list-item-text button {
+    margin-left: 0;
+}
+
+md-dialog.dialog-toplist md-list-item .md-avatar {
+    width: 80px;
+    height: 80px;
+    margin: 8px 16px 8px 0;
+}
+
+md-dialog.dialog-toplist md-input-container {
+    margin: 0;
+}
+
+md-dialog.dialog-toplist .md-errors-spacer {
+    display: none;
+}
+
 /* my picture dialog */
 md-dialog.dialog-my-profile-picture .profile-picture-first-step p {
     text-align: center;

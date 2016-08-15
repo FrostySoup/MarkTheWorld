@@ -12,7 +12,6 @@ function rectanglesService(spotDetailsService) {
     }
 
     function addNewRecsToMap(recsToBeAdded, map) {
-        console.log(recsToBeAdded);
         angular.forEach(recsToBeAdded, function (value) {
             var rec = new google.maps.Rectangle({
                 id: value.dotId,
