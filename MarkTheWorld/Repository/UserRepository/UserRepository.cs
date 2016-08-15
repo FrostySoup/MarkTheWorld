@@ -17,8 +17,6 @@ namespace Repository.UserRepository
             User newUser = generateUser();
             newUser.PasswordHash = userPost.PasswordHash;
             newUser.UserName = userPost.UserName;
-            if (userPost == null)
-                newUser.state = userPost.State;
             newUser.countryCode = userPost.CountryCode;         
             Random rnd = new Random();
             newUser.profilePicture = "defaultAvatar" + rnd.Next(1, 16) + ".png";
@@ -34,7 +32,7 @@ namespace Repository.UserRepository
                 User oneObject = await DocumentDBRepository<User>.GetItemAsync(x => x.UserName.Equals(newUser.UserName));
                 if (oneObject == null)
                 {
-                    newUser.Token = check.Token.ToString();
+                    newUser.Token = check.Token;
                     await DocumentDBRepository<User>.CreateItemAsync(newUser);
                     check.success = true;
                     check.message = message2.Success;
@@ -48,7 +46,7 @@ namespace Repository.UserRepository
             {
                 check.success = true;
                 check.Token = System.Guid.NewGuid().ToString();
-                newUser.Token = check.Token.ToString();
+                newUser.Token = check.Token;
                 await DocumentDBRepository<User>.CreateItemAsync(newUser);
                 check.message = message2.Success;
                 return check;
@@ -75,7 +73,7 @@ namespace Repository.UserRepository
                                 .GetItemAsync(x => x.UserName.Equals(userName));
                 if (user != null)
                     return false;
-                else return true;
+                return true;
             }
             catch
             {

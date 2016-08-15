@@ -58,22 +58,6 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Raven.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Database.3.0.30000\lib\net45\Raven.Abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Raven.Client.Contrib-4.5, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.Contrib.2.5.0\lib\net45\Raven.Client.Contrib-4.5.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Raven.Client.Lightweight, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.3.0.30000\lib\net45\Raven.Client.Lightweight.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Raven.Database, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Database.3.0.30000\lib\net45\Raven.Database.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
@@ -258,6 +242,7 @@
   <ItemGroup>
     <Content Include="404.html" />
     <Content Include="500.html" />
+    <Content Include="App_Data\XmlDocument.xml" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\img\avatars\defaultAvatar1.png" />
     <Content Include="Content\img\avatars\defaultAvatar10.png" />
@@ -530,15 +515,11 @@
     <Content Include="Content\img\icons\ic_tune.svg" />
     <Content Include="Content\img\icons\ic_view_module.svg" />
     <Content Include="Content\img\icons\settings.png" />
-    <Content Include="Content\img\icons\target.svg" />
     <Content Include="Content\styles\css\app.css" />
     <Content Include="Content\styles\css\libs\ng-img-crop.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Raven.Studio.Html5.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Scripts\account\accountService.js" />
     <Content Include="Scripts\account\facebookLoginInitializerService.js" />
     <Content Include="Scripts\account\facebookLoginService.js" />
@@ -550,29 +531,41 @@
     <Content Include="Scripts\dialogs\claimSpot\claimSpotController.js" />
     <Content Include="Scripts\dialogs\claimSpot\claimSpotService.js" />
     <Content Include="Scripts\dialogs\claimSpot\index.js" />
+    <Content Include="Scripts\dialogs\filterMap\filterMap.html" />
+    <Content Include="Scripts\dialogs\filterMap\filterMapController.js" />
+    <Content Include="Scripts\dialogs\filterMap\filterMapEventService.js" />
+    <Content Include="Scripts\dialogs\filterMap\filterMapService.js" />
+    <Content Include="Scripts\dialogs\filterMap\index.js" />
     <Content Include="Scripts\dialogs\index.js" />
-    <Content Include="Scripts\dialogs\myProfile\directives\bonusPointsDirective.html" />
-    <Content Include="Scripts\dialogs\myProfile\directives\bonusPointsDirective.js" />
+    <Content Include="Scripts\dialogs\myProfile\bonusPointsDirective.html" />
+    <Content Include="Scripts\dialogs\myProfile\bonusPointsDirective.js" />
+    <Content Include="Scripts\dialogs\myProfile\bonusPointsDirectiveController.js" />
+    <Content Include="Scripts\dialogs\myProfile\index.js" />
     <Content Include="Scripts\dialogs\myProfile\myProfile.html" />
-    <Content Include="Scripts\dialogs\myProfile\myProfile.js" />
-    <Content Include="Scripts\dialogs\myProfile\myProfileColor\directives\myProfileColorContainer.html" />
-    <Content Include="Scripts\dialogs\myProfile\myProfileColor\directives\myProfileColorContainer.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfileColor\index.js" />
     <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColor.html" />
-    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColor.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorContainerDirective.html" />
+    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorContainerDirective.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorContainerDirectiveController.js" />
     <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorController.js" />
     <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorService.js" />
     <Content Include="Scripts\dialogs\myProfile\myProfileController.js" />
-    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\directives\httpPrefixDirective.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\httpPrefixDirective.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\index.js" />
     <Content Include="Scripts\dialogs\myProfile\myProfilePicture\myProfilePicture.html" />
     <Content Include="Scripts\dialogs\myProfile\myProfilePicture\myProfilePicture.js" />
     <Content Include="Scripts\dialogs\myProfile\myProfilePicture\myProfilePictureController.js" />
     <Content Include="Scripts\dialogs\myProfile\myProfilePicture\myProfilePictureService.js" />
     <Content Include="Scripts\dialogs\myProfile\myProfileService.js" />
-    <Content Include="Scripts\dialogs\spotDetails\claimSpotController.js" />
-    <Content Include="Scripts\dialogs\spotDetails\claimSpotService.js" />
     <Content Include="Scripts\dialogs\spotDetails\index.js" />
     <Content Include="Scripts\dialogs\spotDetails\spotDetails.html" />
+    <Content Include="Scripts\dialogs\spotDetails\spotDetailsController.js" />
+    <Content Include="Scripts\dialogs\spotDetails\spotDetailsService.js" />
     <Content Include="Scripts\index.js" />
+    <Content Include="Scripts\layout\actionButtons\actionButtonsDirective.html" />
+    <Content Include="Scripts\layout\actionButtons\actionButtonsDirective.js" />
+    <Content Include="Scripts\layout\actionButtons\actionButtonsDirectiveController.js" />
+    <Content Include="Scripts\layout\actionButtons\index.js" />
     <Content Include="Scripts\layout\index.js" />
     <Content Include="Scripts\layout\sideNav\completeFBRegistration\completeSideNavDirective.html" />
     <Content Include="Scripts\layout\sideNav\completeFBRegistration\completeSideNavDirective.js" />
@@ -604,12 +597,13 @@
     <Content Include="Scripts\map\mapService.js" />
     <Content Include="Scripts\map\markersService.js" />
     <Content Include="Scripts\map\rectanglesService.js" />
-    <Content Include="Scripts\shared\shared.js" />
+    <Content Include="Scripts\shared\confirmDialog\confirmDialogService.js" />
+    <Content Include="Scripts\shared\confirmDialog\index.js" />
+    <Content Include="Scripts\shared\index.js" />
     <Content Include="Scripts\shared\simpleModal\simpleModal.js" />
     <Content Include="Scripts\shared\simpleModal\simpleModalController.js" />
     <Content Include="Scripts\shared\simpleModal\simpleModalService.js" />
     <Content Include="Scripts\shared\toast\toast.html" />
-    <Content Include="Scripts\shared\toast\toast.js" />
     <Content Include="Scripts\shared\toast\toastController.js" />
     <Content Include="Scripts\shared\toast\toastService.js" />
     <Content Include="Web.config">
@@ -642,6 +636,12 @@
     <Folder Include="App_Data\ProfilePictures\" />
     <Folder Include="Content\img\dotLocation\" />
     <Folder Include="Content\uploadedImages\" />
+    <Folder Include="Scripts\dialogs\myProfile\directives\" />
+    <Folder Include="Scripts\dialogs\myProfile\myProfileColor\directives\" />
+    <Folder Include="Scripts\dialogs\myProfile\myProfilePicture\directives\" />
+    <Folder Include="Scripts\libs\" />
+    <Folder Include="Scripts\newSquare\" />
+    <Folder Include="Scripts\services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -672,6 +672,7 @@
     <None Include="Project_Readme.html" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Dummy\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\MarkThePlanet - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">
@@ -681,6 +682,10 @@
     <ProjectReference Include="..\Data\Data.csproj">
       <Project>{8378be20-c7cd-4c69-9c82-4dd3e792b641}</Project>
       <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository\Repository.csproj">
+      <Project>{413e6a4b-fa0f-42ce-9957-67a53b3e4313}</Project>
+      <Name>Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
