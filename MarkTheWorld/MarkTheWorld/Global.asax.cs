@@ -1,21 +1,10 @@
 ﻿using BusinessLayer;
-using BusinessLayer.UserService;
 using MarkTheWorld.App_Start;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Security.Principal;
-using System.Web;
-using System.Web.Caching;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Data.DeleteLater;
-using Repository;
 
 namespace MarkTheWorld
 {
@@ -28,7 +17,7 @@ namespace MarkTheWorld
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            DocumentDBRepository<Item>.Initialize();
+            //DocumentDBRepository<Item>.Initialize();
             DbLink.DocumentRep();
         }
 

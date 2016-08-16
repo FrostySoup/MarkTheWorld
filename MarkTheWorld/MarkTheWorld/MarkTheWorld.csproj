@@ -45,11 +45,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Azure.Documents.Client, Version=1.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.DocumentDB.1.9.1\lib\net45\Microsoft.Azure.Documents.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Raven.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
       <HintPath>..\packages\RavenDB.Database.3.0.30000\lib\net45\Raven.Abstractions.dll</HintPath>
       <Private>True</Private>
@@ -233,7 +241,6 @@
     <Compile Include="Controllers\Api\UploadingController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\Api\UserWithFBController.cs" />
-    <Compile Include="Controllers\DummyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="ExceptionsHandling\BrowserJsonFormatter.cs" />
@@ -275,12 +282,17 @@
     <Content Include="Content\img\icons\ic_people_black_48px.svg" />
     <Content Include="Content\img\icons\ic_settings_48px.svg" />
     <Content Include="Content\img\icons\settings.png" />
-    <Content Include="Content\style.css" />
     <Content Include="Content\styles\css\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\account\accountService.js" />
+    <Content Include="Scripts\account\facebookLoginInitializerService.js" />
+    <Content Include="Scripts\account\facebookLoginService.js" />
+    <Content Include="Scripts\account\index.js" />
+    <Content Include="Scripts\account\userService.js" />
+    <Content Include="Scripts\appController.js" />
+    <Content Include="Scripts\bundles\main.js" />
     <Content Include="Scripts\controllers\topMarkersCtrl.js" />
     <Content Include="Scripts\controllers\mapSettingsCtrl.js" />
     <Content Include="Scripts\controllers\addPointCtrl.js" />
@@ -288,38 +300,95 @@
     <Content Include="Scripts\controllers\simpleModalController.js" />
     <Content Include="Scripts\controllers\pointInfoController.js" />
     <Content Include="Scripts\controllers\sideBarCtrl.js" />
+    <Content Include="Scripts\dialogs\claimSpot\claimSpot.html" />
+    <Content Include="Scripts\dialogs\claimSpot\claimSpotController.js" />
+    <Content Include="Scripts\dialogs\claimSpot\claimSpotService.js" />
+    <Content Include="Scripts\dialogs\claimSpot\index.js" />
+    <Content Include="Scripts\dialogs\filterMap\filterMap.html" />
+    <Content Include="Scripts\dialogs\filterMap\filterMapController.js" />
+    <Content Include="Scripts\dialogs\filterMap\filterMapEventService.js" />
+    <Content Include="Scripts\dialogs\filterMap\filterMapService.js" />
+    <Content Include="Scripts\dialogs\filterMap\index.js" />
+    <Content Include="Scripts\dialogs\index.js" />
+    <Content Include="Scripts\dialogs\myProfile\bonusPointsDirective.html" />
+    <Content Include="Scripts\dialogs\myProfile\bonusPointsDirective.js" />
+    <Content Include="Scripts\dialogs\myProfile\bonusPointsDirectiveController.js" />
+    <Content Include="Scripts\dialogs\myProfile\index.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfile.html" />
+    <Content Include="Scripts\dialogs\myProfile\myProfileColor\index.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColor.html" />
+    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorContainerDirective.html" />
+    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorContainerDirective.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorContainerDirectiveController.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorController.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorService.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfileController.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\httpPrefixDirective.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\index.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\myProfilePicture.html" />
+    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\myProfilePicture.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\myProfilePictureController.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\myProfilePictureService.js" />
+    <Content Include="Scripts\dialogs\myProfile\myProfileService.js" />
+    <Content Include="Scripts\dialogs\spotDetails\index.js" />
+    <Content Include="Scripts\dialogs\spotDetails\spotDetails.html" />
+    <Content Include="Scripts\dialogs\spotDetails\spotDetailsController.js" />
+    <Content Include="Scripts\dialogs\spotDetails\spotDetailsService.js" />
+    <Content Include="Scripts\dialogs\toplist\index.js" />
+    <Content Include="Scripts\dialogs\toplist\toplist.html" />
+    <Content Include="Scripts\dialogs\toplist\toplistController.js" />
+    <Content Include="Scripts\dialogs\toplist\toplistService.js" />
+    <Content Include="Scripts\layout\actionButtons\actionButtonsDirective.html" />
+    <Content Include="Scripts\layout\actionButtons\actionButtonsDirective.js" />
+    <Content Include="Scripts\layout\actionButtons\actionButtonsDirectiveController.js" />
+    <Content Include="Scripts\layout\actionButtons\index.js" />
+    <Content Include="Scripts\layout\index.js" />
+    <Content Include="Scripts\layout\sideNav\completeFBRegistration\completeSideNavDirective.html" />
+    <Content Include="Scripts\layout\sideNav\completeFBRegistration\completeSideNavDirective.js" />
+    <Content Include="Scripts\layout\sideNav\completeFBRegistration\completeSideNavDirectiveController.js" />
+    <Content Include="Scripts\layout\sideNav\completeFBRegistration\index.js" />
+    <Content Include="Scripts\layout\sideNav\countriesValue.js" />
+    <Content Include="Scripts\layout\sideNav\index.js" />
+    <Content Include="Scripts\layout\sideNav\login\index.js" />
+    <Content Include="Scripts\layout\sideNav\login\loginSideNavDirective.html" />
+    <Content Include="Scripts\layout\sideNav\login\loginSideNavDirective.js" />
+    <Content Include="Scripts\layout\sideNav\login\loginSideNavDirectiveController.js" />
+    <Content Include="Scripts\layout\sideNav\register\index.js" />
+    <Content Include="Scripts\layout\sideNav\register\registerSideNavDirective.html" />
+    <Content Include="Scripts\layout\sideNav\register\registerSideNavDirective.js" />
+    <Content Include="Scripts\layout\sideNav\register\registerSideNavDirectiveController.js" />
+    <Content Include="Scripts\layout\sideNav\sideNavDirective.html" />
+    <Content Include="Scripts\layout\sideNav\sideNavDirective.js" />
+    <Content Include="Scripts\layout\sideNav\sideNavDirectiveController.js" />
+    <Content Include="Scripts\layout\sideNav\sideNavEventService.js" />
+    <Content Include="Scripts\layout\sideNav\statesUSValue.js" />
+    <Content Include="Scripts\layout\sideNav\uniqueUsernameDirective.js" />
+    <Content Include="Scripts\layout\topToolbar\index.js" />
+    <Content Include="Scripts\layout\topToolbar\topToolbarDirective.html" />
+    <Content Include="Scripts\layout\topToolbar\topToolbarDirective.js" />
+    <Content Include="Scripts\layout\topToolbar\topToolbarDirectiveController.js" />
     <Content Include="Scripts\mapSettings\mapSettings.html" />
     <Content Include="Scripts\mapSettings\mapSettings.js" />
     <Content Include="Scripts\mapSettings\mapSettingsController.js" />
     <Content Include="Scripts\mapSettings\mapSettingsService.js" />
-    <Content Include="Scripts\map\map.js" />
-    <Content Include="Scripts\map\services\mapService.js" />
-    <Content Include="Scripts\map\services\rectanglesService.js" />
-    <Content Include="Scripts\newSquare\newSquare.html" />
-    <Content Include="Scripts\newSquare\newSquare.js" />
-    <Content Include="Scripts\newSquare\newSquareController.js" />
-    <Content Include="Scripts\newSquare\newSquareService.js" />
-    <Content Include="Scripts\services\accountService.js" />
-    <Content Include="Scripts\shared\shared.js" />
+    <Content Include="Scripts\map\googleMapsInitializer\googleMapsInitializerService.js" />
+    <Content Include="Scripts\map\googleMapsInitializer\index.js" />
+    <Content Include="Scripts\map\index.js" />
+    <Content Include="Scripts\map\mapDirective.js" />
+    <Content Include="Scripts\map\mapService.js" />
+    <Content Include="Scripts\map\markersService.js" />
+    <Content Include="Scripts\map\rectanglesService.js" />
+    <Content Include="Scripts\shared\confirmDialog\confirmDialogService.js" />
+    <Content Include="Scripts\shared\confirmDialog\index.js" />
+    <Content Include="Scripts\shared\index.js" />
+    <Content Include="Scripts\shared\simpleModal\simpleModal.html" />
     <Content Include="Scripts\shared\simpleModal\simpleModal.js" />
     <Content Include="Scripts\shared\simpleModal\simpleModalController.js" />
     <Content Include="Scripts\shared\simpleModal\simpleModalService.js" />
+    <Content Include="Scripts\shared\toast\index.js" />
     <Content Include="Scripts\shared\toast\toast.html" />
-    <Content Include="Scripts\shared\toast\toast.js" />
     <Content Include="Scripts\shared\toast\toastController.js" />
     <Content Include="Scripts\shared\toast\toastService.js" />
-    <Content Include="Scripts\squareDetails\squareDetails.html" />
-    <Content Include="Scripts\squareDetails\squareDetails.js" />
-    <Content Include="Scripts\squareDetails\squareDetailsController.js" />
-    <Content Include="Scripts\squareDetails\squareDetailsService.js" />
-    <Content Include="Scripts\templates\topMarkersDialog.html" />
-    <Content Include="Scripts\templates\login.html" />
-    <Content Include="Scripts\templates\pointAddedDialog.html" />
-    <Content Include="Scripts\templates\register.html" />
-    <Content Include="Scripts\topMarkers\topMarkers.html" />
-    <Content Include="Scripts\topMarkers\topMarkers.js" />
-    <Content Include="Scripts\topMarkers\topMarkersController.js" />
-    <Content Include="Scripts\topMarkers\topMarkersService.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -348,7 +417,6 @@
   <ItemGroup>
     <Folder Include="App_Data\Flags\" />
     <Folder Include="App_Data\ProfilePictures\" />
-    <Folder Include="Scripts\libs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -380,6 +448,7 @@
     <None Include="Project_Readme.html" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Dummy\Index.cshtml" />
+    <Content Include="Scripts\bundles\main.js.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">
