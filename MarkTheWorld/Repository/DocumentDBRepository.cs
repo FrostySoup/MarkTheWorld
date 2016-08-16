@@ -16,7 +16,7 @@ namespace Repository
     public static class DocumentDBRepository<T> where T : class
     {
         private static readonly string DatabaseId = ConfigurationManager.AppSettings["database"];
-        private static readonly string[] CollectionId = (ConfigurationManager.AppSettings["collection"]).Split(',');
+        private static readonly string CollectionId = ConfigurationManager.AppSettings["collection"];
         private static DocumentClient client;
 
         public static DocumentClient getDoc()
@@ -31,7 +31,7 @@ namespace Repository
 
         public static string CollectId(int number)
         {
-            return CollectionId[number];
+            return CollectionId;
         }
 
         public static void Initialize()
@@ -62,30 +62,14 @@ namespace Repository
 
         public static async Task<string> CreateItemAsync(T item)
         {
-            int k = getK();
-            Document doc = await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId[k]), item);
+            Document doc = await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId), item);
             return doc.Id;
-        }
-
-        public static int getK()
-        {
-            int k = 0;
-            if (typeof(T) == typeof(Dot))
-            {
-                k = 1;
-            }
-            else if (typeof(T) == typeof(Data.Database.User))
-            {
-                k = 2;
-            }
-            return k;
         }
 
         public static async Task<List<T>> GetItemsAsync(Expression<Func<T, bool>> predicate)
         {
-            int k = getK();
             IDocumentQuery<T> query = client.CreateDocumentQuery<T>(
-                UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId[k]))
+                UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId))
                 .Where(predicate)
                 .AsDocumentQuery();
 
@@ -100,9 +84,8 @@ namespace Repository
 
         public static async Task<T> GetItemAsync(Expression<Func<T, bool>> predicate)
         {
-            int k = getK();
             IDocumentQuery<T> query = client.CreateDocumentQuery<T>(
-                UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId[k]))
+                UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId))
                 .Where(predicate)
                 .AsDocumentQuery();
 
@@ -119,9 +102,8 @@ namespace Repository
 
         public static async Task<List<T>> GetItemAsyncPages(Expression<Func<T, bool>> predicate, Expression<Func<T, int>> orderBy, int howMany, int skipNum)
         {
-            int k = getK();
             IDocumentQuery<T> query = client.CreateDocumentQuery<T>(
-                UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId[k]))
+                UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId))
                 .Where(predicate)
                 .OrderBy(orderBy)
                 .Skip(skipNum)
@@ -139,16 +121,14 @@ namespace Repository
 
         public static async Task<Document> UpdateItemAsync(string id, T item)
         {
-            int k = getK();
-            return await client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId[k], id), item);
+            return await client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id), item);
         }
 
         public static async Task<T> GetItemAsyncByID(string id)
         {
-            int k = getK();
             try
             {
-                Document document = await client.ReadDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId[k], id));
+                Document document = await client.ReadDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id));
                 return (T)(dynamic)document;
             }
             catch (DocumentClientException e)
@@ -166,10 +146,9 @@ namespace Repository
 
         private static async Task CreateCollectionIfNotExistsAsync()
         {
-            int k = getK();
             try
             {
-                await client.ReadDocumentCollectionAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId[k]));
+                await client.ReadDocumentCollectionAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId));
             }
             catch (DocumentClientException e)
             {
@@ -177,7 +156,7 @@ namespace Repository
                 {
                     await client.CreateDocumentCollectionAsync(
                         UriFactory.CreateDatabaseUri(DatabaseId),
-                        new DocumentCollection { Id = CollectionId[k] },
+                        new DocumentCollection { Id = CollectionId },
                         new RequestOptions { OfferThroughput = 1000 });
                 }
                 else

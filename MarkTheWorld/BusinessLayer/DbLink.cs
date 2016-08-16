@@ -12,9 +12,6 @@ namespace BusinessLayer
         public static void DocumentRep()
         {
             DocumentDBRepository<Data.DeleteLater.Item>.Initialize();
-            DocumentDBRepository<Data.Database.Dot>.Initialize();
-            DocumentDBRepository<Data.Database.User>.Initialize();
-            DocumentDBRepository<Data.Database.Events>.Initialize();
         }
     }
 }
