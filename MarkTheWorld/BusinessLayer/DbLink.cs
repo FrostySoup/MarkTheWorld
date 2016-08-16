@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Database;
 
 namespace BusinessLayer
 {
@@ -11,7 +12,8 @@ namespace BusinessLayer
     {
         public static void DocumentRep()
         {
-            DocumentDBRepository<Data.DeleteLater.Item>.Initialize();
+            DocumentDBRepository<Dot>.Initialize();
+            DocumentDBRepository<User>.Initialize();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Repository
             return DatabaseId;
         }
 
-        public static string CollectId(int number)
+        public static string CollectId()
         {
             return CollectionId;
         }

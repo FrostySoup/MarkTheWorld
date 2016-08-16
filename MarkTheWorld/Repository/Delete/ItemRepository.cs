@@ -16,7 +16,7 @@ namespace Repository.Delete
         {
             List<Item> items = new List<Item>();
             IDocumentQuery<Item> query = DocumentDBRepository<Item>.getDoc().CreateDocumentQuery<Item>(
-                UriFactory.CreateDocumentCollectionUri(DocumentDBRepository<Item>.DbId(), DocumentDBRepository<Item>.CollectId(0)))
+                UriFactory.CreateDocumentCollectionUri(DocumentDBRepository<Item>.DbId(), DocumentDBRepository<Item>.CollectId()))
                .Where(x => x.Completed)
                .AsDocumentQuery();
 
@@ -30,7 +30,7 @@ namespace Repository.Delete
 
         public async Task AddItem(Item item)
         {
-            await DocumentDBRepository<Item>.getDoc().CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DocumentDBRepository<Item>.DbId(), DocumentDBRepository<Item>.CollectId(0)), item);
+            await DocumentDBRepository<Item>.CreateItemAsync(item);
         }
     }
 }

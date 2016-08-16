@@ -1,4 +1,4 @@
-﻿﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
@@ -45,19 +45,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Azure.Documents.Client, Version=1.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Azure.DocumentDB.1.9.1\lib\net45\Microsoft.Azure.Documents.Client.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Raven.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
       <HintPath>..\packages\RavenDB.Database.3.0.30000\lib\net45\Raven.Abstractions.dll</HintPath>
       <Private>True</Private>
@@ -151,6 +143,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -249,7 +244,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Dummy.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -259,388 +253,73 @@
     <Content Include="404.html" />
     <Content Include="500.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
-    <Content Include="Content\img\avatars\defaultAvatar1.png" />
-    <Content Include="Content\img\avatars\defaultAvatar10.png" />
-    <Content Include="Content\img\avatars\defaultAvatar11.png" />
-    <Content Include="Content\img\avatars\defaultAvatar12.png" />
-    <Content Include="Content\img\avatars\defaultAvatar13.png" />
-    <Content Include="Content\img\avatars\defaultAvatar14.png" />
-    <Content Include="Content\img\avatars\defaultAvatar15.png" />
-    <Content Include="Content\img\avatars\defaultAvatar16.png" />
-    <Content Include="Content\img\avatars\defaultAvatar2.png" />
-    <Content Include="Content\img\avatars\defaultAvatar3.png" />
-    <Content Include="Content\img\avatars\defaultAvatar4.png" />
-    <Content Include="Content\img\avatars\defaultAvatar5.png" />
-    <Content Include="Content\img\avatars\defaultAvatar6.png" />
-    <Content Include="Content\img\avatars\defaultAvatar7.png" />
-    <Content Include="Content\img\avatars\defaultAvatar8.png" />
-    <Content Include="Content\img\avatars\defaultAvatar9.png" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\images\bg1.png" />
+    <Content Include="Content\images\error-img.png" />
     <Content Include="Content\img\ErrorPageIcons\MarkThePlanetLogoText.png" />
     <Content Include="Content\img\ErrorPageIcons\MarkTheWorldLogo.png" />
     <Content Include="Content\img\ErrorPageIcons\signal.png" />
-    <Content Include="Content\img\flags\ad.png" />
-    <Content Include="Content\img\flags\ae.png" />
-    <Content Include="Content\img\flags\af.png" />
-    <Content Include="Content\img\flags\ag.png" />
-    <Content Include="Content\img\flags\ai.png" />
-    <Content Include="Content\img\flags\al.png" />
-    <Content Include="Content\img\flags\am.png" />
-    <Content Include="Content\img\flags\an.png" />
-    <Content Include="Content\img\flags\ao.png" />
-    <Content Include="Content\img\flags\aq.png" />
-    <Content Include="Content\img\flags\ar.png" />
-    <Content Include="Content\img\flags\as.png" />
-    <Content Include="Content\img\flags\at.png" />
-    <Content Include="Content\img\flags\au.png" />
-    <Content Include="Content\img\flags\aw.png" />
-    <Content Include="Content\img\flags\az.png" />
-    <Content Include="Content\img\flags\ba.png" />
-    <Content Include="Content\img\flags\bb.png" />
-    <Content Include="Content\img\flags\bd.png" />
-    <Content Include="Content\img\flags\be.png" />
-    <Content Include="Content\img\flags\bf.png" />
-    <Content Include="Content\img\flags\bg.png" />
-    <Content Include="Content\img\flags\bh.png" />
-    <Content Include="Content\img\flags\bi.png" />
-    <Content Include="Content\img\flags\bj.png" />
-    <Content Include="Content\img\flags\bm.png" />
-    <Content Include="Content\img\flags\bn.png" />
-    <Content Include="Content\img\flags\bo.png" />
-    <Content Include="Content\img\flags\br.png" />
-    <Content Include="Content\img\flags\bs.png" />
-    <Content Include="Content\img\flags\bt.png" />
-    <Content Include="Content\img\flags\bw.png" />
-    <Content Include="Content\img\flags\by.png" />
-    <Content Include="Content\img\flags\bz.png" />
-    <Content Include="Content\img\flags\ca.png" />
-    <Content Include="Content\img\flags\cd.png" />
-    <Content Include="Content\img\flags\cf.png" />
-    <Content Include="Content\img\flags\cg.png" />
-    <Content Include="Content\img\flags\ch.png" />
-    <Content Include="Content\img\flags\ci.png" />
-    <Content Include="Content\img\flags\ck.png" />
-    <Content Include="Content\img\flags\cl.png" />
-    <Content Include="Content\img\flags\cm.png" />
-    <Content Include="Content\img\flags\cn.png" />
-    <Content Include="Content\img\flags\co.png" />
-    <Content Include="Content\img\flags\cr.png" />
-    <Content Include="Content\img\flags\cu.png" />
-    <Content Include="Content\img\flags\cv.png" />
-    <Content Include="Content\img\flags\cy.png" />
-    <Content Include="Content\img\flags\cz.png" />
-    <Content Include="Content\img\flags\de.png" />
-    <Content Include="Content\img\flags\dj.png" />
-    <Content Include="Content\img\flags\dk.png" />
-    <Content Include="Content\img\flags\dm.png" />
-    <Content Include="Content\img\flags\do.png" />
-    <Content Include="Content\img\flags\dz.png" />
-    <Content Include="Content\img\flags\ec.png" />
-    <Content Include="Content\img\flags\ee.png" />
-    <Content Include="Content\img\flags\eg.png" />
-    <Content Include="Content\img\flags\eh.png" />
-    <Content Include="Content\img\flags\er.png" />
-    <Content Include="Content\img\flags\es.png" />
-    <Content Include="Content\img\flags\et.png" />
-    <Content Include="Content\img\flags\fi.png" />
-    <Content Include="Content\img\flags\fj.png" />
-    <Content Include="Content\img\flags\fm.png" />
-    <Content Include="Content\img\flags\fo.png" />
-    <Content Include="Content\img\flags\fr.png" />
-    <Content Include="Content\img\flags\ga.png" />
-    <Content Include="Content\img\flags\gb.png" />
-    <Content Include="Content\img\flags\gd.png" />
-    <Content Include="Content\img\flags\ge.png" />
-    <Content Include="Content\img\flags\gg.png" />
-    <Content Include="Content\img\flags\gh.png" />
-    <Content Include="Content\img\flags\gi.png" />
-    <Content Include="Content\img\flags\gl.png" />
-    <Content Include="Content\img\flags\gm.png" />
-    <Content Include="Content\img\flags\gn.png" />
-    <Content Include="Content\img\flags\gp.png" />
-    <Content Include="Content\img\flags\gq.png" />
-    <Content Include="Content\img\flags\gr.png" />
-    <Content Include="Content\img\flags\gt.png" />
-    <Content Include="Content\img\flags\gu.png" />
-    <Content Include="Content\img\flags\gw.png" />
-    <Content Include="Content\img\flags\gy.png" />
-    <Content Include="Content\img\flags\hk.png" />
-    <Content Include="Content\img\flags\hn.png" />
-    <Content Include="Content\img\flags\hr.png" />
-    <Content Include="Content\img\flags\ht.png" />
-    <Content Include="Content\img\flags\hu.png" />
-    <Content Include="Content\img\flags\id.png" />
-    <Content Include="Content\img\flags\ie.png" />
-    <Content Include="Content\img\flags\il.png" />
-    <Content Include="Content\img\flags\im.png" />
-    <Content Include="Content\img\flags\in.png" />
-    <Content Include="Content\img\flags\iq.png" />
-    <Content Include="Content\img\flags\ir.png" />
-    <Content Include="Content\img\flags\is.png" />
-    <Content Include="Content\img\flags\it.png" />
-    <Content Include="Content\img\flags\je.png" />
-    <Content Include="Content\img\flags\jm.png" />
-    <Content Include="Content\img\flags\jo.png" />
-    <Content Include="Content\img\flags\jp.png" />
-    <Content Include="Content\img\flags\ke.png" />
-    <Content Include="Content\img\flags\kg.png" />
-    <Content Include="Content\img\flags\kh.png" />
-    <Content Include="Content\img\flags\ki.png" />
-    <Content Include="Content\img\flags\km.png" />
-    <Content Include="Content\img\flags\kn.png" />
-    <Content Include="Content\img\flags\kp.png" />
-    <Content Include="Content\img\flags\kr.png" />
-    <Content Include="Content\img\flags\kw.png" />
-    <Content Include="Content\img\flags\ky.png" />
-    <Content Include="Content\img\flags\kz.png" />
-    <Content Include="Content\img\flags\la.png" />
-    <Content Include="Content\img\flags\lb.png" />
-    <Content Include="Content\img\flags\lc.png" />
-    <Content Include="Content\img\flags\li.png" />
-    <Content Include="Content\img\flags\lk.png" />
-    <Content Include="Content\img\flags\lr.png" />
-    <Content Include="Content\img\flags\ls.png" />
-    <Content Include="Content\img\flags\lt.png" />
-    <Content Include="Content\img\flags\lu.png" />
-    <Content Include="Content\img\flags\lv.png" />
-    <Content Include="Content\img\flags\ly.png" />
-    <Content Include="Content\img\flags\ma.png" />
-    <Content Include="Content\img\flags\mc.png" />
-    <Content Include="Content\img\flags\md.png" />
-    <Content Include="Content\img\flags\me.png" />
-    <Content Include="Content\img\flags\mg.png" />
-    <Content Include="Content\img\flags\mh.png" />
-    <Content Include="Content\img\flags\mk.png" />
-    <Content Include="Content\img\flags\ml.png" />
-    <Content Include="Content\img\flags\mm.png" />
-    <Content Include="Content\img\flags\mn.png" />
-    <Content Include="Content\img\flags\mo.png" />
-    <Content Include="Content\img\flags\mq.png" />
-    <Content Include="Content\img\flags\mr.png" />
-    <Content Include="Content\img\flags\ms.png" />
-    <Content Include="Content\img\flags\mt.png" />
-    <Content Include="Content\img\flags\mu.png" />
-    <Content Include="Content\img\flags\mv.png" />
-    <Content Include="Content\img\flags\mw.png" />
-    <Content Include="Content\img\flags\mx.png" />
-    <Content Include="Content\img\flags\my.png" />
-    <Content Include="Content\img\flags\mz.png" />
-    <Content Include="Content\img\flags\na.png" />
-    <Content Include="Content\img\flags\nc.png" />
-    <Content Include="Content\img\flags\ne.png" />
-    <Content Include="Content\img\flags\ng.png" />
-    <Content Include="Content\img\flags\ni.png" />
-    <Content Include="Content\img\flags\nl.png" />
-    <Content Include="Content\img\flags\no.png" />
-    <Content Include="Content\img\flags\np.png" />
-    <Content Include="Content\img\flags\nr.png" />
-    <Content Include="Content\img\flags\nz.png" />
-    <Content Include="Content\img\flags\om.png" />
-    <Content Include="Content\img\flags\pa.png" />
-    <Content Include="Content\img\flags\pe.png" />
-    <Content Include="Content\img\flags\pf.png" />
-    <Content Include="Content\img\flags\pg.png" />
-    <Content Include="Content\img\flags\ph.png" />
-    <Content Include="Content\img\flags\pk.png" />
-    <Content Include="Content\img\flags\pl.png" />
-    <Content Include="Content\img\flags\pr.png" />
-    <Content Include="Content\img\flags\ps.png" />
-    <Content Include="Content\img\flags\pt.png" />
-    <Content Include="Content\img\flags\pw.png" />
-    <Content Include="Content\img\flags\py.png" />
-    <Content Include="Content\img\flags\qa.png" />
-    <Content Include="Content\img\flags\re.png" />
-    <Content Include="Content\img\flags\ro.png" />
-    <Content Include="Content\img\flags\rs.png" />
-    <Content Include="Content\img\flags\ru.png" />
-    <Content Include="Content\img\flags\rw.png" />
-    <Content Include="Content\img\flags\sa.png" />
-    <Content Include="Content\img\flags\sb.png" />
-    <Content Include="Content\img\flags\sc.png" />
-    <Content Include="Content\img\flags\sd.png" />
-    <Content Include="Content\img\flags\se.png" />
-    <Content Include="Content\img\flags\sg.png" />
-    <Content Include="Content\img\flags\si.png" />
-    <Content Include="Content\img\flags\sk.png" />
-    <Content Include="Content\img\flags\sl.png" />
-    <Content Include="Content\img\flags\sm.png" />
-    <Content Include="Content\img\flags\sn.png" />
-    <Content Include="Content\img\flags\so.png" />
-    <Content Include="Content\img\flags\sr.png" />
-    <Content Include="Content\img\flags\st.png" />
-    <Content Include="Content\img\flags\sv.png" />
-    <Content Include="Content\img\flags\sy.png" />
-    <Content Include="Content\img\flags\sz.png" />
-    <Content Include="Content\img\flags\tc.png" />
-    <Content Include="Content\img\flags\td.png" />
-    <Content Include="Content\img\flags\tg.png" />
-    <Content Include="Content\img\flags\th.png" />
-    <Content Include="Content\img\flags\tj.png" />
-    <Content Include="Content\img\flags\tl.png" />
-    <Content Include="Content\img\flags\tm.png" />
-    <Content Include="Content\img\flags\tn.png" />
-    <Content Include="Content\img\flags\to.png" />
-    <Content Include="Content\img\flags\tr.png" />
-    <Content Include="Content\img\flags\tt.png" />
-    <Content Include="Content\img\flags\tv.png" />
-    <Content Include="Content\img\flags\tw.png" />
-    <Content Include="Content\img\flags\tz.png" />
-    <Content Include="Content\img\flags\ua.png" />
-    <Content Include="Content\img\flags\ug.png" />
-    <Content Include="Content\img\flags\us.png" />
-    <Content Include="Content\img\flags\uy.png" />
-    <Content Include="Content\img\flags\uz.png" />
-    <Content Include="Content\img\flags\va.png" />
-    <Content Include="Content\img\flags\vc.png" />
-    <Content Include="Content\img\flags\ve.png" />
-    <Content Include="Content\img\flags\vg.png" />
-    <Content Include="Content\img\flags\vi.png" />
-    <Content Include="Content\img\flags\vn.png" />
-    <Content Include="Content\img\flags\vu.png" />
-    <Content Include="Content\img\flags\ws.png" />
-    <Content Include="Content\img\flags\ye.png" />
-    <Content Include="Content\img\flags\za.png" />
-    <Content Include="Content\img\flags\zm.png" />
-    <Content Include="Content\img\flags\zw.png" />
-    <Content Include="Content\img\icons\earth-globe.svg" />
-    <Content Include="Content\img\icons\faceBook.svg" />
-    <Content Include="Content\img\icons\facebook-icon.png" />
     <Content Include="Content\img\icons\ic_account_box_black_36px.svg" />
     <Content Include="Content\img\icons\ic_account_box_white_36px.svg" />
     <Content Include="Content\img\icons\ic_account_box_white_48px.svg" />
     <Content Include="Content\img\icons\ic_account_circle_white_36px.svg" />
     <Content Include="Content\img\icons\ic_account_circle_white_48px.svg" />
-    <Content Include="Content\img\icons\ic_add_a_photo.svg" />
-    <Content Include="Content\img\icons\ic_add_location.svg" />
+    <Content Include="Content\img\icons\ic_add_location_48px.svg" />
     <Content Include="Content\img\icons\ic_announcement.svg" />
-    <Content Include="Content\img\icons\ic_cancel.svg" />
-    <Content Include="Content\img\icons\ic_check.svg" />
-    <Content Include="Content\img\icons\ic_check_circle.svg" />
-    <Content Include="Content\img\icons\ic_chevron_left.svg" />
-    <Content Include="Content\img\icons\ic_chevron_right.svg" />
     <Content Include="Content\img\icons\ic_clear_white_36px.svg" />
     <Content Include="Content\img\icons\ic_clear_white_48px.svg" />
-    <Content Include="Content\img\icons\ic_delete.svg" />
     <Content Include="Content\img\icons\ic_face_black_24px.svg" />
-    <Content Include="Content\img\icons\ic_file_upload.svg" />
-    <Content Include="Content\img\icons\ic_filter_list.svg" />
-    <Content Include="Content\img\icons\ic_info_outline.svg" />
     <Content Include="Content\img\icons\ic_lock_open.svg" />
-    <Content Include="Content\img\icons\ic_menu.svg" />
     <Content Include="Content\img\icons\ic_monetization_on.svg" />
     <Content Include="Content\img\icons\ic_more_vert_white_48px.svg" />
     <Content Include="Content\img\icons\ic_people_black_48px.svg" />
     <Content Include="Content\img\icons\ic_settings_48px.svg" />
-    <Content Include="Content\img\icons\ic_star.svg" />
-    <Content Include="Content\img\icons\ic_tune.svg" />
-    <Content Include="Content\img\icons\ic_view_module.svg" />
-    <Content Include="Content\img\icons\globe-country.svg" />
     <Content Include="Content\img\icons\settings.png" />
-    <Content Include="Content\img\icons\target.svg" />
-    <Content Include="Content\styles\css\app.css" />
-    <Content Include="Content\styles\css\libs\ng-img-crop.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\styles\css\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Raven.Studio.Html5.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Scripts\account\accountService.js" />
-    <Content Include="Scripts\account\facebookLoginInitializerService.js" />
-    <Content Include="Scripts\account\facebookLoginService.js" />
-    <Content Include="Scripts\account\index.js" />
-    <Content Include="Scripts\account\userService.js" />
-    <Content Include="Scripts\appController.js" />
-    <Content Include="Scripts\bundles\main.js" />
-    <Content Include="Scripts\dialogs\claimSpot\claimSpot.html" />
-    <Content Include="Scripts\dialogs\claimSpot\claimSpotController.js" />
-    <Content Include="Scripts\dialogs\claimSpot\claimSpotService.js" />
-    <Content Include="Scripts\dialogs\claimSpot\index.js" />
-    <Content Include="Scripts\dialogs\filterMap\filterMap.html" />
-    <Content Include="Scripts\dialogs\filterMap\filterMapController.js" />
-    <Content Include="Scripts\dialogs\filterMap\filterMapEventService.js" />
-    <Content Include="Scripts\dialogs\filterMap\filterMapService.js" />
-    <Content Include="Scripts\dialogs\filterMap\index.js" />
-    <Content Include="Scripts\dialogs\index.js" />
-    <Content Include="Scripts\dialogs\myProfile\bonusPointsDirective.html" />
-    <Content Include="Scripts\dialogs\myProfile\bonusPointsDirective.js" />
-    <Content Include="Scripts\dialogs\myProfile\bonusPointsDirectiveController.js" />
-    <Content Include="Scripts\dialogs\myProfile\index.js" />
-    <Content Include="Scripts\dialogs\myProfile\myProfile.html" />
-    <Content Include="Scripts\dialogs\myProfile\myProfileColor\index.js" />
-    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColor.html" />
-    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorContainerDirective.html" />
-    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorContainerDirective.js" />
-    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorContainerDirectiveController.js" />
-    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorController.js" />
-    <Content Include="Scripts\dialogs\myProfile\myProfileColor\myProfileColorService.js" />
-    <Content Include="Scripts\dialogs\myProfile\myProfileController.js" />
-    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\httpPrefixDirective.js" />
-    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\index.js" />
-    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\myProfilePicture.html" />
-    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\myProfilePicture.js" />
-    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\myProfilePictureController.js" />
-    <Content Include="Scripts\dialogs\myProfile\myProfilePicture\myProfilePictureService.js" />
-    <Content Include="Scripts\dialogs\myProfile\myProfileService.js" />
-    <Content Include="Scripts\dialogs\spotDetails\index.js" />
-    <Content Include="Scripts\dialogs\spotDetails\spotDetails.html" />
-    <Content Include="Scripts\dialogs\spotDetails\spotDetailsController.js" />
-    <Content Include="Scripts\dialogs\spotDetails\spotDetailsService.js" />
-    <Content Include="Scripts\dialogs\toplist\index.js" />
-    <Content Include="Scripts\dialogs\toplist\toplist.html" />
-    <Content Include="Scripts\dialogs\toplist\toplistController.js" />
-    <Content Include="Scripts\dialogs\toplist\toplistService.js" />
-    <Content Include="Scripts\index.js" />
-    <Content Include="Scripts\layout\actionButtons\actionButtonsDirective.html" />
-    <Content Include="Scripts\layout\actionButtons\actionButtonsDirective.js" />
-    <Content Include="Scripts\layout\actionButtons\actionButtonsDirectiveController.js" />
-    <Content Include="Scripts\layout\actionButtons\index.js" />
-    <Content Include="Scripts\layout\index.js" />
-    <Content Include="Scripts\layout\sideNav\completeFBRegistration\completeSideNavDirective.html" />
-    <Content Include="Scripts\layout\sideNav\completeFBRegistration\completeSideNavDirective.js" />
-    <Content Include="Scripts\layout\sideNav\completeFBRegistration\completeSideNavDirectiveController.js" />
-    <Content Include="Scripts\layout\sideNav\completeFBRegistration\index.js" />
-    <Content Include="Scripts\layout\sideNav\countriesValue.js" />
-    <Content Include="Scripts\layout\sideNav\index.js" />
-    <Content Include="Scripts\layout\sideNav\login\index.js" />
-    <Content Include="Scripts\layout\sideNav\login\loginSideNavDirective.html" />
-    <Content Include="Scripts\layout\sideNav\login\loginSideNavDirective.js" />
-    <Content Include="Scripts\layout\sideNav\login\loginSideNavDirectiveController.js" />
-    <Content Include="Scripts\layout\sideNav\register\index.js" />
-    <Content Include="Scripts\layout\sideNav\register\registerSideNavDirective.html" />
-    <Content Include="Scripts\layout\sideNav\register\registerSideNavDirective.js" />
-    <Content Include="Scripts\layout\sideNav\register\registerSideNavDirectiveController.js" />
-    <Content Include="Scripts\layout\sideNav\sideNavDirective.html" />
-    <Content Include="Scripts\layout\sideNav\sideNavDirective.js" />
-    <Content Include="Scripts\layout\sideNav\sideNavDirectiveController.js" />
-    <Content Include="Scripts\layout\sideNav\sideNavEventService.js" />
-    <Content Include="Scripts\layout\sideNav\statesUSValue.js" />
-    <Content Include="Scripts\layout\sideNav\uniqueUsernameDirective.js" />
-    <Content Include="Scripts\layout\topToolbar\index.js" />
-    <Content Include="Scripts\layout\topToolbar\topToolbarDirective.html" />
-    <Content Include="Scripts\layout\topToolbar\topToolbarDirective.js" />
-    <Content Include="Scripts\layout\topToolbar\topToolbarDirectiveController.js" />
+    <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\controllers\topMarkersCtrl.js" />
+    <Content Include="Scripts\controllers\mapSettingsCtrl.js" />
+    <Content Include="Scripts\controllers\addPointCtrl.js" />
+    <Content Include="Scripts\controllers\appCtrl.js" />
+    <Content Include="Scripts\controllers\simpleModalController.js" />
+    <Content Include="Scripts\controllers\pointInfoController.js" />
+    <Content Include="Scripts\controllers\sideBarCtrl.js" />
     <Content Include="Scripts\mapSettings\mapSettings.html" />
     <Content Include="Scripts\mapSettings\mapSettings.js" />
     <Content Include="Scripts\mapSettings\mapSettingsController.js" />
     <Content Include="Scripts\mapSettings\mapSettingsService.js" />
-    <Content Include="Scripts\map\googleMapsInitializer\googleMapsInitializerService.js" />
-    <Content Include="Scripts\map\googleMapsInitializer\index.js" />
-    <Content Include="Scripts\map\index.js" />
-    <Content Include="Scripts\map\mapDirective.js" />
-    <Content Include="Scripts\map\mapService.js" />
-    <Content Include="Scripts\map\markersService.js" />
-    <Content Include="Scripts\map\rectanglesService.js" />
-    <Content Include="Scripts\shared\confirmDialog\confirmDialogService.js" />
-    <Content Include="Scripts\shared\confirmDialog\index.js" />
-    <Content Include="Scripts\shared\index.js" />
-    <Content Include="Scripts\shared\simpleModal\simpleModal.html" />
+    <Content Include="Scripts\map\map.js" />
+    <Content Include="Scripts\map\services\mapService.js" />
+    <Content Include="Scripts\map\services\rectanglesService.js" />
+    <Content Include="Scripts\newSquare\newSquare.html" />
+    <Content Include="Scripts\newSquare\newSquare.js" />
+    <Content Include="Scripts\newSquare\newSquareController.js" />
+    <Content Include="Scripts\newSquare\newSquareService.js" />
+    <Content Include="Scripts\services\accountService.js" />
+    <Content Include="Scripts\shared\shared.js" />
     <Content Include="Scripts\shared\simpleModal\simpleModal.js" />
     <Content Include="Scripts\shared\simpleModal\simpleModalController.js" />
     <Content Include="Scripts\shared\simpleModal\simpleModalService.js" />
-    <Content Include="Scripts\shared\toast\index.js" />
     <Content Include="Scripts\shared\toast\toast.html" />
+    <Content Include="Scripts\shared\toast\toast.js" />
     <Content Include="Scripts\shared\toast\toastController.js" />
     <Content Include="Scripts\shared\toast\toastService.js" />
+    <Content Include="Scripts\squareDetails\squareDetails.html" />
+    <Content Include="Scripts\squareDetails\squareDetails.js" />
+    <Content Include="Scripts\squareDetails\squareDetailsController.js" />
+    <Content Include="Scripts\squareDetails\squareDetailsService.js" />
+    <Content Include="Scripts\templates\topMarkersDialog.html" />
+    <Content Include="Scripts\templates\login.html" />
+    <Content Include="Scripts\templates\pointAddedDialog.html" />
+    <Content Include="Scripts\templates\register.html" />
+    <Content Include="Scripts\topMarkers\topMarkers.html" />
+    <Content Include="Scripts\topMarkers\topMarkers.js" />
+    <Content Include="Scripts\topMarkers\topMarkersController.js" />
+    <Content Include="Scripts\topMarkers\topMarkersService.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -669,8 +348,7 @@
   <ItemGroup>
     <Folder Include="App_Data\Flags\" />
     <Folder Include="App_Data\ProfilePictures\" />
-    <Folder Include="Content\img\dotLocation\" />
-    <Folder Include="Content\uploadedImages\" />
+    <Folder Include="Scripts\libs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -698,6 +376,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Content\images\Thumbs.db" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Dummy\Index.cshtml" />
@@ -746,9 +425,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Azure.DocumentDB.1.9.1\build\Microsoft.Azure.DocumentDB.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Azure.DocumentDB.1.9.1\build\Microsoft.Azure.DocumentDB.targets'))" />
   </Target>
-  <Import Project="..\packages\Microsoft.Azure.DocumentDB.1.9.1\build\Microsoft.Azure.DocumentDB.targets" Condition="Exists('..\packages\Microsoft.Azure.DocumentDB.1.9.1\build\Microsoft.Azure.DocumentDB.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
