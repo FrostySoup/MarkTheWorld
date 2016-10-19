@@ -129,7 +129,7 @@ namespace Repository
             try
             {
                 Document document = await client.ReadDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id));
-                return (T)(dynamic)document;
+                return (T)(document as dynamic);
             }
             catch (DocumentClientException e)
             {

@@ -29,11 +29,11 @@ namespace Repository.UserRepository
                 check.success = false;
                 check.message = message2.UserNameTaken;
                 check.Token = System.Guid.NewGuid().ToString();
-                User oneObject = await DocumentDBRepository<User>.GetItemAsync(x => x.UserName.Equals(newUser.UserName));
+                User oneObject = RavenDbRepository<User>.GetItemAsync(x => x.UserName.Equals(newUser.UserName));
                 if (oneObject == null)
                 {
                     newUser.Token = check.Token;
-                    await DocumentDBRepository<User>.CreateItemAsync(newUser);
+                    RavenDbRepository<User>.CreateItemAsync(newUser);
                     check.success = true;
                     check.message = message2.Success;
                     return check;
@@ -47,7 +47,7 @@ namespace Repository.UserRepository
                 check.success = true;
                 check.Token = System.Guid.NewGuid().ToString();
                 newUser.Token = check.Token;
-                await DocumentDBRepository<User>.CreateItemAsync(newUser);
+                RavenDbRepository<User>.CreateItemAsync(newUser);
                 check.message = message2.Success;
                 return check;
             }
@@ -69,7 +69,7 @@ namespace Repository.UserRepository
         {
             try
             {
-                User user = await DocumentDBRepository<User>
+                User user = RavenDbRepository<User>
                                 .GetItemAsync(x => x.UserName.Equals(userName));
                 if (user != null)
                     return false;
@@ -106,7 +106,7 @@ namespace Repository.UserRepository
             {
                 if (string.IsNullOrEmpty(countryCode))
                 {
-                    users = (await DocumentDBRepository<User>.GetItemAsyncPages(x => x != null, x => x.points, number, startingPage * number)).Select(x => new TopUser
+                    users = (RavenDbRepository<User>.GetItemAsyncPages(x => x != null, x => x.points, number, startingPage * number)).Select(x => new TopUser
                     {
                         photoPath = x.profilePicture,
                         points = x.points,
@@ -115,7 +115,7 @@ namespace Repository.UserRepository
                 }
                 else
                 {
-                    users = (await DocumentDBRepository<User>.GetItemAsyncPages(x => x.countryCode.Equals(countryCode), x => x.points, number, startingPage * number)).Select(x => new TopUser
+                    users = (RavenDbRepository<User>.GetItemAsyncPages(x => x.countryCode.Equals(countryCode), x => x.points, number, startingPage * number)).Select(x => new TopUser
                     {
                         photoPath = x.profilePicture,
                         points = x.points,
@@ -139,7 +139,7 @@ namespace Repository.UserRepository
 
         public async Task<List<User>> GetAll()
         {
-            return await DocumentDBRepository<User>
+            return RavenDbRepository<User>
                 .GetItemsAsync(x => x != null);
                                 
         }
@@ -150,7 +150,7 @@ namespace Repository.UserRepository
             {
                 UserRegistrationModel check = new UserRegistrationModel();
                 check.success = false;
-                User oneObject = await DocumentDBRepository<User>
+                User oneObject = RavenDbRepository<User>
                                 .GetItemAsync(x => x.UserName.Equals(user.UserName));
                 if (oneObject == null)
                 {
@@ -191,7 +191,7 @@ namespace Repository.UserRepository
         {
             try
             {
-                User oneObject = await DocumentDBRepository<User>
+                User oneObject = RavenDbRepository<User>
                                 .GetItemAsync(x => x.UserName.Equals(name));
                 return oneObject;
             }
@@ -205,7 +205,7 @@ namespace Repository.UserRepository
         {
             try
             {
-                User oneObject = await DocumentDBRepository<User>
+                User oneObject = RavenDbRepository<User>
                                 .GetItemAsync(x => x.Token.Equals(token));
                 return oneObject;
             }
@@ -219,7 +219,7 @@ namespace Repository.UserRepository
         {
             try
             {
-                await DocumentDBRepository<User>
+                RavenDbRepository<User>
                                 .UpdateItemAsync(user.Id, user);
                 return true;
             }
@@ -233,7 +233,7 @@ namespace Repository.UserRepository
         {
             try
             {
-                User oneObject = await DocumentDBRepository<User>
+                User oneObject = RavenDbRepository<User>
                                 .GetItemAsync(x => x.UserName.Equals(name));
                 return oneObject.Token;
             }

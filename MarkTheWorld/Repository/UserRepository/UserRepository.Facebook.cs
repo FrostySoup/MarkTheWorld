@@ -15,7 +15,7 @@ namespace Repository.UserRepository
         {
             try
             {
-                User user = await DocumentDBRepository<User>
+                User user = RavenDbRepository<User>
                                 .GetItemAsync(x => x.fbID.Equals(id));
                 if (user != null)
                     return false;
@@ -32,12 +32,12 @@ namespace Repository.UserRepository
         {
             try
             {
-                User user = await DocumentDBRepository<User>
+                User user = RavenDbRepository<User>
                                 .GetItemAsync(x => x.fbID.Equals(id));
                 if (user != null)
                 {
                     user.Token = token;
-                    await DocumentDBRepository<User>.UpdateItemAsync(user.Id, user);
+                    RavenDbRepository<User>.UpdateItemAsync(user.Id, user);
                     string profilePath = user.profilePicture;
                     if (!profilePath.Contains("facebook"))
                         profilePath = "/Content/img/avatars/" + profilePath;
@@ -61,7 +61,7 @@ namespace Repository.UserRepository
         {
             try
             {
-                User user = await DocumentDBRepository<User>
+                User user = RavenDbRepository<User>
                                 .GetItemAsync(x => x.UserName.Equals(usName));
                 if (user != null)
                 {
@@ -80,7 +80,7 @@ namespace Repository.UserRepository
         public async Task<Registration> RegisterFbUser(FbRegisterClient fb, string photo)
         {
 
-                User user = await DocumentDBRepository<User>
+                User user = RavenDbRepository<User>
                                 .GetItemAsync(x => x.fbID.Equals(fb.userID));   
                 if (user != null)               
                     return null;
@@ -92,7 +92,7 @@ namespace Repository.UserRepository
                 newUser.profilePicture = photo;
                 if (fb.state != null)
                     newUser.state = fb.state;
-                await DocumentDBRepository<User>
+                RavenDbRepository<User>
                     .CreateItemAsync(newUser);
                 return new Registration
                 {

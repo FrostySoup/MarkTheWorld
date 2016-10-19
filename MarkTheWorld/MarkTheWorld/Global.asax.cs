@@ -18,7 +18,7 @@ namespace MarkTheWorld
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //DocumentDBRepository<Item>.Initialize();
-            DbLink.DocumentRep();
+            //DbLink.DocumentRep();
         }
 
     }

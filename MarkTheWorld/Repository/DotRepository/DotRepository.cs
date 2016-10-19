@@ -21,11 +21,11 @@ namespace Repository.DotRepository
             reg.message = 0;
             double[] coords = centerCoords(dot);
             string coordsKey = coords[0].ToString() + coords[1].ToString();
-            User user = await DocumentDBRepository<User>.GetItemAsync(x => x.Token.Equals(dot.token));
+            User user = RavenDbRepository<User>.GetItemAsync(x => x.Token.Equals(dot.token));
             if (user.Id == null)
                 return reg;
 
-            List<Dot> dots = (await DocumentDBRepository<Dot>.GetItemsAsync(x => x != null)).Where(x => (x.lon.ToString() + x.lat.ToString()).Equals(coordsKey)).ToList();
+            List<Dot> dots =  RavenDbRepository<Dot>.GetItemsAsync(x => x != null).Where(x => (x.lon.ToString() + x.lat.ToString()).Equals(coordsKey)).ToList();
 
             for (int i = 0; i < dots.Count; i++)
             {                       
@@ -39,7 +39,7 @@ namespace Repository.DotRepository
                 else if (checkTerritory(dots[i]))
                 {
                     string name = dots[i].username;
-                    User userChanged = await DocumentDBRepository<User>.GetItemAsync(x => x.UserName.Equals(name));
+                    User userChanged = RavenDbRepository<User>.GetItemAsync(x => x.UserName.Equals(name));
                     userChanged.dotsId.Remove(dots[i].Id);
 
                     //addEvent(userChanged, user, dots[i]);
@@ -49,9 +49,9 @@ namespace Repository.DotRepository
                     if (user.dotsId == null)
                         user.dotsId = new List<string>();
                     user.dotsId.Add(dots[i].Id);
-                    await DocumentDBRepository<Dot>.UpdateItemAsync(dots[i].Id, dots[i]);
-                    await DocumentDBRepository<User>.UpdateItemAsync(userChanged.Id, userChanged);
-                    await DocumentDBRepository<User>.UpdateItemAsync(user.Id, user);
+                     RavenDbRepository<Dot>.UpdateItemAsync(dots[i].Id, dots[i]);
+                     RavenDbRepository<User>.UpdateItemAsync(userChanged.Id, userChanged);
+                     RavenDbRepository<User>.UpdateItemAsync(user.Id, user);
                     reg.success = true;
                     reg.message = message2.Success;
                     return reg;
@@ -63,11 +63,11 @@ namespace Repository.DotRepository
                 //addEventNewDot(session, user, dot.lng, dot.lat);
                 Dot dotCopy = new Dot();
                 dotCopy = changeDotValues(DateTime.Today, dot.message, coords[1], coords[0], user.UserName, cutImageName(imagePath));
-                dotCopy.Id = await DocumentDBRepository<Dot>.CreateItemAsync(dotCopy);
+                dotCopy.Id = (RavenDbRepository<Dot>.CreateItemAsync(dotCopy)).Id;
                 if (user.dotsId == null)
                     user.dotsId = new List<string>();
                 user.dotsId.Add(dotCopy.Id);
-                await DocumentDBRepository<User>.UpdateItemAsync(user.Id, user);
+                RavenDbRepository<User>.UpdateItemAsync(user.Id, user);
 
                 reg.success = true;
                 reg.message = message2.Success;
@@ -95,7 +95,7 @@ namespace Repository.DotRepository
                 neY = 89;
             if (swY > 90 || swY < -90)
                 swY = -89;              
-            List<Dot> dotsToSend = await DocumentDBRepository<Dot>.GetItemsAsync(x => x.lon < neX && x.lat < neY && swX < x.lon && swY < x.lat);
+            List<Dot> dotsToSend = RavenDbRepository<Dot>.GetItemsAsync(x => x.lon < neX && x.lat < neY && swX < x.lon && swY < x.lat);
             return dotsToSend;
         }
 
@@ -105,7 +105,7 @@ namespace Repository.DotRepository
             List<Dot> reg = new List<Dot>();
             try
             {
-                List<Dot> dotsToSend = await DocumentDBRepository<Dot>
+                List<Dot> dotsToSend = RavenDbRepository<Dot>
                     .GetItemsAsync(x => x.username.Equals(name) && x.lon < corners.neX 
                             && x.lat < corners.neY && corners.swX < x.lon && corners.swY < x.lat);
                 return reg;
@@ -121,12 +121,12 @@ namespace Repository.DotRepository
             List<Dot> dots;
             if (!string.IsNullOrEmpty(name))
             {
-                 dots = await DocumentDBRepository<Dot>
+                 dots = RavenDbRepository<Dot>
                     .GetItemsAsync(x => x.username.Equals(name));
                
             }
             else {
-                dots = await DocumentDBRepository<Dot>
+                dots = RavenDbRepository<Dot>
                     .GetItemsAsync(x => x != null);
             }
             return dots.ToArray();
@@ -140,12 +140,12 @@ namespace Repository.DotRepository
             {
                 double[] coords = centerCoords(dot);
                 string coordsKey = coords[0].ToString() + coords[1].ToString();
-                User user = await DocumentDBRepository<User>.GetItemAsync(x => x.Token.Equals(dot.token));
+                User user = RavenDbRepository<User>.GetItemAsync(x => x.Token.Equals(dot.token));
 
                 if (user.Id == null)
                     return reg;
                 Dot dotCopy = new Dot();
-                List<Dot> dots = (await DocumentDBRepository<Dot>.GetItemsAsync(x => x != null)).Where(x => (x.lon.ToString() + x.lat.ToString()).Equals(coordsKey)).ToList();
+                List<Dot> dots = (RavenDbRepository<Dot>.GetItemsAsync(x => x != null)).Where(x => (x.lon.ToString() + x.lat.ToString()).Equals(coordsKey)).ToList();
                 if (dots.Count() > 0)
                 {
                     if (user.UserName.Equals(dots[0].username))
@@ -181,8 +181,8 @@ namespace Repository.DotRepository
         {
             try
             {
-                Dot myDot = await DocumentDBRepository<Dot>.GetItemAsyncByID(Id);
-                User user = await DocumentDBRepository<User>.GetItemAsync(x => x.UserName.Equals(myDot.username));
+                Dot myDot = RavenDbRepository<Dot>.GetItemAsyncByID(Id);
+                User user = RavenDbRepository<User>.GetItemAsync(x => x.UserName.Equals(myDot.username));
                 return new DotClick
                 {
                     profilePic = user.profilePicture,

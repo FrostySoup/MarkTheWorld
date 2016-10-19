@@ -16,7 +16,7 @@ namespace Repository.UserRepository
             UserDailyReward dailies = new UserDailyReward();
             try
             {
-                User user = await DocumentDBRepository<User>
+                User user = RavenDbRepository<User>
                                 .GetItemAsync(x => x.UserName.Equals(userName));
                 timePassed = DateTime.Now - user.lastDailyTime;
                 if (timePassed.TotalDays >= 1)
@@ -27,7 +27,7 @@ namespace Repository.UserRepository
                     dailies.received = points;
                     TimeSpan day = new TimeSpan(24, 0, 0);
                     dailies.timeLeft = (int)day.TotalSeconds;
-                    await DocumentDBRepository<User>.UpdateItemAsync(user.Id, user);
+                    RavenDbRepository<User>.UpdateItemAsync(user.Id, user);
                     return dailies;
                 }
                 else return dailies;
@@ -43,7 +43,7 @@ namespace Repository.UserRepository
         {
             try
             {
-                User user = await DocumentDBRepository<User>
+                User user = RavenDbRepository<User>
                                 .GetItemAsync(x => x.UserName.Equals(userName));
                 if (user.profilePicture == null)
                     return "defaultAvatar1.png";
@@ -61,11 +61,11 @@ namespace Repository.UserRepository
         {
             try
             {
-                User user = await DocumentDBRepository<User>
+                User user = RavenDbRepository<User>
                     .GetItemAsync(x => x.UserName.Equals(userName));
 
                 user.colors = colors;
-                await DocumentDBRepository<User>
+                RavenDbRepository<User>
                     .UpdateItemAsync(user.Id, user);
                 return true;
             }
@@ -79,7 +79,7 @@ namespace Repository.UserRepository
         {
             try
             {
-                User user = await DocumentDBRepository<User>
+                User user = RavenDbRepository<User>
                     .GetItemAsync(x => x.UserName.Equals(userName));
                 if (user == null)
                     return -1;
@@ -97,7 +97,7 @@ namespace Repository.UserRepository
         {
             try
             {
-                User user = await DocumentDBRepository<User>
+                User user = RavenDbRepository<User>
                     .GetItemAsync(x => x.UserName.Equals(userName));
                 if (user != null)
                     return CountriesList.getCountry(user.countryCode);
@@ -114,7 +114,7 @@ namespace Repository.UserRepository
             TimeSpan timePassed = new TimeSpan(0, 0, 0);
             try
             {
-                User user = await DocumentDBRepository<User>
+                User user = RavenDbRepository<User>
                     .GetItemAsync(x => x.UserName.Equals(userName));
                 timePassed = DateTime.Now - user.lastDailyTime;
                 return timePassed;
@@ -129,7 +129,7 @@ namespace Repository.UserRepository
         {
             try
             {
-                User user = await DocumentDBRepository<User>
+                User user = RavenDbRepository<User>
                     .GetItemAsync(x => x.UserName.Equals(userName));
                 if (user != null)
                     return user.colors;
