@@ -87,6 +87,7 @@
     <Compile Include="DataHelpers\User\StringFiltering.cs" />
     <Compile Include="DeleteLater\Item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuadTrees\GetGroupDotsDataReceived.cs" />
     <Compile Include="QuadTrees\QuadTree.cs" />
     <Compile Include="DataHelpers\User\SendData\UserDailyReward.cs" />
     <Compile Include="DataHelpers\User\ReceivedData\UserRegistrationPost.cs" />

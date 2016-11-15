@@ -12,6 +12,8 @@ namespace Data
         public double lon { get; set; }
         public double lat { get; set; }
 
+        public GroupedDotsForApi() { }
+
         public void addDots(GroupedDotsForApi otherDots)
         {            
             double bigger = (double)(count / otherDots.count);

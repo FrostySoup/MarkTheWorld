@@ -5,25 +5,11 @@ using Data.DataHelpers;
 using CSharpQuadTree;
 using Data.DataHelpers.Map;
 using Data.Database;
-using Data.QuadTrees;
-using Flurl.Http;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Net;
-using System.Net.Http.Headers;
 
 namespace BusinessLayer.DotService
 {
-    public class Test
-    {
-        public string id { get; set; }
-    }
-
     public partial class DotServices
     {
-
-        private readonly string URL = "http://localhost:56381/api/QuadTree";
-
         private Repository.UserRepository.UserRepository userRepository = new Repository.UserRepository.UserRepository();
 
         public CornersCorrds coordsToSquare(double lat, double lng)
@@ -52,34 +38,73 @@ namespace BusinessLayer.DotService
             return corners;
         }
 
-        public async Task<List<GroupedDotsForApi>> groupDots(List<Dot> dots, CornersCorrds corners, double zoomLevel)
+        public List<GroupedDotsForApi> groupDots(List<Dot> dots, CornersCorrds corners, double zoomLevel)
         {
-            GetGroupDotsDataReceived getGroupDotsDataReceived = new GetGroupDotsDataReceived()
+            double lenghtPerSquare = 16;
+            if (zoomLevel > 2)
+                lenghtPerSquare /= Math.Pow(2, (zoomLevel - 3));
+            if (corners.neX < corners.swX)
+                corners.neX = 179;
+            corners.neX = lenghtPerSquare * ((int)(corners.neX / lenghtPerSquare) + 1);
+            corners.neY = lenghtPerSquare * ((int)(corners.neY / lenghtPerSquare) + 1);
+            corners.swX = lenghtPerSquare * (int)((corners.swX / lenghtPerSquare) - 1);
+            corners.swY = lenghtPerSquare * (int)((corners.swY / lenghtPerSquare) - 1);
+
+            double squarex = corners.neX - corners.swX;
+            double squarey = corners.neY - corners.swY;
+            double neX = corners.neX + squarex / 3;
+            double neY = corners.neY + squarey / 3;
+            double swX = corners.swX - squarex / 3;
+            double swY = corners.swY - squarey / 3;
+            if (neX < swX)
+                neX = 179;
+            if (squarex < 0)
+                squarex = 179 - corners.swX;
+            if (neX > 180 || neX < -180)
+                neX = 179;
+            if (swX > 180 || swX < -180)
+                swX = -179;
+            if (neY > 90 || neY < -90)
+                neY = 89;
+            if (swY > 90 || swY < -90)
+                swY = -89;
+            TBQuadTreeNodeData node;
+            quadTreeNode quadTree = new quadTreeNode(new TBBoundingBox(swX, swY, neX, neY), 1);
+            foreach (Dot dot in dots)
             {
-                dots = dots,
-                corners = corners,
-                zoomLevel = zoomLevel
-            };
+                node = new TBQuadTreeNodeData(dot.lat, dot.lon, dot);
+                quadTree.addPoint(node);
+            }
 
-            var results = new List<GroupedDotsForApi>();
+            int howManySquaresX = (int)Math.Ceiling(squarex / lenghtPerSquare);
+            int howManySquaresY = (int)Math.Ceiling(squarey / lenghtPerSquare);
 
-            using (var client = new HttpClient())
+            List<TBQuadTreeNodeData>[] block = new List<TBQuadTreeNodeData>[howManySquaresX * howManySquaresY];
+
+
+            for (int j = 0; j < howManySquaresY; j++)
             {
-                //client.BaseAddress = new Uri("http://localhost:56381/api/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await client.PostAsJsonAsync(URL, getGroupDotsDataReceived);
-                if (response.IsSuccessStatusCode)
+                for (int i = 0; i < howManySquaresX; i++)
                 {
-                    results = await response.Content.ReadAsAsync<List<GroupedDotsForApi>>();
-                }else
-                {
-                    return null;
+                    neX = corners.neX - lenghtPerSquare * (howManySquaresX - i - 1);
+                    neY = corners.neY - lenghtPerSquare * j;
+                    swX = corners.neX - lenghtPerSquare * (howManySquaresX - i);
+                    swY = corners.neY - lenghtPerSquare * (j + 1);
+                    block[i + j * howManySquaresX] = new List<TBQuadTreeNodeData>();
+                    quadTree.TBQuadTreeGatherDataInRange(quadTree, new TBBoundingBox(swX, swY, neX, neY), block[i + j * howManySquaresX]);
                 }
             }
-            
-            return results;
+
+            List<GroupedDotsForApi> groupedDotsApi = new List<GroupedDotsForApi>();
+            for (int i = 0; i < howManySquaresX * howManySquaresY; i++)
+            {
+                if (block[i].Count > 0)
+                    groupedDotsApi.Add(new GroupedDotsForApi(block[i]));
+            }
+
+            combineGroupedDots(groupedDotsApi, (lenghtPerSquare * 0.6));
+            groupedDotsApi.RemoveAll(item => item == null);
+            return groupedDotsApi;
         }      
 
         private void combineGroupedDots(List<GroupedDotsForApi> groupedDotsApi, double distanceAllowed)

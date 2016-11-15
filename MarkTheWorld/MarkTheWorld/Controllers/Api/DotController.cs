@@ -214,7 +214,7 @@ namespace MarkTheWorld.Controllers.Api
             try
             {
                 gameDots = await dotService.getUserDotsName(corners, name);
-                groupedDots = dotService.groupDots(gameDots, corners, zoomLevel);
+                groupedDots = await dotService.groupDots(gameDots, corners, zoomLevel);
             }
             catch (Exception)
             {
@@ -242,7 +242,7 @@ namespace MarkTheWorld.Controllers.Api
             try
             {
                 gameDots = await dotService.getAllDots(corners);
-                groupedDots = dotService.groupDots(gameDots, corners, zoomLevel);
+                groupedDots = await dotService.groupDots(gameDots, corners, zoomLevel);
             }
             catch (Exception)
             {
