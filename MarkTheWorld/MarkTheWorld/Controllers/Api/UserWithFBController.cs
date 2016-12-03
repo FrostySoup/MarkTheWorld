@@ -10,10 +10,12 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 
 namespace MarkTheWorld.Controllers.Api
 {
+    [EnableCors(origins: "http://localhost:5555", headers: "*", methods: "*")]
     [RoutePrefix("api")]
     [ValidateViewModel]
     public class UserWithFBController : ApiController

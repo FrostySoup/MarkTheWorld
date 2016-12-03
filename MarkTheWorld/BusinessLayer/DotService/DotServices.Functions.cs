@@ -14,10 +14,6 @@ using System.Net.Http.Headers;
 
 namespace BusinessLayer.DotService
 {
-    public class Test
-    {
-        public string id { get; set; }
-    }
 
     public partial class DotServices
     {
@@ -70,6 +66,7 @@ namespace BusinessLayer.DotService
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 HttpResponseMessage response = await client.PostAsJsonAsync(URL, getGroupDotsDataReceived);
+
                 if (response.IsSuccessStatusCode)
                 {
                     results = await response.Content.ReadAsAsync<List<GroupedDotsForApi>>();

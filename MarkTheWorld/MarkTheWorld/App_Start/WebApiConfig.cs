@@ -11,6 +11,8 @@ namespace MarkTheWorld.App_Start
     {
         public static void Register(HttpConfiguration config)
         {
+            config.EnableCors();
+
             config.MapHttpAttributeRoutes();
 
             config.Formatters.Add(new BrowserJsonFormatter());

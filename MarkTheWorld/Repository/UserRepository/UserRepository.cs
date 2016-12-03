@@ -17,29 +17,37 @@ namespace Repository.UserRepository
             User newUser = generateUser();
             newUser.PasswordHash = userPost.PasswordHash;
             newUser.UserName = userPost.UserName;
-            newUser.countryCode = userPost.CountryCode;         
+            newUser.countryCode = userPost.CountryCode;   
+                  
             Random rnd = new Random();
             newUser.profilePicture = "defaultAvatar" + rnd.Next(1, 16) + ".png";
+
             UserRegistrationModel check = new UserRegistrationModel();
             check.photo = "/Content/img/avatars/" + newUser.profilePicture;             
             check.username = userPost.UserName;
+
             try
             {                    
                     
                 check.success = false;
                 check.message = message2.UserNameTaken;
                 check.Token = System.Guid.NewGuid().ToString();
+
                 User oneObject = RavenDbRepository<User>.GetItemAsync(x => x.UserName.Equals(newUser.UserName));
+
                 if (oneObject == null)
                 {
                     newUser.Token = check.Token;
                     RavenDbRepository<User>.CreateItemAsync(newUser);
                     check.success = true;
                     check.message = message2.Success;
+
                     return check;
                 }
+
                 check.success = false;
                 check.message = message2.UserNameTaken;
+
                 return check;
             }
             catch
@@ -57,11 +65,13 @@ namespace Repository.UserRepository
         {
             User newUser = new User();
             newUser.lastDailyTime = DateTime.Now;
+
             Random rnd = new Random();
             newUser.colors = new Colors();
             newUser.colors.blue = rnd.Next(1, 255);
             newUser.colors.red = rnd.Next(1, 255);
             newUser.colors.green = rnd.Next(1, 255);
+
             return newUser;
         }
 
