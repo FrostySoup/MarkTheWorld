@@ -16,7 +16,7 @@ namespace MarkTheWorld
             // Wire token validation
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions
             {
-                Authority = "https://localhost:44300",
+                Authority = "https://localhost:44366",
 
                 // For access to the introspection endpoint
                 ClientId = "api",
