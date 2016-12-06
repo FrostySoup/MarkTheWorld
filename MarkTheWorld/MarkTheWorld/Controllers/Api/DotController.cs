@@ -57,6 +57,15 @@ namespace MarkTheWorld.Controllers.Api
             return Ok(dotCopy);
         }
 
+        [Route("test")]
+        [HttpGet]
+        [AuthorizeAttribute]
+        public async Task<IHttpActionResult> TestDot()
+        {
+            
+            return Ok("Works");
+        }
+
         /// <summary>
         /// Gražina visus kvadratėlius tam tikroje teritorijoje
         /// </summary>
