@@ -13,7 +13,21 @@ namespace IdentityServer
             return new List<Scope>
             {
                 StandardScopes.OpenId,
-                StandardScopes.Profile
+                StandardScopes.Profile,
+                new Scope
+                {
+                Name = "api",
+
+                DisplayName = "Access to API",
+                Description = "This will grant you access to the API",
+
+                ScopeSecrets = new List<Secret>
+                {
+                    new Secret("api-secret".Sha256())
+                },
+
+                Type = ScopeType.Resource
+                }
             };
         }
     }
