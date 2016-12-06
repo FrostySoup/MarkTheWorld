@@ -1,5 +1,8 @@
-﻿using Microsoft.Owin;
+﻿using IdentityServer3.AccessTokenValidation;
+using Microsoft.Owin;
+using Microsoft.Owin.Cors;
 using Owin;
+using System.Web.Http;
 
 [assembly: OwinStartupAttribute(typeof(MarkTheWorld.Startup))]
 namespace MarkTheWorld
@@ -8,7 +11,27 @@ namespace MarkTheWorld
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+            app.UseCors(CorsOptions.AllowAll);
+
+            // Wire token validation
+            app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions
+            {
+                Authority = "https://localhost:44300",
+
+                // For access to the introspection endpoint
+                ClientId = "api",
+                ClientSecret = "api-secret",
+
+                RequiredScopes = new[] { "api" }
+            });
+
+            // Wire Web API
+            var httpConfiguration = new HttpConfiguration();
+            httpConfiguration.MapHttpAttributeRoutes();
+            //httpConfiguration.Filters.Add(new AuthorizeAttribute());
+
+            app.UseWebApi(httpConfiguration);
+            //ConfigureAuth(app);
         }
     }
 }

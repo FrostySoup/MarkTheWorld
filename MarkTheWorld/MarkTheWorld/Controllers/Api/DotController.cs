@@ -36,6 +36,7 @@ namespace MarkTheWorld.Controllers.Api
         [Route("dot")]
         [HttpPost]
         [ValidateViewModel]
+        [AuthorizeAttribute]
         public async Task<IHttpActionResult> PostDot(DotFromViewModel dot)
         {          
             UserRegistrationModel dotCopy = new UserRegistrationModel();
