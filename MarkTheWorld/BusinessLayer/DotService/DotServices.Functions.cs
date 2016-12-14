@@ -6,7 +6,6 @@ using CSharpQuadTree;
 using Data.DataHelpers.Map;
 using Data.Database;
 using Data.QuadTrees;
-using Flurl.Http;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net;
