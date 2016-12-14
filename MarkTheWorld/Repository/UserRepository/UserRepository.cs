@@ -147,10 +147,10 @@ namespace Repository.UserRepository
             return users;
         }
 
-        public async Task<List<User>> GetAll()
+        public List<User> GetAll()
         {
             return RavenDbRepository<User>
-                .GetItemsAsync(x => x != null);
+                .GetAllItems();
                                 
         }
 

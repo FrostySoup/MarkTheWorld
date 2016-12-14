@@ -58,12 +58,16 @@ namespace MarkTheWorld.Controllers.Api
         }
 
         [Route("test")]
+        [ResponseType(typeof(string))]
         [HttpGet]
         [AuthorizeAttribute]
-        public async Task<IHttpActionResult> TestDot()
+        public IHttpActionResult TestDot()
         {
             
-            return Ok("Works");
+            return Ok(new Dot()
+            {
+                Id = "Authenticated user called API"
+            });
         }
 
         /// <summary>

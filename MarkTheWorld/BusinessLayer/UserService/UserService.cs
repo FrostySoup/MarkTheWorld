@@ -10,12 +10,35 @@ using System.Threading.Tasks;
 using BusinessLayer.DotService;
 using Data.DataHelpers.User;
 using Data.Database;
+using IdentityServer3.Core.Services.InMemory;
+using System.Security.Claims;
+using IdentityServer3.Core;
 
 namespace BusinessLayer.UserService
 {
     public class UserService
     {
         private Repository.UserRepository.UserRepository repository = new Repository.UserRepository.UserRepository();
+
+        public List<InMemoryUser> GetUsersForIdentityServer()
+        {
+            List<User> users = repository.GetAll();
+            List<InMemoryUser> identityUsers = new List<InMemoryUser>();
+
+            int i = 1;
+            foreach(User user in users)
+            {
+                identityUsers.Add(new InMemoryUser
+                {
+                    Username = user.UserName,
+                    Password = user.PasswordHash,
+                    Subject = i.ToString()
+                });
+                i++;
+            }
+
+            return identityUsers;
+        }
 
         public UserService()
         {
@@ -121,9 +144,9 @@ namespace BusinessLayer.UserService
             return user;
         }
 
-        public async Task<List<string>> GetUsersAutoComplete(string filter, int number)
+        public List<string> GetUsersAutoComplete(string filter, int number)
         {
-            List<string> usernames = (await repository.GetAll()).Select(x => x.UserName).ToList();
+            List<string> usernames = (repository.GetAll()).Select(x => x.UserName).ToList();
             usernames = filterUsernames(filter, number, usernames);
             return usernames;
         }

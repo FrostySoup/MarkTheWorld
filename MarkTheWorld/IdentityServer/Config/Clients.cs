@@ -11,7 +11,7 @@
         public static IEnumerable<Client> Get()
         {
             return new[]
-            {
+             {
                 new Client
                 {
                     Enabled = true,
@@ -21,13 +21,7 @@
 
                     RedirectUris = new List<string>
                     {
-                        "http://localhost:56668/popup.html",
-                        "http://localhost:56668/silent-renew.html"
-                    },
-
-                    PostLogoutRedirectUris = new List<string>
-                    {
-                        "http://localhost:56668/index.html"
+                        "http://localhost:56668/popup.html"
                     },
 
                     AllowedCorsOrigins = new List<string>
@@ -35,9 +29,13 @@
                         "http://localhost:56668"
                     },
 
-                    AllowAccessToAllScopes = true,
-                    // Access token lifetime increased to 1 minute
-                    AccessTokenLifetime = 60
+                    PostLogoutRedirectUris = new List<string>
+                    {
+                        "http://localhost:56668/index.html"
+                    },
+
+
+                    AllowAccessToAllScopes = true
                 }
             };
         }

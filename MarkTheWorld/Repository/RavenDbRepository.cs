@@ -28,6 +28,16 @@ namespace Repository
             }
         }
 
+        public static List<T> GetAllItems()
+        {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+
+                return session.Query<T>()
+                    .ToList();
+            }
+        }
+
         public static T GetItemAsync(Expression<Func<T, bool>> predicate)
         {
             using (var session = DocumentStoreHolder.Store.OpenSession())

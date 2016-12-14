@@ -6,23 +6,23 @@
 <head>
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
     @Styles.Render("~/Content/css")
-    <meta name="viewport" content="initial-scale=1"/>
+    <meta name="viewport" content="initial-scale=1" />
     <title>Mark The World - visit planet Earth and leave your mark!</title>
 </head>
 <body layout="column" ng-controller="appController" ng-cloak>
-<div id="fb-root"></div>
+    <div id="fb-root"></div>
 
-<top-toolbar action="rightSideNavAction"></top-toolbar>
+    <top-toolbar action="rightSideNavAction"></top-toolbar>
 
-<div id="toastBounds" flex layout layout-padding>
-    <game-map id="map" flex></game-map>
-</div>
+    <div id="toastBounds" flex layout layout-padding>
+        <game-map id="map" flex></game-map>
+    </div>
 
-<action-buttons></action-buttons>
+    <action-buttons></action-buttons>
 
-<side-nav action="rightSideNavAction"></side-nav>
+    <side-nav action="rightSideNavAction"></side-nav>
 
-<script src="~/Scripts/bundles/main.js"></script>
+    <script src="~/Scripts/bundles/main.js"></script>
 
 </body>
 </html>

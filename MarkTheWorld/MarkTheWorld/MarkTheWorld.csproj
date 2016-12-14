@@ -138,8 +138,9 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
@@ -286,6 +287,7 @@
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\Api\UserWithFBController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IdentityController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="ExceptionsHandling\BrowserJsonFormatter.cs" />
     <Compile Include="ExceptionsHandling\ExceptionHandlingWithCustomPages.cs" />
@@ -663,6 +665,10 @@
     <Content Include="Scripts\dialogs\toplist\toplist.html" />
     <Content Include="Scripts\dialogs\toplist\toplistController.js" />
     <Content Include="Scripts\dialogs\toplist\toplistService.js" />
+    <Content Include="Scripts\identityServer\bootstrap.css" />
+    <Content Include="Scripts\identityServer\bootstrap.js" />
+    <Content Include="Scripts\identityServer\jquery.js" />
+    <Content Include="Scripts\identityServer\oidc-client.js" />
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -685,6 +691,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Scripts\identityServer\bootstrap.css.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -744,6 +751,10 @@
     <Content Include="Scripts\shared\toast\toast.html" />
     <Content Include="Scripts\shared\toast\toastController.js" />
     <Content Include="Scripts\shared\toast\toastService.js" />
+    <Content Include="Views\Home\Index.html" />
+    <Content Include="Views\Identity\popup.html" />
+    <Content Include="Views\Identity\silent-renew.html" />
+    <Content Include="Views\Home\window.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -755,7 +766,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -768,6 +778,9 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Identity\Index.cshtml" />
+    <Content Include="Views\Identity\Popup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Flags\" />

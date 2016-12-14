@@ -92,12 +92,12 @@ namespace MarkTheWorld.Controllers.Api
         [ResponseType(typeof(List<string>))]
         [Route("autocomplete/{username}/{number}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetUsersAutoComplete(string username, int number)
+        public IHttpActionResult GetUsersAutoComplete(string username, int number)
         {
             List<string> usernames;
             try
             {
-                usernames = await userService.GetUsersAutoComplete(username, number);
+                usernames = userService.GetUsersAutoComplete(username, number);
             }
             catch (Exception)
             {
