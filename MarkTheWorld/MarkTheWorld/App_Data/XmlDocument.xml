@@ -501,11 +501,6 @@
             Patikrina ar galima patalpinti tašką
             </summary>
         </member>
-        <member name="M:MarkTheWorld.Controllers.Api.DotController.GetUserSquaresByName(Data.DataHelpers.CornersCorrds,System.String)">
-            <summary>
-            (REMOVE LATER)
-            </summary>
-        </member>
         <member name="M:MarkTheWorld.Controllers.Api.DotController.GetPointsByName(System.String)">
             <summary>
             Gražina tam tikro žaidėjo taškų skaičių, kurį jis gali gauti kartą per parą

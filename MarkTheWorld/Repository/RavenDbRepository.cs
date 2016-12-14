@@ -16,14 +16,9 @@ namespace Repository
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
                 var list = new List<T>();
-                try
-                {
-                    list = session.Query<T>()
-                        .Where(predicate)
-                        .ToList();
-                }
-                catch
-                {}
+                list = session.Query<T>()
+                    .Where(predicate)
+                    .ToList();
                 return list;
             }
         }

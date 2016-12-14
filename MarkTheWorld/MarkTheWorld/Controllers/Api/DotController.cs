@@ -156,7 +156,7 @@ namespace MarkTheWorld.Controllers.Api
 
             return Ok(results);
         }
-
+        /*
         /// <summary>
         /// (REMOVE LATER)
         /// </summary>
@@ -185,7 +185,7 @@ namespace MarkTheWorld.Controllers.Api
             }
 
             return Ok(squares);
-        }
+        }*/
 
         /// <summary>
         /// Gražina tam tikro žaidėjo taškų skaičių, kurį jis gali gauti kartą per parą
