@@ -86,6 +86,7 @@ namespace Repository.DotRepository
 
         private bool checkTerritory(Dot dot)
         {
+            return true;
             double[] center = centreCapturePoint(dot.lat, dot.lon);
             if (checkIfInside(dot.lat, dot.lon, dot.nextCapLat, dot.nextCapLon))
                 return true;
@@ -94,6 +95,7 @@ namespace Repository.DotRepository
 
         private bool checkIfInside(double lat, double lng, double allowedLat, double allowedLng)
         {
+            return true;
             if (lat < allowedLat + squareA && lat > allowedLat - squareA)
                 if (lng < allowedLng + squareA && lng > allowedLng - squareA)
                     return true;
