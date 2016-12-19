@@ -69,7 +69,7 @@ build/
 *.pidb
 *.log
 *.scc
-
+*.vs/
 # Visual C++ cache files
 ipch/
 *.aps
